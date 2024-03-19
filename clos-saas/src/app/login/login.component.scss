@@ -1,0 +1,51 @@
+.container {
+    width: 100%;
+  }
+  
+  .card {
+    background-color: #fff; /* Warna latar card */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: blue; /* Warna teks pada card */
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 6px;
+  }
+  
+  input {
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid blue; /* Warna border input */
+    border-radius: 4px;
+    transition: border-color 0.3s ease-in-out;
+    outline: none; /* Hapus outline pada saat focus */
+  }
+  
+  input:focus {
+    border-color: #2980b9; /* Warna border input saat focus */
+  }
+  
+  button {
+    background-color: #2980b9; /* Warna latar button */
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: blue; /* Warna latar button saat hover */
+  }
