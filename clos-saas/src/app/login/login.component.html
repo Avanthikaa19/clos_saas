@@ -1,21 +1,96 @@
-<div class="container" style="width:100%">
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-           <img style="width:95%;margin-top:37%" src="/assets/login-img.png">
+<div>
+  <!-------------------INITIAL CARD------------------------------>
+ <div>
+     <mat-card>
+         <mat-card-content>
+             <!-------------LEFT SIDE HEADER-------------------->
+             <span>
+             <span class="main-header" style="color: blue;">
+             <span>C L
+                 <span>
+                  <i class="fa fa-globe"></i>
+                 </span>
+                 <span> S</span>
+             </span>
+             </span>
+          </span>
+          <!-----------RIGHT SIDE HEADER------------------------>
+          <span style="position: absolute;right:5px">
+              <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
+                  <span>
+                      <i class="fa fa-phone">
+                      </i>
+                      <span> +654321890</span>
+                  </span>
+              </span>
+          <span style="margin-right: 8px;" routerLink="/home">
+              <button mat-flat-button color="primary">
+                  <i class="fa fa-arrow-left"></i>
+                  <span> BACK</span>
+              </button>
+          </span>
+          </span>
+         </mat-card-content>
+     </mat-card>
+ </div> 
+</div>
+<!------------------------------------CLOS LIVE DEMO FORM---------------------------------------->
+<div style="background-color: #073174;height:89.6%;">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:8%">
+        <div class="main-header">
+            <span style="line-height: 1.4;">CORPORATE LOAN ORIGINATION SOLUTION (<span> CL</span><span><i class="fa fa-globe"></i></span><span>S</span>)</span>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:20%">
-    <div class="card">
-      <h2><span> CL</span><span><i class="fa fa-globe"></i></span><span>S</span></h2>
-      <form>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-  
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-  
-        <button routerLink="/home" type="submit">Login</button>
-      </form>
-      </div>
-    </div>
+        <div class="sub-header" style="margin-top: 5%">
+          USER ADMIN LOGIN
+        </div>
+        <div style="font-size: 17px;font-family: sans-serif;color: white;line-height:1.6;margin-top:5%">
+          Corporate Loan Origination enables the end-to-end digitization of loan process and enhances turnaround time, predictability, transparency, and smarter decision-making. Our comprehensive solution provides portfolio management and effective risk assessment while complying with internal and regulatory norms.  
+          CLOS provides better solution for loans. It is an end-to-end solution covering Retail and Small Business Products. It comes with workflow, screens and allows foe extensibility and quick time time to market.  
+        </div>
+       </div>
+  <!---------------------REQUEST FOR DEMO----------------------------------------->
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div style="height:425px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;">
+          <div class="container">
+            <!----------------------FS LOGO---------------------------->
+            <div style="text-align: center;">
+              <img src="/assets/FSLOGO.png" style="width:12%">
+            </div>
+            <!----------------------USER NAME-------------------------->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div style="margin-top: 3%;">
+                <div>User Name <span style="color:red">*</span></div>
+                <input [(ngModel)]="username"  matInput class="min-select" placeholder="User Name" />
+            </div>
+            </div>
+            </div>
+            <!----------------------PASSWORD---------------------------->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div style="margin-top: 3%;">
+                <div>Password <span style="color:red">*</span></div>
+                <input #pwd id="login-password" type="password" [(ngModel)]="password"  matInput class="min-select" placeholder="Password" />
+                <mat-icon style="padding: 10px 20px 10px 10px;z-index:1;height: 31px ;position: absolute;left:80%;bottom: 51%;
+            width: 47px;color: black;cursor: pointer;" matSuffix
+            (click)="pwd.type=pwd.type=='password'?'text':'password'">{{pwd.type=='password'?
+            'visibility_off' : 'visibility'}}</mat-icon>
+            </div>
+            </div>
+            </div>
+            <!--------------REQUEST FOR DEMO----------->
+            <div style="margin-top:10%;text-align: center;">
+              <button [disabled]="username==''||password==''" style="text-align: center;" mat-flat-button color="primary">
+                  <span> LOGIN</span>
+              </button>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
+</div>
+<div class="version-info">
+  <span class="version-name float-left" style="margin-left: 44%">Copyright © 2024 FinSurge. All Rights Reserved.</span>
+</div>

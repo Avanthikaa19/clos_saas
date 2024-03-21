@@ -92,6 +92,16 @@
                     </div>
                   </div>
               </div>
+              <!--------------DOMAIN NAME------------------->
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div style="margin-top: 4%;">
+                      <div>Domain Name <span style="color:red">*</span></div>
+                      <input [(ngModel)]="domainName" matInput class="min-select" style="width:36rem" placeholder="DOMAIN NAME">
+                      <span style="font-family: sans-serif;font-weight: 400;"> .clos</span>
+                  </div>
+                </div>
+            </div>
               <!-------------POSITION AND ROLE-------------->
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -156,7 +166,7 @@
                 </div>                
             </div>            
               <!--------------REQUEST FOR DEMO----------->
-              <div style="margin-top:6%;text-align: center;">
+              <div style="margin-top:-4%;text-align: center;">
                 <button (click)="demovideo=true;signup()" style="text-align: center;" mat-flat-button color="primary">
                     <span> SIGN UP</span>
                 </button>
@@ -177,7 +187,7 @@
        </span>
     </div>
     <div style="text-align: center;margin-top: 6%;">
-        <button mat-flat-button color="primary" (click)="demovideo=false">
+        <button mat-flat-button color="primary" (click)="demovideo=false;done()">
             <span> DONE</span>
         </button> 
     </div>

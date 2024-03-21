@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'demo',component:LiveDemoComponent},
   {path:'signup',component:SignUpComponent},
-  {path:':company-login/:id',component:LoginComponent},
+  {path:`:subdomain.${window.location.host}`,component:LoginComponent},
 ];
 
 @NgModule({

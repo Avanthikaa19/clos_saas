@@ -27,6 +27,7 @@ export class SignUpComponent implements OnInit {
   file:any;
   onefileuploaded:boolean=false;
   id:any=0;
+  domainName:any='';
 
     addNewCompany() {
         this.companies.push('');
@@ -53,7 +54,10 @@ export class SignUpComponent implements OnInit {
 signup(){
   this.id++;
   this.transferDataService.setData(this.id);
-  this.router.navigate([`:${this.companyname}-login/:${this.id}`])
+}
+done(){
+  window.location.host?.replace(`${this.domainName}.${window.location.host}`,`${window.location.host}`)
+  this.router.navigate([`${this.domainName}.${window.location.host}`])
 }
 
   constructor(
