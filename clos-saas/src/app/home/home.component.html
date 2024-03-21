@@ -13,43 +13,19 @@
                    <span> S</span>
                </span>
                </span>
-               <span style=margin-left:15px>
-                   <button mat-flat-button color="primary">
-                       <i class="fa fa-money"></i>
-                       <span> PRICING</span>
-                   </button>
-               </span>
-               <span style="margin-left:12px">
-                <button mat-flat-button color="primary">
-                    <i class="fa fa-user"></i>
-                    <span> USERS</span>
-                </button>
-            </span>
             </span>
             <!-----------RIGHT SIDE HEADER------------------------>
             <span style="position: absolute;right:5px">
-                <span style="margin-right:8px">
-                    <button mat-flat-button color="primary">
+                <span class="sign-up-btn" style="margin-right:8px">
+                    <button mat-flat-button color="primary" routerLink="/signup">
                         <i class="fa fa-sign-in" aria-hidden="true"></i>
                         <span>  SIGN UP</span>
                     </button>
                 </span>
-            <span style="margin-right:8px" routerLink="/demo">
+            <span class="sign-up-btn" style="margin-right:8px" routerLink="/demo">
                 <button mat-flat-button color="primary">
                     <i class="fa fa-telegram"></i>
                     <span> LIVE DEMO</span>
-                </button>
-            </span>
-            <span style="margin-right: 8px;">
-                <button mat-flat-button color="primary">
-                    <i class="fa fa-arrow-right"></i>
-                    <span> GET FREE TRIAL</span>
-                </button>
-            </span>
-            <span style="margin-right:8px">
-                <button routerLink="/login" mat-flat-button color="primary">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i>
-                    <span>  LOG OUT</span>
                 </button>
             </span>
             </span>
@@ -58,7 +34,7 @@
    </div> 
 </div>
  <!-----------------------HEADING SLIDER--------------------------------------->
- <div style="height: 833px !important;overflow: auto;">
+ <div style="height: 774px !important;overflow: auto;">
  <div>
  <div class="container">
     <div class="row">
@@ -88,7 +64,7 @@ Ease customer onboarding processes.
             <span style="margin-left:2%">
                 <button mat-flat-button color="primary">
                     <i class="fa fa-arrow-right"></i>
-                    <span> GET STARTED</span>
+                    <span> SIGN UP</span>
                 </button>
             </span>
         </div>
@@ -128,6 +104,28 @@ Ease customer onboarding processes.
         <i class="fa fa-angle-right"></i>
       </div>
     </div>
+</div>
+<!---------------------------CHATBOT----------------------------------------------------------------->
+<div>
+    <div style="height:200px;width:240px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);float:right;margin-right: 1%;margin-top:-14%" *ngIf="openchat">
+       <div style="background-color: lightgrey;border:1px solid lightgrey;border-radius: 6px;height:50px;margin-top:14px;color:black">
+          <span>Hi I'm your chatbot! If you have doubts contact me</span>
+       </div>
+       <div style="box-shadow:0 0 10px rgba(0, 0, 0, 0.2);height:28px;margin-top:44%">
+          <span style="text-align: center;font-size: 12px;font-family: sans-serif;color:black;">
+            <input style="width:91%;" type="text" placeholder="Type your queries">
+            <span style="float: right;">
+                <i class="fa fa-telegram"></i> 
+            </span>
+          </span>
+       </div>
+    </div>
+    <span style="color: blue;float:right;margin-right:20px;cursor: pointer;" (click)="openchat=true" *ngIf="!openchat" [matTooltip]="'open chatbot'">
+        <mat-icon>message</mat-icon>
+    </span>
+    <span style="color: blue;float:right;margin-right:20px;cursor: pointer;" (click)="openchat=false" *ngIf="openchat" [matTooltip]="'close chatbot'">
+        <mat-icon>close</mat-icon>
+    </span>
 </div>
 <!------------------------ABOUT US TAG-------------------------------------------->
 <div style="margin-top:3%">
@@ -195,6 +193,149 @@ Ease customer onboarding processes.
         </div>
     </div>
 </div>
+<!------------------------PRICING--------------------------------------------------->
+<div style="height:100px;width:100%;background-color: lightgrey;font-size: 30px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:2%">
+    <span style="margin-left: -3%;">PRICING</span>
+</div>
+<div class="container" style="margin-top: 1%;">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%;">
+            <div class="card-box">
+            <div style="text-align: center;margin-top: 5%;">
+                <span style="font-size: 20px;font-weight: bold;color: black;">BASIC</span>
+            </div>
+            <div style="margin-top: 3%;">
+                <span style="font-size: 15px;;color: black;">For business wanting to stramline their online application with minimal control and flexibilty</span>
+            </div>
+            <div style="margin-top: 3%;">
+                Starts at
+            </div>
+            <div style="margin-top: 3%;">
+                <span style="font-weight: bold;font-size: 20px;">$300/month</span>
+            </div>
+            <div style="text-align: center;margin-top: 3%;">
+                <button mat-flat-button color="primary" style="width:100%">
+                    <span> SUBSCRIBE</span>
+                </button>
+            </div>
+            <div style="margin-top: 4%;">
+                Includes everything inStandard Plan +
+                <div>
+ * Stay tax compliant with e-invoicing
+ </div>
+ <div>
+* Manage subscription billing
+</div>
+<div>
+* Use hosted payment pages
+</div>
+<div>
+* Provide multi-currency options
+</div>
+<div>
+* Set transaction approval processes
+</div>
+<div>
+* Allow customers to review timesheets
+</div>
+<div>
+* Receive scheduled reports
+</div>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
+            <div class="card-box">
+            <div style="text-align: center;margin-top: 5%;">
+                <span style="font-size: 20px;font-weight: bold;color: black;">STANDARD</span>
+            </div>
+            <div style="margin-top: 3%;">
+                <span style="font-size: 15px;;color: black;">For business wanting to stramline their online application with minimal control and flexibility</span>
+            </div>
+            <div style="margin-top: 3%;">
+                Starts at
+            </div>
+            <div style="margin-top: 3%;">
+                <span style="font-weight: bold;font-size: 20px;">$500/month</span>
+            </div>
+            <div style="text-align: center;margin-top: 3%;">
+                <button mat-flat-button color="primary" style="width:100%">
+                    <span> SUBSCRIBE</span>
+                </button>
+            </div>
+            <div style="margin-top: 4%;">
+                Includes everything inStandard Plan +
+                <div>
+ * Stay tax compliant with e-invoicing
+ </div>
+ <div>
+* Manage subscription billing
+</div>
+<div>
+* Use hosted payment pages
+</div>
+<div>
+* Provide multi-currency options
+</div>
+<div>
+* Set transaction approval processes
+</div>
+<div>
+* Allow customers to review timesheets
+</div>
+<div>
+* Receive scheduled reports
+</div>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
+            <div class="card-box">
+            <div style="text-align: center;margin-top: 5%;">
+                <span style="font-size: 20px;font-weight: bold;color: black;">PREMIUM</span>
+            </div>
+            <div style="margin-top: 3%;">
+                <span style="font-size: 15px;;color: black;">Our most powerful marketing software for advanced control and advanced flexibility.</span>
+            </div>
+            <div style="margin-top: 3%;">
+                Starts at
+            </div>
+            <div style="margin-top: 3%;">
+                <span style="font-weight: bold;font-size: 20px;">$800/month</span>
+            </div>
+            <div style="text-align: center;margin-top: 3%;">
+                <button mat-flat-button color="primary" style="width:100%">
+                    <span> SUBSCRIBE</span>
+                </button>
+            </div>
+            <div style="margin-top: 4%;">
+                Includes everything inStandard Plan +
+                <div>
+ * Stay tax compliant with e-invoicing
+ </div>
+ <div>
+* Manage subscription billing
+</div>
+<div>
+* Use hosted payment pages
+</div>
+<div>
+* Provide multi-currency options
+</div>
+<div>
+* Set transaction approval processes
+</div>
+<div>
+* Allow customers to review timesheets
+</div>
+<div>
+* Receive scheduled reports
+</div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!------------------------TESTIMONILAS----------------------------------------------->
 <div style="height:100px;width:100%;background-color: lightgrey;font-size: 30px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:2%">
     <span>BY OUR CLIENTS</span>
@@ -257,3 +398,4 @@ Ease customer onboarding processes.
 <div class="version-info">
     <span class="version-name float-left" style="margin-left: 44%">Copyright © 2024 FinSurge. All Rights Reserved.</span>
 </div>
+<router-outlet></router-outlet>

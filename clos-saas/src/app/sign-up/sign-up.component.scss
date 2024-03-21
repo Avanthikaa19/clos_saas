@@ -70,4 +70,28 @@
     outline: solid transparent 0.2rem;
     margin-top: 4%;
 }
+.scrollable-container {
+    height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+}
+.cancel-icon {
+    position: absolute;
+    right: 35px;
+    top: 65%;
+    transform: translateY(-50%);
+}
+.cancel-icon1 {
+    position: absolute;
+    right: 5px;
+    top: 65%;
+    transform: translateY(-50%);
+    color: crimson;
+}
+.attach-icon {
+    position: absolute;
+    right: 40px;
+    top: 64%;
+    transform: translateY(-50%);
+}
+
   

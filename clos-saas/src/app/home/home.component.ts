@@ -12,5 +12,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
   endtoend:boolean=false;
+  openchat:boolean=false;
 
 }

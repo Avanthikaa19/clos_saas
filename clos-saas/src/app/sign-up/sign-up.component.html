@@ -43,7 +43,7 @@
               <span style="line-height: 1.4;">CORPORATE LOAN ORIGINATION SOLUTION (<span> CL</span><span><i class="fa fa-globe"></i></span><span>S</span>)</span>
           </div>
           <div class="sub-header" style="margin-top: 5%">
-              Get a Demo with <span> CL</span><span><i class="fa fa-globe"></i></span><span>S</span>
+              Get a Sign Up with <span> CL</span><span><i class="fa fa-globe"></i></span><span>S</span>
           </div>
           <div style="font-size: 17px;font-family: sans-serif;color: white;line-height:1.6;margin-top:5%">
             Corporate Loan Origination enables the end-to-end digitization of loan process and enhances turnaround time, predictability, transparency, and smarter decision-making. Our comprehensive solution provides portfolio management and effective risk assessment while complying with internal and regulatory norms.  
@@ -51,8 +51,8 @@
           </div>
          </div>
     <!---------------------REQUEST FOR DEMO----------------------------------------->
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <div style="height:550px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:-6%">
+          <div style="height:750px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;">
             <div class="container">
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -85,52 +85,80 @@
                 </div>
               <!-------------COMPANY NAME-------------->
               <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div style="margin-top: 10%;">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div style="margin-top: 4%;">
                         <div>Company Name <span style="color:red">*</span></div>
-                        <input [(ngModel)]="companyname" matInput style="width:38rem" class="min-select" placeholder="ABC INFOTECH PVT LTD">
+                        <input [(ngModel)]="companyname" matInput class="min-select" style="width:38rem" placeholder="ABC INFOTECH PVT LTD">
                     </div>
                   </div>
               </div>
-              <!-------------DATE AND TIME-------------->
+              <!-------------POSITION AND ROLE-------------->
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div style="margin-top: 10%;">
-                        <div>Date</div>
-                        <input [(ngModel)]="date" type="date" matInput class="min-select" placeholder="19/03/2024">
+                        <div>Position <span style="color:red">*</span></div>
+                        <input [(ngModel)]="position" matInput class="min-select" placeholder="Mananger">
                     </div>
-                </div>                
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div style="margin-top: 10%;">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="margin-top:3%">
-                                    <div>Hour</div>
-                                    <mat-select class="min-select" [(ngModel)]="hr" style="line-height: normal; vertical-align: middle;height:40px;width:5rem" placeholder="01">
-                                        <mat-option *ngFor="let min of hrs" [value]="min" style="background-color: white; color: black">{{ min }}</mat-option>
-                                    </mat-select>  
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="margin-top:3%">
-                                    <div>Minute</div>
-                                    <mat-select class="min-select" [(ngModel)]="min" style="line-height: normal; vertical-align: middle;height:40px;width:5rem;" placeholder="00">
-                                        <mat-option *ngFor="let min of minutes" [value]="min" style="background-color: white; color: black">{{ min }}</mat-option>
-                                    </mat-select>  
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="margin-top:3%">
-                                    <div>AM/PM</div>
-                                    <mat-select class="min-select" [(ngModel)]="ampm" style="line-height: normal; vertical-align: middle;height:40px;width:5rem;" placeholder="PM">
-                                        <mat-option *ngFor="let min of timeofdemo" [value]="min" style="background-color: white; color: black">{{ min }}</mat-option>
-                                    </mat-select>  
-                                </div>
+                </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div style="margin-top: 10%;">
+                          <div>Role <span style="color:red">*</span></div>
+                          <div class="row">
+                            <div class="col-lg-10">
+                              <mat-select class="min-select" [(ngModel)]="role" placeholder="ADMIN">
+                                  <mat-option *ngFor="let country of roleList" [value]="country" style="background-color: white; color: black">{{ country }}</mat-option>
+                              </mat-select> 
                             </div>
-                        </div> 
-                    </div>
+                        </div>
+                      </div>
                     </div>
               </div> 
+              <!--------------COUNTRY NAME-------------->
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div style="margin-top: 4%;">
+                      <div>Country Name <span style="color:red">*</span></div>
+                      <div class="row">
+                          <div class="col-lg-10">
+                            <mat-select class="min-select" [(ngModel)]="countryName" style="width:38rem" placeholder="INDIA">
+                                <mat-option *ngFor="let country of countries" [value]="country" style="background-color: white; color: black">{{ country }}</mat-option>
+                            </mat-select> 
+                          </div>
+                      </div>
+                     
+                      </div>
+                </div>
+            </div>
+            <!----------------UPLOAD DOCX---------------->
+            <div class="row">
+                <div>
+                    <span>
+                        <button mat-icon-button *ngIf="onefileuploaded" (click)="addNewCompany()" [matTooltip]="'add document'" style="color: blue;float:right">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:100px;overflow-y:auto;margin-top:-6px">
+                    <div *ngFor="let company of companies; let i = index">
+                        <div style="position: relative;">
+                            <input [(ngModel)]="companies[i]" matInput class="min-select" style="width:38rem" placeholder="ID PROOF">
+                            <label for="fileInput">
+                                <button mat-icon-button class="attach-icon" [matTooltip]="'Attach document'" (click)="triggerFileInputClick()">
+                                    <mat-icon>attach_file</mat-icon>
+                                </button>
+                            </label>
+                            <button mat-icon-button class="cancel-icon1" [matTooltip]="'Remove document'" (click)="removeCompany(i)">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <input type="file" #fileInput style="display: none;" (change)="handleFileInput($event, i)">
+                        </div>                        
+                    </div>
+                </div>                
+            </div>            
               <!--------------REQUEST FOR DEMO----------->
-              <div style="margin-top:10%;text-align: center;">
-                <button [disabled]="firstname==''||lastname==''||email==''||phn==''||companyname==''" (click)="demovideo=true" style="text-align: center;" mat-flat-button color="primary">
-                    <span> REQUEST FOR DEMO</span>
+              <div style="margin-top:6%;text-align: center;">
+                <button (click)="demovideo=true;signup()" style="text-align: center;" mat-flat-button color="primary">
+                    <span> SIGN UP</span>
                 </button>
               </div>
             </div>
@@ -143,10 +171,9 @@
     <div style="text-align: center;margin-top:5%">
         <img src="assets/ok.png" style="width:24%">
     </div>
-    <div class="main-header" style="text-align: center;margin-top:4%;color: blue;">
+    <div class="main-header" style="text-align: center;margin-top:4%;color:blue">
        <span style="font-size: 14px;">
-        Your request has been accepted.
-           Experience the future firsthand with our demo video
+        We will verify your documents . Username and password will be send shortly to your registered mail.
        </span>
     </div>
     <div style="text-align: center;margin-top: 6%;">
