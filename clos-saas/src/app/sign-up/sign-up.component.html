@@ -97,7 +97,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div style="margin-top: 4%;">
                       <div>Domain Name <span style="color:red">*</span></div>
-                      <input [(ngModel)]="domainName" matInput class="min-select" style="width:36rem" placeholder="DOMAIN NAME">
+                      <input [(ngModel)]="domainName" matInput class="min-select" style="width:35rem" placeholder="DOMAIN NAME">
                       <span style="font-family: sans-serif;font-weight: 400;"> .clos</span>
                   </div>
                 </div>
@@ -110,17 +110,11 @@
                         <input [(ngModel)]="position" matInput class="min-select" placeholder="Mananger">
                     </div>
                 </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <div style="margin-top: 10%;">
-                          <div>Role <span style="color:red">*</span></div>
-                          <div class="row">
-                            <div class="col-lg-10">
-                              <mat-select class="min-select" [(ngModel)]="role" placeholder="ADMIN">
-                                  <mat-option *ngFor="let country of roleList" [value]="country" style="background-color: white; color: black">{{ country }}</mat-option>
-                              </mat-select> 
-                            </div>
-                        </div>
-                      </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div style="margin-top: 10%;">
+                        <div>Role <span style="color:red">*</span></div>
+                        <input [(ngModel)]="role" matInput class="min-select" placeholder="Senior Manager">
+                    </div>
                     </div>
               </div> 
               <!--------------COUNTRY NAME-------------->
@@ -167,7 +161,7 @@
             </div>            
               <!--------------REQUEST FOR DEMO----------->
               <div style="margin-top:-4%;text-align: center;">
-                <button [disabled]="firstname==''||lastname==''||email==''||phn==''||position==''||role==''||companyname==''||countryName==''" (click)="demovideo=true;signup()" style="text-align: center;" mat-flat-button color="primary">
+                <button (click)="demovideo=true;signup()" style="text-align: center;" mat-flat-button color="primary">
                     <span> SIGN UP</span>
                 </button>
               </div>

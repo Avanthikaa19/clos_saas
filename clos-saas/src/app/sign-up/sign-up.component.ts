@@ -66,8 +66,20 @@ signup(){
     const newUrl = `http://${newHost}${window.location.pathname}${window.location.search}/login`;
     console.log(newUrl,'new url')
     window.location.href = newUrl;
-    this.domainName='';
+    this.clearAll();
     console.log(newUrl,window.location.href)
+}
+clearAll(){
+  this.firstname='';
+  this.lastname='';
+  this.position='';
+  this.role='';
+  this.email='';
+  this.phn='';
+  this.companyname='';
+  this.domainName='';
+  this.countryName='';
+  this.companies=[''];
 }
 
   constructor(

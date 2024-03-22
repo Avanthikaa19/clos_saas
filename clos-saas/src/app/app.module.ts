@@ -19,7 +19,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { UsersComponent } from './users/users.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     HomeComponent,
     LoginComponent,
     LiveDemoComponent,
-    SignUpComponent
+    SignUpComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,MatNativeDateModule,
-    MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule
+    MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,
+    MatPaginatorModule,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

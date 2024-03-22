@@ -28,4 +28,39 @@ i{
     border: 1px solid #87ceef;
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(205 226 229)), color-stop(0.72, rgb(206 229 229)), color-stop(0.86, rgb(217 237 234)));
   }
+  /* Basic table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table header */
+th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Table rows */
+tr {
+  border: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Table cells */
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Hover effect */
+tr:hover {
+  background-color: #e2e2e2;
+}
+
 

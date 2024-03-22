@@ -23,7 +23,7 @@
                       <span> +654321890</span>
                   </span>
               </span>
-          <span style="margin-right: 8px;" routerLink="/home">
+          <span style="margin-right: 8px;" (click)="redirectToHome()">
               <button mat-flat-button color="primary">
                   <i class="fa fa-arrow-left"></i>
                   <span> BACK</span>
@@ -82,7 +82,7 @@
             </div>
             <!--------------REQUEST FOR DEMO----------->
             <div style="margin-top:10%;text-align: center;">
-              <button [disabled]="username==''||password==''" style="text-align: center;" mat-flat-button color="primary">
+              <button [disabled]="username==''||password==''" style="text-align: center;" mat-flat-button color="primary" routerLink="/users">
                   <span> LOGIN</span>
               </button>
             </div>

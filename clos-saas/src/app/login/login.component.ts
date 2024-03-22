@@ -17,6 +17,12 @@ export class LoginComponent implements OnInit {
    }
   ngOnInit(): void {
     console.log(this.router.url),'url'
+    console.log(window.location)
   }
+  redirectToHome() {
+    const { hostname, port } = window.location;
+    const newUrl = `http://${hostname}${port ? ':' + port : ''}/`;
+    window.location.href = newUrl;
+}
 
 }

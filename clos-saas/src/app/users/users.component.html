@@ -1,0 +1,183 @@
+<div>
+    <!-------------------INITIAL CARD------------------------------>
+   <div>
+       <mat-card>
+           <mat-card-content>
+               <!-------------LEFT SIDE HEADER-------------------->
+               <span>
+               <span class="main-header" style="color: blue;font-size: 20px;margin-left:5px">
+                USERS (FSUSER)
+               </span>
+            </span>
+            <!-----------RIGHT SIDE HEADER------------------------>
+            <span style="position: absolute;right:5px">
+                <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
+                    <span>
+                        <i class="fa fa-phone">
+                        </i>
+                        <span> +654321890</span>
+                    </span>
+                </span>
+            <span style="margin-right: 8px;">
+                <button mat-flat-button color="primary">
+                    <i class="fa fa-add"></i>
+                    <span> CREATE USERS</span>
+                </button>
+            </span>
+            </span>
+           </mat-card-content>
+       </mat-card>
+   </div> 
+  </div>
+  <!---------------------------TABLE------------------------------------>
+  <div style="margin-left:1%;width:98%;margin-top:1%">
+      <table>
+          <tr>
+              <th *ngFor="let list of userHeaders;let i=index" style="background-color: rgb(64,98,115);color:white">{{list}}</th>
+          </tr>
+          <tr>
+              <td>LOKESH</td>
+              <td>1</td>
+              <td>abc@gmail.com</td>
+              <td>DEVELOPER</td>
+              <td>ABC INFOTECH PVT LTD</td>
+              <td>MALAYSIA</td>
+              <td> +6543227890</td>
+              <td>
+                <button class="rounded-button">
+                    <span>ACTIVE</span>
+                </button>
+              </td>
+          </tr>
+          <tr>
+            <td>RAM</td>
+            <td>2</td>
+            <td>abcs@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABCS INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button-inactive">
+                  <span>INACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>RAVI</td>
+            <td>3</td>
+            <td>abcd@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABCD INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button">
+                  <span>ACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>LAKSHMI</td>
+            <td>4</td>
+            <td>abc4@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABC4 INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button-inactive">
+                  <span>INACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>REBIN</td>
+            <td>5</td>
+            <td>abcq@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABCQ INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button">
+                  <span>ACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>SHARMI</td>
+            <td>6</td>
+            <td>abc6@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABCTY INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button-inactive">
+                  <span>INACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>SHIVAM</td>
+            <td>7</td>
+            <td>abc8@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>AB8C INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button-inactive">
+                  <span>INACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>KIRAN</td>
+            <td>8</td>
+            <td>abcde@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABCDE INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button">
+                  <span>ACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>ROY</td>
+            <td>9</td>
+            <td>abcqw@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>ABQWC INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button">
+                  <span>ACTIVE</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>ROCK</td>
+            <td>10</td>
+            <td>bca@gmail.com</td>
+            <td>DEVELOPER</td>
+            <td>BCA INFOTECH PVT LTD</td>
+            <td>MALAYSIA</td>
+            <td> +6543227890</td>
+            <td>
+              <button class="rounded-button-inactive">
+                  <span>INACTIVE</span>
+              </button>
+            </td>
+        </tr>
+      </table>
+      <div style="margin-top: 2%;">
+      <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" [showFirstLastButtons]="true" aria-label="Select page">
+    </mat-paginator>
+    </div>
+  </div>
