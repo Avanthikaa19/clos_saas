@@ -52,7 +52,7 @@
          </div>
     <!---------------------REQUEST FOR DEMO----------------------------------------->
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:-6%">
-          <div style="height:750px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;">
+          <div style="height:775px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;overflow-y: scroll;overflow-x: hidden;">
             <div class="container">
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -177,14 +177,17 @@
     </div>
  </div>
  <!-----------------------------------DEMO VIDEO CLICK-------------------------------------------->
- <div *ngIf="demovideo" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:300px;width:450px">
+ <div *ngIf="demovideo" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:370px;width:385px;border-radius: 10px;padding: 15px;">
     <div style="text-align: center;margin-top:5%">
         <img src="assets/ok.png" style="width:24%">
     </div>
     <div class="main-header" style="text-align: center;margin-top:4%;color:blue">
-       <span style="font-size: 14px;">
+       <span style="font-size: 14px;font-weight: lighter;margin-bottom: 10px;line-height: 23px;">
         We will verify your documents . Username and password will be send shortly to your registered mail.
        </span>
+       <br>
+       <span style="font-weight: bold;font-size: 15px;">Domain : {{domainName}}</span><br>
+       <span style="font-weight: bold;font-size: 15px;">Username : {{firstname}}</span>
     </div>
     <div style="text-align: center;margin-top: 6%;">
         <button mat-flat-button color="primary" (click)="demovideo=false;done()">

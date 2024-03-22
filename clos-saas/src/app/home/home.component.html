@@ -107,23 +107,31 @@ Ease customer onboarding processes.
 </div>
 <!---------------------------CHATBOT----------------------------------------------------------------->
 <div>
-    <div style="height:200px;width:240px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);float:right;margin-right: 1%;margin-top:-14%" *ngIf="openchat">
-       <div style="background-color: lightgrey;border:1px solid lightgrey;border-radius: 6px;height:50px;margin-top:14px;color:black">
-          <span>Hi I'm your chatbot! If you have doubts contact me</span>
-       </div>
-       <div style="box-shadow:0 0 10px rgba(0, 0, 0, 0.2);height:28px;margin-top:44%">
-          <span style="text-align: center;font-size: 12px;font-family: sans-serif;color:black;">
-            <input style="width:91%;" type="text" placeholder="Type your queries">
-            <span style="float: right;">
-                <i class="fa fa-telegram"></i> 
-            </span>
-          </span>
-       </div>
+    <div class="wrapper" style="position: absolute;bottom: 19%;right: 1%;" *ngIf="openchat">
+        <div class="title">Chatbot</div>
+        <div class="box">
+            <div class="item">
+                <div class="icon">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="msg">
+                    <p>Want to chat about CLOS? I'm here to help you find your way.</p>
+                </div>
+            </div>
+            <br clear="both">
+        </div>
+        
+        <div class="typing-area">
+            <div class="input-field">
+                <input type="text" placeholder="Type your message" required>
+                <button>Send</button>
+            </div>
+        </div>
     </div>
-    <span style="color: blue;float:right;margin-right:20px;cursor: pointer;" (click)="openchat=true" *ngIf="!openchat" [matTooltip]="'open chatbot'">
-        <mat-icon>message</mat-icon>
+    <span style="color: #073174;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;" (click)="openchat=true" *ngIf="!openchat" [matTooltip]="'open chatbot'">
+        <mat-icon>question_answer</mat-icon>
     </span>
-    <span style="color: blue;float:right;margin-right:20px;cursor: pointer;" (click)="openchat=false" *ngIf="openchat" [matTooltip]="'close chatbot'">
+    <span style="color: #073174;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;" (click)="openchat=false" *ngIf="openchat" [matTooltip]="'close chatbot'">
         <mat-icon>close</mat-icon>
     </span>
 </div>
