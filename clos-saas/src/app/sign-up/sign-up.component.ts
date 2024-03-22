@@ -54,10 +54,20 @@ export class SignUpComponent implements OnInit {
 signup(){
   this.id++;
   this.transferDataService.setData(this.id);
+  const newHost = `${this.domainName}.${window.location.host}`;
+    const newUrl = `http://${newHost}${window.location.pathname}${window.location.search}${window.location.hash}`;
+    // this.router.navigate(['/login'])
+    console.log(newUrl,'new url')
+    // window.location.href = newUrl;
+    console.log(newUrl,window.location)
 }
-done(){
-  window.location.host?.replace(`${this.domainName}.${window.location.host}`,`${window.location.host}`)
-  this.router.navigate([`${this.domainName}.${window.location.host}`])
+  done() {
+    const newHost = `${this.domainName}.${window.location.host}`;
+    const newUrl = `http://${newHost}${window.location.pathname}${window.location.search}/login`;
+    console.log(newUrl,'new url')
+    window.location.href = newUrl;
+    this.domainName='';
+    console.log(newUrl,window.location.href)
 }
 
   constructor(
