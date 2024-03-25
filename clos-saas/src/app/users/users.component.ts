@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -8,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class UsersComponent implements OnInit {
   userHeaders:any=['USER NAME','USER ID','EMAIL','POSITION','COMPANY NAME','COUNTRY','PHONE','STATUS']
 
-  constructor() { }
+  constructor(public router:Router) { }
 
   ngOnInit(): void {
+  }
+  backtohome(){
+    const newUrl = `http://${window.location.pathname}${window.location.search}/home`;
+    window.location.href=newUrl;
+    this.router.navigateByUrl(newUrl)
   }
 
 }
