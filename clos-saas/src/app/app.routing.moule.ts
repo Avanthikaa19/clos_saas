@@ -5,6 +5,8 @@ import { LiveDemoComponent } from './live-demo/live-demo.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UsersComponent } from './users/users.component';
+import { AdminLandingComponent } from './admin-landing/admin-landing.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -13,6 +15,9 @@ const routes: Routes = [
   {path:'signup',component:SignUpComponent},
   { path: `signup/login`, component: LoginComponent },
   {path:'users',component:UsersComponent},
+  {path:'main',component:AdminLandingComponent},
+  {path:'admin',component:SideNavComponent},
+  {path:`:subdomain.${window.location.host}`,component:LoginComponent},
 ];
 
 @NgModule({

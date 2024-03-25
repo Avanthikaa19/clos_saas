@@ -21,6 +21,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { UsersComponent } from './users/users.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { AdminLandingComponent } from './admin-landing/admin-landing.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     LoginComponent,
     LiveDemoComponent,
     SignUpComponent,
-    UsersComponent
+    UsersComponent,
+    AdminLandingComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,
