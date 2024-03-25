@@ -128,12 +128,16 @@ Ease customer onboarding processes.
             </div>
         </div>
     </div>
-    <span style="color: #073174;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;" (click)="openchat=true" *ngIf="!openchat" [matTooltip]="'open chatbot'">
-        <mat-icon>question_answer</mat-icon>
+    <div *ngIf="!openchat" style="height: 47px;width:47px;align-items: center;background-color: #E9EEF4;border-radius: 50%;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;display: flex;justify-content: center;">
+    <span style="color: #073174;" (click)="openchat=true" [matTooltip]="'open chatbot'">
+        <mat-icon style="margin-top: 5px;">question_answer</mat-icon>
     </span>
-    <span style="color: #073174;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;" (click)="openchat=false" *ngIf="openchat" [matTooltip]="'close chatbot'">
-        <mat-icon>close</mat-icon>
+    </div>
+    <div *ngIf="openchat" style="height: 47px;width:47px;align-items: center;background-color: #E9EEF4;border-radius: 50%;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;display: flex;justify-content: center;">
+    <span style="color: #073174;" (click)="openchat=false" [matTooltip]="'close chatbot'">
+        <mat-icon style="margin-top: 5px;">close</mat-icon>
     </span>
+    </div>
 </div>
 <!------------------------ABOUT US TAG-------------------------------------------->
 <div style="margin-top:3%">
