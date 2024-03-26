@@ -7,6 +7,10 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { UsersComponent } from './users/users.component';
 import { AdminLandingComponent } from './admin-landing/admin-landing.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { RoleComponent } from './role/role.component';
+import { TemplateComponent } from './template/template.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { PricingComponent } from './pricing/pricing.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -17,7 +21,11 @@ const routes: Routes = [
   {path:'users',component:UsersComponent},
   {path:'main',component:AdminLandingComponent},
   {path:'admin',component:SideNavComponent},
-  {path:`:subdomain.${window.location.host}`,component:LoginComponent},
+  {path:`:subdomain.clos-dev.finsurge.tech/los-gui`,component:LoginComponent},
+  {path:'role',component:RoleComponent},
+  {path:'template',component:TemplateComponent},
+  {path:'billings',component:SubscriptionsComponent},
+  {path:'pricing',component:PricingComponent},
 ];
 
 @NgModule({

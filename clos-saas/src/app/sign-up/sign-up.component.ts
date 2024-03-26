@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data-service';
+import { UrlService } from '../services/url-service';
 
 @Component({
   selector: 'app-sign-up',
@@ -28,6 +29,26 @@ export class SignUpComponent implements OnInit {
   onefileuploaded:boolean=false;
   id:any=0;
   domainName:any='';
+  responseUrl:any;
+  
+ 
+ async ngOnInit() {
+    // this.dateFormat = await this.formatDate();
+    let response = await this.updateUrl();
+    UrlService.API_URL = response.toString();
+    if (UrlService.API_URL.trim().length == 0) {
+      console.warn('FALLING BACK TO ALTERNATE API URL.');
+      UrlService.API_URL = UrlService.FALLBACK_API_URL;
+    }
+    this.responseUrl=response;
+    console.log(response)
+  }
+
+
+  public updateUrl() {
+    console.log('hiiii')
+    return this.url.getUrl().toPromise().then();
+  }
 
     addNewCompany() {
         this.companies.push('');
@@ -51,23 +72,30 @@ export class SignUpComponent implements OnInit {
     }
     
 }
+logoutConfirm:boolean=false;
+onCancelClick(){
+  this.logoutConfirm=false;
+}
 signup(){
   this.id++;
   this.transferDataService.setData(this.id);
   const newHost = `${this.domainName}.${window.location.host}`;
-    const newUrl = `http://${newHost}${window.location.pathname}${window.location.search}${window.location.hash}`;
-    // this.router.navigate(['/login'])
+  const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
+  // this.router.navigate(['/login'])
     console.log(newUrl,'new url')
+    this.responseUrl=newUrl;
     // window.location.href = newUrl;
     console.log(newUrl,window.location)
 }
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
-    const newUrl = `http://${newHost}${window.location.pathname}${window.location.search}/login`;
+    console.log(window.location)
+    const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
     console.log(newUrl,'new url')
-    window.location.href = newUrl;
+    this.responseUrl=newUrl;
+    // window.location.href = newUrl;
     this.clearAll();
-    console.log(newUrl,window.location.href)
+    this.router.navigate(['/pricing'])
 }
 clearAll(){
   this.firstname='';
@@ -81,13 +109,26 @@ clearAll(){
   this.countryName='';
   this.companies=[''];
 }
+copyTokenToClipboard() {
+  let token = this.responseUrl;
+  if (token) {
+    var copyElement = document.createElement("textarea");
+    copyElement.style.position = 'fixed';
+    copyElement.style.opacity = '0';
+    copyElement.textContent = token;
+    var body = document.getElementsByTagName('body')[0];
+    body.appendChild(copyElement);
+    copyElement.select();
+    document.execCommand('copy');
+    body.removeChild(copyElement);
+    return;
+  }
+}
+
 
   constructor(
     public transferDataService:DataService,
     public router:Router,
+    public url:UrlService,
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }

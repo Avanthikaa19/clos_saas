@@ -12,10 +12,23 @@
      </span>
      </div>
      <div>
+     <div style="cursor: pointer;">
       <div class="side_nav_item">
-        <div style="display: flex;justify-content: space-between;width: 80%;">
+        <div style="display: flex;justify-content: space-between;width: 80%;" routerLink="/users">
              <mat-icon style="font-size: 40px;">person</mat-icon>
              <span class="side_nav_text">Users</span>
+             </div>
+      </div>
+      <div class="side_nav_item">
+        <div style="display: flex;justify-content: space-between;width: 80%;" routerLink="/role">
+             <mat-icon style="font-size: 40px;">settings</mat-icon>
+             <span class="side_nav_text">Groups</span>
+             </div>
+      </div>
+      <div class="side_nav_item">
+        <div style="display: flex;justify-content: space-between;width: 80%;" routerLink="/template">
+             <mat-icon style="font-size: 40px;">security</mat-icon>
+             <span class="side_nav_text">Template</span>
              </div>
       </div>
       <div class="side_nav_item">
@@ -25,7 +38,7 @@
         </div>
  </div>
  <div class="side_nav_item">
-    <div style="display: flex;justify-content: space-between;width: 80%;">
+    <div style="display: flex;justify-content: space-between;width: 80%;" routerLink="/billings">
     <mat-icon style="font-size: 40px;">credit_card</mat-icon>
     <span class="side_nav_text">Subscription and Billings</span>
     </div>
@@ -36,5 +49,12 @@
     <span class="side_nav_text">Dashboard</span>
     </div>
 </div>
+<div class="side_nav_item">
+    <div style="display: flex;justify-content: space-between;width: 80%;">
+    <mat-icon style="font-size: 40px;">person_pin</mat-icon>
+    <span class="side_nav_text">Logout</span>
+    </div>
+</div>
+     </div>
      </div>
 </nav>

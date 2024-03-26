@@ -1,6 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import '@angular/compiler';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app.routing.moule';
@@ -23,6 +23,15 @@ import { UsersComponent } from './users/users.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { AdminLandingComponent } from './admin-landing/admin-landing.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { RoleComponent } from './role/role.component';
+import { TemplateComponent } from './template/template.component';
+import { UrlService } from './services/url-service';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { PricingComponent } from './pricing/pricing.component';
+// export function ConfigLoader(injector: Injector): () => Promise<any> {
+// return () => injector.get(UrlService).loadConfigurations();
+// }
 
 
 @NgModule({
@@ -34,7 +43,11 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     SignUpComponent,
     UsersComponent,
     AdminLandingComponent,
-    SideNavComponent
+    SideNavComponent,
+    RoleComponent,
+    TemplateComponent,
+    SubscriptionsComponent,
+    PricingComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +59,9 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     MatInputModule,
     MatDatepickerModule,MatNativeDateModule,
     MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,
-    MatPaginatorModule,
+    MatPaginatorModule,HttpClientModule,
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useValue:{},multi:true},{provide:HttpClientModule,useValue:{}},{provide:HttpClient,useValue:{}}],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
