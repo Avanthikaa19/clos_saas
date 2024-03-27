@@ -1,0 +1,66 @@
+<app-side-nav></app-side-nav>
+<div style="position: relative;margin-left:350px;overflow-x:hidden;overflow-y: scroll;" [style.height.px]="component_height">
+
+    <div style="position: sticky;top:0;">
+        <!-------------------INITIAL CARD------------------------------>
+       <div>
+           <mat-card>
+               <mat-card-content>
+                   <!-------------LEFT SIDE HEADER-------------------->
+                   <span>
+                   <span class="main-header" style="color: blue;font-size: 20px;margin-left:5px">
+                    DEMO VIDEOS (FSUSER)
+                   </span>
+                </span>
+                <!-----------RIGHT SIDE HEADER------------------------>
+                <span style="position: absolute;right:5px">
+                <span style="margin-right: 8px;">
+                    <button mat-flat-button color="primary" routerLink="/main">
+                        <i class="fa fa-arrow-left"></i>
+                        <span> BACK</span>
+                    </button>
+                </span>
+                </span>
+               </mat-card-content>
+           </mat-card>
+       </div> 
+      </div>
+      <!---Videos-->
+      <div class="container" style="padding: 1%;">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">BASICS OF CLOS</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/BasicsofCLOS.webm" type="video/mp4">
+                </video>
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">APPLICATION ENTRY</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/ApplicationEntry.webm" type="video/mp4">
+                </video>
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">REPORTS</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/Reports.webm" type="video/mp4">
+                </video>
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">BI TOOLS</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/BITools.webm" type="video/mp4">
+                </video>
+                </p>
+            </div>
+
+        </div>
+      </div>
+    </div>

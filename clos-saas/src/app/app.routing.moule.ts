@@ -12,6 +12,7 @@ import { TemplateComponent } from './template/template.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { PaymentComponent } from './payment/payment.component';
+import { DemoVideosComponent } from './demo-videos/demo-videos.component';
 
 const routes: Routes = [
   { path: `http://:subdomain.${window.location.hostname}/signup/login`,component:LoginComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:'billings',component:SubscriptionsComponent},
   {path:'pricing',component:PricingComponent},
   {path:'payment',component:PaymentComponent},
+  {path:'demo-videos',component:DemoVideosComponent},
 ];
 
 @NgModule({

@@ -29,6 +29,7 @@ import { UrlService } from './services/url-service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { DemoVideosComponent } from './demo-videos/demo-videos.component';
 import { PaymentComponent } from './payment/payment.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 // export function ConfigLoader(injector: Injector): () => Promise<any> {
@@ -50,6 +51,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     TemplateComponent,
     SubscriptionsComponent,
     PricingComponent,
+    DemoVideosComponent,
     PaymentComponent,
   ],
   imports: [
