@@ -93,9 +93,10 @@ signup(){
     const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
     console.log(newUrl,'new url')
     this.responseUrl=newUrl;
-    // window.location.href = newUrl;
     this.clearAll();
     this.router.navigate(['/pricing'])
+    sessionStorage.setItem('newurl',newUrl)
+    sessionStorage.setItem('domain',this.domainName)
 }
 clearAll(){
   this.firstname='';

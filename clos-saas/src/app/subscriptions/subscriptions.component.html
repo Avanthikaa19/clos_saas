@@ -7,13 +7,13 @@
            <mat-card-content>
                <!-------------LEFT SIDE HEADER-------------------->
                <span>
-               <span class="main-header" style="color: blue;font-size: 20px;margin-left:5px">
+               <span class="main-header" style="color: #0d203e;font-size: 20px;margin-left:5px">
                 SUBSCRIPTIONS AND BILLINGS (FSUSER)
                </span>
             </span>
             <!-----------RIGHT SIDE HEADER------------------------>
             <span style="position: absolute;right:5px">
-                <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
+                <span style="margin-right:20px;font-size: 20px;color: #0d203e;margin-top:2px">
                     <span>
                         <i class="fa fa-phone">
                         </i>
@@ -21,13 +21,13 @@
                     </span>
                 </span>
             <span style="margin-right: 8px;">
-                <button mat-flat-button color="primary">
+                <button mat-flat-button style="background: #0d203e;color: white;">
                     <i class="fa fa-plus_square_o"></i>
                     <span> ADD INVOICE</span>
                 </button>
             </span>
             <span style="margin-right: 8px;">
-                <button mat-flat-button color="primary" routerLink="/main">
+                <button mat-flat-button style="background: #0d203e;color: white;" routerLink="/main">
                     <i class="fa fa-arrow-left"></i>
                     <span> BACK</span>
                 </button>
@@ -41,7 +41,7 @@
   <div style="margin-left:1%;width:98%;margin-top:1%">
       <table>
           <tr>
-              <th *ngFor="let list of userHeaders;let i=index" style="background-color: rgb(64,98,115);color:white">{{list}}</th>
+              <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white">{{list}}</th>
           </tr>
           <tr>
               <td>26 Jan 2024</td>
@@ -49,16 +49,17 @@
               <td>26 Mar 2024</td>
               <td>$300</td>
               <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
               </td>              
               <td>
-                <button class="rounded-button">
-                    <span>
-                        <mat-icon>download</mat-icon>
-                    </span>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
                 </button>
               </td>
           </tr>
@@ -68,22 +69,23 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
-                <button mat-flat-button style="background-color: orange;margin-left: 10px;">
+                <button mat-flat-button class="btn" style="margin-left:10px">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAY NOW</span>
                 </button>
             </td>              
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -91,22 +93,23 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
-                <button mat-flat-button style="background-color: orange;margin-left: 10px;">
+                <button mat-flat-button  class="btn" style="margin-left:10px">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAY NOW</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -114,18 +117,19 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -133,18 +137,19 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -152,18 +157,19 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -171,18 +177,19 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -190,22 +197,23 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
-                <button mat-flat-button style="background-color: orange;margin-left: 10px;">
+                <button mat-flat-button  class="btn" style="margin-left:10px">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAY NOW</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -213,18 +221,19 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>26 Jan 2024</td>
@@ -232,18 +241,19 @@
             <td>26 Mar 2024</td>
             <td>$300</td>
             <td>
-                <button mat-flat-button style="background-color: green;">
+                <button mat-flat-button  class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
             </td>              
-            <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>download</mat-icon>
-                  </span>
-              </button>
-            </td>
+             <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>download</mat-icon>
+                <span>Download Invoice</span>
+                </button>
+              </td>
         </tr>
       </table>
       <div style="margin-top: 2%;">

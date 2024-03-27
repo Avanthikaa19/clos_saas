@@ -7,13 +7,13 @@
            <mat-card-content>
                <!-------------LEFT SIDE HEADER-------------------->
                <span>
-               <span class="main-header" style="color: blue;font-size: 20px;margin-left:5px">
+               <span class="main-header" style="color: #0d203e;font-size: 20px;margin-left:5px">
                 TEMPLATE (FSUSER)
                </span>
             </span>
             <!-----------RIGHT SIDE HEADER------------------------>
             <span style="position: absolute;right:5px">
-                <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
+                <span style="margin-right:20px;font-size: 20px;color: #0d203e;margin-top:2px">
                     <span>
                         <i class="fa fa-phone">
                         </i>
@@ -21,13 +21,13 @@
                     </span>
                 </span>
             <span style="margin-right: 8px;">
-                <button mat-flat-button color="primary">
+                <button mat-flat-button style="background: #0d203e;color: white;">
                     <i class="fa fa-plus_square_o"></i>
                     <span> CREATE GROUP</span>
                 </button>
             </span>
             <span style="margin-right: 8px;">
-                <button mat-flat-button color="primary" routerLink="/main">
+                <button mat-flat-button style="background: #0d203e;color: white;" routerLink="/main">
                     <i class="fa fa-arrow-left"></i>
                     <span> BACK</span>
                 </button>
@@ -41,7 +41,7 @@
   <div style="margin-left:1%;width:98%;margin-top:1%">
       <table>
           <tr>
-              <th *ngFor="let list of userHeaders;let i=index" style="background-color: rgb(64,98,115);color:white">{{list}}</th>
+              <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white">{{list}}</th>
           </tr>
           <tr>
               <td>GROUP USER</td>
@@ -50,10 +50,11 @@
               <td>12 MAR 2024</td>
               <td>FSUSER</td>
               <td>
-                <button class="rounded-button">
-                    <span>
-                        <mat-icon>edit</mat-icon>
-                    </span>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
                 </button>
               </td>
           </tr>
@@ -64,12 +65,13 @@
             <td>13 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER2</td>
@@ -78,12 +80,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER3</td>
@@ -92,12 +95,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER4</td>
@@ -106,12 +110,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER6</td>
@@ -120,12 +125,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER7</td>
@@ -134,12 +140,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER8</td>
@@ -148,12 +155,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER9</td>
@@ -162,12 +170,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
         <tr>
             <td>GROUP USER10</td>
@@ -176,12 +185,13 @@
             <td>12 MAR 2024</td>
             <td>FSUSER</td>
             <td>
-              <button class="rounded-button">
-                  <span>
-                      <mat-icon>edit</mat-icon>
-                  </span>
-              </button>
-            </td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Template</span>
+                </button>
+              </td>
         </tr>
       </table>
       <div style="margin-top: 2%;">

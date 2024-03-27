@@ -1,0 +1,32 @@
+.main-header{
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+}
+.sub-header{
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white; 
+}
+.logo-img{
+    width:150px;
+    height:100px;
+}
+.box{
+    height:250px;
+    width:100%;
+    border-radius: 11px;
+    background-color: lightgrey;
+}
+.min-select {
+    width: 30rem;
+    padding: 10px;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem;
+    margin-top: 4%;
+}

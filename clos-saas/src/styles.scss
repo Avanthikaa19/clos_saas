@@ -49,7 +49,7 @@ tr {
 
 /* Alternating row colors */
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #fff;
 }
 
 /* Table cells */
@@ -61,6 +61,34 @@ td {
 /* Hover effect */
 tr:hover {
   background-color: #e2e2e2;
+}
+//btn
+.btn {
+  // padding: 0.7rem 1rem;
+  border-radius: 0.4rem;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: small;
+  opacity: 1;
+  background-color: #13183f !important;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.5);
+  outline: solid rgba(255, 255, 255, 0.3) 0.3rem;
+  cursor: pointer;
+  transition: all linear 100ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color:white !important;
+  text-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.75);
+  >mat-icon {
+      font-size: 1.7rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      // padding-left: 1rem;
+      padding-right: 2.4rem;
+      color:white !important;
+  }
 }
 
 

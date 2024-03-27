@@ -1,75 +1,194 @@
-<div style="position: sticky;top:0">
-    <!-------------------INITIAL CARD------------------------------>
-   <div>
-       <mat-card>
-           <mat-card-content>
-               <!-------------LEFT SIDE HEADER-------------------->
-               <span>
-               <span class="main-header" style="color: blue;">
-                <a style="text-decoration: none;color: blue;" routerLink="/home">
-               <span>C L
-                   <span>
-                    <i class="fa fa-globe"></i>
-                   </span>
-                   <span> S</span>
-               </span>
-               </a>
-               </span>
-            </span>
-            <!-----------RIGHT SIDE HEADER------------------------>
-            <span style="position: absolute;right:5px">
-                <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
-                    <a style="text-decoration: none;color: blue;" routerLink="/users">
-                        <span>Admin</span>
-                    </a>
-                </span>
-            </span>
-           </mat-card-content>
-       </mat-card>
-   </div> 
-  </div>
-  <!--CLOS DEFINITION-->
-<div [style.height.px]="component_height-62">
-  <div class="container-fluid" style="height: 100%;background-color: #073174;">
-    <div class="row" style="padding: 30px;background-color: #073174;">
-        <div class="col-lg-7 col-md-12 col-sm-12" style="padding: 20px;">
-            <div style="margin: 30px 0px;">
-                <h1 class="title">CLOS</h1>
-                <p style="font-size: 18px;line-height: 28px;font-weight: 400;color: white">Corporate Loan Origination enables the end-to-end digitization of loan process and enhances turnaround time, predictability, transparency, and smarter decision-making. Our comprehensive solution provides portfolio management and effective risk assessment while complying with internal and regulatory norms. Corporate loan organizations play a crucial role in facilitating financial transactions for businesses, providing vital capital for growth, expansion, and operational needs. However, managing corporate loans efficiently involves complex processes, from origination to servicing and monitoring. In this article, we delve into innovative solutions designed to streamline operations and enhance efficiency within corporate loan organizations.</p>
+<section class="home-container" style="background-image: url(assets/Home_Cover.jpg);overflow-y: hidden;">
+    <div class="dashboard-bg">
+        <p style="letter-spacing: 2px" >Corporate Origination System</p>
+        <span style="font-size:20px;letter-spacing: 3px;" >Dashboard Main Screen</span>
+    </div>
+    <div class="card-container pt-5" style="margin-top: 18rem;">
+        <div class="row-container">
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/application-entry/application-details']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color:  #fff;">
+                                        Application Entry
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Application Data Entry
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:5rem;"><mat-icon>assignment</mat-icon></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="margin: 30px 0px;">
-                <h1 class="sub-title">ADVANTAGES OF USING CLOS</h1>
-                
-                    <ul class="list">
-                        <li>
-                            Digital Origination Platforms
-                        </li>
-                        <li>
-                            Blockchain for Secure Transactions
-                        </li>
-                        <li>
-                            Predictive Analytics for Risk Management
-                        </li>
-                        <li>
-                            Cloud-Based Loan Servicing Platforms
-                        </li>
-                        <li>
-                            Collaborative Ecosystems and Open Banking
-                        </li>
-                    </ul>
-                
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;margin-left:20px" class="card-grid" [routerLink]="['/flows']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Flow
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Data Flow Manager
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>account_tree</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;margin-left:40px" class="card-grid" [routerLink]="['/desicion-engine']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Decision
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Decision Engine
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>directions_alt</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;margin-left:60px" class="card-grid" [routerLink]="['/loan-case-manager']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Manage
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Case Manager
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>cases</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-lg-5 col-md-12 col-sm-12">
-            <div style="padding: 20px;">
-                <img class="img-fluid" src="/assets/Clos-main.png">
+        <div class="row-container" style="margin-top:2%">
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;" class="card-grid" [routerLink]="['/loan-application-matching']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Configurations
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Configuration Manager
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>join_inner</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="height: 50px;"></div>
-            <div style="margin-bottom: 30px;">
-                <img class="img-fluid" src="/assets/clos-process.png">
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;margin-left:20px" class="card-grid" [routerLink]="['/reports']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Reports
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Generate Reports
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>assignment</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;margin-left: 40px;" class="card-grid" [routerLink]="['/dynamic/dynamic/landingPage']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        BI Tools
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Dashboard
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>dashboard_customize</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div style="background-color:#0d203e;margin-left: 60px;" class="card-grid" [routerLink]="['/users']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Admin
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Administrator
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span style="color: #2196f3; font-size:8rem;position: absolute;top:10px;right:10px">
+                                        <mat-icon>admin_panel_settings</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
- </div>
-</div>
-  <div class="footer">Copyright © 2024 FinSurge. All Rights Reserved.</div>
+</section>

@@ -29,6 +29,8 @@ import { UrlService } from './services/url-service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { PaymentComponent } from './payment/payment.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 // export function ConfigLoader(injector: Injector): () => Promise<any> {
 // return () => injector.get(UrlService).loadConfigurations();
 // }
@@ -47,7 +49,8 @@ import { PricingComponent } from './pricing/pricing.component';
     RoleComponent,
     TemplateComponent,
     SubscriptionsComponent,
-    PricingComponent
+    PricingComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,7 @@ import { PricingComponent } from './pricing/pricing.component';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,MatNativeDateModule,
-    MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,
+    MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,MatButtonToggleModule,
     MatPaginatorModule,HttpClientModule,
   ],
   providers: [{provide:HTTP_INTERCEPTORS,useValue:{},multi:true},{provide:HttpClientModule,useValue:{}},{provide:HttpClient,useValue:{}}],

@@ -27,11 +27,9 @@ export class PricingComponent implements OnInit {
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
-    const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
+    const newUrl = `http://${this.domainName}.localhost:4200/signup/login`;
     console.log(newUrl,'new url')
     this.responseUrl=newUrl;
-    // window.location.href = newUrl;
-    this.clearAll();
 }
 clearAll(){
   this.firstname='';
@@ -58,7 +56,9 @@ copyTokenToClipboard() {
 }
   constructor(public router:Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.responseUrl=sessionStorage.getItem('newurl');
+    this.domainName=sessionStorage.getItem('domain')
   }
 
 }
