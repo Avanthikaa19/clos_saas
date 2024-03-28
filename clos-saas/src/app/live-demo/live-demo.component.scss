@@ -42,7 +42,7 @@
 }
 .version-info{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     position: relative;
     bottom: 0;
     right: 0;
@@ -61,7 +61,7 @@
     
   }
   .min-select {
-    width: 18rem;
+    width: 100%;
     padding: 10px;
     border: solid #e6e6e6 0.1rem;
     background-color: #fafafa;

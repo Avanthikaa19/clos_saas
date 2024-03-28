@@ -35,7 +35,7 @@
    </div> 
 </div>
 <!------------------------------------CLOS LIVE DEMO FORM---------------------------------------->
-<div style="background-color: #073174;height:89.6%;">
+<div style="background-color: #073174;overflow: auto;" [style.height.px]="component_height-90">
 <div class="container">
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:8%">
@@ -51,8 +51,8 @@
           </div>
          </div>
     <!---------------------REQUEST FOR DEMO----------------------------------------->
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:-6%">
-          <div style="height:775px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;overflow-y: scroll;overflow-x: hidden;">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:-4.5%">
+          <div style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:14%;background-color: white;margin-bottom: 10px;padding: 10px;">
             <div class="container">
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -88,7 +88,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div style="margin-top: 4%;">
                         <div>Company Name <span style="color:red">*</span></div>
-                        <input [(ngModel)]="companyname" matInput class="min-select" style="width:38rem" placeholder="ABC INFOTECH PVT LTD">
+                        <input [(ngModel)]="companyname" matInput class="min-select"  placeholder="ABC INFOTECH PVT LTD">
                     </div>
                   </div>
               </div>
@@ -97,7 +97,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div style="margin-top: 4%;">
                       <div>Domain Name <span style="color:red">*</span></div>
-                      <input [(ngModel)]="domainName" matInput class="min-select" style="width:35rem" placeholder="DOMAIN NAME">
+                      <input [(ngModel)]="domainName" matInput class="min-select"  placeholder="DOMAIN NAME">
                       <span style="font-family: sans-serif;font-weight: 400;"> .clos</span>
                   </div>
                 </div>
@@ -123,8 +123,8 @@
                   <div style="margin-top: 4%;">
                       <div>Country Name <span style="color:red">*</span></div>
                       <div class="row">
-                          <div class="col-lg-10">
-                            <mat-select class="min-select" [(ngModel)]="countryName" style="width:38rem" placeholder="INDIA">
+                          <div class="col-lg-12">
+                            <mat-select class="min-select" [(ngModel)]="countryName"  placeholder="INDIA">
                                 <mat-option *ngFor="let country of countries" [value]="country" style="background-color: white; color: black">{{ country }}</mat-option>
                             </mat-select> 
                           </div>
@@ -142,10 +142,10 @@
                         </button>
                     </span>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:100px;overflow-y:auto;margin-top:-6px">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:73px;overflow-y:auto;margin-top:-6px">
                     <div *ngFor="let company of companies; let i = index">
                         <div style="position: relative;">
-                            <input [(ngModel)]="companies[i]" matInput class="min-select" style="width:38rem" placeholder="ID PROOF">
+                            <input [(ngModel)]="companies[i]" matInput class="min-select"  placeholder="ID PROOF">
                             <label for="fileInput">
                                 <button mat-icon-button class="attach-icon" [matTooltip]="'Attach document'" (click)="triggerFileInputClick()">
                                     <mat-icon>attach_file</mat-icon>
@@ -160,7 +160,7 @@
                 </div>                
             </div>            
               <!--------------REQUEST FOR DEMO----------->
-              <div style="margin-top:-4%;text-align: center;">
+              <div style="text-align: center;">
                 <button (click)="demovideo=true;signup()" style="text-align: center;" mat-flat-button color="primary">
                     <span> SIGN UP</span>
                 </button>
@@ -193,5 +193,5 @@
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 
  <div class="version-info">
-    <span class="version-name float-left" style="margin-left: 44%">Copyright © 2024 FinSurge. All Rights Reserved.</span>
+    <span class="version-name float-left">Copyright © 2024 FinSurge. All Rights Reserved.</span>
 </div>
