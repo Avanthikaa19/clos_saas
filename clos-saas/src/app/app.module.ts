@@ -34,6 +34,7 @@ import { PaymentComponent } from './payment/payment.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { SaasLoginComponent } from './saas-login/saas-login.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { GroupsComponent } from './groups/groups.component';
 // export function ConfigLoader(injector: Injector): () => Promise<any> {
 // return () => injector.get(UrlService).loadConfigurations();
 // }
@@ -56,6 +57,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     DemoVideosComponent,
     PaymentComponent,
     SaasLoginComponent,
+    GroupsComponent,
   ],
   imports: [
     BrowserModule,
