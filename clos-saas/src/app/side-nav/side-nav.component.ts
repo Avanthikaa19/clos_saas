@@ -7,6 +7,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class SideNavComponent implements OnInit {
   component_height:any;
+  logoutconfirm:boolean=false;
 	@HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;

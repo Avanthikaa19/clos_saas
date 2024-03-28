@@ -32,6 +32,8 @@ import { PricingComponent } from './pricing/pricing.component';
 import { DemoVideosComponent } from './demo-videos/demo-videos.component';
 import { PaymentComponent } from './payment/payment.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { SaasLoginComponent } from './saas-login/saas-login.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 // export function ConfigLoader(injector: Injector): () => Promise<any> {
 // return () => injector.get(UrlService).loadConfigurations();
 // }
@@ -53,6 +55,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     PricingComponent,
     DemoVideosComponent,
     PaymentComponent,
+    SaasLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,MatNativeDateModule,
-    MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,MatButtonToggleModule,
+    MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,MatButtonToggleModule,MatSnackBarModule,
     MatPaginatorModule,HttpClientModule,
   ],
   providers: [{provide:HTTP_INTERCEPTORS,useValue:{},multi:true},{provide:HttpClientModule,useValue:{}},{provide:HttpClient,useValue:{}}],

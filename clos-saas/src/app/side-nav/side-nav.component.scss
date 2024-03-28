@@ -34,3 +34,38 @@
     margin-top: 4%;
     width: 70%;
 }
+//logout-card
+.container {
+    justify-content: space-between;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    width:400px;
+    height:200px;
+    position: absolute;
+    top:35%;
+    left:38%;
+    z-index:22222222;
+    background-color: #fff;
+  }
+  
+  .container .btn-holder{
+    justify-content: flex-end;
+    display: flex;
+    margin-top: 4rem;
+  }
+  button{
+    margin: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(14, 41, 84, 1);
+    color: white;
+    mat-icon{
+        font-size: 2rem;
+        margin-right:0.5rem
+    }
+    span{
+        font-size: 1.8rem;
+        margin-left:0.5rem
+    }
+  }

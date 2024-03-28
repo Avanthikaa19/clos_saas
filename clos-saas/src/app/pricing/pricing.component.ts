@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DataService } from '../data-service';
 
 @Component({
   selector: 'app-pricing',
@@ -40,6 +42,7 @@ clearAll(){
   this.domainName='';
 }
 copyTokenToClipboard() {
+  this.openSnackBar('Link copied successfully',null)
   let token = this.responseUrl;
   if (token) {
     var copyElement = document.createElement("textarea");
@@ -54,11 +57,25 @@ copyTokenToClipboard() {
     return;
   }
 }
-  constructor(public router:Router) { }
+  constructor(public router:Router,public transferDataService:DataService,public snackBar:MatSnackBar) { }
 
   ngOnInit() {
     this.responseUrl=sessionStorage.getItem('newurl');
-    this.domainName=sessionStorage.getItem('domain')
+    this.domainName=sessionStorage.getItem('domain');
+    this.transferDataService.getData().subscribe(data => {
+      console.log(data)
+      this.companyname=data?.companyname;
+      this.firstname=data.firstname;
+      this.lastname=data?.lastname;
+      this.email=data?.email;
+      this.phn=data?.phn;
+      this.domainName=data?.domainName;
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }

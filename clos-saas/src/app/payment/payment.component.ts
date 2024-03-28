@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../data-service';
+import { SnackbarComponent } from '../snackbar';
 
 @Component({
   selector: 'app-payment',
@@ -23,10 +26,16 @@ export class PaymentComponent implements OnInit {
   countries:any=['INDIA','MALAYSIA','ENGLAND','SINGAPORE','HONG-KONG'];
   currencies:any=['INR','MYR','POUNDS','SGD','YEN']
   responseUrl:any='';
-  constructor() { }
+  constructor(public transferDataService:DataService,public snackBar:MatSnackBar,) { }
 
   ngOnInit() {
-    this.responseUrl=sessionStorage.getItem('newurl')
+    this.responseUrl=sessionStorage.getItem('newurl');
+    this.transferDataService.getData().subscribe(data => {
+      this.companyname=data?.companyname;
+      this.countryName=data?.countryName;
+      this.email=data?.email;
+      this.phn=data?.phn;
+    });
   }
   done() {
     this.clearAll();
@@ -40,6 +49,7 @@ clearAll(){
   this.state='';
 }
 copyTokenToClipboard() {
+  this.openSnackBar('Link copied successfully',null)
   let token = this.responseUrl;
   if (token) {
     var copyElement = document.createElement("textarea");
@@ -53,6 +63,14 @@ copyTokenToClipboard() {
     body.removeChild(copyElement);
     return;
   }
+}
+openSnackBar(message, action) {
+  this.snackBar.openFromComponent(SnackbarComponent, {
+    panelClass: ['success-snackbar'], duration: 5000,
+    data: {
+      message: message, icon: 'done', type: 'success', action: action
+    }
+  });
 }
 
 }

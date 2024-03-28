@@ -93,6 +93,18 @@ signup(){
     const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
     console.log(newUrl,'new url')
     this.responseUrl=newUrl;
+    const responseData = {
+      firstname: this.firstname,
+      lastname: this.lastname,
+      position: this.position,
+      role: this.role,
+      email: this.email,
+      phn: this.phn,
+      companyname: this.companyname,
+      domainName: this.domainName,
+      countryName: this.countryName,
+  };
+    this.transferDataService.setData(responseData)
     this.clearAll();
     this.router.navigate(['/pricing'])
     sessionStorage.setItem('newurl',newUrl)

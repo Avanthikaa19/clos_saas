@@ -50,7 +50,7 @@
     </div>
 </div>
 <div class="side_nav_item">
-    <div style="display: flex;justify-content: space-between;width: 80%;">
+    <div style="display: flex;justify-content: space-between;width: 80%;" (click)="logoutconfirm=true;">
     <mat-icon style="font-size: 40px;">person_pin</mat-icon>
     <span class="side_nav_text">Logout</span>
     </div>
@@ -58,3 +58,20 @@
      </div>
      </div>
 </nav>
+<div *ngIf="logoutconfirm"
+ style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
+<!------------------logout card------------------------->
+<div class="container" *ngIf="logoutconfirm">
+    <span style="font-size:large;text-align: center;margin-top: 1rem;margin-left: 2rem;"> Are you sure want to logout ? </span>
+    <br>
+    <div class="btn-holder">
+      <button mat-raised-button (click)="logoutconfirm=false">
+        <mat-icon>close</mat-icon>
+        <span>Cancel</span>
+      </button>
+      <button mat-raised-button [routerLink]="['/signup/login']">
+        <mat-icon>done</mat-icon>
+        <span>Yes</span>
+      </button>
+    </div>
+  </div>
