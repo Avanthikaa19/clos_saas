@@ -35,7 +35,7 @@
    </div> 
 </div>
 <!------------------------------------CLOS LIVE DEMO FORM---------------------------------------->
-<div style="background-color: #073174;height:89.6%;">
+<div style="background-color: #073174;overflow: auto;" [style.height.px]="component_height-90">
 <div class="container">
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top:8%">
@@ -52,11 +52,11 @@
          </div>
     <!---------------------LOGIN-CHECK----------------------------------------->
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" *ngIf="!loginapp">
-          <div style="height:250px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:24%;background-color: white;">
+          <div style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);margin-top:24%;background-color: white;padding: 10px;margin-bottom: 10px;">
             <div class="container">
               <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <div style="margin-top: 16%;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div style="margin-top: 7%;">
                   <div>Enter your Email Id <span style="color:red">*</span></div>
                   <input [(ngModel)]="email" style="margin-top: 4%;"  matInput class="min-select" placeholder="abc@gmail.com" />
               </div>
@@ -119,5 +119,5 @@
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 
  <div class="version-info">
-    <span class="version-name float-left" style="margin-left: 44%">Copyright © 2024 FinSurge. All Rights Reserved.</span>
+    <span class="version-name float-left">Copyright © 2024 FinSurge. All Rights Reserved.</span>
 </div>

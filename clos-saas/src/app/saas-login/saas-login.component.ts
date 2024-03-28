@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar';
 
@@ -13,8 +13,14 @@ export class SaasLoginComponent implements OnInit {
   loginapp:boolean=false;
   domainName='user';
   responseUrl:any='';
-
-  constructor(public snackBar:MatSnackBar,) { }
+  component_height:any;
+  @HostListener('window:resize', ['$event'])
+  updateComponentSize() {
+    this.component_height = window.innerHeight;
+  }
+  constructor(public snackBar:MatSnackBar,) {
+    this.updateComponentSize();
+   }
 
   ngOnInit(): void {
   }
