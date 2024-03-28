@@ -26,9 +26,15 @@
              </div>
       </div>
       <div class="side_nav_item">
+        <div style="display: flex;justify-content: space-between;width: 80%;" routerLink="/groups">
+             <mat-icon style="font-size: 40px;">account_circle</mat-icon>
+             <span class="side_nav_text">Roles</span>
+             </div>
+      </div>
+      <div class="side_nav_item">
         <div style="display: flex;justify-content: space-between;width: 80%;" routerLink="/template">
              <mat-icon style="font-size: 40px;">security</mat-icon>
-             <span class="side_nav_text">Template</span>
+             <span class="side_nav_text">Access Template</span>
              </div>
       </div>
       <div class="side_nav_item">
@@ -63,15 +69,16 @@
 <!------------------logout card------------------------->
 <div class="container" *ngIf="logoutconfirm">
     <span style="font-size:large;text-align: center;margin-top: 1rem;margin-left: 2rem;"> Are you sure want to logout ? </span>
-    <br>
-    <div class="btn-holder">
-      <button mat-raised-button (click)="logoutconfirm=false">
-        <mat-icon>close</mat-icon>
-        <span>Cancel</span>
+    <span style="margin-right: 8px;" (click)="logoutconfirm=false">
+      <button mat-flat-button color="primary">
+        <i class="fa fa-window-close"></i>
+          <span> CANCEL</span>
       </button>
-      <button mat-raised-button [routerLink]="['/signup/login']">
-        <mat-icon>done</mat-icon>
-        <span>Yes</span>
+    </span>
+    <span style="margin-right: 8px;" routerLink="/signup/login">
+      <button mat-flat-button color="primary" style="margin-bottom:35px">
+        <i class="fa fa-sign-out"></i>
+          <span> LOGOUT</span>
       </button>
-    </div>
+    </span>
   </div>

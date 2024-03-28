@@ -14,6 +14,7 @@ import { PricingComponent } from './pricing/pricing.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DemoVideosComponent } from './demo-videos/demo-videos.component';
 import { SaasLoginComponent } from './saas-login/saas-login.component';
+import { GroupsComponent } from './groups/groups.component';
 
 const routes: Routes = [
   { path: `http://:subdomain.${window.location.hostname}/signup/login`,component:LoginComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path:'payment',component:PaymentComponent},
   {path:'demo-videos',component:DemoVideosComponent},
   {path:'saas-login',component:SaasLoginComponent},
+  {path:'groups',component:GroupsComponent},
 ];
 
 @NgModule({

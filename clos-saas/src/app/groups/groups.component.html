@@ -1,0 +1,212 @@
+<app-side-nav></app-side-nav>
+<div style="position: relative;margin-left:350px;">
+<div>
+    <!-------------------INITIAL CARD------------------------------>
+   <div>
+       <mat-card>
+           <mat-card-content>
+               <!-------------LEFT SIDE HEADER-------------------->
+               <span>
+               <span class="main-header" style="color: #0d203e;font-size: 20px;margin-left:5px">
+                ROLE (FSUSER)
+               </span>
+            </span>
+            <!-----------RIGHT SIDE HEADER------------------------>
+            <span style="position: absolute;right:5px">
+                <span style="margin-right:20px;font-size: 20px;color:  #0d203e;margin-top:2px">
+                    <span>
+                        <i class="fa fa-phone">
+                        </i>
+                        <span> +654321890</span>
+                    </span>
+                </span>
+            <span style="margin-right: 8px;">
+                <button mat-flat-button style="background:  #0d203e;color: white;">
+                    <i class="fa fa-plus_square_o"></i>
+                    <span> CREATE ROLE</span>
+                </button>
+            </span>
+            <span style="margin-right: 8px;">
+                <button mat-flat-button style="background:  #0d203e;color: white;" routerLink="/main">
+                    <i class="fa fa-arrow-left"></i>
+                    <span> BACK</span>
+                </button>
+            </span>
+            </span>
+           </mat-card-content>
+       </mat-card>
+   </div> 
+  </div>
+  <!---------------------------TABLE------------------------------------>
+  <div style="margin-left:1%;width:98%;margin-top:1%">
+      <table>
+          <tr>
+              <th *ngFor="let list of userHeaders;let i=index" style="background-color:  #0d203e;color:white">{{list}}</th>
+          </tr>
+          <tr>
+              <td>1</td>
+              <td>ADMIN</td>
+              <td>FSUSER</td>
+              <td>FSUSER</td>
+              <td>TEST</td>
+              <td>+654321789</td>
+              <td>
+                <button class="btn"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                [matTooltip]="'Edit User'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Group</span>
+                </button>
+              </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>ADMIN</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321787</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>ADMIN</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>NORMAL</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>ADMIN</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>NORMAL</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>NORMAL</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>NORMAL</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>ADMIN</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>ADMIN</td>
+            <td>FSUSER</td>
+            <td>FSUSER</td>
+            <td>TEST</td>
+            <td>+654321789</td>
+            <td>
+              <button class="btn"
+              style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+              [matTooltip]="'Edit User'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Group</span>
+              </button>
+            </td>
+        </tr>
+      </table>
+      <div style="margin-top: 2%;">
+      <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" [showFirstLastButtons]="true" aria-label="Select page">
+    </mat-paginator>
+    </div>
+  </div>
+  </div>
