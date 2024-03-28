@@ -40,7 +40,7 @@
    </div> 
 </div>
  <!-----------------------HEADING SLIDER--------------------------------------->
- <div style="height: 774px !important;overflow: auto;">
+ <div style="overflow: auto;" [style.height.px]="component_height-90">
  <div>
  <div class="container">
     <div class="row">
@@ -113,7 +113,7 @@ Ease customer onboarding processes.
 </div>
 <!---------------------------CHATBOT----------------------------------------------------------------->
 <div>
-    <div class="wrapper" style="position: absolute;bottom: 19%;right: 1%;z-index: 22;" *ngIf="openchat">
+    <div class="wrapper" style="position: absolute;bottom: 13%;right: 1%;z-index: 22;" *ngIf="openchat">
         <div class="title">Chatbot</div>
         <div class="box">
             <div class="item">
@@ -134,14 +134,14 @@ Ease customer onboarding processes.
             </div>
         </div>
     </div>
-    <div *ngIf="!openchat" style="height: 47px;width:47px;align-items: center;background-color: #E9EEF4;border-radius: 50%;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;display: flex;justify-content: center;">
+    <div *ngIf="!openchat" style="height: 58px;width:58px;align-items: center;background-color: #E9EEF4;border-radius: 50%;float:right;cursor: pointer;position: absolute;bottom: 40px;right: 1%;display: flex;justify-content: center;box-shadow: -4px 4px 19px 0px lightgray;">
     <span style="color: #073174;" (click)="openchat=true" [matTooltip]="'open chatbot'">
-        <mat-icon style="margin-top: 5px;">question_answer</mat-icon>
+        <mat-icon style="margin-top: 12px;font-size: 29px;margin-right: 7px;">question_answer</mat-icon>
     </span>
     </div>
-    <div *ngIf="openchat" style="height: 47px;width:47px;align-items: center;background-color: #E9EEF4;border-radius: 50%;float:right;margin-right:20px;cursor: pointer;position: absolute;bottom: 15%;right: 1%;display: flex;justify-content: center;">
+    <div *ngIf="openchat" style="height: 58px;width:58px;align-items: center;background-color: #E9EEF4;border-radius: 50%;float:right;cursor: pointer;position: absolute;bottom: 40px;right: 1%;display: flex;justify-content: center;box-shadow: -4px 4px 19px 0px lightgray;">
     <span style="color: #073174;" (click)="openchat=false" [matTooltip]="'close chatbot'">
-        <mat-icon style="margin-top: 5px;">close</mat-icon>
+        <mat-icon style="margin-top: 12px;font-size: 29px;margin-right: 7px;">close</mat-icon>
     </span>
     </div>
 </div>
