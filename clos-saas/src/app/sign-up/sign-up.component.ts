@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data-service';
 import { UrlService } from '../services/url-service';
@@ -138,10 +138,16 @@ copyTokenToClipboard() {
   }
 }
 
-
+component_height:any;
+@HostListener('window:resize', ['$event'])
+updateComponentSize() {
+  this.component_height = window.innerHeight;
+}
   constructor(
     public transferDataService:DataService,
     public router:Router,
     public url:UrlService,
-  ) { }
+  ) {
+    this.updateComponentSize();
+   }
 }

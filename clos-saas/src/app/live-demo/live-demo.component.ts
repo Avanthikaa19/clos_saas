@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-live-demo',
@@ -19,8 +19,14 @@ export class LiveDemoComponent implements OnInit {
   email:any='';
   phn:any='';
   demovideo:boolean=false;
-
-  constructor() { }
+  component_height:any;
+  @HostListener('window:resize', ['$event'])
+  updateComponentSize() {
+    this.component_height = window.innerHeight;
+  }
+  constructor() { 
+    this.updateComponentSize();
+  }
 
   ngOnInit(): void {
   }
