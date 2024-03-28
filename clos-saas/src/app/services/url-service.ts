@@ -24,7 +24,7 @@ export class UrlService {
     UrlService.FALLBACK_API_URL = splitArr[0] + '/' + API;
   }
 
-url = 'assets/API_URL.txt'
+  url = 'assets/API_URL.txt'
   getUrl() {
     console.log('url')
     let url = this.http.get(`${this.url}`, { responseType: 'text' as 'json' });

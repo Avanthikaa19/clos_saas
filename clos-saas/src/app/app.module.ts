@@ -35,9 +35,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { SaasLoginComponent } from './saas-login/saas-login.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { GroupsComponent } from './groups/groups.component';
-// export function ConfigLoader(injector: Injector): () => Promise<any> {
-// return () => injector.get(UrlService).loadConfigurations();
-// }
+import { HttpInterceptorService } from './services/http/http-interceptor-service';
+export function ConfigLoader(injector: Injector): () => Promise<any> {
+return () => injector.get(UrlService).loadConfigurations();
+}
 
 
 @NgModule({
@@ -71,7 +72,7 @@ import { GroupsComponent } from './groups/groups.component';
     MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,MatButtonToggleModule,MatSnackBarModule,
     MatPaginatorModule,HttpClientModule,
   ],
-  providers: [{provide:HTTP_INTERCEPTORS,useValue:{},multi:true},{provide:HttpClientModule,useValue:{}},{provide:HttpClient,useValue:{}}],
+  providers: [{provide:HTTP_INTERCEPTORS,useValue:HttpInterceptorService,multi:true},{provide:HttpClientModule,useValue:{}},{provide:HttpClient,useValue:{}}],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

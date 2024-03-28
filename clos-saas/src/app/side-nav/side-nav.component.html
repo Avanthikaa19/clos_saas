@@ -49,12 +49,12 @@
     <span class="side_nav_text">Subscription and Billings</span>
     </div>
 </div>
-<div class="side_nav_item">
+<!-- <div class="side_nav_item">
     <div style="display: flex;justify-content: space-between;width: 80%;">
     <mat-icon style="font-size: 40px;">dashboard</mat-icon>
     <span class="side_nav_text">Dashboard</span>
     </div>
-</div>
+</div> -->
 <div class="side_nav_item">
     <div style="display: flex;justify-content: space-between;width: 80%;" (click)="logoutconfirm=true;">
     <mat-icon style="font-size: 40px;">person_pin</mat-icon>
@@ -70,13 +70,13 @@
 <div class="container" *ngIf="logoutconfirm">
     <span style="font-size:large;text-align: center;margin-top: 1rem;margin-left: 2rem;"> Are you sure want to logout ? </span>
     <span style="margin-right: 8px;" (click)="logoutconfirm=false">
-      <button mat-flat-button color="primary">
+      <button mat-flat-button style="background-color: #0d203e;color:white">
         <i class="fa fa-window-close"></i>
           <span> CANCEL</span>
       </button>
     </span>
     <span style="margin-right: 8px;" routerLink="/signup/login">
-      <button mat-flat-button color="primary" style="margin-bottom:35px">
+      <button mat-flat-button style="margin-bottom:35px;background-color: #0d203e;color:white">
         <i class="fa fa-sign-out"></i>
           <span> LOGOUT</span>
       </button>
