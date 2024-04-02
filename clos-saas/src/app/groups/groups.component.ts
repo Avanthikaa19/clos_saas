@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-groups',
@@ -7,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupsComponent implements OnInit {
   userHeaders:any=['ROLE ID','NAME','DESCRIPTION','CREATED BY','DEFAULT TEMPLATE','PHONE','EDIT']
-
-  constructor() { }
+  component_height:any;
+  @HostListener('window:resize', ['$event'])
+	updateComponentSize() {
+		this.component_height = window.innerHeight;
+	}
+  constructor() { this.updateComponentSize() }
 
   ngOnInit(): void {
   }

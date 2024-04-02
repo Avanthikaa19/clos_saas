@@ -20,12 +20,12 @@
                         <span> +654321890</span>
                     </span>
                 </span>
-            <span style="margin-right: 8px;">
+            <!-- <span style="margin-right: 8px;">
                 <button mat-flat-button style="background:  #0d203e;color: white;">
                     <i class="fa fa-plus_square_o"></i>
                     <span> CREATE GROUP</span>
                 </button>
-            </span>
+            </span> -->
             <span style="margin-right: 8px;">
                 <button mat-flat-button style="background:  #0d203e;color: white;" routerLink="/main">
                     <i class="fa fa-arrow-left"></i>
@@ -38,11 +38,35 @@
    </div> 
   </div>
   <!---------------------------TABLE------------------------------------>
-  <div style="margin-left:1%;width:98%;margin-top:1%">
+  <div class="button-container">
+    <div class="button-container">
+      <div class="header-container">
+        <div class="spacer"></div>
+        <div class="button-item-container" matTooltip="Create New Role">
+          <mat-icon>add</mat-icon>
+        </div>
+        <div class="button-item-container" matTooltip="Apply Filter">
+          <mat-icon>filter_list</mat-icon>
+        </div>
+        <div class="button-item-container" matTooltip="Clear Filters">
+          <mat-icon>clear</mat-icon>
+        </div>
+        <div class="button-item-container" matTooltip="CopyToClipboard">
+          <mat-icon>content_copy</mat-icon>
+        </div>
+        <div class="button-item-container" matTooltip="Export">
+          <mat-icon>download</mat-icon>
+        </div>
+      </div>
+    </div>
+    </div>
+  <div style="margin-left:1%;width:98%;margin-top:1%;overflow: auto;" [style.height.px]="component_height - 210">
       <table>
+        <thead class="header">
           <tr>
               <th *ngFor="let list of userHeaders;let i=index" style="background-color:  #0d203e;color:white">{{list}}</th>
           </tr>
+          </thead>
           <tr>
               <td>GROUP USER</td>
               <td>User Testing</td>
@@ -194,9 +218,9 @@
             </td>
         </tr>
       </table>
+      </div>
       <div style="margin-top: 2%;">
       <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" [showFirstLastButtons]="true" aria-label="Select page">
     </mat-paginator>
-    </div>
   </div>
   </div>

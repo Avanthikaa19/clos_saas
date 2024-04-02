@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-role',
@@ -7,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoleComponent implements OnInit {
   userHeaders:any=['NAME','DESCRIPTION','CREATED BY','CREATED','ORIGIN ID','EDIT']
-
-  constructor() { }
+  component_height:any;
+  @HostListener('window:resize', ['$event'])
+	updateComponentSize() {
+		this.component_height = window.innerHeight;
+	}
+  constructor() { this.updateComponentSize() }
 
   ngOnInit(): void {
   }

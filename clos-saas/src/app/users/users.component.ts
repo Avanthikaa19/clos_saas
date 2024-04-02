@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,8 +8,12 @@ import { Router } from '@angular/router';
 })
 export class UsersComponent implements OnInit {
   userHeaders:any=['USER NAME','USER ID','EMAIL','POSITION','COMPANY NAME','COUNTRY','PHONE','STATUS','EDIT']
-
-  constructor(public router:Router) { }
+  component_height:any;
+  @HostListener('window:resize', ['$event'])
+	updateComponentSize() {
+		this.component_height = window.innerHeight;
+	}
+  constructor(public router:Router) { this.updateComponentSize() }
 
   ngOnInit(): void {
   }

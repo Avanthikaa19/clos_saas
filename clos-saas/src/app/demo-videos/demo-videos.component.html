@@ -1,6 +1,5 @@
 <app-side-nav></app-side-nav>
-<div style="position: relative;margin-left:350px;overflow-x:hidden;overflow-y: hidden;" [style.height.px]="component_height">
-
+<div style="position: relative;margin-left:350px;">
     <div style="position: sticky;top:0;">
         <!-------------------INITIAL CARD------------------------------>
        <div>
@@ -33,7 +32,7 @@
        </div> 
       </div>
       <!---Videos-->
-      <div class="container" style="padding: 1%;">
+      <div class="container" style="padding: 1%;overflow: auto;"  [style.height.px]="component_height - 60">
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <span class="video-title">BASICS OF CLOS</span>
