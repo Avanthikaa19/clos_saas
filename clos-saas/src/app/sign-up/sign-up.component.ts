@@ -30,6 +30,8 @@ export class SignUpComponent implements OnInit {
   id:any=0;
   domainName:any='';
   responseUrl:any;
+  errMessage:any='';
+  errMessageForNumbers:any='';
   
  
  async ngOnInit() {
@@ -76,6 +78,26 @@ logoutConfirm:boolean=false;
 onCancelClick(){
   this.logoutConfirm=false;
 }
+mailValidation(emailId) {
+  this.errMessage = null!;
+  //PATTERN TO CHECK VALID MAIL 
+  const emailPattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const validEmail = emailPattern.test(String(emailId).toLowerCase());
+  if (!validEmail) {
+    this.errMessage = 'Please enter valid email Id';
+    return;
+  }
+}
+numberValidation(inputValue: string) {
+  this.errMessageForNumbers = null!;
+  const numberPattern = /^[0-9]{10}$/;
+  const isValidNumber = numberPattern.test(inputValue);
+  if (!isValidNumber) {
+    this.errMessageForNumbers = 'Please enter a valid 10-digit mobile number';
+    return;
+  }
+}
+
 signup(){
   this.id++;
   this.transferDataService.setData(this.id);

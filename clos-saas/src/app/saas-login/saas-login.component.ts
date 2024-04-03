@@ -14,6 +14,7 @@ export class SaasLoginComponent implements OnInit {
   domainName='user';
   responseUrl:any='';
   component_height:any;
+  errMessage:any='';
   @HostListener('window:resize', ['$event'])
   updateComponentSize() {
     this.component_height = window.innerHeight;
@@ -23,6 +24,16 @@ export class SaasLoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+  mailValidation(emailId) {
+    this.errMessage = null!;
+    //PATTERN TO CHECK VALID MAIL 
+    const emailPattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const validEmail = emailPattern.test(String(emailId).toLowerCase());
+    if (!validEmail) {
+      this.errMessage = 'Please enter valid email Id';
+      return;
+    }
   }
   login(){
     const newHost = `${this.domainName}.${window.location.host}`;

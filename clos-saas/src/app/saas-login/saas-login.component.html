@@ -58,13 +58,14 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div style="margin-top: 7%;">
                   <div>Enter your Email Id <span style="color:red">*</span></div>
-                  <input [(ngModel)]="email" style="margin-top: 4%;"  matInput class="min-select" placeholder="abc@gmail.com" />
+                  <input [(ngModel)]="email" (ngModelChange)="mailValidation(email)" style="margin-top: 4%;"  matInput class="min-select" placeholder="abc@gmail.com" />
               </div>
+              <span *ngIf="errMessage" style="font-size: 12px;color: crimson;">{{errMessage}}</span>
               </div>
               </div>
               <!--------------LOGIN----------->
               <div style="margin-top:10%;text-align: center;">
-                <button [disabled]="email==''" (click)="loginapp=true" style="text-align: center;" mat-flat-button color="primary">
+                <button [disabled]="email=='' || errMessage" (click)="loginapp=true" style="text-align: center;" mat-flat-button color="primary">
                     <span> SEARCH</span>
                 </button>
               </div>
