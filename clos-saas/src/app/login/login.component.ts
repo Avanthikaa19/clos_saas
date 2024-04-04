@@ -22,10 +22,6 @@ export class LoginComponent implements OnInit {
     // this.dateFormat = await this.formatDate();
     let response = await this.updateUrl();
     UrlService.API_URL = response.toString();
-    if (UrlService.API_URL.trim().length == 0) {
-      console.warn('FALLING BACK TO ALTERNATE API URL.');
-      UrlService.API_URL = UrlService.FALLBACK_API_URL;
-    }
     console.log(response)
   }
 

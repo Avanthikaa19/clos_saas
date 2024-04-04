@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import '@angular/compiler';
 import { AppComponent } from './app.component';
@@ -36,10 +36,11 @@ import { SaasLoginComponent } from './saas-login/saas-login.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { GroupsComponent } from './groups/groups.component';
 import { HttpInterceptorService } from './services/http/http-interceptor-service';
+import { APP_BASE_HREF, DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 export function ConfigLoader(injector: Injector): () => Promise<any> {
 return () => injector.get(UrlService).loadConfigurations();
 }
-
 
 @NgModule({
   declarations: [
@@ -72,7 +73,19 @@ return () => injector.get(UrlService).loadConfigurations();
     MatSelectModule,ReactiveFormsModule,MatCheckboxModule,FormsModule,MatIconModule,MatTooltipModule,MatButtonToggleModule,MatSnackBarModule,
     MatPaginatorModule,HttpClientModule,
   ],
-  providers: [{provide:HTTP_INTERCEPTORS,useValue:HttpInterceptorService,multi:true},{provide:HttpClientModule,useValue:{}},{provide:HttpClient,useValue:{}}],
+  providers: [ {
+    provide: APP_INITIALIZER,
+    useFactory: ConfigLoader,
+    deps: [
+      Injector
+    ],
+    multi: true
+  },
+  DatePipe,
+  { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+  { provide: APP_BASE_HREF, useValue: '/' },
+  {provide:MatDialog,useValue:{}}
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data-service';
+import { SaasService } from '../services/saas-service';
 import { UrlService } from '../services/url-service';
 
 @Component({
@@ -38,10 +39,6 @@ export class SignUpComponent implements OnInit {
     // this.dateFormat = await this.formatDate();
     let response = await this.updateUrl();
     UrlService.API_URL = response.toString();
-    if (UrlService.API_URL.trim().length == 0) {
-      console.warn('FALLING BACK TO ALTERNATE API URL.');
-      UrlService.API_URL = UrlService.FALLBACK_API_URL;
-    }
     this.responseUrl=response;
     console.log(response)
   }
@@ -103,12 +100,23 @@ signup(){
   this.transferDataService.setData(this.id);
   const newHost = `${this.domainName}.${window.location.host}`;
   const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
-  // this.router.navigate(['/login'])
-    console.log(newUrl,'new url')
-    this.responseUrl=newUrl;
-    // window.location.href = newUrl;
-    console.log(newUrl,window.location)
+  this.responseUrl=newUrl;
+  this.saasService.getUserSignUp(null,this.companyname,this.domainName,this.firstname,this.password).subscribe(
+    res=>{
+     console.log(res)
+     this.id=res['id'];
+     this.createDB();
+    }
+  )
 }
+createDB(){
+  this.saasService.getDataBaseForOrg(this.id).subscribe(
+    res=>{
+      console.log(res)
+    }
+  )
+}
+password:any='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -169,6 +177,7 @@ updateComponentSize() {
     public transferDataService:DataService,
     public router:Router,
     public url:UrlService,
+    public saasService:SaasService,
   ) {
     this.updateComponentSize();
    }

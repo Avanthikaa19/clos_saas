@@ -3,5 +3,6 @@ export interface ApiUrlMap {
     readonly services: {
         auth_service: string,
         admin_service: string,
+        saas_service:string,
     }
 }
