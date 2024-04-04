@@ -62,13 +62,13 @@ Ease customer onboarding processes.
           </div>
           <div style="margin-top:5%">
             <span>
-                <button mat-flat-button color="primary">
+                <button mat-flat-button color="primary" routerLink="/demo">
                     <i class="fa fa-telegram"></i>
                     <span> LIVE DEMO</span>
                 </button>
             </span>
             <span style="margin-left:2%">
-                <button mat-flat-button color="primary">
+                <button mat-flat-button color="primary" routerLink="/signup">
                     <i class="fa fa-sign-in"></i>
                     <span> SIGN UP</span>
                 </button>
@@ -87,27 +87,59 @@ Ease customer onboarding processes.
       <span>
           10+ banks in 5+ countries grow their business with <span> CL</span><span><i class="fa fa-globe"></i></span><span>S</span>
       </span>
-      <div style="margin-top:2%">
-          <i class="fa fa-angle-left"></i>
-          <span>
-              <img class="logo-img" src="/assets/dbs.png">
-          </span>
-          <span>
-            <img class="logo-img" src="/assets/rhb.png">
-         </span>
-         <span>
+      <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="2000">
+            <span>
+                <img class="logo-img" src="/assets/dbs.png">
+            </span>
+            <span>
+              <img class="logo-img" src="/assets/rhb.png">
+           </span>
+           <span>
             <img style="height:55px" class="logo-img" src="/assets/cimb.png">
         </span>
         <span>
             <img style="margin-top:-42px" class="logo-img" src="/assets/ocbc.png">
         </span>
-        <span>
-            <img class="logo-img" src="/assets/standard.png">
-        </span>
-        <span>
-            <img class="logo-img" src="/assets/rand.png">
-        </span>
-        <i class="fa fa-angle-right"></i>
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <span>
+                <img style="height:55px" class="logo-img" src="/assets/cimb.png">
+            </span>
+            <span>
+                <img style="margin-top:-42px" class="logo-img" src="/assets/ocbc.png">
+            </span>
+            <span>
+                <img class="logo-img" src="/assets/dbs.png">
+            </span>
+            <span>
+              <img class="logo-img" src="/assets/rhb.png">
+           </span>
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <span>
+                <img class="logo-img" src="/assets/standard.png">
+            </span>
+            <span>
+                <img class="logo-img" src="/assets/rand.png">
+            </span>
+            <span>
+                <img class="logo-img" src="/assets/dbs.png">
+            </span>
+            <span>
+              <img class="logo-img" src="/assets/rhb.png">
+           </span>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev" style="left:19%">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next" style="right: 19%;">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
 </div>
