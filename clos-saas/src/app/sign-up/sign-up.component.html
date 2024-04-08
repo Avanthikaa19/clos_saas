@@ -146,18 +146,22 @@
                         </button>
                     </span>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:73px;overflow-y:auto;margin-top:-6px; display: flex; align-items: center; justify-content: space-between;">
-                    <button class="btn btn-primary" (click)="addFileInput()">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 2%;">
+                    <button class="btn btn-primary" (click)="addFileInput()" style="float: right;">
                         <span>
                             <mat-icon>add</mat-icon>
                         </span>
                     </button>
+                </div>   
+                <div style="height: 75px;overflow: scroll;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div *ngFor="let company of companies; let i = index">
                         <div>
                             <input type="file" class="min-select" multiple (change)="onFileSelected($event)" #fileInput>
                         </div>                  
                     </div>
-                </div>                                         
+                </div>  
+                </div>                                    
             </div>            
               <!--------------REQUEST FOR DEMO----------->
               <div style="text-align: center;">
