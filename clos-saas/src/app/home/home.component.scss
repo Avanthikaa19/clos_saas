@@ -15,30 +15,41 @@
     height:100px;
 }
 .box{
-    height:250px;
+    height:100%;
     width:100%;
     border-radius: 11px;
-    background-color: lightgrey;
+    padding: 20px;
+    text-align: center;
+    background-color: #073174;
+}
+.box1{
+    height:100%;
+    width:100%;
+    border-radius: 11px;
+    padding: 20px;
+    text-align: center;
+    background-color: #07317473;
 }
 .content{
-    color:black;
+    color:white;
     font-size: 20px;
     font-family: sans-serif;
     font-weight: bold;
     display: flex; align-items: center; justify-content: center;
-    margin-left:10px;
     line-height: 1.6;
+    text-align: center;
 }
 .testimonilas{
-    background-color: lightgrey;
-    color: black;
+    background-color: white;
+    color: #073174;
     font-size: 20px;
     font-family: sans-serif;
     font-weight: bold;
-    height:200px;
+    height:360px;
     width:100%;
     line-height: 1.6;
-    display: flex; align-items: center; justify-content: center;
+    border-radius: 13px;
+    text-align: center;
 }
 .version-info{
     display: flex;
@@ -234,4 +245,9 @@
 .wrapper .typing-area .input-field input:valid ~ button {
     opacity: 1;
     pointer-events: auto;
+}
+.testimonial-container{
+    height: auto;
+    background-color:#D5DEEB;
+    padding: 4% 0%;
 }
