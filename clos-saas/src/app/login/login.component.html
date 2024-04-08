@@ -18,7 +18,7 @@
           </div>
       </div>
       <div class="button-container">
-          <button type="submit" [disabled]="username==''||password==''" class="btn" routerLink="/main"><span>Login</span></button>
+          <button type="submit" [disabled]="username==''||password==''" class="btn" (click)="login()"><span>Login</span></button>
       </div>
       <br>
   </div>

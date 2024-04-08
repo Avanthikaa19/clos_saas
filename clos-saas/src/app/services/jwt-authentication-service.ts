@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, throwError, timeout } from 'rxjs';
 import { Router } from '@angular/router';
 import { UrlService } from './url-service';
+import { EncryptDecryptService } from './encrpt-decrypt-service';
 
 export const TOKEN = 'token';
 export const AUTHENTICATED_USER = 'authenticatedUser';
@@ -20,42 +21,38 @@ export class JwtAuthenticationService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private configurationService : UrlService
+    private configurationService : UrlService,
+    public encryptDecryptService:EncryptDecryptService,
   ) { }
 
 
   // To authenticate the login credentials
-  executeJWTAuthenticationService(username, password, remember, connectionTimeout: number) {
-    return this.http.post<any>(`${this.configurationService.apiUrl().services.auth_service}/auth/login`, { username, password }).pipe(map(
-      data => {
-        this.UserDetails = data.ldapName;
-        if (remember) {
-          localStorage.setItem(TOKEN, `Bearer ${data.token}`);
-          localStorage.setItem(AUTHENTICATED_USER, username);
-          sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
-          sessionStorage.setItem(AUTHENTICATED_USER, username);
-        } else {
-          localStorage.removeItem(TOKEN);
-          sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
-          sessionStorage.setItem(AUTHENTICATED_USER, username);
+  executeJWTAuthenticationService(username: string, password: string, remember: boolean, authority: string) {
+    // Set headers with authority
+    const headers = new HttpHeaders({
+      'authority': authority
+    });
+  
+    return this.http.post<any>(`${this.configurationService.apiUrl().services.auth_service}/auth/login`, { username, password }, { headers }).pipe(
+      map(
+        data => {
+          let encryptUser = this.encryptDecryptService.encryptData(username);
+          if (remember) {
+            localStorage.setItem(AUTHENTICATED_USER, username);
+            localStorage.setItem(TOKEN, `Bearer ${data.token}`);
+            sessionStorage.setItem(AUTHENTICATED_USER, encryptUser);
+            sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
+          } else {
+            localStorage.removeItem(AUTHENTICATED_USER);
+            localStorage.removeItem(TOKEN);
+            sessionStorage.setItem(AUTHENTICATED_USER, encryptUser);
+            sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
+          }
+          this.router.navigate(['main']);
         }
-        this.router.navigate(['/report'])
-
-        return data;
-
-      }
-    ),
-      timeout(connectionTimeout),
-      catchError(err => {
-        if (err.error == 'Username and Password Mismatched') {
-          // this.getTracked('LOGIN', 'LOGIN', err.error)
-        }
-        return throwError(err);
-      })
+      )
     );
-
   }
-
     // Method to get Authenticated token
     getAuthenticatedToken() {
         return sessionStorage.getItem(TOKEN);

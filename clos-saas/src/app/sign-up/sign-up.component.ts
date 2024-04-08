@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
   phn:any='';
   demovideo:boolean=false;
   countryName:any='';
-  companies: string[] = [''];
+  companies: any[] = [{}]; // Initialize with at least one input box
   position:any='';
   role:any='';
   roleList:any=['SUPER','ADMIN','NORMAL']
@@ -96,23 +96,45 @@ numberValidation(inputValue: string) {
 }
 
 signup(){
-  this.id++;
-  this.transferDataService.setData(this.id);
   const newHost = `${this.domainName}.${window.location.host}`;
-  const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
+  const newUrl = `http://${this.domainName}.${window.location.hostname}/signup/login`;
   this.responseUrl=newUrl;
-  this.saasService.getUserSignUp(null,this.companyname,this.domainName,this.firstname,this.password).subscribe(
-    res=>{
+  this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn).subscribe(
+    (res:any)=>{
      console.log(res)
-     this.id=res['id'];
+     this.newId=res['id'];
+     this.uploadDocument();
      this.createDB();
     }
   )
 }
+newId:any='';
 createDB(){
-  this.saasService.getDataBaseForOrg(this.id).subscribe(
+  this.saasService.getDataBaseForOrg(this.newId).subscribe(
     res=>{
       console.log(res)
+    }
+  )
+}
+files: File[] = [];
+onFileSelected(event: any): void {
+  // Extract files from the event
+  const selectedFiles: FileList = event.target.files;
+  
+  // Iterate over the selected files and add them to the files array
+  for (let i = 0; i < selectedFiles.length; i++) {
+    this.files.push(selectedFiles[i]);
+  }
+}
+addFileInput(): void {
+  this.companies.push({}); // Add an empty object to the companies array
+}
+
+uploadDocument(){
+  console.log(this.companies,this.files)
+  this.saasService.getUploadedDocuments(this.newId,this.files).subscribe(
+    res=>{
+      console.log(res);
     }
   )
 }
@@ -120,7 +142,7 @@ password:any='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
-    const newUrl = `http://${this.domainName}.localhost:4200/#/login`;
+    const newUrl = `http://${this.domainName}.${window.location.hostname}/signup/login`;
     console.log(newUrl,'new url')
     this.responseUrl=newUrl;
     const responseData = {
@@ -135,8 +157,6 @@ password:any='';
       countryName: this.countryName,
   };
     this.transferDataService.setData(responseData)
-    this.clearAll();
-    this.router.navigate(['/pricing'])
     sessionStorage.setItem('newurl',newUrl)
     sessionStorage.setItem('domain',this.domainName)
 }

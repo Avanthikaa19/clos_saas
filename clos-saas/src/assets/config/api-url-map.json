@@ -1,8 +1,8 @@
 {
-    "gateway": "https://clos-dev.finsurge.tech/los-gui",
+    "gateway": "http://192.168.19.193:8765",
     "idleTimeoutSeconds": 7200,
     "services": {
-        "auth_service": "[gateway]/auth-service",
+        "auth_service": "[gateway]/clos-auth-service",
         "admin_service": "[gateway]/admin-service",
         "saas_service": "[gateway]/saas-service"
         }
