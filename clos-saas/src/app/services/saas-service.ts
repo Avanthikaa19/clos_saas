@@ -30,6 +30,10 @@ getUploadedDocuments(id: string, files: File[]) {
     }
 
     // Make a POST request to your server endpoint with the FormData object
-    return this.http.post<any>(`${this.QUERY_BUILDER_API_URL}/upload/doc?id=1`, formData);
+    return this.http.post<any>(`${this.QUERY_BUILDER_API_URL}/upload/doc?id=${id}`, formData);
+  }
+  //VALIDATE ORG NAME AND DOMAIN NAME
+  getValidatedOrgAndDomain(column,value){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/check/is_valid?column=${column}&value=${value}`);
   }
 }

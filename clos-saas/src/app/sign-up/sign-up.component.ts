@@ -33,6 +33,8 @@ export class SignUpComponent implements OnInit {
   responseUrl:any;
   errMessage:any='';
   errMessageForNumbers:any='';
+  orgValidation:any='';
+  domainValidation:any='';
   
  
  async ngOnInit() {
@@ -48,10 +50,6 @@ export class SignUpComponent implements OnInit {
     console.log('hiiii')
     return this.url.getUrl().toPromise().then();
   }
-
-    addNewCompany() {
-        this.companies.push('');
-    }
     removeCompany(index: number) {
       this.companies.splice(index, 1);
   }
@@ -97,7 +95,7 @@ numberValidation(inputValue: string) {
 
 signup(){
   const newHost = `${this.domainName}.${window.location.host}`;
-  const newUrl = `http://${this.domainName}.${window.location.hostname}/signup/login`;
+  const newUrl = `http://${this.domainName}.${window.location.hostname}:4200/signup/login`;
   this.responseUrl=newUrl;
   this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn).subscribe(
     (res:any)=>{
@@ -108,6 +106,10 @@ signup(){
     }
   )
 }
+hidePassword: boolean = true
+togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
 newId:any='';
 createDB(){
   this.saasService.getDataBaseForOrg(this.newId).subscribe(
@@ -127,7 +129,7 @@ onFileSelected(event: any): void {
   }
 }
 addFileInput(): void {
-  this.companies.push({}); // Add an empty object to the companies array
+  this.companies.push({});
 }
 
 uploadDocument(){
@@ -142,7 +144,7 @@ password:any='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
-    const newUrl = `http://${this.domainName}.${window.location.hostname}/signup/login`;
+    const newUrl = `http://${this.domainName}.${window.location.hostname}:4200/signup/login`;
     console.log(newUrl,'new url')
     this.responseUrl=newUrl;
     const responseData = {
@@ -186,6 +188,31 @@ copyTokenToClipboard() {
     body.removeChild(copyElement);
     return;
   }
+}
+isResponse:boolean=false;
+//VALIDATE-MY-DOMAIN-ORG NAME
+validateOrgandDomain(column,value){
+   this.saasService.getValidatedOrgAndDomain(column,value).subscribe(
+     res=>{
+       console.log(res)
+       this.isResponse=true;
+       this.orgValidation=res['status']
+     },
+     err=>{
+       console.log(err)
+       this.isResponse=false;
+       this.orgValidation=err.error['status']
+     }
+   )
+}
+timer:any;
+getMyValidation(event,col,val){
+  if (event != null) {
+    if (event.length > 0 || event.length == undefined) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => { this.validateOrgandDomain(col,val) }, 1000)
+    }
+    }
 }
 
 component_height:any;
