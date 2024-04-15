@@ -1,0 +1,61 @@
+<div class="page__main-container">
+    <div class="header-container">
+        <span>
+            Manage Users:-
+        </span>
+    </div>
+    <div class="main-container">
+        <div class="search-container">
+            <mat-icon class="icon-search">search</mat-icon>
+            <input class="min-input" placeholder="Search Here...">
+        </div>
+        <div class="content-container">
+            <div class="list__role-container" *ngFor="let user of users; let i = index">
+                <div class="check__box-container">
+                    <input type="checkbox" [(ngModel)]="user.isChecked">
+                </div>
+                <div class="role__icon-container">
+                    <mat-icon>how_to_reg</mat-icon>
+                </div>
+                <div class="role__name-container">
+                    {{user.username}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paginated-container">
+        <div class="page-nav-container noselect" [@fadeInOut] *ngIf="entryCount">
+            <div>
+                <button mat-icon-button [disabled]="(pageNum + 1) <= 1" (click)="prevPage()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+            </div>
+            <div>
+                <span>Page {{pageNum + 1}} of {{totalPages}}
+                </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of
+                <span>{{entryCount}}</span>)
+            </div>
+            <div>
+                <button mat-icon-button [disabled]="(pageNum + 1) >= totalPages" (click)="nextPage()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="end" class="button-container">
+    <div>
+        <button mat-dialog-close class="tl-btn">
+            <mat-icon>close</mat-icon>
+            <span>Close</span>
+        </button>
+    </div>
+    <div>
+        <button  (click)="onApplyClick()" class="tl-btn-submit">
+            <mat-icon>done</mat-icon>
+            <span>Apply</span>
+        </button>
+    </div>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

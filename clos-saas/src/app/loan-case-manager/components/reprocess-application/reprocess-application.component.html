@@ -1,0 +1,4 @@
+<div class="main-container">
+    <app-generic-data-table [columns]="reprocessApplicationColumn" [pageData]="pageData" [filterButton]="true" [displayAllButton]="true" [exportButton]="true" [clearButton]="true" [filterInput]="true" [tableData]="reprocessData" [loading]="loadingItems" (onExportChange)="reprocessExplort($event)"
+        (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)" (onClick)="detailClick($event)" (onPageChange)="getreprocessApplicationListData($event)"></app-generic-data-table>
+</div>

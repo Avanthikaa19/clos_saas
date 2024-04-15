@@ -1,0 +1,46 @@
+<mat-toolbar class="tool-bar">
+    <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+    <span class="separator-div">
+        <div class="separator"></div>
+    </span>
+    <span>
+      Data Administration
+    </span>
+    <span class="spacing"></span>
+    <button mat-flat-button class="btn-toolbar" (click)="onBackClick()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        Go Back
+    </button>
+</mat-toolbar>
+
+
+
+<div class="main-container">
+    <!-- <div class="header-container">
+          header container
+      </div> -->
+    <div class="content-container grid-container">
+        <div class="card-container grid-item flex-row-parent" *ngFor="let card of configNavs" routerLink="{{card.navLink}}" (click)="onCardClick(card.navLink)">
+            <div class="card-icon flex-stetch">
+                <div class="icon">
+                    <img *ngIf="card.icon == 'object_editor'" src="assets/Icons/object-model-editor.png" alt="" style="margin: 1rem;" />
+                    <img *ngIf="card.icon == 'default_selector'" src="assets/Icons/default.png" alt="" style="margin: 1rem;" />
+                    <img *ngIf="card.icon == 'db_connection'" src="assets/Icons/database.png" alt="" style="margin: 1rem;" />
+                    <img *ngIf="card.icon == 'Profile'" src="assets/Icons/configuration.png" alt="" style="margin: 1rem;" />
+                </div>
+            </div>
+            <div class="card-content flex-column-parent flex-unstetch">
+                <div class="c-header flex-stetch">
+                    {{card.header}}
+                </div>
+                <div class="c-sub-header flex-unstetch">
+                    {{card.subHeader}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <ng-container *ngIf="!cardDisplay">
+          <router-outlet></router-outlet>
+      </ng-container> -->
+
+</div>

@@ -1,0 +1,120 @@
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+.main-container {
+    height: 100%;
+    .header-container {
+        height: 10%;
+        display: flex;
+        justify-content: left;
+        span {
+            padding-top: 2%;
+            padding-bottom: 1%;
+            padding-left: 1rem;
+            color: rgba(14, 41, 84, 1);
+            text-shadow:2px 2px rgb(223, 223, 223);
+        }
+    }
+    .inner-container {
+        height: 85%;
+        // padding-left: 20px;
+        .sub-header {
+            padding: 1rem;
+            background-color: whitesmoke;
+            color: gray;
+            span {
+                font-style: italic;
+            }
+        }
+        .node-detail {
+            padding-top: 20px;
+            .label {
+                padding: 0.1rem;
+                display: inline-block;
+                span {
+                    padding: 1rem;
+                }
+            }
+            .value {
+                display: inline-block;
+            }
+        }
+        .spacer {
+            height: 10%;
+        }
+    }
+    .button-container {
+        height: 5%;
+    }
+}
+
+.node-detail {
+    display: inline-block;
+    padding: 1rem;
+}
+
+input {
+    display: inline-block;
+}
+
+textarea {
+    vertical-align: top;
+}
+
+.create {
+    background-color: rgb(43, 42, 42);
+    color: white;
+}
+
+.create button:disabled {
+    background-color: rgb(43, 42, 42);
+    color: white;
+}
+
+.button-cls {
+    transform: scale(0.75);
+}
+
+.button-class {
+    transform: scale(0.5);
+}
+
+.default {
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 10%;
+    font-style: italic;
+    color: lightgray;
+}
+
+ ::ng-deep .query-param-model mat-dialog-container {
+    height: 92% !important;
+}
+
+.arthemetic_condition {
+    display: inline;
+    margin: 6px;
+    background: #5e72e4;
+    position: relative;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    top: 10px;
+    padding: 3px 0px;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+    >span {
+        font-size: 13px;
+        position: relative;
+        bottom: 3px;
+        right: 8px;
+    }
+     ::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
+        background-color: rgb(245 63 63 / 54%);
+    }
+     ::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
+        background-color: #f71414;
+    }
+}
+
+.disabled {
+    background-color: whitesmoke;
+}

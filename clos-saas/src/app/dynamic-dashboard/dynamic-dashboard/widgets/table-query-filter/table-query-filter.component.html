@@ -1,0 +1,586 @@
+<div class="row bg pt-0 container-fluid card-shadow" style="border-radius: 12px;"
+[style.opacity]="loading == true? '0.5': ''" [style.pointer-events]="loading == true? 'none':''">
+    <!-- HEADER -->
+    <div class="col-lg-12 col-md-12 mb-2" style="display: flex;
+    justify-content: space-between;align-items: center;">
+        <p class="float-left" style="padding-left: 15px; padding-top: 12px; font-size: 19px;
+        font-weight: 700;" [style.color]="'#000000'">QUERY FILTER</p>
+        <mat-icon class="float-right icon-hov2" matTooltip="Close" style="cursor: pointer;font-size: 18px; font-weight: bolder;" (click)="onClose()">close</mat-icon>
+    </div>
+       <!-- EXPANSION PANEL WITH QUERY BUILDER FIELDS -->
+       <div class="col-lg-12 col-md-12 hori-scroll" style="overflow: auto;height: 400px;">
+        <!-- JUMBOTRON WITH QUERY FIELDS -->
+        <div class="jumbotron" style="padding: 1rem 2rem; background-color: gainsboro;overflow: auto;margin-left: 20px;display: flex;flex-direction:row;
+       ">
+        <div style="flex: 50%;">
+         <div class="row" (click)="whereList=[];">
+            <p class="col-lg-12 col-md-12 mb-0"
+                [style.color]="'#000000'"
+                style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">{{queryField?.tableName==null||queryField?.tableName==undefined?tableName:queryField.tableName}}
+            </p>
+            <!-- ADDING FIELD(ADD / OR) ONCE CLICK ON ADD BUTTON  -->
+            <ng-container *ngFor="let where of queryField?.where; let i= index">
+                <!-- Where Column Name -->
+                <span class="col-lg-4 col-md-6 mb-1">
+                    <mat-select class="query-filter-mat-select"
+                        [(ngModel)]="where.operandField"
+                        (ngModelChange)="where.operator=null;where.value=null;queryField.order=null;queryField.orderBy=null"
+                        panelClass="select-panel-theme-light"
+                        [class]="'dbField-light'"
+                    >
+                    <div class="search-container">
+                        <mat-form-field class="search-input-field">
+                          <mat-label>Search</mat-label>
+                          <input
+                            matInput
+                            [(ngModel)]="whereList[i]"
+                            [ngModelOptions]="{ standalone: true }"
+                            (keydown)="$event.stopPropagation()"
+                            type="text"
+                            autocomplete="off" style="background-color: transparent;box-shadow: none;"
+                          />
+                          <mat-icon
+                            matSuffix
+                            *ngIf="whereList[i]"
+                            class="clear-icon"
+                            (click)="whereList[i]=''"
+                          >
+                            close
+                          </mat-icon>
+                        </mat-form-field>
+                      </div>
+                    <mat-option *ngFor="let value of allTableWhereColumns1|searchFilter:whereList[i];let i = index" (click)="opTypePass(where, value)" [value]="value?.fieldNane" [hidden]="value?.fieldNane==null||value?.fieldNane==''||value?.fieldNane=='null'">{{value?.fieldNane?.replaceAll('_',' ')}}</mat-option>
+                    <div *ngIf="( allTableWhereColumns1 | searchFilter : whereList[i]) as result">
+                        <span *ngIf="result?.length==0" style="margin: 10px 0;pointer-events: none;font-size: 12px;color: gray;font-style: italic;display: flex;justify-content: center;align-items: center;"> No Data
+                          Found
+                      </span>
+                  </div>
+                </mat-select>
+                <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                    <mat-icon *ngIf="where.operandField" style="font-size: 13px;line-height: 28px;margin-bottom: 10px;margin-left: 40%;" class="icon-hov1"
+                    (click)="where.operandField=null">close
+                    </mat-icon>
+                </button>
+                </span> 
+                    <!-- Condition -->
+                    <span *ngIf = "where.operandType == 'Date' || where.operandType == 'Number'" class="col-lg-2 col-md-12 mb-1">
+                        <mat-select class="query-filter-mat-select"
+                            [(ngModel)]="where.operator"
+                            panelClass="select-panel-theme-light"
+                            [class]="'dbField-light'"
+                        >
+                            <mat-option value="=">=</mat-option>
+                            <mat-option value=">">></mat-option>
+                            <mat-option value="<"><</mat-option>
+                            <mat-option value=">=">>=</mat-option>
+                            <mat-option value="<="><=</mat-option>
+                            <mat-option *ngIf = "where.operandType != 'Date'" value="<>"><></mat-option>
+                    </mat-select>
+                    <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                        <mat-icon *ngIf="where.operator" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                        (click)="where.operator=null">close
+                        </mat-icon>
+                    </button>
+                    </span> 
+                    <span *ngIf = "where.operandType == 'String'" class="col-lg-2 col-md-12 mb-1">
+                        <mat-select class="query-filter-mat-select"
+                            [(ngModel)]="where.operator"
+                            panelClass="select-panel-theme-light"
+                            [class]="'dbField-light'"
+                        >
+                         
+                            <mat-option value="LIKE">LIKE</mat-option>
+                            <mat-option value="NOT LIKE">NOT LIKE</mat-option>
+                    </mat-select>
+                    <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                        <mat-icon *ngIf="where.operator" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                        (click)="where.operator=null">close
+                        </mat-icon>
+                    </button>
+                    </span> 
+                    <span *ngIf="where.operandType!='Date'" class="col-lg-3 col-md-12 mb-1" style="padding-left: 16px;">
+                        <input
+                            [(ngModel)]="where.value"
+                            [class]="'dbField-light'"
+                            style="width: 100%; height: 35px;font-size: 12px;"
+                            type="text"
+                            placeholder="Enter the value"
+                            spellcheck="false"
+                            autocomplete="off"
+                        />
+                        
+                        <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                            <mat-icon *ngIf="where.value" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                            (click)="where.value=null">close
+                            </mat-icon>
+                        </button>
+                    </span>  
+                    <span *ngIf="where.operandType=='Date'"  class="col-lg-3 col-md-12 mb-1" style="width:25%;" class="form-group">
+                        <input
+                          type="date"
+                          name="date"
+                          id="date"
+                          class="form-control"
+                          [(ngModel)]="where.value" [ngModelOptions]="{standalone:true}"
+                        />
+                        <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                            <mat-icon *ngIf="where.value" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                            (click)="where.value=null">close
+                            </mat-icon>
+                        </button>
+                    </span>  
+                <span class="col-lg-3 col-md-12 mb-1" style="padding-left: 16px;display: flex;"> 
+                    <!-- ADD BUTTON TO ADD FIELDS  -->
+                    <button style="margin-left: 7px;" mat-icon-button color="primary" type="button" [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
+
+                    <!-- <button style="margin-left: 6px;" mat-raised-button color="warn" type="button" (click)="getremoveField(i);">REMOVE</button> -->
+        
+                    <!-- REMOVE BUTTON TO REMOVE FIELDS -->
+                    <button style="margin-left: 6px;" mat-icon-button color="primary"  [hidden]="i==0" type="button" (click)="getremoveField(i);"><mat-icon>remove</mat-icon></button>
+        
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="addWhereField('AND')">AND</button>
+                        <button mat-menu-item (click)="addWhereField('OR')">OR</button>
+                    </mat-menu>
+                    <span style="font-size: 12px;font-family:sans-serif;font-weight:bold;margin-top:12px;display:inline-block;margin-left:12px">{{queryAdd[i+1]}}</span>
+                </span>  
+            </ng-container> 
+                </div>
+                <div class="row"  (click)="searchList ='';">
+                    <p class="col-lg-4 col-md-12 mb-0"
+                        [style.color]="'#000000'"
+                        style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">ORDER BY
+                    </p>
+                    <p class="col-lg-2 col-md-12 mb-0"
+                    [style.color]="'#000000'"
+                    style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">ORDER
+                    </p>
+                    <p class="col-lg-6 col-md-12 mb-0"
+                    [style.color]="'#000000'"
+                    style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">
+                    </p>
+                    <span class="col-lg-4 col-md-6 mb-1">
+                        <mat-select class="query-filter-mat-select" [disabled]="queryField?.orderBy2 || queryField?.order2"
+                        [(ngModel)]="queryField.orderBy"
+                        panelClass="select-panel-theme-light"
+                        [class]="'dbField-light'">
+                        <div class="search-container">
+                            <mat-form-field class="search-input-field">
+                              <mat-label>Search</mat-label>
+                              <input
+                                matInput
+                                [(ngModel)]="searchList"
+                                [ngModelOptions]="{ standalone: true }"
+                                (keydown)="$event.stopPropagation()"
+                                type="text"
+                                autocomplete="off" style="background-color: transparent;box-shadow: none;"
+                              />
+                              <mat-icon
+                                matSuffix
+                                *ngIf="searchList"
+                                class="clear-icon"
+                                (click)="searchList=''"
+                              >
+                                close
+                              </mat-icon>
+                            </mat-form-field>
+                          </div>
+                        <mat-option *ngFor="let value of allTableColumns|newFilter:searchList;let i = index" [value]="value" [hidden]="value==null||value=='null'||value==''">{{value?.replaceAll('_',' ')}}</mat-option>
+                        <div *ngIf="( allTableColumns | newFilter : searchList) as result">
+                            <span *ngIf="result?.length==0" style="margin: 10px 0;pointer-events: none;font-size: 12px;color: gray;font-style: italic;display: flex;justify-content: center;align-items: center;"> No Data
+                              Found
+                          </span>
+                      </div>
+                    </mat-select>
+                    <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                        <mat-icon *ngIf="queryField.orderBy" style="font-size: 13px;line-height: 28px;margin-bottom: 10px;margin-left: 40%;" class="icon-hov1"
+                        (click)="queryField.orderBy=null">close
+                        </mat-icon>
+                    </button>
+                    </span> 
+                    <span class="col-lg-2 col-md-6 mb-1">
+                    <mat-select class="query-filter-mat-select" [disabled]="queryField?.orderBy2 || queryField?.order2"
+                        [(ngModel)]="queryField.order"
+                        panelClass="select-panel-theme-light"
+                        [class]="'dbField-light'">
+                        <mat-option *ngFor="let value of order" [value]="value">{{value?.replaceAll('_',' ')}}</mat-option>
+                    </mat-select>
+                    <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                        <mat-icon *ngIf="queryField?.order" style="font-size: 13px;line-height: 28px;margin-bottom: 10px;margin-left: 40%;" class="icon-hov1"
+                        (click)="queryField.order=null">close
+                        </mat-icon>
+                    </button>
+                    </span> 
+                </div>
+        </div>
+        <div style="flex: 50%;">
+            <div class="row" *ngIf = "queryField.join"  (click)="whereList2=[];">
+                <p class="col-lg-12 col-md-12 mb-0"
+                    [style.color]="'#000000'"
+                    style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">{{queryField?.tableName2}}
+                </p>
+                <!-- ADDING FIELD(ADD / OR) ONCE CLICK ON ADD BUTTON  -->
+                <ng-container *ngFor="let where of queryField.where2; let i= index">
+                    <!-- Where Column Name -->
+                    <span class="col-lg-4 col-md-6 mb-1">
+                        <mat-select class="query-filter-mat-select"
+                            [(ngModel)]="where.operandField"
+                            (ngModelChange)="where.operator=null;where.value=null;queryField.order2=null;queryField.orderBy2=null"
+                            panelClass="select-panel-theme-light"
+                            [class]="'dbField-light'"
+                           >
+                           <div class="search-container">
+                            <mat-form-field class="search-input-field">
+                              <mat-label>Search</mat-label>
+                              <input
+                                placeholder="Search"
+                                matInput
+                                [(ngModel)]="whereList2[i]"
+                                [ngModelOptions]="{ standalone: true }"
+                                (keydown)="$event.stopPropagation()"
+                                type="text"
+                                autocomplete="off" style="background-color: transparent;box-shadow: none;"
+                              />
+                              <mat-icon
+                                matSuffix
+                                *ngIf="whereList2[i]"
+                                class="clear-icon"
+                                (click)="whereList2[i]=''"
+                              >
+                                close
+                              </mat-icon>
+                            </mat-form-field>
+                          </div>
+                        <mat-option *ngFor="let value of allTableWhereColumns2|searchFilter:whereList2[i];let i = index" (click)="opTypePass(where, value)" [value]="value.fieldNane" [hidden]="value?.fieldNane==null||value?.fieldNane=='null'||value?.fieldNane==''">{{value.fieldNane?.replaceAll('_',' ')}}</mat-option>
+                        <div *ngIf="( allTableWhereColumns2 | searchFilter : whereList2[i]) as result">
+                            <span *ngIf="result?.length==0" style="margin: 10px 0;pointer-events: none;font-size: 12px;color: gray;font-style: italic;display: flex;justify-content: center;align-items: center;"> No Data
+                              Found
+                          </span>
+                      </div>
+                    </mat-select>
+                    <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                        <mat-icon *ngIf="where.operandField" style="font-size: 13px;line-height: 28px;margin-bottom: 10px;margin-left: 40%;" class="icon-hov1"
+                        (click)="where.operandField=null">close
+                        </mat-icon>
+                    </button>
+                    </span> 
+                        <!-- Condition -->
+                        <span *ngIf = "where.operandType == 'Date' || where.operandType == 'Number'" class="col-lg-2 col-md-12 mb-1">
+                            <mat-select class="query-filter-mat-select"
+                                [(ngModel)]="where.operator"
+                                panelClass="select-panel-theme-light"
+                                [class]="'dbField-light'"
+                            >
+                                <mat-option value="=">=</mat-option>
+                                <mat-option value=">">></mat-option>
+                                <mat-option value="<"><</mat-option>
+                                <mat-option value=">=">>=</mat-option>
+                                <mat-option value="<="><=</mat-option>
+                                <mat-option *ngIf = "where.operandType != 'Date'" value="<>"><></mat-option>
+                        </mat-select>
+                        <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                            <mat-icon *ngIf="where.operator" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                            (click)="where.operator=null">close
+                            </mat-icon>
+                        </button>
+                        </span> 
+                        <span *ngIf = "where.operandType == 'String'" class="col-lg-2 col-md-12 mb-1">
+                            <mat-select class="query-filter-mat-select"
+                                [(ngModel)]="where.operator"
+                                panelClass="select-panel-theme-light"
+                                [class]="'dbField-light'"
+                            >
+                             
+                                <mat-option value="LIKE">LIKE</mat-option>
+                                <mat-option value="NOT LIKE">NOT LIKE</mat-option>
+                        </mat-select>
+                        <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                            <mat-icon *ngIf="where.operator" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                            (click)="where.operator=null">close
+                            </mat-icon>
+                        </button>
+                        </span> 
+                        <span *ngIf="where.operandType!='Date'" class="col-lg-3 col-md-12 mb-1" style="padding-left: 16px;">
+                            <input
+                                [(ngModel)]="where.value"
+                                [class]="'dbField-light'"
+                                style="width: 100%; height: 35px;font-size: 12px;"
+                                type="text"
+                                placeholder="Enter the value"
+                                spellcheck="false"
+                                autocomplete="off"
+                            />
+                            
+                            <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                                <mat-icon *ngIf="where.value" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                                (click)="where.value=null">close
+                                </mat-icon>
+                            </button>
+                        </span>  
+                        <span *ngIf="where.operandType=='Date'"  class="col-lg-3 col-md-12 mb-1" style="width:25%;" class="form-group">
+                            <input
+                              type="date"
+                              name="date"
+                              id="date"
+                              class="form-control"
+                              [(ngModel)]="where.value" [ngModelOptions]="{standalone:true}"
+                            />
+                            <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                                <mat-icon *ngIf="where.value" style="font-size: 13px;margin-bottom: 10px;margin-left: 40%;" matSuffix class="icon-hov1"
+                                (click)="where.value=null">close
+                                </mat-icon>
+                            </button>
+                        </span>    
+                    <span class="col-lg-3 col-md-12 mb-1" style="padding-left: 16px;display: flex;"> 
+                        <!-- ADD BUTTON TO ADD FIELDS  -->
+                        <button style="margin-left: 7px;" mat-icon-button color="primary" type="button" [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
+
+                        <!-- <button style="margin-left: 6px;" mat-raised-button color="warn" type="button" (click)="getremoveField(i);">REMOVE</button> -->
+            
+                        <!-- REMOVE BUTTON TO REMOVE FIELDS -->
+                        <button style="margin-left: 6px;" mat-icon-button color="primary"  [hidden]="i==0" type="button" (click)="getremoveField2(i);"><mat-icon>remove</mat-icon></button>
+            
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="addWhereField2('AND')">AND</button>
+                            <button mat-menu-item (click)="addWhereField2('OR')">OR</button>
+                        </mat-menu>
+                        <span style="font-size: 12px;font-family:sans-serif;font-weight:bold;margin-top:12px;display:inline-block;margin-left:12px">{{queryAdd2[i+1]}}</span>
+                    </span>
+                </ng-container> 
+            </div> 
+            <div class="row" *ngIf = "queryField.join"  (click)="searchList ='';">
+                <p class="col-lg-4 col-md-12 mb-0"
+                    [style.color]="'#000000'"
+                    style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">ORDER BY
+                </p>
+                <p class="col-lg-2 col-md-12 mb-0"
+                [style.color]="'#000000'"
+                style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">ORDER
+                </p>
+                <p class="col-lg-6 col-md-12 mb-0"
+                [style.color]="'#000000'"
+                style="font-size: 12px !important;font-weight: 700; padding: 12px 7px 0 12px;">
+                </p>
+                <span class="col-lg-4 col-md-6 mb-1">
+                    <mat-select class="query-filter-mat-select" [disabled]="queryField.orderBy || queryField.order"
+                    [(ngModel)]="queryField.orderBy2"
+                    panelClass="select-panel-theme-light"
+                    [class]="'dbField-light'">
+                    <div style="position: sticky;top:0;z-index:1;">
+                        <mat-form-field class="sub-input-field" style="width: 100%;height:39px;border:5px solid #8080955c;background-color: whitesmoke;">
+                            <mat-label>Search</mat-label>
+                            <input [(ngModel)]="searchList" [ngModelOptions]="{standalone: true}"
+                                (keydown)="$event.stopPropagation()" type="text" matInput style="height: 0px;"
+                                autocomplete="off" />
+                                <mat-icon matSuffix [hidden]="searchList ==''" style="font-size: 15px;
+                                margin-top: -20px;
+                                color: gray;
+                                margin-left: -20px;cursor: pointer;" class="icon-hov1"
+                                    (click)="searchList ='';">close
+                                </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <mat-option *ngFor="let value of allTableColumns2" [value]="value" [hidden]="value==null||value=='null'||value==''">{{value?.replaceAll('_',' ')}}</mat-option>
+                    <div *ngIf="( allTableColumns2 | searchFilter : searchList) as result">
+                        <span *ngIf="result?.length==0" style="margin: 10px 0;pointer-events: none;font-size: 12px;color: gray;font-style: italic;display: flex;justify-content: center;align-items: center;"> No Data
+                          Found
+                      </span>
+                  </div>
+                </mat-select>
+                <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                    <mat-icon *ngIf="queryField.orderBy2" style="font-size: 13px;line-height: 28px;margin-bottom: 10px;margin-left: 40%;" class="icon-hov1"
+                    (click)="queryField.orderBy2=null">close
+                    </mat-icon>
+                </button>
+                </span> 
+                <span class="col-lg-2 col-md-6 mb-1">
+                <mat-select class="query-filter-mat-select" [disabled]="queryField?.orderBy || queryField?.order"
+                    [(ngModel)]="queryField.order2"
+                    panelClass="select-panel-theme-light"
+                    [class]="'dbField-light'">
+                    <mat-option *ngFor="let value of order" [value]="value">{{value?.replaceAll('_',' ')}}</mat-option>
+                </mat-select>
+                <button class="mat-icon-button"  style="float: right;margin-top:-29px;margin-right:25px">
+                    <mat-icon *ngIf="queryField.order2" style="font-size: 13px;line-height: 28px;margin-bottom: 10px;margin-left: 40%;" class="icon-hov1"
+                    (click)="queryField.order2=null">close
+                    </mat-icon>
+                </button>
+                </span> 
+            </div>
+           </div>
+           </div>
+   
+        <div style="margin: 20px 10px 10px 20px;display: none;" *ngIf="data?.tableName?.type!=='candleStick'">
+         <!-- CLEAR QUERY BUTTON -->
+         <button
+         mat-flat-button 
+         class="clos-submit-btn"
+         style="width: 170px;height: 35px; font-weight: 700;"
+         (click)="clear()" [disabled]="queryField?.tableName == ''||queryField?.tableName == null||queryField?.columnName1 == ''||queryField?.columnName1 == null"
+     >
+     <i class="fa fa-undo" style="font-size: 19px;margin:0 4px 0 0;"></i>
+         <span>CLEAR QUERY</span>
+     </button>
+
+     <!-- SHOW TABLE BUTTON -->
+     <button
+         mat-flat-button 
+         class="clos-submit-btn"
+         style="width: 150px; margin-left: 5px; height: 35px; font-weight: 700;"
+         (click)="showData=true;showQueryData()">
+     <i class="fa fa-th-list" style="font-size: 17px;margin:-2px 4px 0 0;"></i>
+         <span>SHOW DATA</span>
+     </button>
+
+     <!-- GENERATE SQL BUTTON -->
+     <button
+         mat-flat-button 
+         class="clos-submit-btn"
+         style="width: 170px; margin-left: 5px; height: 35px; font-weight: 700;"
+         (click)="showQuery=true;dataGenration();"
+     >
+         <span>GENERATE SQL</span>
+         <i class="fa fa-angle-double-right" style="font-size:22px;margin: -3px 0px 0px 4px;"></i>
+     </button>
+     </div>
+
+     <div class="row" style="margin: 10px;display: none;">
+         <!-- TEXT AREA FOR QUERY -->
+         <div [hidden]="!showQuery" style="font-weight: 700;font-size: 16px;margin: 20px 0 0 0;color: black;">SQL QUERY : </div>
+         <div class="col-lg-6 col-md-12" *ngIf = "!queryField.join" [hidden]="!showQuery" #queryBox [class]="'dbField-light'" style="width: 100%; font-family: monospace; height: 120px; font-size: 14px;background-color: aliceblue;overflow: auto;margin-left: 10px;
+         margin-top: 10px;
+         padding: 10px 20px;" spellcheck="false">
+             SELECT
+             <!-- COLUMN FIELD -->
+             <span *ngIf="queryField.columnName1 && queryField.aggregation1">{{queryField.aggregation1}}({{queryField.columnName1}})</span>
+                        <span *ngIf="queryField.columnName1 && !queryField.aggregation1">{{queryField.columnName1}}</span>
+                        <span *ngIf="(queryField.columnName1 || queryField.aggregation1 || !queryField?.columnName1?.includes('*')) && data?.widget?.type != 'gaugeChart' && data?.widget?.type!=='cardChart' && data?.widget?.type!=='table'">,</span>
+                        <span *ngIf="data?.widget?.type!=='card'||data?.widget?.type!=='gaugeChart'||data?.widget?.type!=='cardChart'"><span *ngIf="queryField.columnName2 && queryField.aggregation2">{{queryField.aggregation2}}({{queryField.columnName2}})</span>
+                        <span *ngIf="queryField.columnName2 && !queryField.aggregation2">{{queryField.columnName2}}</span></span>
+                    FROM {{queryField.tableName}}
+
+             <!-- <span *ngFor="let col of queryField.columnName1;let i = index">
+                 <span *ngIf="col && queryField.aggregation1">{{queryField.aggregation1}}({{col}})</span>
+                 <span *ngIf="col && !queryField.aggregation1">{{col}}</span>
+                 <span *ngIf="col !== queryField.columnName1[queryField.columnName1.length-1]">,</span>
+                 </span> -->
+             <!-- FROM {{queryField.tableName}} -->
+
+             <!-- WHERE -->
+             <span *ngIf="queryField.where[0].operandField">
+                 WHERE 
+                 <span style="margin-left: 10px;" *ngFor="let where of queryField.where">
+                    <span style="margin-left:10px;" *ngIf="where.operandType=='Date'">
+                        <span *ngIf="where.operation">{{where.operation}}</span> {{where.operandField}} {{where.operator}} '{{where.value}}'
+                    </span>
+                    <span *ngIf="where.operandType!='Date'"> {{where.operation}} {{where.operandField}}</span> <span *ngIf="where.operandType!='Date'" > {{where.operator}} </span>
+                    <span *ngIf="where.operandType=='String'">'%{{where.value}}%'</span>
+                    <span *ngIf="where.operandType=='Number'">{{where.value}}</span>
+                    </span>
+                    </span>
+             <!-- GROUP BY -->
+             <span *ngIf="queryField.groupBy"> GROUP BY {{queryField.groupBy}}</span>
+             <!-- ORDER BY  -->
+             <span *ngIf="queryField.orderBy"> ORDER BY {{queryField.orderBy}}</span>
+             <span *ngIf="queryField.order">  {{queryField.order}}</span>
+
+         </div>
+
+         <div class="col-lg-6 col-md-12"  *ngIf = "queryField.join" [hidden]="!showQuery" #queryBox [class]="'dbFeild-light'" style="width: 100%; font-family: monospace; height: 120px; font-size: 14px;background-color: aliceblue;overflow: auto;margin-left: 10px;
+         margin-top: 10px;
+         padding: 10px 20px;" spellcheck="false">
+             SELECT
+             <!-- COLUMN FIELD -->
+             <span *ngFor="let col of queryField.columnName1;let i = index">
+             <!-- <span *ngIf="col && queryField.aggregation1">{{queryField.aggregation1}}(t1.{{col}})</span> -->
+             <span *ngIf="col">{{queryField.tableName}}.{{col}}</span>
+             <span *ngIf="col !== queryField.columnName1[queryField.columnName1.length-1]">,</span>
+             </span>
+             <span *ngFor="let col of queryField.aggregationList1;let i = index">
+                 <span *ngIf="col.comSep && queryField.columnName1">{{col.comSep}}</span>
+                 <span *ngIf="col.colList && col.aggregationField">{{col.aggregationField}}({{queryField.tableName}}.{{col.colList}})</span>
+             </span>
+             <span *ngFor="let col of queryField.columnName2;let i = index">
+                 <!-- <span *ngIf="col && queryField.aggregation2">,{{queryField.aggregation2}}(t2.{{col}})</span> -->
+                 <span *ngIf="col">,{{queryField.tableName2}}.{{col}}</span>
+                 <!-- <span *ngIf="col !== queryField.columnName2[queryField.columnName2.length-1]">,</span> -->
+             </span>
+             <span *ngFor="let col of queryField.aggregationList2;let i = index">
+                 <span *ngIf="col.comSep && queryField.columnName2">{{col.comSep}}</span>
+                 <span *ngIf="col.colList && col.aggregationField">{{col.aggregationField}}({{queryField.tableName2}}.{{col.colList}})</span>
+             </span>
+             <!-- <span *ngIf="queryField.columnName2 && queryField.columnName1">,</span>
+             <span *ngIf="queryField.columnName2">{{queryField.aggregation2}}{{queryField.columnName2}}</span> -->
+             FROM {{queryField.tableName}}  JOIN {{queryField.tableName2}}
+             ON
+             <span *ngIf="queryField.keyCol1 && queryField.keyCol2"> {{queryField.tableName}}.{{queryField.keyCol1}} = {{queryField.tableName2}}.{{queryField.keyCol2}}</span>
+
+             <!-- WHERE -->
+             <span *ngIf="queryField.where[0].operandField || queryField.where2[0].operandField">
+                 WHERE 
+                 
+                     <span style="margin-left: 10px;" *ngFor="let where of queryField.where;">
+                         <span style="margin-left:10px;" *ngIf="where.operandType=='Date'">
+                             <span *ngIf="where.operation">{{where.operation}}</span> {{queryField.tableName}}.{{where.operandField}} {{where.operator}} '{{where.value}}'
+                         </span>
+                     <span *ngIf="where.operandType!='Date'">{{where.operation}} {{queryField.tableName}}.{{where.operandField}}</span> <span *ngIf="where.operandType!='Date'" > {{where.operator}} </span>
+                     <span *ngIf="where.operandType=='String'">'%{{where.value}}%'</span>
+                     <span *ngIf="where.operandType=='Number'">{{where.value}}</span>
+                     </span>
+                     </span>
+
+
+                 <span *ngIf="queryField?.where2[0].operandField">  AND
+                 <span style="margin-left: 10px;" *ngFor="let where of queryField.where2;">
+                     <span style="margin-left:10px;" *ngIf="where.operandType=='Date'">
+                         <span *ngIf="where.operation">{{where.operation}}</span>{{queryField.tableName2}}.{{where.operandField}} {{where.operator}} '{{where.value}}'
+                     </span>
+                     <span *ngIf="where.operandType!='Date'">{{where.operation}} {{queryField.tableName2}}.{{where.operandField}}</span> <span *ngIf="where.operandType!='Date'" > {{where.operator}} </span>
+                     <span *ngIf="where.operandType=='String'">'%{{where.value}}%'</span>
+                     <span *ngIf="where.operandType=='Number'">{{where.value}}</span>
+                 </span>
+             </span>
+
+             <!-- GROUP BY -->
+             <span *ngIf="queryField.groupBy"> GROUP BY {{queryField.tableName}}.{{queryField.groupBy}}</span>
+             <span *ngIf="queryField.groupBy2"> GROUP BY {{queryField.tableName2}}.{{queryField.groupBy2}}</span>
+             <!-- ORDER BY  -->
+             <span *ngIf="queryField.orderBy || queryField.order"> ORDER BY {{queryField.orderBy}}  {{queryField.order}}</span>
+             <span *ngIf="queryField.orderBy2 || queryField.order2"> ORDER BY {{queryField.orderBy2}}  {{queryField.order2}}</span>
+
+         </div>
+
+           <!-- SHOW DATA -->
+           <div *ngIf="showData" style="font-weight: 700;font-size: 16px;margin: 20px 0 0 0;color: black;">DATA : </div>
+           <div class="col-lg-6 col-md-12" *ngIf="showData" [class]="'dbField-light'" style="width: 100%; font-family: monospace; height: 190px; margin-top: 5px; font-size: 14px;white-space: pre;overflow: auto;background-color: aliceblue;margin-left: 10px;
+           margin-top: 10px;
+           padding: 10px 20px;" [style.color]="error? 'red':'black'" spellcheck="false">
+               {{ tableData? (tableData | json) : error  }} 
+           </div>
+         </div>
+         
+       </div>
+        <div style="float: right;margin: 10px 0;width: 98.5%;">
+            <button mat-flat-button class="clos-submit-btn" (click)="showQueryData()">APPLY</button>
+            <button mat-flat-button class="clos-submit-btn"  style="float:right;margin-right: 20px;font-size: 12px;" (click)="clearFilter()">CLEAR</button>
+        </div>
+</div>
+ <!-- SPINNER -->
+ <div class="load-wrapp" style="top: 20%; left: 47.5%;position: absolute;" *ngIf="loading">
+    <div class="spinner">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+        <div class="bar4"></div>
+        <div class="bar5"></div>
+        <div class="bar6"></div>
+        <div class="bar7"></div>
+        <div class="bar8"></div>
+        <div class="bar9"></div>
+        <div class="bar10"></div>
+        <div class="bar11"></div>
+        <div class="bar12"></div>
+    </div>
+    <!-- <div style="margin-top:30px;margin-left:47%;font-size:13px" *ngIf="loading"><span>LOADING</span></div> -->
+</div>
+

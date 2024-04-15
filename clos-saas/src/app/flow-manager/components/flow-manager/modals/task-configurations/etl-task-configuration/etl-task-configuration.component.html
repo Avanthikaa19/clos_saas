@@ -1,0 +1,297 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <table *ngIf="config">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Enable Spring Batch Job</span>
+
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+
+                    <mat-slide-toggle [(ngModel)]="config.enableBatchJob"></mat-slide-toggle>
+
+                </td>
+            </tr>
+            <tr *ngIf="!config.enableBatchJob">
+                <td>
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Runnable Console</span>
+                        <!-- <button mat-icon-button (click)="editFormula('Source Sql',config.sourceSql)"  class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                            <mat-icon  style="padding-left: 77px;" color="primary">edit</mat-icon>
+                        </button> -->
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+                    <!-- <input [(ngModel)]="config.runnableConsole" class="min-input" readonly> -->
+                    <mat-select class="min-select" [(ngModel)]="config.runnableConsole" style="width: 100%;">
+                        <mat-option value="SOURCE">Source</mat-option>
+                        <mat-option value="DESTINATION">Destination</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr *ngIf="!config.enableBatchJob">
+                <td>
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Runnable Sql</span>
+                        <button mat-icon-button (click)="editFormula('Runnable Sql',config.runnableSql)" class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                            <mat-icon  style="padding-left: 47px;" color="primary">edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.runnableSql" class="min-input" readonly>
+                </td>
+            </tr>
+            <tr *ngIf="config.enableBatchJob">
+                <td>
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Source Sql</span>
+                        <button mat-icon-button (click)="editFormula('Source Sql',config.sourceSql)" class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                            <mat-icon  style="padding-left: 77px;" color="primary">edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.sourceSql" class="min-input" readonly>
+                </td>
+            </tr>
+            <tr *ngIf="config.enableBatchJob">
+                <td>
+                    <span class="min-label">Destination Table</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.destinationTable" class="min-input">
+                </td>
+            </tr>
+            <tr *ngIf="config.enableBatchJob">
+                <td>
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">Destination Table Ddl</span>
+                        <button mat-icon-button (click)="editFormula('Destination Table Ddl',config.destinationTableDdl)" class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                            <mat-icon  style="padding-left: 3px" color="primary">edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.destinationTableDdl" readonly class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        RECONCILIATION:
+    </div>
+    <table *ngIf="config.reconciliation">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Enable Reconciliation</span>
+
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+
+                    <mat-slide-toggle [(ngModel)]="config.reconciliation.enableReconciliation"></mat-slide-toggle>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- <span class="min-label">Source Recon Sql</span> -->
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Source Recon Sql</span>
+                        <button mat-icon-button (click)="editFormula('Source Recon Sql',config.reconciliation.sourceReconSql)" class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                            <mat-icon style="padding-left: 30px;" color="primary">edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.reconciliation.sourceReconSql" readonly class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- <span class="min-label">Destination Recon Sql</span> -->
+                    <div class="input-wrapper">
+                        <span class="min-label formula-type-text">
+                    Destination Recon Sql</span>
+                        <button mat-icon-button (click)="editFormula('Destination Recon Sql',config.reconciliation.destinationReconSql)" class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                            <mat-icon color="primary">edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.reconciliation.destinationReconSql" readonly class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        CONNECTION:
+    </div>
+    <table *ngIf="config.connection">
+        <tbody>
+            <div class="category-sub-header">
+                SOURCE DB:
+            </div>
+            <ng-container *ngIf="config.connection.sourceDB.dbConfig == undefined || config.connection.sourceDB.dbConfig == null || config.connection.sourceDB.dbConfig.trim() == ''">
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Driver Name</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.sourceDB.driverName" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Host</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.sourceDB.dbHost" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Port</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.sourceDB.dbPort" type="number" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Schema Name</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.sourceDB.dbSchemaName" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">User ID</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.sourceDB.dbUserid" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Password</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.sourceDB.dbPassword" type="password" class="min-input">
+                    </td>
+                </tr>
+            </ng-container>
+            <div class="category-sub-header">
+                DESTINATION DB:
+            </div>
+            <ng-container *ngIf="config.connection.destinationDB.dbConfig == undefined || config.connection.destinationDB.dbConfig == null || config.connection.destinationDB.dbConfig.trim() == ''">
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Driver Name</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.destinationDB.driverName" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Host</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.destinationDB.dbHost" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Port</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.destinationDB.dbPort" type="number" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Schema Name</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.destinationDB.dbSchemaName" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">User ID</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.destinationDB.dbUserid" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Password</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.destinationDB.dbPassword" type="password" class="min-input">
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

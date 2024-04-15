@@ -1,0 +1,46 @@
+<div class="main-container">
+    <div class="header-container" style="height: auto;">
+        Create Score Card
+    </div>
+    <form class="body-container" #inputForm="ngForm">
+        <div class="node-data">
+            <div class="node-detail">
+                <div class="label">
+                    <span>Name </span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <input class="min-input" [(ngModel)]="tableDetails.name" required name="flowname">
+                </div>
+            </div>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Description</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <textarea class="min-input" rows="6" cols="50" [(ngModel)]="tableDetails.description" name="description"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- <small class="err-msg">
+    {{errMsg()}}
+</small> -->
+<mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close style="color: white;background-color: rgb(43, 42, 42)">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button class="create" mat-flat-button mat-dialog-close (click)="createTableList()" [disabled]="!tableDetails.name">
+        <mat-icon>done_all</mat-icon>
+        <span>Create Scorecard</span>
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

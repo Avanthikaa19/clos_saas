@@ -1,0 +1,127 @@
+// @import '../../../administrator/common-feature-styles.scss';
+@import url(../../../../../common-styles/form-style.scss);
+
+.selector-container {
+    padding: 10px;
+    width: 600px;
+    font-size: 14px;
+    background: white;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(255, 255, 255, 1) 5px, rgba(255, 255, 255, 1) 100%);
+    > .title-container {
+        font-weight: 500;
+        text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+        color: dimgray;
+        padding-bottom: 10px;
+        border-bottom: solid gainsboro 1px;
+    }
+    > .workflows-container {
+        padding: 10px 0;
+        border-bottom: solid gainsboro 1px;
+        > .workflow-search {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            mat-icon {
+                flex: 0 0 auto;
+            }
+            input {
+                width: auto;
+                flex: 1 1 auto;
+            }
+        }
+        > .workflows-items-list {
+            max-height: 30vh;
+            overflow-y: auto;
+            background-color: whitesmoke;
+            padding: 5px;
+            border: solid gainsboro 1px;
+            > .workflow-item-container {
+                padding: 5px 10px;
+                border-radius: 5px;
+                background-color: white;
+                margin-bottom: 5px;
+                > .workflow-item {
+                    padding: 3px 0;
+                    position: sticky;
+                    top: -5px;
+                    background-color: rgba(255, 255, 255, 0.75);
+                    backdrop-filter: blur(5px);
+                    z-index: 99;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    > mat-checkbox {
+                        font-weight: 500;
+                        color: crimson;
+                    }
+                    > .bullet {
+                        margin: 0 10px;
+                    }
+                    > .description {
+                        font-weight: 500;
+                        color: gray;
+                    }
+                }
+                > .worksheets-item-list {
+                    > .worksheet-item {
+                        padding: 3px 0 3px 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        position: relative;
+                        > .tree-indicator, > .tree-indicator-bottom {
+                            position: absolute;
+                            height: 50%;
+                            width: 10px;
+                            left: 5px;
+                        }
+                        > .tree-indicator {
+                            top: 0;
+                            border-left: solid gainsboro 1px;
+                            border-bottom: solid gainsboro 1px;
+                        }
+                        > .bullet {
+                            margin: 0 10px;
+                        }
+                        > .description {
+                            color: gray;
+                        }
+                    }
+                    > .worksheet-item:not(:last-child) {
+                        > .tree-indicator-bottom {
+                            top: 50%;
+                            border-left: solid gainsboro 1px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    > .actions-container {
+        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > div.spacer {
+            flex: 1 1 auto;
+        }
+        > *:not(div.spacer) {
+            flex: 0 0 auto;
+        }
+        > button:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+}
+
+button {
+    span {
+      //to add a gap between icon and text in buttons
+      padding-left: 10px;
+    }
+}
+
+:host ::ng-deep .mat-checkbox-layout {
+    margin-bottom: 0 !important;
+}

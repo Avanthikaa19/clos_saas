@@ -1,0 +1,279 @@
+@import url(../../../common-css/common.scss);
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url(../../../common-css/table-design-v.01.scss);
+@import url(../../../common-css/commonstyles.scss);
+* {
+    font-size: 1.4rem;
+}
+
+.tool-bar {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    >span {
+        position: relative;
+        >input {
+            background-color: white;
+            height: 3rem;
+            width: 60rem;
+            padding-left: 4rem;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: inset 0 0 5px 2px rgb(136 136 136 / 30%);
+            border: none;
+        }
+        .icon-search {
+            position: absolute;
+            left: 2%;
+            top: 48%;
+            color: rgb(80, 80, 80);
+            transform: translateY(-50%);
+        }
+    }
+    >.create-table-container {
+        flex: 0 0 auto;
+
+    }
+    div.spacer {
+        flex: 1 1 auto;
+    }
+    *:not(spacer) {
+        flex: 0 0 auto;
+    }
+}
+
+.main-container {
+    height: calc(100vh - 20rem);
+}
+.queryvar-btn{
+background-color:#0e2954 ;
+color: white;
+}
+.sidenav-content {
+    height: calc(100% - 3.9rem);
+    .query-definition-container {
+        height: 100%;
+        >.query-container-box {
+            height: 38%;
+            >.toggle-container {
+                padding: 10px;
+                height: 5%;
+            }
+        }
+        >.spacer {
+            height: 2%;
+        }
+        >.execution-container {
+            height: 60%;
+            overflow: auto;
+            background-color: rgb(248, 250, 252);
+            >.default-container {
+                display: flex;
+                font-style: italic;
+                color: #938c8c;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                top: 50%;
+            }
+            >.table-container {
+                height: 48%;
+            }
+        }
+    }
+}
+
+.sidenav {
+    padding: 10px;
+    width: 25%;
+    >.node-data {
+        width: 30%;
+        padding-top: 20px;
+        padding-bottom: 10px;
+        .node-detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            margin-left: 20px;
+            .label {
+                font-weight: bold;
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: 100px;
+                text-align: left;
+            }
+            .spacer {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: 50px;
+                height: 2px;
+                text-align: center;
+            }
+            .value {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: 300px;
+                input {
+                    width: 100%;
+                    padding: 1rem;
+                    box-shadow: inset 0 0 5px 2px rgb(136 136 136 / 30%);
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
+.mat-button-toggle-group {
+    height: 32px;
+    align-items: center;
+}
+
+.button-cls {
+    transform: scale(0.75);
+}
+
+.button-class {
+    transform: scale(0.7);
+    float: right;
+}
+
+.spacer-cls {
+    width: 2%
+}
+
+.loading__line {
+    /* =Animate the stuff
+  ------------------------ */
+    .load-1 .line:nth-last-child(1) {
+        animation: loadingA 1.5s 1s infinite;
+    }
+    .load-1 .line:nth-last-child(2) {
+        animation: loadingA 1.5s 0.5s infinite;
+    }
+    .load-1 .line:nth-last-child(3) {
+        animation: loadingA 1.5s 0s infinite;
+    }
+    .line {
+        display: inline-block;
+        width: 10px;
+        height: 15px;
+        border-radius: 15px;
+        background-color: #4b9cdb;
+        margin: 0.2rem;
+    }
+    @keyframes loadingA {
+        0% {
+            height: 15px;
+        }
+        50% {
+            height: 35px;
+        }
+        100% {
+            height: 15px;
+        }
+    }
+    p {
+        font-size: 1.6rem;
+        margin-left: 1.2rem;
+        font-weight: 500;
+    }
+}
+
+.save-disable {
+    color: #0e2954 !important;
+    background-color: white !important;
+    cursor: not-allowed;
+}
+
+.disable-icon {
+    background-color: rgb(236, 229, 222);
+    cursor: not-allowed;
+}
+
+.quey-builder-container {
+    background: #fff;
+}
+
+.field-container {
+    min-height: 3rem;
+    background-color: white;
+    margin: 1.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 10px;
+    border: 1px dashed #ccc;
+}
+
+.tableChoose {
+    width: 25rem;
+    margin-right: 20px;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    top: 0.5rem;
+}
+
+.tableChoose label {
+    margin-right: 1em;
+    padding: 0.7em 0;
+    font-weight: bold;
+}
+
+.tableChoose mat-select {
+    flex: 6;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.remove-field {
+    // width: 25px;
+    // height: 25px;
+    // text-align: center;
+    // border: 1px solid #ccc;
+    // position: relative;
+    // box-shadow: rgba(149, 157, 165, 0.2) 0px 5px 3px;
+    // top: 8px;
+    >mat-icon {
+        position: relative;
+        top: 8px;
+        color: red;
+        font-size: 2.1rem;
+        margin-right: 0rem;
+        cursor: pointer;
+    }
+}
+
+.remove-field:focus {
+    box-shadow: none;
+}
+
+.tableChoose mat-select {
+    box-shadow: inset 0 0 10px #d5d5d4ba;
+}
+
+.addmoreField button {
+    margin: 10px 10px 0 10px;
+    position: relative;
+    left: 7px;
+    color: #0e2954;
+}
+
+.category-header {
+    >span {
+        top: 9px;
+        position: relative;
+        font-size: 17px;
+    }
+}
+
+.tableFieldSearch{
+    width: 100%;
+    background-color: white;
+}

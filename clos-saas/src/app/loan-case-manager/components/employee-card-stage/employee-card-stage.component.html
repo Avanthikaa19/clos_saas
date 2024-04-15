@@ -1,0 +1,13 @@
+<mat-tab-group (selectedTabChange)="employeeCardTabChange($event)" [(selectedIndex)]="selectedIndex">
+    <ng-container *ngFor="let tab of listUEmployeeCardTab">
+        <mat-tab style="font-weight: 600;" label="{{tab.name}}">
+            <ng-template mat-tab-label style="font-weight:bold;">
+                <mat-icon>{{tab.icon}} </mat-icon> <span class="tabsName"> {{tab.name}} </span>
+            </ng-template>
+        </mat-tab>
+    </ng-container>
+</mat-tab-group>
+<div class="main-container">
+    <app-generic-data-table [columns]="employeeCardColumns" [filterButton]="true" [pageData]="pageData" [displayAllButton]="true" [exportButton]="true" [tableData]="employeeCardData" (onFilterChange)="onApplyFilter($event)" [clearButton]="true" (onChange)="columnChange($event)"
+        [loading]="loadingItems" (onExportChange)="employeeCardListExport($event)" (onClick)="detailClick($event)" (onSelectAllCheckbox)="multiCheckData($event)" (onSelectAllSelfAssign)="multiCheckSelfAssign($event)" [filterInput]="true" (onPageChange)="getEmployeeCardData($event)"></app-generic-data-table>
+</div>

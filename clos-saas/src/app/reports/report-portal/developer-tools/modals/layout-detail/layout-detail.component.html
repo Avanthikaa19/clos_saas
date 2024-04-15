@@ -1,0 +1,217 @@
+<!-- <div class="layout-detail-container">
+    <div class="layout-title">
+        <span>Layout Details</span>
+    </div>
+    <div class="layout-details">
+        <span class="min-label">Name:</span><input [(ngModel)]="layout.name" class="min-input field-name">
+        <span class="min-label">Visible To:</span>
+        <mat-select [(ngModel)]="layout.visibleTo" class="min-select" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'">Everyone</mat-option>
+        </mat-select>
+        <span class="min-label">Editable By:</span>
+        <mat-select [(ngModel)]="layout.editableBy" class="min-select" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'" [disabled]="layout.visibleTo === 'OWNER_ONLY'">Everyone</mat-option>
+        </mat-select>
+    </div>
+    <div class="layout-details">
+        <span class="min-label">Description:</span><input [(ngModel)]="layout.description"
+            class="min-input field-description">
+    </div>
+    <div class="layout-spec-title">
+        <span>Configure:</span>
+        <button mat-stroked-button color="primary" class="float-right" (click)="openThemeSelection('Base')">
+            <mat-icon>format_paint</mat-icon>
+            <span style="padding-left: 10px;">{{layout.specification.baseTheme ? 'Change' : 'Select'}}</span>
+        </button>
+        <div class="float-right theme-name" *ngIf="layout.specification.baseTheme">
+            <mat-icon>done</mat-icon>
+            <span class="theme-name-value">{{layout.specification.baseTheme.name}}</span>
+        </div>
+        <div class="float-right theme-name">
+            <span class="theme-name-label">Base Theme:</span>
+        </div>
+    </div>
+    <div class="layout-spec-container">
+        <div class="spec-section-title noselect sticky-bottom" style="border-left: solid black 3px;">
+            Title
+        </div>
+        <div class="spec-title-band-list">
+           
+        <div class="spec-section-title noselect" style="border-left: solid black 3px; bottom: 48px;">
+            Header Items
+        </div>
+        <div class="spec-header-band-list" cdkDropList [cdkDropListData]="layout.specification.headerBands" (cdkDropListDropped)="drop($event)">
+            <div class="layout-ignore l-context-band" style="border-left: solid black 3px;" [@fadeInOut] *ngFor="let hBand of layout.specification.headerBands; let i = index" 
+                oncontextmenu="return false;" cdkDropListGroup cdkDrag [cdkDragData]="layout.specification.headerBands" 
+                matTooltip="Margins = Top: {{hBand.margins.top}} Left: {{hBand.margins.left}} Right: {{hBand.margins.right}} Bottom: {{hBand.margins.bottom}}">
+                <div class="band-backdrop noselect">
+                    HEADER BAND {{(i+1)}}
+                </div>
+                <div class="item-list-wrapper">
+                    <div cdkDropList class="item-list noselect" cdkDropListOrientation="horizontal"
+                        #leftContextElementsList="cdkDropList" [cdkDropListData]="hBand.elementsLeft"
+                        [cdkDropListConnectedTo]="[rightContextElementsList]" (cdkDropListDropped)="drop($event)">
+                        <span class="add-placeholder" *ngIf="!hBand.elementsLeft.length">ADD ITEMS</span>
+                        <app-layout-context-element-card class="items-left"
+                            *ngFor="let item of hBand.elementsLeft; let j = index" [(element)]="hBand.elementsLeft[j]"
+                            (click)="openContextElementEditor(true, i, true, j, item)"
+                            (contextmenu)="onContextMenu($event, 'CONTEXT_ELEMENT', hBand.elementsLeft, i, item)" cdkDrag>
+                            <div cdkDragHandle></div>
+                        </app-layout-context-element-card>
+                    </div>
+                    <div class="add-button-wrapper layout-selectable item-add noselect" matRipple
+                        (click)="addBandItem(hBand, 'LEFT')">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div class="items-space"></div>
+                    <div class="add-button-wrapper layout-selectable item-add noselect" matRipple
+                        (click)="addBandItem(hBand, 'RIGHT')">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div cdkDropList class="item-list noselect" cdkDropListOrientation="horizontal"
+                        #rightContextElementsList="cdkDropList" [cdkDropListData]="hBand.elementsRight"
+                        [cdkDropListConnectedTo]="[leftContextElementsList]" (cdkDropListDropped)="drop($event)">
+                        <span class="add-placeholder" *ngIf="!hBand.elementsRight.length">ADD ITEMS</span>
+                        <app-layout-context-element-card class="items-right"
+                            *ngFor="let item of hBand.elementsRight; let j = index" [(element)]="hBand.elementsRight[j]"
+                            (click)="openContextElementEditor(true, i, false, j, item)"
+                            (contextmenu)="onContextMenu($event, 'CONTEXT_ELEMENT', hBand.elementsRight, i, item)" cdkDrag>
+                            <div cdkDragHandle></div>
+                        </app-layout-context-element-card>
+                    </div>
+                </div>
+                <div class="l-context-band-grip" cdkDragHandle>
+                    <div class="l-context-band-grip-inner grip1"></div>
+                    <div class="l-context-band-grip-inner grip2"></div>
+                </div>
+            </div>
+            <div class="l-context-band-add noselect">
+                <div class="space-between"></div>
+                <button mat-stroked-button (click)="addHeaderBand()">
+                    <mat-icon>library_add</mat-icon>
+                    <span style="padding-left: 10px;">Add Header Band</span>
+                </button>
+            </div>
+        </div>
+      
+        <div class="spec-section-title noselect sticky-bottom" style="border-left: solid black 3px; bottom: 0;">
+            Footer Items
+        </div>
+        <div class="spec-header-band-list" cdkDropList [cdkDropListData]="layout.specification.footerBands" (cdkDropListDropped)="drop($event)">
+            <div class="layout-ignore l-context-band" style="border-left: solid black 3px;" [@fadeInOut] *ngFor="let hBand of layout.specification.footerBands; let i = index" 
+                oncontextmenu="return false;" cdkDropListGroup cdkDrag [cdkDragData]="layout.specification.footerBands" 
+                matTooltip="Margins = Top: {{hBand.margins.top}} Left: {{hBand.margins.left}} Right: {{hBand.margins.right}} Bottom: {{hBand.margins.bottom}}">
+                <div class="band-backdrop noselect">
+                    FOOTER BAND {{(i+1)}}
+                </div>
+                <div class="item-list-wrapper">
+                    <div cdkDropList class="item-list noselect" cdkDropListOrientation="horizontal"
+                        #leftContextElementsList="cdkDropList" [cdkDropListData]="hBand.elementsLeft"
+                        [cdkDropListConnectedTo]="[rightContextElementsList]" (cdkDropListDropped)="drop($event)">
+                        <span class="add-placeholder" *ngIf="!hBand.elementsLeft.length">ADD ITEMS</span>
+                        <app-layout-context-element-card class="items-left"
+                            *ngFor="let item of hBand.elementsLeft; let j = index" [(element)]="hBand.elementsLeft[j]"
+                            (click)="openContextElementEditor(false, i, true, j, item)"
+                            (contextmenu)="onContextMenu($event, 'CONTEXT_ELEMENT', hBand.elementsLeft, i, item)" cdkDrag>
+                            <div cdkDragHandle></div>
+                        </app-layout-context-element-card>
+                    </div>
+                    <div class="add-button-wrapper layout-selectable item-add noselect" matRipple
+                        (click)="addBandItem(hBand, 'LEFT')">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div class="items-space"></div>
+                    <div class="add-button-wrapper layout-selectable item-add noselect" matRipple
+                        (click)="addBandItem(hBand, 'RIGHT')">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div cdkDropList class="item-list noselect" cdkDropListOrientation="horizontal"
+                        #rightContextElementsList="cdkDropList" [cdkDropListData]="hBand.elementsRight"
+                        [cdkDropListConnectedTo]="[leftContextElementsList]" (cdkDropListDropped)="drop($event)">
+                        <span class="add-placeholder" *ngIf="!hBand.elementsRight.length">ADD ITEMS</span>
+                        <app-layout-context-element-card class="items-right"
+                            *ngFor="let item of hBand.elementsRight; let j = index" [(element)]="hBand.elementsRight[j]"
+                            (click)="openContextElementEditor(false, i, false, j, item)"
+                            (contextmenu)="onContextMenu($event, 'CONTEXT_ELEMENT', hBand.elementsRight, i, item)" cdkDrag>
+                            <div cdkDragHandle></div>
+                        </app-layout-context-element-card>
+                    </div>
+                </div>
+                <div class="l-context-band-grip" cdkDragHandle>
+                    <div class="l-context-band-grip-inner grip1"></div>
+                    <div class="l-context-band-grip-inner grip2"></div>
+                </div>
+            </div>
+            <div class="l-context-band-add noselect">
+                <div class="space-between"></div>
+                <button mat-stroked-button (click)="addFooterBand()">
+                    <mat-icon>library_add</mat-icon>
+                    <span style="padding-left: 10px;">Add Footer Band</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="layout-details-action">
+        <button mat-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="!layout.id" [disabled]="saving"
+            (click)="createLayout()">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Creating...' : 'Create'}}</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="layout.id" [disabled]="saving"
+            (click)="updateLayout()">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Saving Changes...' : 'Save Changes'}}</span>
+        </button>
+        <button mat-raised-button color="warn" class="item-right" *ngIf="layout.id" [disabled]="saving"
+            (click)="deleteLayout()">
+            <mat-icon>delete</mat-icon>
+            <span style="padding-left: 10px;">Delete Layout</span>
+        </button>
+    </div>
+    <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+        [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+    </div>
+    <mat-menu #contextMenu="matMenu">
+        <ng-template matMenuContent let-type="type" let-parent="selectedParent" let-parentIndex="selectedParentIndex"
+            let-item="selectedItem">
+            <ng-container *ngIf="type==='CONTEXT_ELEMENT'">
+                <span class="menu-section-header">{{item.cellData.type}} ELEMENT:</span>
+                <button mat-menu-item (click)="test(type, parent, item)" style="font-size: 14px; padding-left: 10px;"
+                    oncontextmenu="return false;">
+                    <mat-icon style="margin-left: 0px; margin-right: 0px;">settings</mat-icon>
+                    <span style="padding-left: 10px;">Edit Element</span>
+                </button>
+                <button mat-menu-item (click)="removeFromParent(parent, item)"
+                    style="font-size: 14px; padding-left: 10px; color: red;" oncontextmenu="return false;">
+                    <mat-icon style="margin-left: 0px; margin-right: 0px; color: red;">remove</mat-icon>
+                    <span style="padding-left: 10px;">Remove Element</span>
+                </button>
+                <span class="menu-section-header">HEADER BAND:</span>
+                <button mat-menu-item (click)="test(type, parent, item)" style="font-size: 14px; padding-left: 10px;"
+                    oncontextmenu="return false;">
+                    <mat-icon style="margin-left: 0px; margin-right: 0px;">settings</mat-icon>
+                    <span style="padding-left: 10px;">Edit Band</span>
+                </button>
+                <button mat-menu-item (click)="removeHeaderBand(parentIndex)"
+                    style="font-size: 14px; padding-left: 10px; color: red;" oncontextmenu="return false;">
+                    <mat-icon style="margin-left: 0px; margin-right: 0px; color: red;">remove_circle_outline</mat-icon>
+                    <span style="padding-left: 10px;">Remove Entire Band</span>
+                </button>
+            </ng-container>
+            <ng-container *ngIf="type==='CONTEXT_ELEMENT_TITLE'">
+                <span class="menu-section-header">{{item.cellData.type}} ELEMENT:</span>
+                <button mat-menu-item (click)="test(type, parent, item)" style="font-size: 14px; padding-left: 10px;"
+                    oncontextmenu="return false;">
+                    <mat-icon style="margin-left: 0px; margin-right: 0px;">settings</mat-icon>
+                    <span style="padding-left: 10px;">Edit Element</span>
+                </button>
+            </ng-container>
+        </ng-template>
+    </mat-menu>
+</div> -->

@@ -1,0 +1,65 @@
+> #tsum-tabs {
+    height: 100%;
+}
+> #tsum-tabs main {
+    background: #fff;
+}
+
+> #tsum-tabs section {
+    height: 100%;
+    display: none;
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+}
+
+> #tsum-tabs .input {
+    display: none;
+}
+
+> #tsum-tabs label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 10px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+}
+
+> #tsum-tabs label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+> #tsum-tabs label[for*="1"]:before {
+    content: "\f007";
+}
+> #tsum-tabs label[for*="2"]:before {
+    content: "\f0c0";
+}
+> #tsum-tabs label[for*="3"]:before {
+    content: "\f1ae";
+}
+> #tsum-tabs label[for*="4"]:before {
+    content: "\f507";
+}
+
+> #tsum-tabs label:hover {
+    color: #888;
+    cursor: pointer;
+}
+
+> #tsum-tabs input:checked + label {
+    color: royalblue;
+    border-bottom: 1px solid royalblue;
+    border-top: 1px solid #fff;
+    background-color: whitesmoke;
+}
+
+> #tsum-tabs #tab1:checked ~ #content1,
+> #tsum-tabs #tab2:checked ~ #content2,
+> #tsum-tabs #tab3:checked ~ #content3,
+> #tsum-tabs #tab4:checked ~ #content4 {
+    display: block;
+}

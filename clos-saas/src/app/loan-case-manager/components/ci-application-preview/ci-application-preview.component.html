@@ -1,0 +1,522 @@
+<div class="main-container">
+    <div class="header-container">
+        <div class="icon-container">
+            <mat-icon class="icon">credit_card</mat-icon>
+        </div>
+        <div class="title-container">
+            <div class="component-title" style="border-bottom: none;margin-left:0.5rem;font-size:2rem;">
+                <span>
+                    CI Card Details
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="middle-section">
+        <div class="top-container">
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <td>App ID
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input>
+                        </td>
+                        <td>Account Name
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input>
+                        </td>
+                        <td>CI Instruction
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select">
+                                <mat-option>
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="middle-container">
+            <ng-container>
+                <mat-tab-group class="mat-header" [(selectedIndex)]="selectedIndex">
+                    <ng-container *ngFor="let tab of verificationList">
+                        <mat-tab style="font-weight: 600;" label="{{tab}}">
+                            <ng-template mat-tab-label style="font-weight:bold;">
+                                <span class="tabsName"> {{tab}} </span>
+                            </ng-template>
+                        </mat-tab>
+                    </ng-container>
+                </mat-tab-group>
+                <ng-container *ngIf="selectedIndex == 0">
+                    <div class="table-container" style="overflow: auto;">
+                        <table>
+                            <!-- <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Listed</td>
+                                <td>UnListed</td>
+                            </tr> -->
+                            <tr>
+                                <td>AF Declared
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <!-- <td>
+                                    <mat-radio-button></mat-radio-button>
+                                </td> -->
+                                <!-- <td>
+                                    <mat-radio-button></mat-radio-button>
+                                </td> -->
+                            </tr>
+                            <tr>
+                                <td>Contacted
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <!-- <td>
+                                    <mat-radio-button></mat-radio-button>
+                                </td> -->
+                                <!-- <td>
+                                    <mat-radio-button></mat-radio-button>
+                                </td> -->
+                            </tr>
+                            <tr>
+                                <td>Other
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <!-- <td>
+                                    <mat-radio-button></mat-radio-button>
+                                </td> -->
+                                <!-- <td>
+                                    <mat-radio-button></mat-radio-button>
+                                </td> -->
+                            </tr>
+                            <tr>
+                                <td>No.Contacted
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Source/Position
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Rank
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Employment
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Date Hired
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Position
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Employment / Bus Name
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Add
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Tel
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Annual Income
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Basic Income
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Income Docs Signatory with Docs
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                        </table>
+                        <span style="color:#3445b4;padding: 1rem;"> * Note : For Non top, Unknown, Self Employed
+                            applicants
+                            only.</span>
+                        <table style="padding-bottom:2rem;">
+                            <tr>
+                                <td>Nature of Business
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td> Years in Operation
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>No of Employees
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No of Branches
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="selectedIndex == 1">
+                    <div class="table-container" style="overflow: auto;">
+                        <table>
+                            <tr>
+                                <td>No.Contacted
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Source / Position
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Home Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ownership
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td> Years of Stay
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Hotel Tel/No
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="selectedIndex == 2">
+                    <div class="table-container" style="overflow: auto;">
+                        <table>
+                            <tr>
+                                <td>No.Contacted
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Name
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Embo Name
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Birth Date
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="date">
+                                </td>
+                                <td> Place of Birth
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>MFMN
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>TIN
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>SSS
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Cell Phone no
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Billing Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Permanent Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Civil Status
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input>
+                                </td>
+                                <td>Gender
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select">
+                                        <mat-option *ngFor="let gender of genders" [value]="gender">
+                                            {{gender}}
+                                        </mat-option>
+                                    </mat-select>
+                                </td>
+                            </tr>
+                        </table>
+                        <span style="color:#3445b4;padding: 1rem;font-weight: bold;">SUPPLEMENTARY CARD</span>
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <td>Name
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input>
+                                    </td>
+                                    <td>Embo Name
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input>
+                                    </td>
+                                    <td>Birth Date
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="date">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Suple Sex
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <mat-select class="min-select">
+                                            <mat-option *ngFor="let gender of genders" [value]="gender">
+                                                {{gender}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </td>
+                                    <td>Relationship
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input>
+                                    </td>
+                                    <td>Billing Add
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="selectedIndex == 3">
+                    <mat-tab-group class="mat-header" [(selectedIndex)]="selectedTabIndex">
+                        <ng-container *ngFor="let tab of selectedTabName">
+                            <mat-tab style="font-weight: 600;" label="{{tab}}">
+                                <ng-template mat-tab-label style="font-weight:bold;">
+                                    <span class="tabsName"> {{tab}} </span>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                    <div class="sub-section">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Day 1</h4>
+                                <button mat-flat-button class="add-button" (click)="onAddTextBox()">
+                                    <mat-icon>add</mat-icon>
+                                    Add
+                                </button>
+                            </div>
+                            <div style="overflow: auto;overflow-x: hidden;">
+                                <ng-container *ngFor="let text of textDataList">
+                                    <textarea placeholder="Enter here..."
+                                        style="height:10rem;width: 63rem;margin: 1rem;"></textarea>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Day 2</h4>
+                                <button mat-flat-button class="add-button" (click)="onAddTextBox()">
+                                    <mat-icon>add</mat-icon>
+                                    Add
+                                </button>
+                            </div>
+                            <div style="overflow: auto;overflow-x: hidden;">
+                                <ng-container *ngFor="let text of textDataList">
+                                    <textarea class="text" placeholder="Enter here..."
+                                        style="height:10rem;width: 63rem;margin: 1rem;"></textarea>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="end-section">
+        <div class="end-inner-container">
+            <div class="grid">
+                <div>
+                    <table>
+                        <tr>
+                            <td>Remarks</td>
+                            <td><textarea  class="remarks"></textarea></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-two-container">
+                    <table>
+                        <tr>
+                            <td>C.I Agency/Verifier/Date/Time</td>
+                            <td>:</td>
+                            <td>
+                                <input type="date">
+                            </td>
+                            <td>Checked By :<input style="margin-left:3rem;"></td>
+                        </tr>
+                        <tr>
+                            <td>Position One</td>
+                            <td>:</td>
+                            <td>
+                                <input>
+                            </td>
+                            <td>
+                                <mat-select class="min-select">
+                                    <mat-option *ngFor="let data of status" [value]="data">
+                                        {{data}}
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Position Two</td>
+                            <td>:</td>
+                            <td>
+                                <input>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button  class="proceed-container" mat-button>
+                <mat-icon>check</mat-icon>
+                Proceed
+            </button>
+        </div>
+    </div>
+</div>

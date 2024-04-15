@@ -1,0 +1,203 @@
+.layout-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 0 10px;
+    position: relative;
+    > div {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    > .header-container {
+        height: 50px;
+        background-color: white;
+        position: relative;
+        cursor: default;
+        color:dimgray;
+        > .layout-name-wrapper {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            float:right;
+            > span {
+                padding-left: 10px;
+            }
+            > span,
+            input {
+                font-size: 16px;
+                font-weight: bold;
+            }
+            > input {
+                padding-left: 8px;
+                width: 250px;
+                border: solid gainsboro 2px;
+                border-radius: 3px;
+            }
+            > .edit-btn {
+                margin-left: 10px;
+                opacity: 0;
+                transition: all linear 150ms;
+            }
+        }
+        > .layout-name-wrapper:hover {
+            > .edit-btn {
+                opacity: 1;
+            }
+        }
+        > .title {
+            color: dimgray;
+            background-color: white;
+            position: absolute;
+            left: 7%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+
+> .export-card-create {
+    width: 100%;
+    height: calc(100vh - 280px);
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #8d7d7d1f;
+    transition: all linear 100ms;
+    overflow: hidden;
+    position: relative;
+    > mat-icon {
+        position: absolute;
+        top: calc(50% - 30px);
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: whitesmoke;
+        font-size: 50px;
+        width: 25px;
+        height: 25px;
+    }
+    > .export-card-header{
+        display: flex;
+        justify-content: space-evenly;
+        margin: 10px;
+        background: white;
+    }
+    > div .export-card-header-content{
+        padding: 7px;
+        font-weight: 500;
+        width: 300px;
+        text-align: center;
+        color: royalblue;
+    }
+    > .export-card-data{
+        display: flex;
+        justify-content: space-evenly;
+
+        > .export-card-data-items{
+            height: 600px;
+            overflow: hidden;
+            width: 260px;
+
+            > .data-content{
+                background-color: white;
+                width: 230px;
+                height: 55px;
+                margin: 10px;
+                text-align: center;
+                padding-top: 17px;
+                font-weight: 500;
+                box-shadow: -1px 1px 9px 1px #53505052; 
+                > mat-icon{
+                    float: right;
+                    margin-right: 13px;
+                }
+            }
+
+            > .data-content:hover{
+                box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+                background-color: #8eb2e8; 
+                color: white;
+                transform: scale(1.1);             
+                transition: all 0.5s ease;
+            }
+
+            > .data-content-active{
+                border: 1px double royalblue;
+                color: royalblue;
+                border-style: dashed;
+            }
+        }
+
+        > .export-card-data-items:hover{
+            overflow: auto;
+        }
+    }
+    
+}
+> .export-card-create:hover {
+    -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+> div .tb-btn {
+    flex: 0 0 auto;
+    display: flex;
+    float: right;
+    margin: 10px;
+    align-items: center;
+    // margin-top: 5px;
+    padding: 5px;
+    background-color: white;
+    border: solid gainsboro 1px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all linear 100ms;
+    > mat-icon,
+    span {
+        color: rgb(50, 50, 50);
+        transition: all linear 100ms;
+    }
+    > mat-icon {
+        color: royalblue;
+    }
+    > span {
+        padding-right: 5px;
+    }
+    > span,
+    mat-icon:not(:first-child) {
+        margin-left: 5px;
+        font-weight: normal;
+    }
+    .min-select,
+    .min-input {
+        margin-left: 5px;
+        height: 24px;
+    }
+    .min-select {
+        width: 200px;
+    }
+    mat-select.short-select {
+        width: 100px;
+    }
+    input.short-input {
+        width: 40px;
+    }
+    input[type="color"] {
+        width: 30px;
+    }
+}
+> .tb-btn:hover {
+    border-color: royalblue;
+    box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.1);
+    > mat-icon,
+    span {
+        color: royalblue;
+    }
+}
+.tb-btn:active,
+.tb-btn:focus-within {
+    border-color: royalblue;
+}
+}

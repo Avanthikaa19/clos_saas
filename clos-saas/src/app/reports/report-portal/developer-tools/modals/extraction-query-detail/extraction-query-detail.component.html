@@ -1,0 +1,87 @@
+<div class="extraction-detail-container">
+    <div class="extraction-title noselect">
+        <span>Extraction Query Details</span>
+    </div>
+    <div class="extraction-details">
+        <span class="min-label noselect">Name:</span><input [(ngModel)]="extraction.name" class="min-input field-name" maxlength="100">
+        <span class="min-label noselect">Visible To:</span>
+        <mat-select [(ngModel)]="extraction.visibleTo" class="min-select noselect" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'">Everyone</mat-option>
+        </mat-select>
+        <span class="min-label noselect">Editable By:</span>
+        <mat-select [(ngModel)]="extraction.editableBy" class="min-select noselect" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'" [disabled]="extraction.visibleTo === 'OWNER_ONLY'">Everyone</mat-option>
+        </mat-select>
+    </div>
+    <div class="extraction-details">
+        <span class="min-label noselect">Description:</span><input [(ngModel)]="extraction.description"
+            class="min-input field-description" maxlength="255">
+    </div>
+    <!-- <div class="extraction-spec-title">
+        <span>Query:</span>
+        <mat-icon class="float-right info-icon noselect" matTooltipClass="multi-line-tooltip" 
+        matTooltip="Ctrl + /    to comment or uncomment.&#13;
+        Ctrl + F    to search or replace.&#13;
+        Tab         to increase indent.&#13;
+        Shift + Tab to decrease indent.">
+            info
+        </mat-icon>
+    </div> -->
+    <div class="extraction-spec-container">
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChanged($event)">
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="tab-label-container noselect">
+                        <mat-icon>edit</mat-icon><span style="margin-left: 10px;">Edit SQL</span>
+                    </div>
+                </ng-template>
+                <div class="my-code-editor-description noselect">
+                    <span>Use the editor below to set the SQL query. You can also use the <a class="highlight1">$[</a><a class="highlight2">param_name</a><a class="highlight1">]</a> notation for embedding parameters.</span>
+                    <mat-icon matTooltip="The parameters will need to be configured with values or formulas while creating a report.">info</mat-icon>
+                </div>
+                <div class="my-code-editor-wrapper" [@fadeInOut] *ngIf="selectedTabIndex==0">
+                    <ngx-monaco-editor class="my-code-editor" [options]="editorOptions" [(ngModel)]="unsavedSql"></ngx-monaco-editor>
+                </div>
+            </mat-tab>
+            <mat-tab *ngIf="extraction.id">
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="tab-label-container noselect">
+                        <mat-icon>compare</mat-icon><span style="margin-left: 10px;">View Differences</span>
+                    </div>
+                </ng-template>
+                <div class="my-code-editor-description noselect">
+                    <span>Use the screen below to view the differences of the original SQL <a class="highlight1">(left side)</a> to the edited SQL <a class="highlight1">(right side)</a>.</span>
+                </div>
+                <div class="my-code-diffeditor-wrapper" [@fadeInOut] *ngIf="selectedTabIndex==1">
+                    <ngx-monaco-diff-editor class="my-code-diffeditor" [options]="diffOptions" [originalModel]="originalModel" [modifiedModel]="modifiedModel"></ngx-monaco-diff-editor>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <!-- <div class="extraction-spec-title">
+        <span>Parameters:</span>
+    </div> -->
+    <div class="extraction-details-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="!extraction.id" [disabled]="saving || cannotSaveMessage()"
+            (click)="createExtraction()" matTooltip="cannotSaveMessage()">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Creating...' : 'Create'}}</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="extraction.id" [disabled]="saving || cannotSaveMessage()"
+            (click)="selectedTabIndex == 0 ? confirmUpdate() : updateExtraction()" matTooltip="cannotSaveMessage()">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Saving Changes...' : (selectedTabIndex == 0 ? 'Confirm Changes' : 'Save Changes')}}</span>
+        </button>
+        <button mat-button color="warn" class="item-right" *ngIf="extraction.id" [disabled]="saving"
+            (click)="deleteExtraction()">
+            <mat-icon>delete</mat-icon>
+            <span style="padding-left: 10px;">Delete Query</span>
+        </button>
+    </div>
+</div>

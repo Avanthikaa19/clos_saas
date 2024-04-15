@@ -1,0 +1,48 @@
+<div class="content-container">
+
+    <p class="text_align">File Upload : <span class=" mandatory-icon ">*</span></p>
+
+    <div class="upload_Section">
+        <p *ngIf="fileName === ''" class="click_text">Click <b class="here_text" (click)="handleFileUpload()">here</b> to upload the file</p>
+        <input type="file" prohibitedChars #uploadFile accept=".zip " multiple class="input_Field" #fileInput (change)="handleFileChange($event)">
+        <span *ngIf="fileName && editID" class="file_Name">{{fileName}} </span>
+        <span *ngIf="fileName && !editID" class="file_Name">{{fileName}} </span>
+        <span *ngIf="fileName === null && editID" class="file_Name">No file found</span>
+    </div>
+
+    <div class="delete-container" *ngIf="fileName === null && editID">
+        <button (click)="handleFileUpload()" mat-raised-button class="upload_button">
+            <span class="delete_btn_text">Upload File</span>
+        </button>
+    </div>
+
+    <div class="delete-container" *ngIf="fileName && !editID">
+        <button (click)="deleteFile()" mat-raised-button class="delete_button">
+            <mat-icon style="color:white"  matTooltip="Delete File">delete_forever</mat-icon>
+            <span class="delete_btn_text">Delete File</span>
+        </button>
+    </div>
+
+    <div class="delete-container" *ngIf="fileName && editID">
+        <button (click)="deleteEditFile()" *ngIf="fileName && editID" mat-raised-button class="delete_button">
+            <mat-icon style="color:white"  matTooltip="Delete File">delete_forever</mat-icon>
+            <span class="delete_btn_text">Delete File</span>
+        </button>
+    </div>
+
+    <div *ngIf="uploadProgress !== 0 && uploadProgress !== 100" class="progress form-group " class="progress_Bar">
+        <div class="progress-bar progress-bar-striped bg-primary " role="progressbar " [style.width.%]="uploadProgress">{{uploadProgress}}%
+        </div>
+    </div>
+
+    <div class="button_container">
+        <button *ngIf="createEditOption === 'Create Entry' " (click)="onSubmit() " mat-raised-button class="next_button ">
+            <mat-icon>save</mat-icon>
+            <span class="save_btn_span" >Save</span>
+        </button>
+        <button *ngIf="createEditOption === 'Edit Entry' " (click)="updateClick()" mat-raised-button class="next_button ">
+            <mat-icon>save</mat-icon>
+            <span  class="save_btn_span">Update</span>
+        </button>
+    </div>
+</div>

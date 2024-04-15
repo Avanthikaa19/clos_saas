@@ -1,0 +1,937 @@
+<div class="p-3 dialog-theme-light" *ngIf="widgetComponent == false" >
+    <div>
+        <mat-icon style="cursor: pointer;float: right; font-size: 18px; font-weight: bolder;"  class="icon-hov2" matTooltip="Close"
+            (click)="this.dialogRef.close();">close</mat-icon>
+        <p style=" padding: 10px;margin: 0px;font-size: 22px;font-weight: 700;text-align: center;"
+            [style.color]="' rgba(0, 0, 0, 0.87)'"
+            [class]="'hdr'">
+            WIDGET SETTINGS</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6" style="height: 615px; overflow-y: auto;overflow-x: hidden;">
+            <mat-tab-group animationDuration="0ms"
+                [class]="'label-light'">
+                <mat-tab label="PANEL" style="font-size: large;">
+                    <div style="overflow: hidden; padding-top: 10px;">
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-lg-6 col-md-12">
+                                <p class="ml-1 mb-2"
+                                    [style.color]="'#000000'"
+                                    style="font-size: 16px !important;font-weight: 800;">GENERATE QUERY</p>
+                            </div>
+                            <div class="col-lg-6 col-md-12" style="text-align: end;" *ngIf="widget.query!==null && resultData?.length==0">
+                                <button mat-flat-button style="padding-left: 5px;"class="clos-submit-btn" (click)="queryBuilder()">
+                                    <span style="padding-left: 5px;padding-right: 5px;">QUERY BUILDER</span>
+                                </button>
+                            </div>
+                            <div class="col-lg-6 col-md-12" style="text-align: end;">
+                                <button mat-flat-button style="padding-left: 5px;" [style.bottom]="widget.query!==null && resultData?.length==0?'37px':''" [style.left]="widget.query!==null && resultData?.length==0?'100px':''" class="clos-submit-btn" (click)="queryBuilderOfExtractionQuery()">
+                                    <span style="padding-left: 5px;padding-right: 5px;">EXTRACTION QUERY</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <p class="m-0"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700;">SQL QUERY</p>
+                            <div [class]="'dbField-light'"
+                                style="width: 100%; font-family: monospace; height: 100px; margin-top: 5px;padding: 10px;overflow:auto;background-color: aliceblue;"
+                                spellcheck="false">
+                                {{widget.queryText}}
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <p class="m-0"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700; padding-top: 10px;">DATA</p>
+                            <div [class]="'dbField-light'"
+                                style="width: 100%; font-family: monospace; height: 330px; margin-top: 5px;padding: 10px;white-space: pre;overflow: auto;background-color: aliceblue;"
+                                spellcheck="false">
+                                {{widget.actualData? (widget.actualData | json) : null}}
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="SETTINGS" style="font-size: large;">
+                    <div style="overflow-x:hidden">
+                        <div class="row" style="margin: 15px 0;" *ngIf="widget.type == 'card' || widget.type=='cardChart'">
+                            <p class="col-lg-12 col-md-12 mb-0"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700; padding-left: 20px; padding-top: 20px;">
+                                LABEL NAME
+                            </p>
+                            <span class="col-lg-12 col-md-12 mb-1" style="padding-left: 19px; padding-top: 5px;">
+                                <input class="min-select" type="text" placeholder="Title Name" 
+                                    [(ngModel)]="widget.graphSettings.labelName" style="width: 50%;height: 38px;font-size: 13px;" autocomplete="off"
+                                    required>
+                            </span>
+                            <p class="col-lg-6 col-md-12 mb-0 mt-3"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700; padding-left: 20px;">TEXT COLOR
+                            </p>
+                            <div class="col-lg-6 col-md-12 mb-0 mt-3">
+                                <input type="color" [(ngModel)]="widget.graphSettings.cardTextColor" style="padding: 5px;">
+                            </div>
+                            <p class="col-lg-6 col-md-12 mb-0"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BACKGROUND
+                                COLOR
+                            </p>
+                            <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                <div style="
+                                    border: solid #e6e6e6 0.1rem;
+                                    background-color: #fafafa;
+                                    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1) inset;
+                                    height: 32px;
+                                    width: 64px;
+                                    z-index: 0;
+                                    border-radius: 3px;">
+                                <div style="border:6px solid rgb(233, 233, 237);  border-radius: 3px;
+                                height: 30px;width: 62px;position: relative;" [style.background]="widget.graphSettings.cardColor">
+                                <input style="opacity: 0;" type="color" [(ngModel)]="widget.graphSettings.cardColor">
+                            </div></div></div>
+                            <p class="col-lg-6 col-md-12 mb-0"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BORDER
+                                COLOR
+                            </p>
+                            <span class="col-lg-6 col-md-12 mb-1" style="padding-top: 10px;">
+                                <mat-slide-toggle [(ngModel)]="borderColor" (ngModelChange)="clearBorder();">
+                                </mat-slide-toggle>
+                            </span>
+                            <div class="row" style="margin-left: 0px;" *ngIf="borderColor == true">
+                                <p class="col-lg-6 col-md-12 mb-0"
+                                    [style.color]="'#000000'"
+                                    style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BORDER
+                                    TOP
+                                </p>
+                                <div class="col-lg-3 col-md-12 mb-0" style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="color" [(ngModel)]="widget.graphSettings.borderTopColor" style="padding: 5px;">
+                                </div>
+                                <span class="col-lg-3 col-md-12 " style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="number"  min="0" max="5" style="height: 23px;width:50%;margin-top: 5px;padding: 2px;"
+                                        [(ngModel)]="widget.graphSettings.topThickness" autocomplete="off" required>
+                                </span>
+                                <p class="col-lg-6 col-md-12 mb-0"
+                                    [style.color]="'#000000'"
+                                    style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BORDER
+                                    BOTTOM
+                                </p>
+                                <div class="col-lg-3 col-md-12 mb-0" style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="color" [(ngModel)]="widget.graphSettings.borderBottomColor"style="padding: 5px;">
+                                </div>
+                                <span class="col-lg-3 col-md-12 " style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="number"  min="0" max="5" style="height: 23px;width:50%;margin-top: 5px;padding: 2px;"
+                                        [(ngModel)]="widget.graphSettings.bottomThickness" autocomplete="off" required>
+                                </span>
+                                <p class="col-lg-6 col-md-12 mb-0"
+                                    [style.color]="'#000000'"
+                                    style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BORDER
+                                    LEFT
+                                </p>
+                                <div class="col-lg-3 col-md-12 mb-0" style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="color" [(ngModel)]="widget.graphSettings.borderLeftColor" style="padding: 5px;">
+                                </div>
+                                <span class="col-lg-3 col-md-12 " style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="number"  min="0" max="5" style="height: 23px;width:50%;margin-top: 5px;padding: 2px;"
+                                        [(ngModel)]="widget.graphSettings.leftThickness" autocomplete="off" required>
+                                </span>
+                                <p class="col-lg-6 col-md-12 mb-0"
+                                    [style.color]="'#000000'"
+                                    style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BORDER
+                                    RIGHT
+                                </p>
+                                <div class="col-lg-3 col-md-12 mb-0" style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="color" [(ngModel)]="widget.graphSettings.borderRightColor" style="padding: 5px;">
+                                </div>
+                                <span class="col-lg-3 col-md-12 " style="padding-top: 20px;padding-left: 13px;">
+                                    <input type="number"  min="0" max="5" style="height: 23px;width:50%;margin-top: 5px;padding: 2px;"
+                                        [(ngModel)]="widget.graphSettings.rightThickness" autocomplete="off" required>
+                                </span>
+                            </div>
+                        </div>
+                        <mat-accordion multi *ngIf="widget.type == 'table'">
+                            <!----------------------------------- Title ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                [style.color]="'#000000'"
+                                [expanded]="step === 0" (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        TITLE
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">TITLE
+                                        NAME
+                                    </p>
+                                    <p class="col-lg-4 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">TITLE ALIGNMENT
+                                    </p>
+                                    <p class="col-lg-2 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">
+                                        {{this.widget.graphSettings.titleShow == true ? 'SHOW' : 'HIDE'}}
+                                    </p>
+
+                                    <!-- Title Name -->
+                                    <span class="col-lg-6 col-md-6 mb-1" style="padding-left: 15px;">
+                                        <input type="text" placeholder="Title Name" class="form-control" style="height: 38px;font-size: 13px;"
+                                            [(ngModel)]="widget.graphSettings.tableName" autocomplete="off" required>
+                                    </span>
+                                    <!-- Align-->
+                                    <span class="col-lg-4 col-md-12 mb-1">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.titleAlign"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="left">Left</mat-option>
+                                            <mat-option value="center">Center</mat-option>
+                                            <mat-option value="right">Right</mat-option>
+                                        </mat-select>
+                                    </span>
+                                    <!-- visibility-->
+                                    <span class="col-lg-2 col-md-12 mb-1" style="padding-top: 10px;">
+                                        <mat-slide-toggle [(ngModel)]="widget.graphSettings.titleShow">
+                                        </mat-slide-toggle>
+                                    </span>
+
+                                    <!-- Header BG-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        HEADER BACKGROUND
+                                        COLOR
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="color" [(ngModel)]="widget.graphSettings.headerBg" style="padding: 5px;">
+                                    </div>
+
+                                    <!--Header Color-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        HEADER FONT
+                                        COLOR
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="color" [(ngModel)]="widget.graphSettings.headerColor" style="padding: 5px;">
+                                    </div>
+
+                                    <!--Header border size-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        HEADER BORDER
+                                        SIZE
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="number" min="0" max="5" style="height: 23px;width:30%;padding: 2px;"
+                                            [(ngModel)]="widget.graphSettings.headerBorder" autocomplete="off" required>
+                                    </div>
+                                    <!--border color-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        HEADER BORDER
+                                        COLOR
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="color" [(ngModel)]="widget.graphSettings.headerBorderColor" style="padding: 5px;">
+                                    </div>
+
+                                    <!--BODY-->
+
+                                    <!-- Body BG-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        BODY BACKGROUND
+                                        COLOR
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="color" [(ngModel)]="widget.graphSettings.bodyBg" style="padding: 5px;">
+                                    </div>
+
+                                    <!--Body Color-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        BODY FONT
+                                        COLOR
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="color" [(ngModel)]="widget.graphSettings.bodyColor" style="padding: 5px;">
+                                    </div>
+
+                                    <!-- Body border size-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        BODY BORDER
+                                        SIZE
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="number" min="0" max="5" style="height: 23px;width:30%;padding: 2px;"
+                                            [(ngModel)]="widget.graphSettings.bodyBorder" autocomplete="off" required>
+                                    </div>
+                                    <!--Body border color-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        BODY BORDER
+                                        COLOR
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                        <input type="color" [(ngModel)]="widget.graphSettings.bodyBorderColor" style="padding: 5px;">
+                                    </div>
+                                    <!-- Text Align-->
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">
+                                        TEXT ALIGN
+                                    </p>
+                                    <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;width: 50%">
+                                            <mat-select class="min-select" [(ngModel)]="widget.graphSettings.textAlign"
+                                                panelClass="select-panel-theme-light"
+                                                [class]="'dbField-light'"
+                                                style="background-color: transparent;border-radius: 5px;">
+                                                <mat-option value="left">Left</mat-option>
+                                                <mat-option value="center">Center</mat-option>
+                                                <mat-option value="right">Right</mat-option>
+                                            </mat-select>
+                                    </div>
+
+                                    <!--Header Color-->
+                                    <!-- <p class="col-lg-6 col-md-12 mb-0"
+                                [style.color]="'#000000'"
+                                style="font-size: 12px !important;font-weight: 700; padding: 20px 0 0 20px;">BACKGROUND
+                                COLOR
+                                </p>
+                                <div class="col-lg-6 col-md-12 mb-0" style="padding-top: 20px;">
+                                <input type="color" [(ngModel)]="widget.graphSettings.headerBg">
+                                </div> -->
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion multi *ngIf="widget.type != 'card' && widget.type != 'table' && widget.type!=='cardChart'">
+                            <!----------------------------------- Title ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                [expanded]="step === 0" (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        TITLE
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">TITLE
+                                        NAME
+                                    </p>
+                                    <p class="col-lg-4 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">TITLE ALIGNMENT
+                                    </p>
+                                    <p class="col-lg-2 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">
+                                        {{this.widget.graphSettings.titleShow == true ? 'SHOW' : 'HIDE'}}
+                                    </p>
+
+                                    <!-- Title Name -->
+                                    <span class="col-lg-6 col-md-6 mb-1" style="padding-left: 15px;">
+                                        <input type="text" placeholder="Title Name" class="min-select" style="height: 38px;font-size: 14px;"
+                                            [(ngModel)]="widget.graphSettings.titleText"
+                                            (ngModelChange)="previewOptions();" autocomplete="off" required>
+                                    </span>
+                                    <!-- Align-->
+                                    <span class="col-lg-4 col-md-12 mb-1">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.titleAlign"
+                                            (ngModelChange)="previewOptions()"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="left">Left</mat-option>
+                                            <mat-option value="center">Center</mat-option>
+                                            <mat-option value="right">Right</mat-option>
+                                        </mat-select>
+                                    </span>
+                                    <!-- visibility-->
+                                    <span class="col-lg-2 col-md-12 mb-1" style="padding-top: 10px;">
+                                        <mat-slide-toggle [(ngModel)]="widget.graphSettings.titleShow"
+                                            (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                    </span>
+                                </div>
+                            </mat-expansion-panel>
+                            <!----------------------------------- Legends ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState1 = true" (closed)="panelOpenState1 = false"
+                                *ngIf="widget.type !=='gaugeChart'">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        LEGEND
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState1 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;padding-left: 15PX;">LEGEND
+                                        ALIGNMENT
+                                    </p>
+                                    <p class="col-lg-4 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">LEGEND ORIENT
+                                    </p>
+                                    <p class="col-lg-2 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">
+                                        {{this.widget.graphSettings.legendShow == true ? 'SHOW' : 'HIDE'}}
+                                    </p>
+
+                                    <!-- Align-->
+                                    <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 14px;">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.legendAlign"
+                                            (ngModelChange)="previewOptions()"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="left">Left</mat-option>
+                                            <mat-option *ngIf="widget.graphSettings.legendOrient!='vertical'"
+                                                value="center">Center</mat-option>
+                                            <mat-option value="right">Right</mat-option>
+                                        </mat-select>
+                                    </span>
+                                    <!-- Align-->
+                                    <span class="col-lg-4 col-md-12 mb-1">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.legendOrient"
+                                            (ngModelChange)="previewOptions()"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="vertical">Vertical</mat-option>
+                                            <mat-option value="horizontal">Horizontal</mat-option>
+                                        </mat-select>
+                                    </span>
+                                    <!-- visibility-->
+                                    <span class="col-lg-2 col-md-12 mb-1" style="padding-top: 10px;">
+                                        <mat-slide-toggle [(ngModel)]="widget.graphSettings.legendShow"
+                                            (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                    </span>
+
+                                    <!-- Legend Name -->
+                                    <p class="col-lg-12 col-md-12 mb-0"
+                                        *ngIf="widget.type=='lineChart' || widget.type == 'barChart' || widget.type=='multipleChart' || widget.type=='candleStick'"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">LEGEND
+                                        NAME
+                                    </p>
+                                    <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 14px;"
+                                        *ngIf="widget.type=='lineChart' || widget.type == 'barChart'  || widget.type=='multipleChart' || widget.type=='candleStick'">
+                                        <input type="text" placeholder="Legend Name" class="form-control" style="font-size: 13px;height: 38px;"
+                                            [(ngModel)]="widget.graphSettings.legendName"
+                                            (ngModelChange)="previewOptions()" autocomplete="off" required>
+                                    </span>
+                                    <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 14px;"
+                                    *ngIf="widget.type=='multipleChart'">
+                                    <input type="text" placeholder="Legend Name" class="form-control" style="font-size: 13px;height: 38px;"
+                                        [(ngModel)]="widget.graphSettings.legendName2"
+                                        (ngModelChange)="previewOptions()" autocomplete="off" required>
+                                </span>
+                                <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 14px;"
+                                *ngIf="widget.type=='multipleChart'">
+                                <input type="text" placeholder="Legend Name" class="form-control" style="font-size: 13px;height: 38px;"
+                                    [(ngModel)]="widget.graphSettings.legendName3"
+                                    (ngModelChange)="previewOptions()" autocomplete="off" required>
+                            </span>
+                                </div>
+                            </mat-expansion-panel>
+                            <!----------------------------------- Radius ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState5 = true" (closed)="panelOpenState5 = false"
+                                *ngIf="(widget.type == 'pieChart') || (widget.type == 'donutChart')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        RADIUS
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState5 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3" *ngIf="widget.type == 'pieChart'">
+                                    <p class="col-lg-12 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 16px;">RADIUS
+                                        VALUE
+                                    </p>
+                                    <!-- radius % -->
+                                    <span class="col-lg-12 col-md-6 mb-1">
+                                        <input type="number" placeholder="value" min="10" max="100" class="form-control" style="height: 38px;font-size: 13px;"
+                                            [(ngModel)]="widget.graphSettings.radius "
+                                            (ngModelChange)="previewOptions();" autocomplete="off"
+                                            onkeydown="return false"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                    </span>
+                                </div>
+                                <div class="row" *ngIf="widget.type == 'donutChart'">
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 16px;">OUTER
+                                        RADIUS VALUE
+                                    </p>
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 16px;">INNER
+                                        RADIUS VALUE
+                                    </p>
+                                    <!-- outer radius % -->
+                                    <span class="col-lg-6 col-md-6 mb-1">
+                                        <input type="number" placeholder="value" min="10" max="100" class="min-select" style="height:38px;font-size: 13px;"
+                                            [(ngModel)]="widget.graphSettings.outerRadius "
+                                            (ngModelChange)="previewOptions();" autocomplete="off"
+                                            onKeyDown="return false"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                    </span>
+                                    <!-- inner radius % -->
+                                    <span class="col-lg-6 col-md-6 mb-1">
+                                        <input type="number" placeholder="value" min="10" max="100" class="min-select" style="height: 38px;font-size: 13px;"
+                                            [(ngModel)]="widget.graphSettings.innerRadius "
+                                            (ngModelChange)="previewOptions();" autocomplete="off"
+                                            onKeyDown="return false"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                    </span>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <!----------------------------------- Tooltip ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState4 = true" (closed)="panelOpenState4 = false"
+                                *ngIf="(widget.type != 'gaugeChart')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        TOOLTIP
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState4 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">TOOLTIP
+                                        TRIGGER
+                                    </p>
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">
+                                        {{this.widget.graphSettings.toolTipShow == true ? 'SHOW' : 'HIDE'}}
+                                    </p>
+                                    <!-- Align-->
+                                    <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 14px;">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.toolTipTrigger"
+                                            (ngModelChange)="previewOptions()"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option
+                                                *ngIf="(widget.type == 'barChart') || (widget.type == 'lineChart')"
+                                                value="axis">Axis</mat-option>
+                                            <mat-option value="item">Item</mat-option>
+                                        </mat-select>
+                                    </span>
+                                    <!-- visibility-->
+                                    <span class="col-lg-2 col-md-12 mb-1" style="padding-top: 10px;">
+                                        <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolTipShow"
+                                            (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                    </span>
+                                </div>
+                            </mat-expansion-panel>
+                            <!----------------------------------- X axis ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false"
+                                *ngIf="(widget.type == 'barChart') || (widget.type == 'lineChart')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        X AXIS
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState2 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-12 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">X AXIS
+                                    </p>
+                                    <!-- X axis -->
+                                    <span class="col-lg-12 col-md-12 mb-1" style="padding-left: 14px;">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.xaxis"
+                                            (ngModelChange)="previewOptions();"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="value">Value</mat-option>
+                                            <mat-option value="category">Category</mat-option>
+                                        </mat-select>
+                                    </span>
+                                </div>
+                            </mat-expansion-panel>
+                            <!----------------------------------- Y axis ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState3 = true" (closed)="panelOpenState3 = false"
+                                *ngIf="(widget.type == 'barChart') || (widget.type == 'lineChart')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        Y AXIS
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState3 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-12 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;padding-left: 15px;">Y AXIS
+                                    </p>
+                                    <!-- y axis -->
+                                    <span class="col-lg-12 col-md-12 mb-1" style="padding-left: 14px;">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.yaxis"
+                                            (ngModelChange)="previewOptions()"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="value">Value</mat-option>
+                                            <mat-option value="category">Category</mat-option>
+                                        </mat-select>
+                                    </span>
+                                </div>
+                            </mat-expansion-panel>
+                            <!----------------------------------- Toolbar ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState6 = true" (closed)="panelOpenState6 = false"
+                                *ngIf="(widget.type != 'gaugeChart')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        TOOLBOX
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState6 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-12 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">TOOL
+                                        BOX
+                                    </p>
+                                    <!-- toolbar visibility -->
+                                    <span class="col-lg-12 col-md-12 mb-1" style="padding-left: 15px;">
+                                        <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxShow"
+                                            (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                    </span>
+                                    <div *ngIf="widget.graphSettings.toolboxShow == true">
+                                        <!-- Line and Bar -->
+                                        <div class="row"
+                                            *ngIf="(widget.type == 'barChart') || (widget.type == 'lineChart')">
+                                            <p class="col-lg-3 col-md-12 mb-0"
+                                                [style.color]="'#000000'"
+                                                style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">
+                                                ZOOM
+                                            </p>
+                                            <p class="col-lg-3 col-md-12 mb-0"
+                                                [style.color]="'#000000'"
+                                                style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">
+                                                DATA VIEW
+                                            </p>
+                                            <p class="col-lg-3 col-md-12 mb-0"
+                                                [style.color]="'#000000'"
+                                                style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">
+                                                TYPE
+                                            </p>
+                                            <p class="col-lg-3 col-md-12 mb-0"
+                                                [style.color]="'#000000'"
+                                                style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">
+                                                SAVE
+                                            </p>
+                                            <span class="col-lg-3 col-md-12 mb-1" style="padding-left: 15px;">
+                                                <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxZoom"
+                                                    (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                            </span>
+                                            <span class="col-lg-3 col-md-12 mb-1" style="padding-left: 15px;">
+                                                <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxData"
+                                                    (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                            </span>
+                                            <span class="col-lg-3 col-md-12 mb-1" style="padding-left: 15px;">
+                                                <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxType"
+                                                    (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                            </span>
+                                            <span class="col-lg-3 col-md-12 mb-1" style="padding-left: 15px;">
+                                                <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxSave"
+                                                    (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                            </span>
+                                        </div>
+                                        <!-- Pie Donut Funnel -->
+                                        <div class="row" style="padding-left: 15px;"
+                                            *ngIf="(widget.type == 'pieChart') || (widget.type == 'donutChart') || (widget.type == 'funnelChart')">
+                                            <p class="col-lg-6 col-md-12 mb-0"
+                                                [style.color]="'#000000'"
+                                                style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">
+                                                DATA VIEW
+                                            </p>
+                                            <p class="col-lg-6 col-md-12 mb-0"
+                                                [style.color]="'#000000'"
+                                                style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">
+                                                SAVE
+                                            </p>
+                                            <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 15px;">
+                                                <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxData"
+                                                    (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                            </span>
+                                            <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 15px;">
+                                                <mat-slide-toggle [(ngModel)]="widget.graphSettings.toolboxSave"
+                                                    (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                            <!----------------------------------- Label ---------------------------------------------------->
+                            <mat-expansion-panel hideToggle
+                                 
+                                [style.color]="'#000000'"
+                                (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                                *ngIf="(widget.type != 'gaugeChart') && (widget.type != 'candleStick')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title
+                                        [style.color]="'#000000'"
+                                        style="font-size: 16px; font-weight: 600;">
+                                        LABEL
+                                    </mat-panel-title>
+                                    <mat-icon style="padding-top: 4px;">{{panelOpenState7 ? 'keyboard_arrow_up' :
+                                        'keyboard_arrow_down'}}</mat-icon>
+                                </mat-expansion-panel-header>
+                                <div class="row mt-3 mb-3">
+                                    <p class="col-lg-6 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">LABEL
+                                        POSITION
+                                    </p>
+                                    <p class="col-lg-3 col-md-12 mb-0"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">
+                                        {{this.widget.graphSettings.labelShow == true ? 'SHOW' : 'HIDE'}}
+                                    </p>
+                                    <p class="col-lg-3 col-md-12 mb-0"
+                                        *ngIf="(widget.type != 'lineChart') && (widget.graphSettings.labelShow == true)"
+                                        [style.color]="'#000000'"
+                                        style="font-size: 12px !important;font-weight: 700;">LABEL LINE
+                                    </p>
+                                    <!-- toolbar visibility -->
+                                    <span class="col-lg-6 col-md-12 mb-1" style="padding-left: 14px;">
+                                        <mat-select class="min-select" [(ngModel)]="widget.graphSettings.labelPosition"
+                                            (ngModelChange)="previewOptions()"
+                                            panelClass="select-panel-theme-light"
+                                            [class]="'dbField-light'"
+                                            style="background-color: transparent;border-radius: 5px;">
+                                            <mat-option value="outside">Outside</mat-option>
+                                            <mat-option value="inside">Inside</mat-option>
+                                        </mat-select>
+                                    </span>
+                                    <span class="col-lg-3 col-md-12 mb-1">
+                                        <mat-slide-toggle style="padding-top: 8px;"
+                                            [(ngModel)]="widget.graphSettings.labelShow"
+                                            (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                    </span>
+                                    <span class="col-lg-3 col-md-12 mb-1"
+                                        *ngIf="(widget.type != 'lineChart') && ((widget.graphSettings.labelShow == true))">
+                                        <mat-slide-toggle style="padding-top: 8px;"
+                                            [(ngModel)]="widget.graphSettings.labelLineShow"
+                                            (ngModelChange)="previewOptions()"></mat-slide-toggle>
+                                    </span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div class="col-lg-6 col-md-6" style="padding-top: 20px;">
+            <div class="box" *ngIf="widget.type != 'card' && widget.type != 'table' && widget.type!=='cardChart'">
+                <div id="container" echarts [options]="previewOption" class="demo-chart" style="height: 530px;"></div>
+                <div  *ngIf="widget.type=='gaugeChart'" class="container" style="position: relative;width: 100%;height: 50px;top:-144px">
+                    <!-- <span *ngIf="widget.query!==undefined && typeOfvar!=='string'" style="position: absolute;top: 50%;left: 50%;text-align: center;display: flex;align-items: center;justify-content: center;transform: translate(-50%,-50%);">{{widget.query.columnName1}}</span> -->
+                    </div>
+                <div style="display: flex;height: 30px;justify-content: flex-end;" *ngIf="(widget.type == 'barChart') || (widget.type == 'lineChart')">
+                      <!----------------------------------- X axis ---------------------------------------------------->
+                      <div
+                       
+                      [style.color]="'#000000'"
+                      (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false">
+                      <div class="row mt-3 mb-3">
+                          <p class="col-lg-12 col-md-12 mb-0"
+                              [style.color]="'#000000'"
+                              style="font-size: 12px !important;font-weight: 700; padding-left: 15px;">X AXIS
+                          </p>
+                          <!-- X axis -->
+                          <span class="col-lg-12 col-md-12 mb-1" style="padding-left: 14px;">
+                              <mat-select class="min-select" [(ngModel)]="widget.graphSettings.xaxis"
+                                  (ngModelChange)="previewOptions();"
+                                  panelClass="select-panel-theme-light"
+                                  [class]="'dbField-light'"
+                                  style="background-color: transparent;border-radius: 5px;">
+                                  <mat-option value="value">Value</mat-option>
+                                  <mat-option value="category">Category</mat-option>
+                              </mat-select>
+                          </span>
+                      </div>
+                    </div>
+                  <!----------------------------------- Y axis ---------------------------------------------------->
+                  <div
+                       
+                      [style.color]="'#000000'"
+                      (opened)="panelOpenState3 = true" (closed)="panelOpenState3 = false">
+                      <div class="row mt-3 mb-3" style="margin-left: 10px;">
+                          <p class="col-lg-12 col-md-12 mb-0"
+                              [style.color]="'#000000'"
+                              style="font-size: 12px !important;font-weight: 700;padding-left: 15px;">Y AXIS
+                          </p>
+                          <!-- y axis -->
+                          <span class="col-lg-12 col-md-12 mb-1" style="padding-left: 14px;">
+                              <mat-select class="min-select" [(ngModel)]="widget.graphSettings.yaxis"
+                                  (ngModelChange)="previewOptions()"
+                                  panelClass="select-panel-theme-light"
+                                  [class]="'dbField-light'"
+                                  style="background-color: transparent;border-radius: 5px;">
+                                  <mat-option value="value">Value</mat-option>
+                                  <mat-option value="category">Category</mat-option>
+                              </mat-select>
+                          </span>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box" style="padding: 30px;" *ngIf="widget.type == 'card' || widget.type=='cardChart'">
+                <div class="card label" [style.background-color]="widget.graphSettings.cardColor" style="height: 200px;"
+                [style.background-color]="widget.graphSettings.cardColor ? widget.graphSettings.cardColor : cardcolor"
+                [style.border-top-color]="widget.graphSettings.borderTopColor? widget.graphSettings.borderTopColor : cardtop "
+                [style.border-top-width.px]="widget.graphSettings.topThickness"
+                [style.border-bottom-color]="widget.graphSettings.borderBottomColor ? widget.graphSettings.borderBottomColor :cardbottom "
+                [style.border-bottom-width.px]="widget.graphSettings.bottomThickness"
+                [style.border-left-color]="widget.graphSettings.borderLeftColor ? widget.graphSettings.borderLeftColor :cardleft"
+                [style.border-left-width.px]="widget.graphSettings.leftThickness"
+                [style.border-right-color]="widget.graphSettings.borderRightColor ? widget.graphSettings.borderRightColor :cardright"
+                [style.border-right-width.px]="widget.graphSettings.rightThickness">
+                    <span class="hdr" style="font-size: 16px;margin-top: 12%;"
+                        [style.color]="widget.graphSettings.cardTextColor ?widget.graphSettings.cardTextColor: cardtxt ">{{this.widget.graphSettings.labelName}}</span>
+                        <!-- <span *ngIf="tabLoading" style="position: absolute;right:2%">
+                            <mat-spinner [diameter]="14"></mat-spinner>
+                        </span> -->
+                    <span class="hdr"
+                        [style.color]="widget.graphSettings.cardTextColor ?widget.graphSettings.cardTextColor: cardtxt">{{widget.actualData?.value}}</span>
+                </div>
+            </div>
+            <div class="box" *ngIf="widget.type == 'table'" style="min-height: 300px;">
+                <span class="hdr" style="font-size: 20px;display: flex;margin-bottom: 20px;
+                font-weight: bold;"
+                    [style.justify-content]="widget.graphSettings.titleAlign" [style.color]="textcolor ? textcolor : widget.graphSettings.cardTextColor">{{widget.graphSettings.tableName}}                 
+                    <div style="margin-left:25%;font-size:16px;font-weight:lighter;font-style: italic;color: silver;" *ngIf="tabLoading" >Loading...</div>
+                </span>
+                <!-- <span class="hdr">{{this.tableData}}</span> -->
+                <div class="table-container" style="overflow: auto;max-height: 470px;">
+                    <table id="table" style="width:100%;">
+                        <thead>
+                            <tr [style.background-color]="widget.graphSettings.headerBg ? widget.graphSettings.headerBg : darkBkcolor">
+                                <th
+                                    [style.color]="widget.graphSettings.headerColor"
+                                    [style.border]="widget.graphSettings.headerBorder + 'px solid' + widget.graphSettings.headerBorderColor"
+                                    *ngFor="let list of tableArray"><span *ngIf="list !== '_id'">{{list?.replaceAll('_',' ')}}</span></th>
+                        </thead>
+                        <tbody>
+
+                            <tr  [style.background-color]="widget.graphSettings.bodyBg ? widget.graphSettings.bodyBg : lightBkcolor" *ngFor="let list of tableData; let k = index">
+                                <td 
+                                    [style.color]="widget.graphSettings.bodyColor"
+                                    [style.text-align]="widget.graphSettings.textAlign"
+                                    [style.border]="widget.graphSettings.bodyBorder + 'px solid' + widget.graphSettings.bodyBorderColor"
+                                    *ngFor="let val of tableArray; let i = index">
+                                    <span *ngIf="val !== '_id'">{{list[val]}}</span>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div style="margin-left: 40%;top: 40%;font-style: italic;color: silver;" *ngIf="tableArray.length ==0">No entries found.</div>
+                    <div class="paginator-container" style="position:absolute;bottom:2%;right:45%" *ngIf="!tabLoading && tableArray?.length!==0">
+                        <div class="middle-container">
+                            <button class="page-links" style="height:30px" (click)="page=page-1;showQueryData(queryText)" [disabled]="page===0"><mat-icon style="display: flex;
+                                align-items: center;
+                                justify-content: center;margin-top:-12px" [style.color]="textcolor ? textcolor : widget.graphSettings.cardTextColor">&laquo;</mat-icon></button>
+                        </div>
+                        <div class="left-container" *ngFor="let pageNum of getPageNumbers()">
+                            <button class="page-links" [class.active]="pageNum === page+1" (click)="page = pageNum - 1; showQueryData(queryText)" [style.color]="textcolor ? textcolor : widget.graphSettings.cardTextColor">{{ pageNum }}</button>
+                        </div>
+                        <div class="middle-container">
+                            <button class="page-links" style="height:30px" (click)="nextPage(); showQueryData(queryText)" [disabled]="isLastPage()||totalCount<10"><mat-icon style="display: flex;
+                                align-items: center;
+                                justify-content: center;margin-top:-12px" [style.color]="textcolor ? textcolor : widget.graphSettings.cardTextColor">&raquo;</mat-icon></button>
+                        </div>
+                    </div>    
+                    <div class="right-container" style="position:absolute;right:5%;bottom:4%" *ngIf="!tabLoading" [style.color]="textcolor ? textcolor : widget.graphSettings.cardTextColor">
+                        Total Items: <span style="font-weight: bold">{{totalCount}}</span>
+                    </div>  
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-3 mb-3" style="text-align: center;">
+            <button mat-button style="font-weight: 600;margin-right: 2px;" (click)="widgetComponent = true"
+                [hidden]="layoutData.widget != null" class="btn-primary-admin">
+                <mat-icon style="color: black;">navigate_before</mat-icon>
+                PREVIOUS
+            </button>
+            <button mat-button style="font-weight: 600; margin-right: 38px;margin-top: 18px;"
+                [disabled]="widget.queryText ==null || widget.actualData == null" (click)="saveNewWidget()"
+                [ngClass]="widget.queryText ==null || widget.actualData == null?'btn-disabled':'btn-primary-admin'">
+                <mat-icon style="color: black;">save</mat-icon>
+                SAVE
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="widgetComponent ">
+    <app-widgets></app-widgets>
+</div>

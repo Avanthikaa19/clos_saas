@@ -1,0 +1,189 @@
+<div class="main-container" *ngIf="ac.super || ac.items?.AD006A_AUDIT_TRAIL_VIEW" >
+    <div class="header-container">
+        <div class="header-content-container">
+            <span style="margin-left: 1rem;">
+                <b><u>Audit List</u></b>
+            </span>
+            <span style="padding-left:1rem;padding-right: 1rem; color: gray;" *ngIf="selectedModule?.module">
+                >
+            </span>
+            <span>
+                {{selectedModule?.module}}
+            </span>
+            <span style="padding-left:1rem;padding-right: 1rem; color: gray;" *ngIf="selectedReport">
+                >
+            </span>
+            <span>
+                {{selectedReport}}
+            </span>
+        </div>
+        <div class="cde__btn-container">
+            <button class="blk__create__btn-container" style="color: white; background-color: #040404;"mat-button (click)="getAuditTrailByMultiSortFilter()"
+            [class.edit]="auditTrail.length==0" [disabled]="auditTrail.length==0">
+                <mat-icon style="margin-right: 1rem;">filter_list</mat-icon>
+                Apply All Filters / Sort
+            </button>
+            <!-- <button class="blk__create__btn-container" mat-button>
+                <mat-icon style="margin-right: 1rem;">cloud_upload</mat-icon>
+                Bulk Create
+            </button> -->
+            <button class="blk__delete__btn-container" style="color: white; background-color: #040404;"mat-button (click)="onClearBtnClick()">
+                <mat-icon style="margin-right: 1rem;">close</mat-icon>
+                Clear All Filter / Sort
+            </button>
+            <button *ngIf="this.ac.items?.AD006B_AUDIT_TRAIL_EXPORT || ac.super" class="export__btn-container" style="color: white; background-color: #040404;"
+                matTooltip="Export To CSV / XLSX / PDF / XLS" matTooltipPosition="above" [matMenuTriggerFor]="menu"
+                mat-raised-button>
+                <mat-icon style="margin-right: 1rem;">get_app</mat-icon>
+                Export
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onExportClick('csv')">
+                    <span>CSV</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="onExportClick('xlsx')">
+                    <span>XLSX</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="onExportClick('pdf')">
+                    <span>PDF</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="onExportClick('xls')">
+                    <span>XLS</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="sidenav-container">
+            <div class="side__nav-header">
+                <span style="margin-top: 1rem;"><b>Audit Trail</b></span>
+            </div>
+            <div *ngIf="loading" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+            <div style="overflow-y: auto; margin-top: 1rem;">
+                <mat-accordion>
+                    <div class="expension-panel">
+                        <mat-expansion-panel *ngFor="let groups of allGroups; let index = index"
+                            (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header (click)="getSelectedModule(groups)">
+                                <mat-panel-title>
+                                    <mat-icon>label</mat-icon>
+                                    <span> {{groups.module}}</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="mat-panel">
+                                <mat-panel-description>
+                                    <mat-nav-list>
+                                        <div class="mat_list_item">
+                                            <mat-list-item *ngFor="let reports of groups.auditHeaders"
+                                                (click)="selectReports(reports,groups)" class="nav-list-item">
+                                                <mat-icon>label_important</mat-icon>
+                                                <span style="padding-top: 2px;border: transparent solid 1px; border-bottom: lightgray;
+                                                    text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;
+                                                    -webkit-box-orient: vertical;font-size: 12px;">
+                                                    {{reports}}
+                                                </span>
+                                            </mat-list-item>
+                                        </div>
+                                    </mat-nav-list>
+                                </mat-panel-description>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+            </div>
+        </div>
+        <div class="sidenav_content-container">
+            <div *ngIf="!loading && selectedReport==null">
+                <mat-card class="example-card">
+                    <mat-card-title style="font-size: 14px;">Please select the Module from the left.
+                    </mat-card-title>
+                </mat-card>
+            </div>
+            <div *ngIf="!loading && selectedReport!=null" class="table__cnt-container">
+                <div class="table-container">
+                    <div *ngIf="loading" class="loading-spinner">
+                        <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                        <span>Loading.. Please wait..</span>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr style="text-transform: capitalize;">
+                                <th *ngFor="let header of auditTrailHeaders">{{header}}
+                                    <mat-icon class="flex-shrink table-head-icon"
+                                        style="font-size: 1.4rem; margin-top: 1.2rem;" (click)="onSortBtnClick(header)">
+                                        {{header.order === 'ASC' ? 'arrow_upward' : 'arrow_downward'}}
+                                    </mat-icon>
+                                </th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr style="top: 5.5%; text-transform: capitalize;">
+                                <th *ngFor="let header of auditTrailHeaders">
+                                    <div class="parent__row-flex" *ngIf="filterColumns.includes(header)">
+                                        <input class="min-input flex-grow" placeholder="{{header}}"
+                                        [(ngModel)]="header.filter"
+                                            (ngModelChange)="filterChangeEvent(header.name,header.filter)"
+                                            style="background-color: white;min-width: 15rem;text-transform: capitalize;">
+                                        <mat-icon class="flex-shrink table-head-icon"
+                                            style="font-size: 1.4rem; margin-top: 1rem;"
+                                            (click)="getAuditTrailByMultiSortFilter()">filter_list
+                                        </mat-icon>
+                                    </div>
+                                    <div class="parent__row-flex" *ngIf="!filterColumns.includes(header)">
+                                        <input [disabled]="!filterColumns.includes(header.name)" class="min-input flex-grow"
+                                            placeholder="{{header}}"
+                                            style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;">
+                                        <mat-icon class="flex-shrink table-head-icon"
+                                            style=" font-size: 1.4rem; margin-top: 1rem;">filter_list
+                                        </mat-icon>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <ng-container *ngIf="!loading && auditTrail.length==0">
+                                <span class="no-content"></span>
+                            </ng-container> -->
+                            <ng-container>
+                                <tr *ngFor="let auditTrail of auditTrail">
+                                    <td *ngFor="let header of auditTrailHeaders">
+                                        <ng-container *ngIf="getAuditTrail(auditTrail[header]) != 'Array'">
+                                            {{getAuditTrail(auditTrail[header])}}
+                                        </ng-container>
+                                        <ng-container *ngIf="getAuditTrail(auditTrail[header]) == 'Array'">
+                                            <button mat-button
+                                                style="color: green;background: rgba(98, 160, 96, 0.1);line-height:2rem"
+                                                (click)="getAuditBodiesList(auditTrail)">View</button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="!loading && selectedReport!=null" class="page-container">
+                <div class="fetch-container">
+                    <!-- <span>
+                        Fetched 469 datas in 0.05 seconds
+                    </span> -->
+                </div>
+                <div class="pg-container">
+                    <mat-paginator [length]="entryCount" [pageIndex]="pageNum" [pageSize]="pageSize"
+                        [pageSizeOptions]="[5, 10, 25, 50,100]" (page)="getAuditList($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="no-access" *ngIf="!ac.super && !ac.items?.AD006A_AUDIT_TRAIL_VIEW">
+    <app-no-access></app-no-access>
+</div>

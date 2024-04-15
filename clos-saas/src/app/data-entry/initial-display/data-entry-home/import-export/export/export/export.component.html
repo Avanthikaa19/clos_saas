@@ -1,0 +1,234 @@
+<ng-container>
+  <div [style.height.px]="component_height" [style.min-width.px]="1366" class="component-container"
+    style="background-color: white;overflow: hidden;">
+    <div class="report-publisher-container" style="height: 100%; min-width: 1366px; font-size: 14px;">
+      <mat-toolbar style="min-height: 45px;">
+        <mat-toolbar-row style="display: flex; justify-content: space-between; background-color:#3445b4; height: 45px;">
+          <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            <span style="color: white; flex: 0 0 auto; font-size: 14px;">Path:
+            </span>
+            <div style="flex: 0 0 auto;margin-left: 8px;">
+              <div *ngFor="let folder of currentFolderPathFolders; let i = index" class="address-bar-folder"
+              matTooltip="Click to navigate to directory." [matTooltipDisabled]="!showHints" 
+              [hidden]="folder == 'apps'||folder == 'los'">
+              {{folder == 'batch_export'?'/':folder}}
+            </div>
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="report-publisher-container" [style.height.px]="component_height-45"
+        style="min-width: 1366px; overflow-y: hidden;">
+        <div class="explorer-toolbar-container">
+          <button mat-raised-button class="back-button" [disabled]="currentFolderPathFolders.length <= 3"
+          (click)="goToParentDir();this.searchDirectoryOrFileText = '';name = ''">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <span style="margin-left: 5px;">Back</span>
+          </button>
+          <div class="current-directory">
+            <span>Current Export Directory:</span>
+            <span>{{ name }}</span>
+          </div>
+          <div class="search-input">
+            <span>Search for directory or file:</span>
+            <input placeholder="Search here..." style="width:50%;" [(ngModel)]='searchDirectoryOrFileText'>
+          </div>
+        </div>     
+        <ng-container>
+          <div class="explorer-container">
+            <div class="explorer-item-container" id="expItemContainer" style="height: 750px;">
+              <div class="explorer-item-container-group-header sticky-top noselect">
+                Folders:
+              </div>
+              <div *ngIf="currentDirectory?.children.length==0" class="empty-placeholder noselect">
+                No directories found under this path.
+              </div>
+              <div style="text-align:center;padding-top: 30px;padding-bottom: 30px;"
+                *ngIf="getFilteredDirectoriesForSearch(currentDirectory?.children, searchDirectoryOrFileText).length == 0  && currentDirectory?.children.length!=0">
+                No Directories found under this Name</div>
+              <div
+                *ngFor="let dir of getFilteredDirectoriesForSearch(currentDirectory?.children, searchDirectoryOrFileText); let i = index"
+                matTooltip="Double click to view sub-folders." [matTooltipDisabled]="!showHints"
+                class="explorer-item noselect"
+                [class.explorer-item-focused]="focusedDirectory!=null&&dir.path==focusedDirectory.path"
+                (click)="focusFolder(dir, $event);" (dblclick)="setDirectory(dir.path);this.searchDirectoryOrFileText = ''">
+                <div class="explorer-item-icon explorer-item-icon-folder noselect">
+                  <mat-icon class="noselect">folder</mat-icon>
+                </div>
+                <div class="explorer-item-name noselect">
+                  {{dir.name}}
+                </div>
+              </div>
+              <div class="explorer-item-container-group-header sticky-bottom sticky-top noselect">
+                Files:
+              </div>
+              <div *ngIf="currentDirectory?.files.length==0" class="empty-placeholder noselect">
+                No files found under this path.
+              </div>
+              <div style="text-align:center;padding-top: 30px;padding-bottom: 30px;"
+                *ngIf="getFilteredFilesForSearch(currentDirectory?.files, searchDirectoryOrFileText).length == 0  && currentDirectory?.files.length!=0">
+                No Files found under this Name</div>
+              <ng-container
+                *ngFor="let fil of getFilteredFilesForSearch(currentDirectory?.files, searchDirectoryOrFileText); let i = index">
+                <div matTooltip="Double click to download file." [matTooltipDisabled]="!showHints" class="explorer-item"
+                  id="file{{i}}" [class.explorer-item-focused]="focusedFile!=null&&fil.path==focusedFile.path"
+                  (click)="focusFile(fil, $event, 'file'+i, 'expItemContainer')"
+                  (dblclick)="getFileForDownload(fil, false)">
+                  <div class="explorer-item-icon explorer-item-icon-file">
+                    <mat-icon *ngIf="fil.name.endsWith('.csv')" svgIcon="excel-blue"></mat-icon>
+                    <mat-icon *ngIf="fil.name.endsWith('.xlsx') || fil.name.endsWith('.xls') || fil.name.endsWith('.xlsm')"
+                      svgIcon="excel-green">
+                    </mat-icon>
+                    <mat-icon *ngIf="fil.name.endsWith('.pdf')" svgIcon="pdf"></mat-icon>
+                    <mat-icon style="top: -7px;" *ngIf="!fil.name.endsWith('.csv')&&
+                                        !fil.name.endsWith('.xlsx')&&
+                                        !fil.name.endsWith('.xls')&&
+                                        !fil.name.endsWith('.xlsm')&&
+                                        !fil.name.endsWith('.pdf')" svgIcon="text">
+                      
+                    </mat-icon>
+                  </div>
+                  <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                    [style.top]="contextMenuPosition.y">
+                  </div>
+                  <div class="explorer-item-name noselect">
+                    {{fil.name}}
+                  </div>
+                </div>
+                <div matTooltip="you don't have access to download" [matTooltipDisabled]="!showHints" class="explorer-item"
+                  id="file{{i}}" [class.explorer-item-focused]="focusedFile!=null&&fil.path==focusedFile.path">
+                  <div class="explorer-item-icon explorer-item-icon-file">
+                    <mat-icon *ngIf="fil.name.endsWith('.csv')" svgIcon="excel-blue"></mat-icon>
+                    <mat-icon *ngIf="fil.name.endsWith('.xlsx') || fil.name.endsWith('.xls') || fil.name.endsWith('.xlsm')"
+                      svgIcon="excel-green">
+                    </mat-icon>
+                    <mat-icon *ngIf="fil.name.endsWith('.pdf')" svgIcon="pdf"></mat-icon>
+                    <mat-icon style="top: -7px;" *ngIf="!fil.name.endsWith('.csv')&&
+                                        !fil.name.endsWith('.xlsx')&&
+                                        !fil.name.endsWith('.xls')&&
+                                        !fil.name.endsWith('.xlsm')&&
+                                        !fil.name.endsWith('.pdf')" svgIcon="text">
+                      
+                    </mat-icon>
+                  </div>
+                  <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                    [style.top]="contextMenuPosition.y">
+                  </div>
+                  <div class="explorer-item-name noselect">
+                    {{fil.name}}
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="explorer-details-container">
+              <div class="explorer-details-header sticky-top noselect">
+                Details:
+              </div>
+              <div *ngIf="getSelectedFiles().length==0 && focusedDirectory!=null" class="explorer-details-folder">
+                <div class="explorer-details-folder-icon">
+                  <mat-icon class="noselect">folder</mat-icon>
+                </div>
+                <div style="margin-left: 80px;margin-bottom: 20px;">
+                  <button mat-raised-button (click)="setDirectory(focusedDirectory.path)" color="primary">Open
+                    Directory</button>
+                </div>
+                <div class="explorer-details-data-table">
+                  <table>
+                    <tr>
+                      <td class="hdr">Name:</td>
+                      <td class="data" style="font-weight: 500;">{{focusedDirectory.name}}</td>
+                    </tr>
+                    <tr>
+                      <td class="hdr">Path:</td>
+                      <td class="data">{{focusedDirectory.path}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <br><br>
+                <div style="display: flex;align-items:center;justify-content: center;">
+                  <td colspan="2" style="align-self: center; ">
+    
+                    <div style="display: flex; align-items: center; justify-content: flex-start; flex-direction: column;">
+                      <ng-container>
+                        <button mat-stroked-button color="primary" style="margin-bottom: 10px;"
+                          (click)="downloadFolder(focusedDirectory)" [disabled]="downloadingFile">
+                          <mat-icon *ngIf="!downloadingFile">get_app</mat-icon>
+                          <mat-spinner *ngIf="downloadingFile" diameter="20" style="float: left; margin-top: 7px;">
+                          </mat-spinner>
+                          <span *ngIf="downloadingFile" style="padding-left: 10px;">Wait..</span>
+                          <span *ngIf="!downloadingFile" style="padding-left: 10px;">Zip Everything</span>
+                        </button>
+                      </ng-container>
+                    </div>
+                  </td>
+                </div>
+              </div>
+              <div *ngIf="getSelectedFiles().length==0 && focusedFile!=null" class="explorer-details-file" style="height:calc(100vh - 25vh);overflow-y: auto;">
+                <div class="explorer-details-file-icon">
+                  <mat-icon *ngIf="focusedFile.name.endsWith('.csv')" class="noselect" svgIcon="excel-blue">
+                  </mat-icon>
+                  <mat-icon
+                    *ngIf="focusedFile.name.endsWith('.xlsx') || focusedFile.name.endsWith('.xls') || focusedFile.name.endsWith('.xlsm')"
+                    class="noselect" svgIcon="excel-green">
+                  </mat-icon>
+                  <mat-icon *ngIf="focusedFile.name.endsWith('.pdf')" class="noselect" svgIcon="pdf">
+                  </mat-icon>
+                  <mat-icon style="top: 40px;" *ngIf="!focusedFile.name.endsWith('.csv')&&
+                          !focusedFile.name.endsWith('.xlsx')&&
+                          !focusedFile.name.endsWith('.xls')&&
+                          !focusedFile.name.endsWith('.xlsm')&&
+                          !focusedFile.name.endsWith('.pdf')" class="noselect" svgIcon="text">
+                    </mat-icon>
+                </div>
+                <div class="explorer-details-data-table">
+                  <table>
+                    <tr>
+                      <td class="hdr">Name:</td>
+                      <td class="data" style="font-weight: 500;">{{focusedFile.name}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                      <td class="hdr">Path:</td>
+                      <td class="data">{{focusedFile.path}}</td>
+                    </tr>
+                    <tr>
+                      <td class="hdr">Size:</td>
+                      <td class="data">{{focusedFile.size}}</td>
+                    </tr>
+                    <tr>
+                      <td class="hdr">Date:</td>
+                      <td class="data">{{focusedFile.gen | date:"dd MMM yyyy (EEE) @ hh:mm.ss"}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div style="display: flex; align-items:center; justify-content: center; margin-top: 20px;">
+                  <ng-container>
+                    <button mat-raised-button color="primary" style="width: 120px; margin-right: 20px;"
+                      (click)="getFileForDownload(focusedFile, false)" [disabled]="downloadingFile">
+                      <mat-icon *ngIf="!downloadingFile">get_app</mat-icon>
+                      <mat-spinner *ngIf="downloadingFile" diameter="20" style="float: left; margin-top: 7px;">
+                      </mat-spinner>
+                      <span *ngIf="downloadingFile" style="padding-left: 10px;">Wait..</span>
+                      <span *ngIf="!downloadingFile"
+                        style="padding-left: 10px;">{{getFileFormat(focusedFile.name)}}</span>
+                    </button>
+                    <button mat-stroked-button color="primary" style="width: 120px;"
+                      (click)="getFileForDownload(focusedFile, true)" [disabled]="downloadingZipFile">
+                      <mat-icon *ngIf="!downloadingZipFile">get_app</mat-icon>
+                      <mat-spinner *ngIf="downloadingZipFile" diameter="20" style="float: left; margin-top: 7px;">
+                      </mat-spinner>
+                      <span *ngIf="downloadingZipFile" style="padding-left: 10px;">Wait..</span>
+                      <span *ngIf="!downloadingZipFile" style="padding-left: 10px;">Zip</span>
+                    </button>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>   
+      </div>
+    </div>
+  </div>
+</ng-container>

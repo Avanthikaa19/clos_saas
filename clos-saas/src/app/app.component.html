@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div class="app-container">
+    <div class="header-container">
+        <app-header></app-header>
+    </div>
+    <div class="main-container" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+    <div class="footer-container">
+        <app-footer></app-footer>
+    </div>
+</div>
+<notifier-container></notifier-container>

@@ -1,0 +1,149 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        XML:
+    </div>
+    <table *ngIf="config.xml">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Input Field Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.xml.inputFieldName" class="min-input">
+                </td>
+            </tr>
+           
+            <tr>
+                <td>
+                    <span class="min-label">Input DTD Format</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.xml.inputDataDTD" class="min-select" (selectionChange)="showContent(config.xml.inputDataDTD,'inputdata')">
+                        <mat-option *ngFor="let cfg of dtdConfigs" [value]="cfg">{{cfg.toUpperCase()}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+             
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                   <div *ngFor = "let show of content"> 
+                    {{show}}
+                    <br>
+                 </div> 
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">XSL</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;">
+                        <ngx-monaco-editor 
+                            class="my-code-editor" 
+                            [options]="editorOptions"
+                            [(ngModel)]="config.xml.xsl"></ngx-monaco-editor>
+                    </div>
+                    <!-- <ace-editor
+                    [(ngModel)]="config.xml.xsl"
+                    [mode] = "'xml'"
+                    [theme] ="'eclipse'"
+                    [autoUpdateContent]="true"
+                    style="height:70px; width:100%; overflow: auto;">
+                   </ace-editor> -->
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Output Field Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.xml.outputFieldName" class="min-input">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Output DTD Format</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.xml.outputDataDTD" class="min-select" (selectionChange)="showContent(config.xml.outputDataDTD,'outputdata')">
+                        <mat-option *ngFor="let cfg of dtdConfigs" [value]="cfg">{{cfg.toUpperCase()}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                   <div *ngFor = "let show of content1"> 
+                    {{show}}
+                    <br>
+                 </div> 
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Entries Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Max Thread Count</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

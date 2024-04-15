@@ -1,0 +1,21 @@
+<div style="padding-left: 40px; padding-right: 40px;">
+    <!-- <h3 style="text-align: center; color:rgb(202, 0, 0); margin-bottom: 7px; font-size: 22px;"><mat-icon>av_timer</mat-icon></h3>
+    <h3 style="text-align: center; color:rgb(202, 0, 0); margin-bottom: 17px; font-size: 22px;">
+        Session Timed Out.
+    </h3> -->
+    <div *ngIf="data.type == 'idle'" class="idle-icon"></div>
+    <div *ngIf="data.type == 'force_out'" class="force_out-icon"></div>
+    <h3 style="text-align: center; color:dimgray; margin-bottom: 20px; font-size: 16px; font-weight: 400;">
+      {{data.reason}}
+    </h3>
+    <h3 style="text-align: center; color:rgb(0, 0, 0); font-size: 18px; font-weight: 400;">
+      You have been logged out. Please login again.
+    </h3>
+    <br>
+    <div style="text-align:center">
+      <button mat-button color="warn" style="width: 50%;" (click)="onClose()"> 
+        Close
+      </button>
+    </div>
+  </div>
+  

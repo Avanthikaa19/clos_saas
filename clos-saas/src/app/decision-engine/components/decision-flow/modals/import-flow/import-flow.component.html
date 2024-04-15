@@ -1,0 +1,75 @@
+<div class="main-container">
+    <div class="header-container mb-4">
+        Import Decision Flow
+    </div>
+    <form class="body-container" #inputForm="ngForm">
+        <div class="node-data">
+            <div class="node-detail">
+                <div class="label">
+                    <span>Upload File</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <input type="file" #uploadjson accept=".json" (input)="handleFileInput($event)" multiple />
+                    <button mat-raised-button (click)="uploadjson.click();" [disabled]="uploading" id="btn">      </button>
+                    <!-- <input class="min-input" required name="flowname" #flowname="ngModel" [(ngModel)]="decisionFlow.name"> -->
+                </div>
+            </div>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Name </span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <!-- <input class="min-input" required name="flowname" #flowname="ngModel" [(ngModel)]="decisionFlow.name"> -->
+                    <input class="min-input" required name="flowname" [(ngModel)]="decisionFlow.name">
+                </div>
+            </div>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Description</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <textarea class="min-input" rows="6" cols="50" name="description" [(ngModel)]="decisionFlow.description"></textarea>
+                </div>
+            </div>
+            <!-- <div class="node-detail">
+                <div class="label">
+                    <span>Scenario</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <mat-select class="min-select" [(ngModel)]="decisionFlow.scenario" name="scenario">
+                        <mat-option *ngFor="let scenario of scenarios" [value]=scenario.id>{{scenario.name}}</mat-option>
+                    </mat-select>
+                </div>
+            </div> -->
+        </div>
+    </form>
+</div>
+<small class="err-msg">
+    {{errMsg()}}
+</small>
+<mat-dialog-actions align="end">
+    <button mat-flat-button (click)="onCloseClick()" style="color: white;background-color: rgb(43, 42, 42)">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <!-- <input hidden type="file" #uploadjson accept=".csv" (input)="handleFileInput($event)" multiple /> -->
+    <button class="create" mat-flat-button [disabled]="!decisionFlow.name" (click)="importFlowConfig()">
+        <mat-icon>upload</mat-icon>
+        <span>Import Flow</span>
+    </button>
+
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

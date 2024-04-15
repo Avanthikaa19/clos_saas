@@ -1,0 +1,57 @@
+<mat-tab-group>
+    <mat-tab *ngFor="let element of data">
+        <ng-template mat-tab-label>
+            <mat-icon *ngIf="element.module=='ADMINISTRATOR PANEL'" class="example-tab-icon">work
+            </mat-icon>
+            <mat-icon *ngIf="element.module=='ALERT MANAGER'" class="example-tab-icon"> layers
+            </mat-icon>
+            <mat-icon *ngIf="element.module=='DATA FLOW MANAGER'" class="example-tab-icon">device_hub
+            </mat-icon>
+            <mat-icon *ngIf="element.module=='REPORT PORTAL'" class="example-tab-icon">assignment
+            </mat-icon>
+            <span style="font-weight: 600;"> {{element.module | titlecase}}</span>
+        </ng-template>
+        <div class="main-container">
+            <!-- Main Container -->
+            <!-- <div class="search-container">
+                <div class="search">
+                    <mat-icon class="icon-search">search</mat-icon>
+                    <input class="min-input" style="background-color: white; padding-left: 3rem;" placeholder="Search Here...">
+                </div>
+                <div class="sort">
+                    <div class="lable">
+                        Sort By:
+                    </div>
+                    <div class="value">
+                        <mat-select class="min-select" style="background-color: white;">
+                            <mat-option>Ascending</mat-option>
+                            <mat-option>Descending</mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div> -->
+            <div class="content-container">
+                <div class="module-items-container">
+                    <div class="module-items-wrapper">
+                        <div *ngFor="let category of element.categories" class="module-items">
+                            <div class="module-items-category-name">
+                                {{category.category}}
+                            </div>
+                            <div class="module-items-list">
+                                <div class="module-item" *ngFor="let item of category.items">
+                                    <mat-slide-toggle class="slider" [ngModel]="item.selected" (ngModelChange)="toggleItem(item);allowAccess(item)"></mat-slide-toggle>
+                                    <div class="name">
+                                        {{item.displayName}}
+                                    </div>
+                                    <div class="description">
+                                        {{item.description}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

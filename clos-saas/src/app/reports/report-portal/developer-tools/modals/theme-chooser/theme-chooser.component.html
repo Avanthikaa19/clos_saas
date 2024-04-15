@@ -1,0 +1,61 @@
+<div class="theme-chooser-container">
+    <div class="theme-title noselect">
+        <span>{{title}}</span>
+    </div>
+    <div class="chooser-container">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <div class="search-container noselect">
+            <label class="min-label">Filter:</label>
+            <input class="min-input" [(ngModel)]="nameSearch" placeholder="By Theme Name" (keydown.enter)="onSearchClicked()">
+            <button mat-button (click)="onSearchClicked()">
+                <mat-icon>search</mat-icon>
+                <span style="padding-left: 10px;">Search</span>
+            </button>
+        </div>
+        <div class="cards-list-container">
+            <div class="cards-list noselect">
+                <div *ngFor="let theme of themes" class="theme-chooser-card" [class.selected-card]="theme === selectedTheme" matRipple (click)="selectedTheme = theme">
+                    <div class="theme-preview">
+                        <app-theme-card [theme]="theme"></app-theme-card>
+                        <div class="overlay"> </div>
+                    </div>
+                    <div class="theme-details">
+                        <h6>{{theme.name}}</h6>
+                        <p>{{theme.description}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+                <div>
+                    <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+                </div>
+                <div>
+                    <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="theme-chooser-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <div class="spacer"></div>
+        <mat-checkbox class="item-right noselect" [(ngModel)]="propagate" color="primary">
+          Propagate To Inner Components
+        </mat-checkbox>
+        <button mat-raised-button color="primary" class="item-right" [disabled]="!selectedTheme" (click)="onSelect(selectedTheme)">
+            <mat-icon>check</mat-icon>
+            <span style="padding-left: 10px;">Select</span>
+        </button>
+    </div>
+</div>

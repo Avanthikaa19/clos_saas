@@ -1,0 +1,307 @@
+.dialog-theme-light .mat-select-placeholder {
+    color: rgb(79 73 73 / 77%);
+  }
+  .dialog-theme-dark .form-control::placeholder {
+    color: rgb(122, 107, 107);
+  }
+  
+  .dialog-theme-dark .form-control {
+    color: #ffffffab;
+  }
+  
+  .dashboard-theme-light {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.65);
+    // font-family: "Poppins";
+  }
+  
+  .dashboard-theme-dark {
+    font-size: 20px;
+    font-weight: bold;
+    color: silver;
+    // font-family: "Poppins";
+  }
+  
+  .card {
+    .panel-name-theme-light {
+      font-size: 17px;
+      // font-weight: bold;
+      color: rgba(0, 0, 0, 0.65);
+      /* font-family: "Poppins"; */
+      display: flex;
+      justify-content: end;
+      padding: 7px 26px 0px 26px;
+      // border-bottom: 1px solid #d5d0d0;
+      align-items: center;
+    }
+  
+    .label{
+      text-align: center;
+      font-size: 26px;
+      font-weight: 900;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .box-theme-light {
+      height: 100%;
+      border: 1px solid rgba(139, 139, 139, 0.233);
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: aliceblue;
+  
+      > p {
+        color: #262323;
+        // font-weight: bold;
+      }
+  
+      mat-icon {
+        color: #60a5f3;
+      }
+    }
+  
+    .panel-name-theme-dark {
+      font-size: 17px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.65);
+      /* font-family: "Poppins"; */
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 25px;
+    }
+  
+    .box-theme-dark {
+      height: 100%;
+      border: 1px solid rgba(139, 139, 139, 0.233);
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+  
+      > p {
+        color: silver;
+        font-weight: bold;
+      }
+  
+      mat-icon {
+        color: #14f4ffc7;
+      }
+    }
+  }
+
+  .sep{
+  // z-index: 1;
+  // margin-left: -3rem;
+  // height: 3.5rem;
+  // margin-top: -0.5rem;
+  // width: 4rem;
+  // border-style: solid;
+  // border-width: 0.2rem 0 0 0;
+  // border-radius: 0 0.1rem 0 0;
+  // border-top-color: rgba(255, 255, 255, 0.3);
+  // box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+  // transform: rotate(45deg);
+  // background-color: #60a5f3;
+  height: 40px;
+  width: 40px;
+  // background-color: #60a5f3;
+  transform: rotate(45deg);
+  border-radius: 0 0.1rem 0 0;
+  border-top-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+  }
+  
+  //COMMON INPUT STYLES
+  .min-input-theme-dark {
+    background-color: #212529;
+    color:silver;
+    box-sizing: border-box;
+    border: solid whitesmoke 1px;
+    height:31px;
+    border-radius: 15px;
+    font-size: 17px;
+    font-weight: 800;
+    padding: 20px;
+    
+  }
+  .min-input-theme-light {
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    border: solid #dfe1e3 1px;
+    height:31px;
+    border-radius: 15px;
+    font-size: 17px;
+    font-weight: 800;
+    padding: 20px;
+  }
+  
+  .min-input:hover {
+    border: solid rgb(218, 218, 218) 1px;
+  }
+.accessDashName{
+  font-size:17px;
+  font-weight:600;
+  font-family: sans-serif;
+  color:rgb(7,148,175)
+}
+.load-more-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.load-more-icon {
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.spinner-container {
+  margin-right: 10px;
+  color: rgb(7,148,173); /* Adjust the margin as needed */
+}
+.load-more-container1{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.panel-name-theme-light1 {
+  font-size: 17px;
+  // font-weight: bold;
+  color: rgba(0, 0, 0, 0.65);
+  /* font-family: "Poppins"; */
+  display: flex;
+  justify-content: end;
+  // border-bottom: 1px solid #d5d0d0;
+  align-items: center;
+}
+.total-items {
+  position: absolute;
+  top: 0;
+  right: -300px;
+  background-color: transparent;
+  padding: 5px;
+}
+.paginator-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 1rem;
+  >.left-container {
+      flex: 0 0 auto;
+  }
+  >.middle-container {
+      flex: 0 0 auto;
+  }
+  >.right-container {
+      margin-top: 1rem;
+      flex: 0 0 auto;
+  }
+}
+
+.table-container {
+  flex: 1 1 auto;
+  // border: 1px solid gainsboro;
+  border-radius: 0.5rem;
+  overflow: auto;
+  height: 0;
+  position: relative;
+  table-layout: fixed;
+  margin:0.5rem;
+  #table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: max-content;
+     
+      td>div.content {
+          white-space: nowrap;
+          overflow: hidden;
+          padding-left: 1rem;
+          // padding: 0.5rem 1rem 0.5rem 1rem;
+      }
+      th>div.content {
+          padding-top: 0.4rem;
+          white-space: nowrap;
+          overflow: hidden;
+      }
+      th>div.content_check {
+          padding-top: 0.4rem;
+          white-space: nowrap;
+          overflow: hidden;
+          padding-left: 0.6rem;
+      }
+  }
+  #table td {
+      border-top: 4px solid #ffffff;
+      line-height: 35px;
+      color:black;
+  }
+  #table tbody tr:hover td {
+      background-color: #ddd
+  }
+  #table tr {
+      background-color: #f8f8f8;
+
+  }
+  #table tr:hover {
+      background-color: #ddd;
+  }
+  #table tbody {
+      overflow-y: auto;
+      height: auto
+  }
+  th {
+      position: sticky;
+      top: 0;
+  }
+    #table thead {
+      position: sticky;
+      top: 0;
+      background-color: #0e2954;
+      color: white;
+    }
+  #table th {
+      text-align: middle;
+      z-index: 15;
+      padding: 3px 30px 3px 0px;
+      // min-width: 21rem;
+      max-height: 2rem;
+       ::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+          border-color: white !important;
+          background-color: #adadad !important;
+      }
+       ::ng-deep mat-checkbox .mat-checkbox-checkmark-path {
+          stroke: blue !important;
+      }
+       ::ng-deep .mat-checkbox .mat-checkbox-frame {
+          border-color: white !important;
+      }
+       ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+          background-color: white !important;
+          border-color: white !important;
+      }
+  }
+}
+.page-links {
+  position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    // color: #007bff;
+    background-color: transparent;
+    border: 0px solid #dee2e6;
+  }

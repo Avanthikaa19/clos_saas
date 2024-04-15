@@ -1,0 +1,91 @@
+<div class="extraction-spec-container">
+    <mat-icon style="cursor: pointer;float: right; font-size: 18px; font-weight: bolder;"  class="icon-hov2" matTooltip="Close"
+    (click)="this.dialogRef.close();">close</mat-icon>
+<mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChanged($event)">
+    <mat-tab> 
+        <ng-template mat-tab-label style="padding: 0; margin: 0;">
+            <div class="tab-label-container noselect">
+                <mat-icon>edit</mat-icon><span style="margin-left: 10px;">Edit SQL</span>
+            </div>
+        </ng-template>  
+        <div class="my-code-editor-description noselect">
+            <span>Use the editor below to set the SQL query.</span>
+        </div> 
+        <div class="my-code-editor-wrapper" [@fadeInOut] *ngIf="selectedTabIndex==0">
+            <ngx-monaco-editor class="my-code-editor" [options]="editorOptions" [(ngModel)]="unsavedSql"></ngx-monaco-editor>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label style="padding: 0; margin: 0;">
+            <div class="tab-label-container noselect">
+                <mat-icon>compare</mat-icon><span style="margin-left: 10px;">View Differences</span>
+            </div>
+        </ng-template>
+        <div class="my-code-editor-description noselect">
+            <span>Use the screen below to view the differences of the original SQL <a class="highlight1">(left side)</a> to the edited SQL <a class="highlight1">(right side)</a>.</span>
+        </div>
+        <div class="my-code-diffeditor-wrapper" [@fadeInOut] *ngIf="selectedTabIndex==1">
+            <ngx-monaco-diff-editor class="my-code-diffeditor" [options]="diffOptions" [originalModel]="originalModel" [modifiedModel]="modifiedModel"></ngx-monaco-diff-editor>
+        </div>
+     </mat-tab>
+  </mat-tab-group>
+</div>
+
+    <!-- <button mat-flat-button
+    class="clos-submit-btn"
+        style="width: 150px; height: 35px; font-weight: 700;margin-right: 10px;float: left;"
+        (click)="showQueryData(unsavedSql)" [disabled]="unsavedSql==''||unsavedSql==null||unsavedSql==undefined"
+    >
+    <span class="material-symbols-outlined" style="color: white;font-size: 2.5rem;margin-right: 0.5rem;">
+        view_list
+    </span>  
+    <span>SHOW DATA</span>
+    </button> -->
+
+    <!-- GENERATE SQL BUTTON -->
+    <!-- <button mat-flat-button
+    class="clos-submit-btn"
+        style="width: 170px; height: 35px; font-weight: 700;float: right;"
+        (click)="dataGeneration()" [disabled]="unsavedSql==''||unsavedSql==null||unsavedSql==undefined">
+        <span>GENERATE SQL</span>
+        <span class="material-symbols-outlined" style="color: white;font-size: 2.5rem;margin-right: 0.5rem;">
+            double_arrow
+        </span>             
+    </button> -->
+    <div class="button-container">
+        <button mat-flat-button style="padding-left: 5px;float: left;" class="left-button clos-submit-btn"
+            (click)="unsavedSql=''" [disabled]="unsavedSql==''||unsavedSql==null||unsavedSql==undefined">
+            <span style="padding-left: 5px;padding-right: 5px;">CLEAR</span>
+        </button>
+        <button mat-flat-button style="padding-left: 5px;" class="right-button clos-submit-btn"
+            (click)="showQueryData(unsavedSql)" [disabled]="unsavedSql==''||unsavedSql==null||unsavedSql==undefined">
+            <span style="padding-left: 5px;padding-right: 5px;">GENERATE SQL</span>
+            <span class="material-symbols-outlined" style="color: white;font-size: 2.5rem;margin-right: 0.5rem;">
+                double_arrow
+            </span>
+        </button>
+    </div>
+    <!-- <button mat-flat-button
+    class="clos-submit-btn"
+        style="width: 170px; margin-left: 5px; height: 35px; font-weight: 700;float: left;"
+        (click)="unsavedSql=''" [disabled]="unsavedSql==''||unsavedSql==null||unsavedSql==undefined">
+        <span>CLEAR</span>            
+    </button> -->
+<div class="col-lg-11 col-md-12" *ngIf="showQuery" [class]="'dbFeild-light'" style="width: 100%; font-family: monospace; height: 190px; margin-top: 5px; font-size: 14px;white-space: pre;overflow: auto;background-color: black;margin-left: 10px;
+                margin-top: 10px;
+                padding: 10px 20px;color:white" [style.color]="error? 'red':'black'" spellcheck="false">
+        {{unsavedSql }} 
+  </div>
+  <div class="col-lg-12 col-md-12" *ngIf="showData" [class]="'dbFeild-light'" style="width: 100%; font-family: monospace; height: 234px; margin-top: 5px; font-size: 14px;white-space: pre;overflow: auto;background-color: black;
+                margin-top: 10px;
+                padding: 10px 20px;" [style.color]="error? 'red':'white'" spellcheck="false">
+                <span style="font-weight: 800;font-size: 16px;color: #536b91;">RESULT : <br></span>
+        {{ tableData? (tableData | json) : error  }} 
+  </div>
+<div style="overflow: hidden;"  [style.margin-top.px]="showData ? 10 : 254">
+    <div style="margin-right: 10px;"> 
+    </div>
+    <button mat-flat-button style="padding-left: 5px;" class="right-button clos-submit-btn" (click)="apply()">
+        <span style="padding-left: 5px;padding-right: 5px;">APPLY</span>
+    </button>
+</div>

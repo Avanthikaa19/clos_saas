@@ -1,0 +1,252 @@
+<mat-toolbar class="header">
+
+
+    <div class="header-div1" style="font-weight: bold;font-style: italic;color: rgb(87, 85, 85);font-size:16px;">
+        <mat-icon *ngIf="profileName=='Edit'">edit</mat-icon> {{profileName}} Profiling Variable</div>
+    <div class="header-div" style="margin-left: 3rem;"><button class="button" mat-stroked-button (click)="saveConfig()">
+                <mat-icon >{{profileName==='Create' ?"add":"save"}}</mat-icon>{{profileName==='Create' ?"Create":"Save"}}
+            </button></div>
+    <div class="header-div" style="margin-left: 3rem;"><button class="button" mat-stroked-button (click)="RunProfile()">
+                <mat-icon>play_arrow</mat-icon>Run
+            </button></div>
+
+    <div class="header-div" style="margin-left: 12rem;"><button mat-stroked-button class="button" (click)="configureProfile()">
+                <mat-icon>settings</mat-icon>Configure
+            </button></div>
+    <div class="header-div" style="margin-left: 12rem;"><button mat-stroked-button class="button" (click)="goBack()">
+                <mat-icon>navigate_before</mat-icon>Go Back to Profiling list
+            </button></div>
+</mat-toolbar>
+
+<div class="main-container">
+
+    <mat-stepper>
+        <mat-step label="Profiling Setup" state="profile">
+            <div class="sub-header">
+                <span class="sub-header-name">Profile Definition:</span>
+            </div>
+
+            <div class="definition-container">
+                <mat-card>
+                    <div class="flex-container">
+                        <div class="flex-column">
+                            <span class="name">Name</span>
+                            <span class="colon">:</span>
+                            <input class="min-input" style="height:5rem" type="text" [(ngModel)]="profileData.name">
+                        </div>
+
+
+                        <div class="flex-column">
+                            <span class="name">Description</span>
+                            <span class="colon">:</span>
+                            <textarea class="min-input" style="width:80rem;height:5.5rem" [(ngModel)]="profileData.description"></textarea>
+
+                        </div>
+
+                    </div>
+
+
+
+                </mat-card>
+            </div>
+
+            <div class="sub-header" style="height:30px">
+                <span class="sub-header-name">Profile Configuration:
+
+        <mat-slide-toggle style="float:right; margin-right: 10rem;" [(ngModel)]="toggleData">
+            {{toggleData===true ?"Editor":"Configure"}} </mat-slide-toggle>
+    </span>
+
+            </div>
+
+            <div class="configuration-container">
+                <div *ngIf="toggleData">
+
+                    <span style="font-size:14px;color:rgb(151, 146, 146);padding:2px">File Name</span>
+                    <span style="padding:5px;color:rgb(151, 146, 146)">:</span>
+                    <input class="input-class" type="text" [(ngModel)]="pythonCode.fileName">
+                    <div style="float:right;padding-bottom:10px">
+                        <span style="font-size:14px;color:rgb(151, 146, 146);padding:2px;">Theme</span>
+                        <span style="padding:5px;color:rgb(151, 146, 146)">:</span>
+                        <mat-select style="background-color: whitesmoke;padding-left: 2px;min-height: 24px;width:30rem;line-height: 24px;border-radius: 3px;border: solid transparent 1px;transition: all linear 100ms;" [(ngModel)]="editorOptions.theme" (ngModelChange)="onThemeChange(editorOptions.theme)"
+                            class="min-select">
+                            <mat-option *ngFor="let theme of editorTheme" [value]="theme">
+                                {{theme}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <ngx-monaco-editor style="height: 55rem;padding-top:2rem" [options]="editorOptions" [(ngModel)]="pythonCode.code"></ngx-monaco-editor>
+                </div>
+
+                <div class="main-container1" *ngIf="!toggleData">
+                    <!-- <div class="main-container"> -->
+                    <div class="header-container">
+                        Configuration:-
+                    </div>
+                    <div class="content-container">
+
+                        <div class="card-container flex-row-parent">
+                            <div class="card-inner-container flex-stetch">
+                                <span>
+                        Choose ObjectModel
+                    </span>
+                            </div>
+                            <div class="flex-stetch">
+                                &nbsp; &nbsp;
+                            </div>
+                            <ng-container>
+                                <ng-container>
+                                    <div class="flex-unstetch" style="margin-left: 1rem; margin-right: 1rem;">
+                                        <mat-select class="min-select" [(value)]="name" (selectionChange)="onValueSelected($event.value)" #multiSelect1>
+                                            <mat-option *ngFor="let data of params" [value]="data">
+                                                {{data.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+
+                        <!-- Main Container  -->
+
+                        <ng-container *ngFor="let configJson of configData; let i=index;">
+                            <div class="header-container details-header">
+                                <!-- <span style="padding-left: 1rem;">
+                        Result Column 
+                    </span> -->
+                                <!-- <span style="float: right;" (click)="this.configData.splice(i,1)">
+                        <mat-icon style="color: red;font-size: 1.4rem; cursor: pointer; margin-right: 0rem;">
+                            remove
+                        </mat-icon>
+                    </span> -->
+                            </div>
+
+
+
+                            <ng-container *ngFor="let config of configJson.configMethod">
+                                <div class="card-container flex-row-parent">
+                                    <div class="card-inner-container flex-stetch">
+                                        <span>
+                                {{config.name}}
+                            </span>
+                                    </div>
+                                    <div class="flex-stetch">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <ng-container *ngIf="config">
+                                        <ng-container *ngIf="config.output">
+                                            <div class="flex-unstetch" style="margin-left: 1rem;">
+                                                <mat-select class="min-select" [(ngModel)]="config.input" style="text-transform: capitalize;" #multiSelect1>
+                                                    <ng-container *ngIf="config.name != 'profile_for'">
+                                                        <mat-option>
+                                                            <ngx-mat-select-search placeholderLabel="Find column..." ngModel (ngModelChange)="filterColumns($event);" noEntriesFoundLabel='No columns match search criteria.'>
+                                                            </ngx-mat-select-search>
+                                                        </mat-option>
+                                                        <mat-option *ngFor="let columns of filteredColumns" [value]="columns.name">
+                                                            {{columns.name}}
+                                                        </mat-option>
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="config.name == 'profile_for'">
+                                                        <mat-option [value]="">
+                                                            None
+                                                        </mat-option>
+                                                        <mat-option *ngFor="let columns of selectedColumnList" [value]="columns" style="text-transform: capitalize;">
+                                                            {{columns}}
+                                                        </mat-option>
+                                                    </ng-container>
+
+                                                </mat-select>
+
+
+
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+
+
+                                    <div class="flex-stetch">
+                                        <button style="margin-left: 1rem; background-color: whitesmoke; border: 0px;" matTooltip="Add" [matTooltipPosition]="'above'">
+                                <mat-icon style="margin-right: 0rem; color: red; cursor: pointer;" (click)="config.output.push(getPushData(config.input ,config.filterSymbol , config.filterValue)); 
+                                    config.input=''; config.filterSymbol=''; config.filterValue='';getCloumnList() ">
+                                    add</mat-icon>
+                            </button>
+                                    </div>
+
+                                </div>
+                                <div class="card-container flex-property-parent">
+                                    <div class="card-inner-container flex-stetch" *ngFor="let output of config.output; let i = index" style="margin-left: 1rem; text-transform: capitalize;">
+                                        <span>
+                                {{output}}
+                            </span>
+                                        <mat-icon style="float: right; color: red; font-size: 1.4rem; margin-right: 0rem; cursor: pointer;" (click)="config.output.splice(i,1);getCloumnList() " matTooltip="Remove" [matTooltipPosition]="'above'">
+                                            remove</mat-icon>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="card-container flex-row-parent">
+                                <div class="card-inner-container flex-stetch">
+                                    <span>
+                            Date:
+                        </span>
+                                </div>
+                                <div class="flex-stetch">
+                                    &nbsp; &nbsp;
+                                </div>
+                                <ng-container>
+                                    <ng-container>
+                                        <div class="flex-unstetch" style="margin-left: 1rem; margin-right: 1rem;">
+                                            <mat-select class="min-select" [(ngModel)]="configJson.dateField">
+                                                <div *ngFor="let data of filteredColumns">
+                                                    <mat-option *ngIf="data.type ==='dateTime'" [value]="data.name">
+                                                        {{data.name}}
+                                                    </mat-option>
+                                                </div>
+                                            </mat-select>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <!-- <div class="flex-row-parent" style="margin-top: 1rem;">
+               
+                <div class="flex-stetch">
+                    <button mat-stroked-button (click)="this.configData.push({dateField:'',configMethod:[
+                    {name: 'columnFilter',input: '',output: []},{name: 'profile_for',input: '', output: []},
+                    {name: 'rowFilter',input: '',output: []},
+                    ]})">
+                        <mat-icon>add</mat-icon>
+                        <span>
+                            Add
+                        </span>
+                    </button>
+                </div>
+
+            </div> -->
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </mat-step>
+
+        <mat-step label="Database Configuration" state="db">
+
+
+
+        </mat-step>
+
+
+        <!-- Icon overrides. -->
+        <ng-template matStepperIcon="db">
+            <mat-icon>verified_user</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="profile">
+            <mat-icon>build</mat-icon>
+        </ng-template>
+    </mat-stepper>
+</div>
+<!-- <mat-spinner class="spinner-class" *ngIf="spinnerLoad" diameter="45"></mat-spinner> -->
+<notifier-container></notifier-container>

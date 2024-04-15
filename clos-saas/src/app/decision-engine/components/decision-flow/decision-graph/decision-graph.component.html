@@ -1,0 +1,429 @@
+<div *ngIf="loading" [style.height.px]="screenHeight - 125" class="main-container">
+
+    <mat-drawer-container class="example-container">
+        <mat-drawer #sideNav mode="side" opened="false" (openedChange)="refresh(editSelectedNode)" position="end"
+            class="nav-container">
+            <div class="right-align" style="margin-top:25px">
+                <button mat-button class="button-class" (click)="sideNav.toggle()" style="float: right;">
+                    <mat-icon style="margin-right: 0rem;">close</mat-icon>
+                </button>
+            </div>
+            <div class="nav-content-container" cdkDragBoundary=".nav-container" cdkDrag>
+                <table class="table-container" *ngIf="editSelectedNode">
+                    <tbody>
+                        <tr *ngIf="editSelectedNode.data.condition_branch==='NO'">
+                            <span class="min-label">Condition:</span>
+                        </tr>
+                        <tr *ngIf="editSelectedNode.data.condition_branch==='YES'">
+                            <input class="min-input_black" (click)="assignBranchCondition(editSelectedNode.data)"
+                                [(ngModel)]="editSelectedNode.data.temp_condition" readonly>
+                        </tr>
+
+                        <tr>
+                            <span class="min-label">Name:</span>
+                        </tr>
+                        <tr>
+                            <input class="min-input_black" [(ngModel)]="editSelectedNode.data.name">
+                        </tr>
+                        <tr>
+                            <span class="min-label">Type:</span>
+                        </tr>
+                        <tr>
+                            <mat-select [(ngModel)]="editSelectedNode.data.tempType" class="min-select">
+                                <!-- <mat-option value="STANDARD" (click)="editSelectedStandard()">STANDARD</mat-option> -->
+                                <!-- <mat-option value="TREE" (click)="editSelectedTree()"> DECISION TREE</mat-option> -->
+                                <!-- <mat-option value="TABLE" (click)="editSelectedTable()">DECISION TABLE</mat-option> -->
+                                <mat-option value="TABLES" (click)="editSelectedTables()">DECISION_TABLE_STANDARDS
+                                </mat-option>
+                                <mat-option value="VARIABLES" (click)="editSelectedVariable()">VARIABLES</mat-option>
+                                <!-- <mat-option value="FUNCTIONS" (click)="editSelectedFunctions()">FUNCTIONS</mat-option> -->
+                                <mat-option value="RULE_SET" (click)="editSelectedRuleSet()">RULE_SET</mat-option>
+                                <mat-option value="QUERY_VARIABLE" (click)="editSelectedQueryVariable()">QUERY_VARIABLE
+                                </mat-option>
+                                <!-- <mat-option value="RULE_SET" (click)="editSelectedRuleSet()">RULES</mat-option> -->
+                                <!-- <mat-option value="VARIABLE_LIB" (click)="editSelectedvariableLib()">VARIABLE_LIBRARY</mat-option> -->
+                                <mat-option value="SCORECARD" (click)="editSelectedScoreCardLib()">SCORECARD
+                                </mat-option>
+                            </mat-select>
+                        </tr>
+                        <tr>
+                            <span class="min-label">Config Id:</span>
+                        </tr>
+                        <tr>
+                            <input class="min-input_black" [(ngModel)]="editSelectedNode.data.tempId" type="text"
+                                readonly>
+                        </tr>
+                        <tr>
+                            <span class="min-label"> Config Name:</span>
+
+                        </tr>
+                        <tr>
+                            <input class="min-input_black" [(ngModel)]="editSelectedNode.data.tempName" type="text"
+                                readonly>
+                        </tr>
+                        <tr>
+                            <span class="min-label"> Repeat Count:</span>
+
+                        </tr>
+                        <tr>
+                            <input class="min-input_black" type='number' min="1"
+                                [(ngModel)]="editSelectedNode.data.repeat">
+                        </tr>
+
+                        <tr>
+                            <span class="min-label"> Repeat To:</span>
+
+                        </tr>
+                        <tr>
+                            <mat-select [(ngModel)]="editSelectedNode.data.repeatTo" class="min-select">
+                                <mat-option [value]="task.id" *ngFor="let task of tasks">{{task.name}}</mat-option>
+                            </mat-select>
+                        </tr>
+
+                        <tr>
+                            <span class="min-label"
+                                *ngIf="editSelectedNode.data.flow_type=='TREE' || editSelectedNode.data.flow_type=='TABLE'  || editSelectedNode.data.flow_type=='TABLES' || editSelectedNode.data.flow_type=='STANDARD' 
+                            ||editSelectedNode.data.flow_type=='FUNCTIONS' ||editSelectedNode.data.flow_type=='VARIABLES'||editSelectedNode.data.flow_type=='RULE_SET'
+                            ||editSelectedNode.data.flow_type=='VARIABLE_LIB'||editSelectedNode.data.flow_type=='QUERY_VARIABLE'||editSelectedNode.data.flow_type=='SCORECARD'">
+                                <button mat-stroked-button (click)="goToSource(editSelectedNode.data.configId)">
+                                    <mat-icon>open_in_new</mat-icon>
+                                    Go to{{editSelectedNode.data.flow_type |titlecase}}:
+                                </button></span>
+                            <div style="width: 94%; padding: 17px 10px 10px 10px;">
+                                <button mat-raised-button
+                                    style="width: 100%; background-color: rgb(44, 43, 43); color: white;margin-top:20px"
+                                    (click)=" editFlowData(editSelectedNode);sideNav.toggle()">
+                                    <mat-icon style="padding-right: 10px;">edit</mat-icon>
+                                    <span>Save Details</span>
+                                </button>
+                            </div>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="decision-flow-container">
+                <div class="flow-container">
+                    <mat-toolbar class="tool-bar">
+                        <div class="spacer">
+                            <span class="create-table-container">
+                                <button mat-flat-button onclick="history.back()" style="background:#012970;color:white">
+                                    <mat-icon>keyboard_arrow_left</mat-icon>
+                                    <span>
+                                        Go back to Previous
+                                    </span>
+                                </button>
+                            </span>
+
+                        </div>
+
+                        <!-- <mat-form-field appearance="outline" style="margin-right: 10px; color: blueviolet;transform: scale(0.7) !important;margin-top:1rem;">
+                            <mat-label>
+                                Version History
+                            </mat-label>
+                            <mat-select (click)="getVersionList()" [(ngModel)]="selectedVersion" placeholder="Variable">
+                                <mat-option>-- Select --</mat-option>
+                                <mat-option *ngFor="let v of versions" [value]="v" (click)="onVersionChange()">Version {{v.version}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <!-- <span style="margin-right: 10px;" class="create-table-container">
+                            <button mat-stroked-button matTooltip="Fix graph to center" (click)="doCenter()">
+                                <mat-icon>vertical_align_center</mat-icon>
+                                <span>
+                                    Center graph
+                                </span>
+                            </button>
+                        </span> -->
+                        <ng-container *ngIf="ac.super || ac.items?.DF003I_DECISION_FLOW_TEST">
+                            <span style="margin-right: 10px;" class="create-flow-container">
+                                <button mat-flat-button class="clos-submit-btn" (click)="testDecisionGraph()">
+                                    <mat-icon>bug_report</mat-icon>
+                                    <span>
+                                        Test Flow
+                                    </span>
+                                </button>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="ac.super || ac.items?.DF003G_DECISION_FLOW_EXPORT">
+                            <span style="margin-right: 10px;" class="create-flow-container">
+                                <button mat-flat-button class="clos-submit-btn" (click)="exportFlow()">
+                                    <mat-icon>cloud_download</mat-icon>
+                                    <span>Export Flow</span>
+                                </button>
+                            </span>
+                        </ng-container>
+                        <span style="margin-right: 10px;" class="create-flow-container">
+                            <button mat-flat-button class="clos-submit-btn" [disabled]="!flowById.name||disableSave"
+                                [class.save-disable]="disableSave==true" (click)="saveDecisionFlowData()">
+                                    <mat-icon>update</mat-icon>
+                                    <span>{{disableSave ? 'Updating..' : 'Update'}}</span>
+                            </button>
+                        </span>
+
+                    </mat-toolbar>
+                    <mat-divider></mat-divider>
+                    <div class="header-box" style="margin-bottom:0.5rem;padding:1.5rem;">
+                        <div class="header">
+                            <span class="flowname" style="font-weight: 500;margin-top: 5px;">Name</span>
+                            <span class="flowname" style="padding-left: 10px;font-size: 17px;margin-top: 5px;">:</span>
+                            <input class="value" style="text-transform: capitalize;" [(ngModel)]="flowById.name"
+                                class="min-input" style="width:40rem">
+                        </div>
+                        <div class="header" style="margin-left: 10px;">
+                            <span class="flowname" style="font-weight: 500;margin-top: 5px;">Description</span>
+                            <span class="flowname" style="padding-left: 10px;font-size: 17px;margin-top: 5px;">:</span>
+                            <input class="value" style="text-transform: capitalize;" [(ngModel)]="flowById.description"
+                                class="min-input" style="width:40rem">
+                        </div>
+
+                        <!-- <div class="header">
+                            <span class="flowname" style="font-weight: 500;margin-top: 5px;">Scenario</span>
+                            <span class="flowname" style="padding-left: 10px;font-size: 17px;margin-top: 5px;">:</span>
+                            <div class="value">
+                                <mat-select style="width:30rem;height: 3.5rem;" class="min-select" [(ngModel)]="flowById.scenario" name="scenario">
+                                    <mat-option *ngFor="let scenario of scenarios" [value]=scenario.id>{{scenario.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div> -->
+
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="chart-container">
+                        <ngx-graph style="position: relative;" [center$]="center$" [links]="links" [view]="[1550,690]"
+                            [nodes]="nodes" [curve]="shape.curveLinear" [miniMapMaxWidth]="miniMapMaxWidthPx"
+                            [animate]="animate" [layout]="layout" [miniMapMaxHeight]="miniMapMaxHeightPx"
+                            [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled"
+                            [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [zoomLevel]="zoomLevel"
+                            [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel" [autoZoom]="autoZoom"
+                            [autoCenter]="autoCenter" [panOnZoom]="panOnZoom" [panOffsetX]="panOffsetX"
+                            [panOffsetY]="panOffsetY" [showMiniMap]="showMiniMap" [miniMapPosition]="miniMapPosition"
+                            [miniMapMaxWidth]="miniMapMaxWidthPx" [miniMapMaxHeight]="miniMapMaxHeightPx"
+                            [layoutSettings]="layoutSettings">
+                            <ng-template #defsTemplate>
+                                <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4"
+                                    markerHeight="4" orient="auto">
+                                    <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                                </svg:marker>
+                            </ng-template>
+                            <ng-template #nodeTemplate let-node>
+                                <svg:g class="node" (contextmenu)="onRightClick($event, node)"
+                                    (click)="selectedNode(node)" [class.selected-node]="node.id == selectedFlowId">
+                                    <svg:rect rx="5" ry="5" [attr.width]="node.dimension.width + 30"
+                                        [attr.height]="node.data.height" class="shadow" />
+                                    <svg:rect rx="5" ry="5" [attr.width]="node.dimension.width + 30"
+                                        [attr.height]="node.dimension.height" style="fill: rgb(179 80 163);" />
+                                    <svg:rect rx="5" ry="5" y="45" [attr.width]="node.dimension.width + 30"
+                                        [attr.height]="15" style="fill: rgb(241, 200, 238);" />
+                                    <svg:text alignment-baseline="central" [attr.x]="40" [attr.y]="22"
+                                        style="fill:white;">
+                                        {{node.label}}
+                                    </svg:text>
+                                    <svg:text alignment-baseline="central" text-anchor="middle"
+                                        fill="rgba(35, 35, 35, 1)" [attr.x]="(node.dimension.width+30)/2" [attr.y]="52"
+                                        style="font-size: 10px;">
+                                        {{node.data.configName}}
+                                    </svg:text>
+
+                                    <svg:rect rx="3" ry="3" x="2" y="2" [attr.width]="28" [attr.height]="40"
+                                        style="fill: rgba(0, 0, 0, 0.3);" />
+
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'TREE'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" stroke-width="1" stroke='rgb(188, 226, 188)'
+                                        d="M14.68,12.621c-0.9,0-1.702,0.43-2.216,1.09l-4.549-2.637c0.284-0.691,0.284-1.457,0-2.146l4.549-2.638c0.514,0.661,1.315,1.09,2.216,1.09c1.549,0,2.809-1.26,2.809-2.808c0-1.548-1.26-2.809-2.809-2.809c-1.548,0-2.808,1.26-2.808,2.809c0,0.38,0.076,0.741,0.214,1.073l-4.55,2.638c-0.515-0.661-1.316-1.09-2.217-1.09c-1.548,0-2.808,1.26-2.808,2.809s1.26,2.808,2.808,2.808c0.9,0,1.702-0.43,2.217-1.09l4.55,2.637c-0.138,0.332-0.214,0.693-0.214,1.074c0,1.549,1.26,2.809,2.808,2.809c1.549,0,2.809-1.26,2.809-2.809S16.229,12.621,14.68,12.621M14.68,2.512c1.136,0,2.06,0.923,2.06,2.06S15.815,6.63,14.68,6.63s-2.059-0.923-2.059-2.059S13.544,2.512,14.68,2.512M5.319,12.061c-1.136,0-2.06-0.924-2.06-2.06s0.923-2.059,2.06-2.059c1.135,0,2.06,0.923,2.06,2.059S6.454,12.061,5.319,12.061M14.68,17.488c-1.136,0-2.059-0.922-2.059-2.059s0.923-2.061,2.059-2.061s2.06,0.924,2.06,2.061S15.815,17.488,14.68,17.488">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.name === 'Start'" class="svg-icon icon-tick" height="100%"
+                                    width="100%" transform="translate(8 14)">
+                                    <path data-name="layer1" fill=" rgb(188, 226, 188)" d="M6 2l52 30L6 62V2z"
+                                        stroke-linejoin="round" stroke-linecap="round" style="transform: scale(0.27);">
+                                    </path>params
+                                </svg:g>
+                                <svg:g *ngIf="node.data.name==='End'" class="svg-icon icon-cross" height="100%"
+                                    width="100%" transform="translate(8 14)">
+                                    <path
+                                        d="M24 3c0-1.657-1.343-3-3-3h-18c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h18c1.657 0 3-1.343 3-3v-18z"
+                                        style="transform: scale(0.65);" />
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'CONDITION'" class="svg-icon icon-tick"
+                                    xmlns="http://www.w3.org/2000/svg" fill=" rgb(188, 226, 188)" width="16" height="36"
+                                    class="bi bi-diamond-fill" viewBox="0 0 16 16" transform="translate(8 14)">
+                                    <path
+                                        d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435z" />
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'TABLE'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" width="200px" d="M3.015,4.779h1.164V3.615H3.015V4.779z M18.73,1.869H1.269c-0.322,0-0.582,0.26-0.582,0.582v15.133
+                                            c0,0.322,0.26,0.582,0.582,0.582H18.73c0.321,0,0.582-0.26,0.582-0.582V2.451C19.312,2.129,19.052,1.869,18.73,1.869z
+                                             M18.148,16.42c0,0.322-0.261,0.582-0.582,0.582H2.433c-0.322,0-0.582-0.26-0.582-0.582V6.525h16.297V16.42z M18.148,5.361H1.851
+                                            V3.615c0-0.322,0.26-0.582,0.582-0.582h15.133c0.321,0,0.582,0.26,0.582,0.582V5.361z M7.671,4.779h1.165V3.615H7.671V4.779z
+                                             M5.344,4.779h1.164V3.615H5.344V4.779z"></path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'TABLES'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" width="200px" d="M3.015,4.779h1.164V3.615H3.015V4.779z M18.73,1.869H1.269c-0.322,0-0.582,0.26-0.582,0.582v15.133
+                                            c0,0.322,0.26,0.582,0.582,0.582H18.73c0.321,0,0.582-0.26,0.582-0.582V2.451C19.312,2.129,19.052,1.869,18.73,1.869z
+                                             M18.148,16.42c0,0.322-0.261,0.582-0.582,0.582H2.433c-0.322,0-0.582-0.26-0.582-0.582V6.525h16.297V16.42z M18.148,5.361H1.851
+                                            V3.615c0-0.322,0.26-0.582,0.582-0.582h15.133c0.321,0,0.582,0.26,0.582,0.582V5.361z M7.671,4.779h1.165V3.615H7.671V4.779z
+                                             M5.344,4.779h1.164V3.615H5.344V4.779z"></path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'STANDARD'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" width="200px" d="M17.206,5.45l0.271-0.27l-4.275-4.274l-0.27,0.269V0.9H3.263c-0.314,0-0.569,0.255-0.569,0.569v17.062
+                                    c0,0.314,0.255,0.568,0.569,0.568h13.649c0.313,0,0.569-0.254,0.569-0.568V5.45H17.206z M12.932,2.302L16.08,5.45h-3.148V2.302z
+                                     M16.344,17.394c0,0.314-0.254,0.569-0.568,0.569H4.4c-0.314,0-0.568-0.255-0.568-0.569V2.606c0-0.314,0.254-0.568,0.568-0.568
+                                    h7.394v4.55h4.55V17.394z"></path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'VARIABLES'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" width="200px"
+                                        d="M17.431,2.156h-3.715c-0.228,0-0.413,0.186-0.413,0.413v6.973h-2.89V6.687c0-0.229-0.186-0.413-0.413-0.413H6.285c-0.228,0-0.413,0.184-0.413,0.413v6.388H2.569c-0.227,0-0.413,0.187-0.413,0.413v3.942c0,0.228,0.186,0.413,0.413,0.413h14.862c0.228,0,0.413-0.186,0.413-0.413V2.569C17.844,2.342,17.658,2.156,17.431,2.156 M5.872,17.019h-2.89v-3.117h2.89V17.019zM9.587,17.019h-2.89V7.1h2.89V17.019z M13.303,17.019h-2.89v-6.651h2.89V17.019z M17.019,17.019h-2.891V2.982h2.891V17.019z">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'VARIABLE_LIB'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill="none"
+                                        d="M16.254,3.399h-0.695V3.052c0-0.576-0.467-1.042-1.041-1.042c-0.576,0-1.043,0.467-1.043,1.042v0.347H6.526V3.052c0-0.576-0.467-1.042-1.042-1.042S4.441,2.476,4.441,3.052v0.347H3.747c-0.768,0-1.39,0.622-1.39,1.39v11.813c0,0.768,0.622,1.39,1.39,1.39h12.507c0.768,0,1.391-0.622,1.391-1.39V4.789C17.645,4.021,17.021,3.399,16.254,3.399z M14.17,3.052c0-0.192,0.154-0.348,0.348-0.348c0.191,0,0.348,0.156,0.348,0.348v0.347H14.17V3.052z M5.136,3.052c0-0.192,0.156-0.348,0.348-0.348S5.831,2.86,5.831,3.052v0.347H5.136V3.052z M16.949,16.602c0,0.384-0.311,0.694-0.695,0.694H3.747c-0.384,0-0.695-0.311-0.695-0.694V7.568h13.897V16.602z M16.949,6.874H3.052V4.789c0-0.383,0.311-0.695,0.695-0.695h12.507c0.385,0,0.695,0.312,0.695,0.695V6.874z M5.484,11.737c0.576,0,1.042-0.467,1.042-1.042c0-0.576-0.467-1.043-1.042-1.043s-1.042,0.467-1.042,1.043C4.441,11.271,4.908,11.737,5.484,11.737z M5.484,10.348c0.192,0,0.347,0.155,0.347,0.348c0,0.191-0.155,0.348-0.347,0.348s-0.348-0.156-0.348-0.348C5.136,10.503,5.292,10.348,5.484,10.348z M14.518,11.737c0.574,0,1.041-0.467,1.041-1.042c0-0.576-0.467-1.043-1.041-1.043c-0.576,0-1.043,0.467-1.043,1.043C13.475,11.271,13.941,11.737,14.518,11.737z M14.518,10.348c0.191,0,0.348,0.155,0.348,0.348c0,0.191-0.156,0.348-0.348,0.348c-0.193,0-0.348-0.156-0.348-0.348C14.17,10.503,14.324,10.348,14.518,10.348z M14.518,15.212c0.574,0,1.041-0.467,1.041-1.043c0-0.575-0.467-1.042-1.041-1.042c-0.576,0-1.043,0.467-1.043,1.042C13.475,14.745,13.941,15.212,14.518,15.212z M14.518,13.822c0.191,0,0.348,0.155,0.348,0.347c0,0.192-0.156,0.348-0.348,0.348c-0.193,0-0.348-0.155-0.348-0.348C14.17,13.978,14.324,13.822,14.518,13.822z M10,15.212c0.575,0,1.042-0.467,1.042-1.043c0-0.575-0.467-1.042-1.042-1.042c-0.576,0-1.042,0.467-1.042,1.042C8.958,14.745,9.425,15.212,10,15.212z M10,13.822c0.192,0,0.348,0.155,0.348,0.347c0,0.192-0.156,0.348-0.348,0.348s-0.348-0.155-0.348-0.348C9.653,13.978,9.809,13.822,10,13.822z M5.484,15.212c0.576,0,1.042-0.467,1.042-1.043c0-0.575-0.467-1.042-1.042-1.042s-1.042,0.467-1.042,1.042C4.441,14.745,4.908,15.212,5.484,15.212z M5.484,13.822c0.192,0,0.347,0.155,0.347,0.347c0,0.192-0.155,0.348-0.347,0.348s-0.348-0.155-0.348-0.348C5.136,13.978,5.292,13.822,5.484,13.822z M10,11.737c0.575,0,1.042-0.467,1.042-1.042c0-0.576-0.467-1.043-1.042-1.043c-0.576,0-1.042,0.467-1.042,1.043C8.958,11.271,9.425,11.737,10,11.737z M10,10.348c0.192,0,0.348,0.155,0.348,0.348c0,0.191-0.156,0.348-0.348,0.348s-0.348-0.156-0.348-0.348C9.653,10.503,9.809,10.348,10,10.348z">
+                                    </path>
+                                </svg:g>
+
+                                <svg:g *ngIf="node.data.flow_type === 'RULE_SET'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill="none"
+                                        d="M17.222,5.041l-4.443-4.414c-0.152-0.151-0.356-0.235-0.571-0.235h-8.86c-0.444,0-0.807,0.361-0.807,0.808v17.602c0,0.448,0.363,0.808,0.807,0.808h13.303c0.448,0,0.808-0.36,0.808-0.808V5.615C17.459,5.399,17.373,5.192,17.222,5.041zM15.843,17.993H4.157V2.007h7.72l3.966,3.942V17.993z">
+                                    </path>
+                                    <path fill="none"
+                                        d="M5.112,7.3c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808c0-0.447-0.363-0.808-0.808-0.808H5.92C5.475,6.492,5.112,6.853,5.112,7.3z">
+                                    </path>
+                                    <path fill="none"
+                                        d="M5.92,5.331h4.342c0.445,0,0.808-0.361,0.808-0.808c0-0.446-0.363-0.808-0.808-0.808H5.92c-0.444,0-0.808,0.361-0.808,0.808C5.112,4.97,5.475,5.331,5.92,5.331z">
+                                    </path>
+                                    <path fill="none"
+                                        d="M13.997,9.218H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,9.58,14.442,9.218,13.997,9.218z">
+                                    </path>
+                                    <path fill="none"
+                                        d="M13.997,11.944H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,12.306,14.442,11.944,13.997,11.944z">
+                                    </path>
+                                    <path fill="none"
+                                        d="M13.997,14.67H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.447,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,15.032,14.442,14.67,13.997,14.67z">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'QUERY_VARIABLE'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)"
+                                    viewBox="0 0 20 20">
+                                    <path fill="none"
+                                        d="M9.634,10.633c0.116,0.113,0.265,0.168,0.414,0.168c0.153,0,0.308-0.06,0.422-0.177l4.015-4.111c0.229-0.235,0.225-0.608-0.009-0.836c-0.232-0.229-0.606-0.222-0.836,0.009l-3.604,3.689L6.35,5.772C6.115,5.543,5.744,5.55,5.514,5.781C5.285,6.015,5.29,6.39,5.522,6.617L9.634,10.633z">
+                                    </path>
+                                    <path fill="none"
+                                        d="M17.737,9.815c-0.327,0-0.592,0.265-0.592,0.591v2.903H2.855v-2.903c0-0.327-0.264-0.591-0.591-0.591c-0.327,0-0.591,0.265-0.591,0.591V13.9c0,0.328,0.264,0.592,0.591,0.592h15.473c0.327,0,0.591-0.264,0.591-0.592v-3.494C18.328,10.08,18.064,9.815,17.737,9.815z">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'FUNCTIONS'" class="svg-icon icon-tick"
+                                    fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M17.35,2.219h-5.934c-0.115,0-0.225,0.045-0.307,0.128l-8.762,8.762c-0.171,0.168-0.171,0.443,0,0.611l5.933,5.934c0.167,0.171,0.443,0.169,0.612,0l8.762-8.763c0.083-0.083,0.128-0.192,0.128-0.307V2.651C17.781,2.414,17.587,2.219,17.35,2.219M16.916,8.405l-8.332,8.332l-5.321-5.321l8.333-8.332h5.32V8.405z M13.891,4.367c-0.957,0-1.729,0.772-1.729,1.729c0,0.957,0.771,1.729,1.729,1.729s1.729-0.772,1.729-1.729C15.619,5.14,14.848,4.367,13.891,4.367 M14.502,6.708c-0.326,0.326-0.896,0.326-1.223,0c-0.338-0.342-0.338-0.882,0-1.224c0.342-0.337,0.881-0.337,1.223,0C14.84,5.826,14.84,6.366,14.502,6.708">
+                                    </path>
+                                </svg:g>
+
+                            </ng-template>
+
+                            <ng-template #linkTemplate let-link>
+                                <svg:g class="edge">
+
+                                    <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+                                    <svg:text class="edge-label" x="15" font-size="20px" font-size-adjust="0.50"
+                                        textLength="120" lengthAdjust="spacingAndGlyphs" text-anchor="middle">
+                                        <textPath class="text-path" [attr.href]="'#' + link.id"
+                                            [style.dominant-baseline]="link.dominantBaseline" startOffset="50%">
+                                            {{link.label}}
+                                        </textPath>
+                                    </svg:text>
+                                </svg:g>
+
+                            </ng-template>
+
+
+                        </ngx-graph>
+                        <mat-spinner class="spinner-class" *ngIf="spinnerLoad" diameter="45"></mat-spinner>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+    <!-- an hidden div is created to set the position of appearance of the menu-->
+    <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x"
+        [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="rightMenu"></div>
+
+    <!-- standard material menu -->
+    <mat-menu style="width: 100px;" #rightMenu="matMenu">
+        <ng-template matMenuContent let-item="item">
+            <button mat-menu-item [matMenuTriggerFor]="nodeMenu"
+                *ngIf="item.data.flow_type != 'CONDITION' && item.data.name != 'End'">Insert Node</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item
+                *ngIf="item.data.flow_type != 'CONDITION' && item.data.name != 'End'&& item.data.name != 'Start' && !item.data.condition_branch"
+                (click)="deleteFlowTask(item.data)"> Delete Node</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="editFlowTask(item)"
+                *ngIf="item.data.flow_type != 'CONDITION' && item.data.flow_type != 'START' && item.data.flow_type != 'END'">Assign
+                Node</button>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="extraBranchCreation(item)" *ngIf="item.data.flow_type === 'CONDITION'">Add
+                Branches</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="assignBranchCondition(item)"
+                *ngIf="item.data.condition_branch==='YES'">Assign Condition</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="removeBranch(item.data)" *ngIf="item.data.condition_branch">Remove
+                Branch</button>
+            <mat-divider></mat-divider>
+            <mat-menu style="width: 100px;" #nodeMenu="matMenu">
+                <button mat-menu-item (click)="insertTaskNode(item)">Task</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item *ngIf="item.data.flow_type != 'END'"
+                    [matMenuTriggerFor]="splitMenu">Split</button>
+
+                <mat-menu style="width: 100px;" #splitMenu="matMenu">
+                    <button mat-menu-item *ngIf="item.data.flow_type != 'END'"
+                        (click)="openBranchCreationDialog(item)">Branch</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item *ngIf="item.data.flow_type != 'END'"
+                        (click)="openDupBranchCreationDialog(item)">Duplicate Branch</button>
+                </mat-menu>
+            </mat-menu>
+        </ng-template>
+    </mat-menu>
+
+</div>
+
+<div *ngIf="!loading" style="margin-top: 25%; margin-left: 30%;">
+    <div class="loading__line">
+        <div class="load-1">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <p style="display: inline-block;"> Loading...</p>
+        </div>
+    </div>
+</div>
+
+
+<notifier-container></notifier-container>

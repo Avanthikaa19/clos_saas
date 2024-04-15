@@ -1,0 +1,302 @@
+<div class="ref-container" >
+    <div class="flex-container" style="overflow: auto;">
+        <div class="flex-item">
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header style="background-color: whitesmoke;">
+            <mat-panel-title class="header-banner">
+             <b>Vendors:-</b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="scrollable-content">
+            <table>
+                <tr>
+                    <td>Company Name
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.vendorsCompanyName" (ngModelChange)="saveApplicationData() " appPreventSpace>
+                    </td>
+                    <td>Company Contact Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="applicationDetails.vendorsCompanyContactNumber" (ngModelChange)="saveApplicationData() "(keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Company Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea " [(ngModel)]="applicationDetails.vendorsCompanyAddress" (ngModelChange)="saveApplicationData() " appPreventSpace></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Agreement</td>
+                    <td>: <span>
+                        <input prohibitedChars hidden type="file" #uploadFile1 
+                          accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                          (change)="onFilesSelected($event, 'vendorsAgreement')" multiple />
+                        <mat-icon (click)="uploadFile1.click();" class="inverted-icon">attach_file</mat-icon>
+                      </span></td>
+                    <td>
+                      <div class="scrollable-content">
+                        <label class="file-input-label">
+                          <div class="selected-files">
+                            <div *ngFor="let fileName of applicationDetails.vendorsAgreement; let i = index">
+                              <u (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                              <button mat-icon-button>
+                                <mat-icon (click)="removeAttachment('vendorsAgreement',i)" class="remove-icon">clear</mat-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <textarea placeholder="Remarks" class="min-select" [(ngModel)]="applicationDetails.vendorsAgreementUploadsRemarks" (ngModelChange)="saveApplicationData()" appPreventSpace></textarea>
+                    </td>
+                  </tr>
+            </table>   
+           </div>
+        </mat-expansion-panel>
+      </div>
+      <div  class="flex-item">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header style="background-color: whitesmoke;" >
+             <mat-panel-title class="header-banner">
+               <b>Suppliers:-</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="scrollable-content">
+                <table>
+                    <tr>
+                        <td>Company Name
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.suppliersCompanyName" (ngModelChange)="saveApplicationData() " appPreventSpace>
+                        </td>
+                        <td>Company Contact Number
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="applicationDetails.suppliersCompanyContactNumber" (ngModelChange)="saveApplicationData() "(keydown)="preventLetterE($event)" appPreventSpace>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Company Address
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <textarea type="text" style="resize:none" class="min-select-textarea " [(ngModel)]="applicationDetails.suppliersCompanyAddress" (ngModelChange)="saveApplicationData() " appPreventSpace></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Agreement</td>
+                        <td>: <span>
+                            <input prohibitedChars hidden type="file" #uploadFile2 
+                              accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                              (change)="onFilesSelected($event, 'suppliersAgreement')" multiple />
+                            <mat-icon (click)="uploadFile2.click();" class="inverted-icon">attach_file</mat-icon>
+                          </span></td>
+                        <td>
+                          <div class="scrollable-content">
+                            <label class="file-input-label">
+                              <div class="selected-files">
+                                <div *ngFor="let fileName of applicationDetails.suppliersAgreement; let i = index">
+                                  <u (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                                  <button mat-icon-button>
+                                    <mat-icon (click)="removeAttachment('suppliersAgreement',i)" class="remove-icon">clear</mat-icon>
+                                  </button>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <textarea placeholder="Remarks" class="min-select" [(ngModel)]="applicationDetails.suppliersAgreementUploadsRemarks" (ngModelChange)="saveApplicationData()" appPreventSpace></textarea>
+                        </td>
+                      </tr>
+                </table>       
+             </div>
+          </mat-expansion-panel>
+        </div>
+        <div  class="flex-item">
+            <mat-expansion-panel>
+            <mat-expansion-panel-header style="background-color: whitesmoke;" >
+                <mat-panel-title class="header-banner">
+                <b>Partners:-</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="scrollable-content">
+                <table>
+                    <tr>
+                        <td>Company Name
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.partnersCompanyName" (ngModelChange)="saveApplicationData() " appPreventSpace>
+                        </td>
+                        <td>Company Contact Number
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="applicationDetails.partnersCompanyContactNumber" (ngModelChange)="saveApplicationData() "(keydown)="preventLetterE($event)" appPreventSpace >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Company Address
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <textarea type="text" style="resize:none" class="min-select-textarea " [(ngModel)]="applicationDetails.partnersCompanyAddress" (ngModelChange)="saveApplicationData() " appPreventSpace></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Agreement</td>
+                        <td>: <span>
+                            <input prohibitedChars hidden type="file" #uploadFile3 
+                              accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                              (change)="onFilesSelected($event, 'partnersAgreement')" multiple />
+                            <mat-icon (click)="uploadFile3.click();" class="inverted-icon">attach_file</mat-icon>
+                          </span></td>
+                        <td>
+                          <div class="scrollable-content">
+                            <label class="file-input-label">
+                              <div class="selected-files">
+                                <div *ngFor="let fileName of applicationDetails.partnersAgreement; let i = index">
+                                  <u (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                                  <button mat-icon-button>
+                                    <mat-icon (click)="removeAttachment('partnersAgreement',i)" class="remove-icon">clear</mat-icon>
+                                  </button>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <textarea placeholder="Remarks" class="min-select" [(ngModel)]="applicationDetails.partnersAgreementUploadsRemarks" (ngModelChange)="saveApplicationData()" appPreventSpace></textarea>
+                        </td>
+                      </tr>
+                </table>    
+            </div>
+          </mat-expansion-panel>
+          </div>
+          <div  class="flex-item">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header style="background-color: whitesmoke;" >
+              <mat-panel-title class="header-banner">
+                <b>Bank/Loan History:-</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="scrollable-content">
+                <table>
+                    <tr>
+                        <td>Bank Name
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.bankName" (ngModelChange)="saveApplicationData() "appPreventSpace>
+                        </td>
+                        <td>Purpose of Loan
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.bankPurposeOfLoan" (ngModelChange)="saveApplicationData() " appPreventSpace>
+                        </td>
+                        <td>Loan Type
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.loanType"  (ngModelChange)="saveApplicationData() " >
+                                <mat-option *ngFor="let loan of loanType"  [value]="loan" >
+                                    {{loan}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Loan Amount
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.bankLoanAmount" (ngModelChange)="saveApplicationData() "(keydown)="preventLetterE($event)" appCommaSeparatedInput>
+                        </td>
+                        <td>Payment Status
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.paymentStatus" (ngModelChange)="saveApplicationData() " appPreventSpace>
+                        </td>
+                    </tr>
+                </table>     
+               </div>
+          </mat-expansion-panel>
+          <div class="table-container" style="height: 20rem;">
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            User Defined Fields
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>User Defined fields</td>
+                            <td>:</td>
+                            <td>
+                                <mat-select class="min-select" [(ngModel)]="selectedUdfFieldName" style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                    <mat-option *ngFor="let udfFieldName of selectedField" [value]="udfFieldName">{{ udfFieldName }}</mat-option>
+                                </mat-select>
+                            </td>
+                            <td>
+                                <button mat-raised-button (click)="addInputField()" matTooltip="Add Fields" style="background-color:#0e2954;color: white;">
+                                <mat-icon>add</mat-icon></button></td>
+                        </tr>
+                    </thead>
+                </table>
+                <table>
+                    <tr>
+                        <div *ngFor="let fieldName of selectedFieldNames;let i=index">
+                        <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">
+                            {{ fieldName }}</td>
+                        <td>:</td>
+                        <td>
+                            <ng-container [ngSwitch]="getFieldType(fieldName)">
+                                <input *ngSwitchCase="'ALPHA_NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="text" class="udf-input">
+                                <input *ngSwitchCase="'DATE'" [max]="currentDate" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="date" class="udf-input">
+                                <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                <input *ngSwitchCase="'DATE_TIME'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="datetime-local" class="udf-input">
+                                <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                              </ng-container>
+                        </td>
+                        <td>
+                            <button style="border-radius: 25%;background-color: aliceblue;border: 1px solid rgb(199, 199, 199);" matTooltip="Remove">
+                                <mat-icon (click)="removeInput(i)" style="color: red;">remove</mat-icon>
+                            </button>
+                        </td>
+                    </div>
+                    </tr>
+                </table>
+           </mat-expansion-panel>
+        </div>
+          </div>
+          </div>
+        </div>
+        <div class="loading-container" *ngIf="loading">
+          <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+          <span>Loading... Please wait...</span>
+      </div>
+          <div class="button-container">
+            <button  mat-raised-button style="margin:1rem;" class="clos-submit-btn" mat-raised-button (click)="nexttab()">
+                <mat-icon>forward</mat-icon>
+                <span>Next</span>
+            </button>
+            <button  mat-raised-button style="margin:1rem;" class="clos-submit-btn" mat-raised-button (click)="previoustab()">
+                <mat-icon style="transform: rotate(180deg)">forward</mat-icon>
+                <span>Previous</span>
+            </button>
+        </div>

@@ -1,0 +1,1027 @@
+<div class="main-container">
+    <span class="filter-name">Filters:</span>
+    <div class="filter-container">
+        <div class="filter-chips-container" *ngFor="let column of filterColumns">
+            <div *ngIf="column.searchText.length>0 || column.dateFormat || column.fieldName == 'birthdate'">
+                <mat-chip-list style="display: flex; flex-wrap: wrap;">
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <span>
+                            <span *ngIf="column.dateFormat">
+                                <ng-container *ngIf="column.fromDate">
+                                    {{column.displayName | titlecase}} From :
+                                    <mat-chip [value]="column.fromDate" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.fromDate,'fromDate')">
+                                        {{formatDate(column.fromDate)}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                                <ng-container *ngIf="column.toDate">
+                                    {{column.displayName | titlecase}} To :
+                                    <mat-chip [value]="column.toDate" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.toDate,'toDate')">
+                                        {{formatDate(column.toDate)}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            </span>
+                            <ng-container *ngIf="column.fieldName == 'birthdate'">
+                                <ng-container *ngIf="column.dateFrom">
+                                    {{column.displayName | titlecase}} From :
+                                    <mat-chip [value]="column.dateFrom" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.dateFrom,'fromDate')">
+                                        {{column.dateFrom | date:'dd-MM-y'}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                                <ng-container *ngIf="column.dateTill">
+                                    {{column.displayName | titlecase}} To :
+                                    <mat-chip [value]="column.dateTill" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.dateTill,'toDate')">
+                                        {{column.dateTill | date:'dd-MM-y'}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            </ng-container>
+                            
+                            <span *ngIf="!column.dateFormat">
+                                <span style="margin-left:1rem" *ngIf="column?.searchText?.length>0">{{column.displayName | titlecase}} :</span>
+                            
+                                <ng-container *ngFor="let filter of column.searchText">
+                                    <mat-chip *ngIf="filter === 0 || filter != ''" [value]="filter" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,filter,'searchText')">
+                                        {{filter}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            
+                                <ng-container *ngIf="column.timeFrom">
+                                    {{column.displayName|titlecase}} From:
+                                    <mat-chip [value]="column.timeFrom" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.timeFrom,'timeFrom')">
+                                        {{column.timeFrom}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            
+                                <ng-container *ngIf="column.timeTill">
+                                    {{column.displayName | titlecase}} To:
+                                    <mat-chip [value]="column.timeTill" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.timeTill,'timeTill')">
+                                        {{column.timeTill}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            
+                                <ng-container *ngIf="column.rangeFrom || column.rangeFrom === 0">
+                                    {{column.displayName|titlecase}} From:
+                                    <mat-chip [value]="column.rangeFrom" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.rangeFrom,'rangeFrom')">
+                                        {{column.rangeFrom}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            
+                                <ng-container *ngIf="column.rangeTo || column.rangeTo === 0">
+                                    {{column.displayName | titlecase}} To:
+                                    <mat-chip [value]="column.rangeTo" [selectable]="true" [removable]="true"
+                                        (removed)="onClearFilterClick(column,column.rangeTo,'rangeTo')">
+                                        {{column.rangeTo}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            </span>
+                            
+                        </span>
+                    </div>
+                </mat-chip-list>
+            </div>
+        </div>
+    </div>
+    <div class="button-container">
+        <div class="button-container">
+            <div class="header-container">
+                <div class="spacer"></div>
+                <ng-container>
+                    <div class="button-item-container" (click)="onAddFieldClick($event)" matTooltip="Create New Field"
+                        *ngIf="newFields">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div class="button-item-container" (click)="onDuplicatePreviewClick($event)"
+                        matTooltip="Kyc Preview" *ngIf="selectedfisurgeid.length>=2 && this.datatabs != 0">
+                        <mat-icon>visibility</mat-icon>
+                    </div>
+                    <div class="button-item-container" (click)="onSelfAssignClick($event)" matTooltip="Self Assign"
+                        *ngIf="selectedfisurgeid.length>=2 && this.datatabs === 0">
+                        <mat-icon>person_add</mat-icon>
+                    </div>
+                    <!-- <div class="button-item-container" (click)="onReprocessClick($event)" matTooltip="Reprocess"
+                        *ngIf="selectedfisurgeid.length>=2">
+                        <mat-icon>refresh</mat-icon>
+                    </div> -->
+                    <div class="button-item-container" *ngIf="addNewUser" (click)="onCreateBtnClick($event)"
+                        matTooltip="Add New User">
+                        <mat-icon>add</mat-icon>
+                    </div>
+
+                    <div class="button-item-container" matTooltip="Create New Role" *ngIf="newRoles"
+                        (click)="createRoles()">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div class="button-item-container" matTooltip="Create New Group" *ngIf="newGroups"
+                        (click)="createGroups()">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div class="button-item-container" matTooltip="Create New Template" *ngIf="newTemplate"
+                        (click)="createTemplate()">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                    <div class="button-item-container" matTooltip="Apply Filter" *ngIf="filterButton"
+                        (click)="openFilter()">
+                        <mat-icon>filter_list</mat-icon>
+                    </div>
+                    <div class="button-item-container" matTooltip="Clear Filters" *ngIf="clearButton"
+                        (click)="clearClick()">
+                        <mat-icon>clear</mat-icon>
+                    </div>
+                    <div class="button-item-container" matTooltip="To display all fields" *ngIf="displayAllButton"
+                        (click)="displayAllClick()">
+                        <mat-icon>menu</mat-icon>
+                    </div>
+                    <div class="button-item-container" matTooltip="CopyToClipboard"
+                        (click)="copyTokenToClipboard('table')">
+                        <mat-icon>content_copy</mat-icon>
+                    </div>
+                    <div class="button-item-container" *ngIf="exportButton" matTooltip="Export" (click)="exportClick()">
+                        <mat-icon>download</mat-icon>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+ 
+    <ng-container *ngIf="displayAllButton">
+        <div class="table-container">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <th *ngIf="column.columnDisable"
+                                [ngClass]="{'duplicate_sticky':column.displayName.startsWith('Kyc Preview'),'edit_application_header':column.displayName.startsWith('Edit'),'reason-header':column.displayName.startsWith('Reason for Rejection'), 'preview_sticky':column.displayName.startsWith('Document Preview'),'preview_sticky_All':column.fieldName.startsWith('$document_preview_all') ,'rollover_preview_sticky':column.fieldName.startsWith('$rollover_document_preview'),'extension_of_loan_document_preview_sticky':column.fieldName.startsWith('$extension_of_loan_document_preview'), 'view_sticky':column.displayName.startsWith('View Details'), 'view_sticky_All':column.fieldName.startsWith('$view_details_all') ,'rollover_view_sticky':column.fieldName.startsWith('$rollover_view_details'),'extension_of_loan_view_details_sticky':column.fieldName.startsWith('$extension_of_loan_view_details'),'selfassign_sticky' :column.displayName.startsWith('Self Assign'),'sample' :column.displayName.startsWith('Underwriting Preview'),'credit_memo':column.displayName.startsWith('Credit Memo'),'underwriting_ratio_preview':column.displayName.startsWith('Ratio Preview'),'view_rollover_Sticky' :column.displayName.startsWith('View Rollover Details'),'view_rollover_parent_details':column.fieldName.startsWith('$rollover_parent_details'),'view_extension_of_loan_parent_details':column.fieldName.startsWith('$extension_parent_details'),'view_extension_of_loan_Sticky' :column.displayName.startsWith('View Extension of Loan Details'),'dashboard_Sticky':column.displayName.startsWith('Dashboard'),'status_Sticky' :column.displayName.startsWith('Status'),'status_Sticky_All':column.displayName.startsWith('All Status'),'rollover_details_Sticky' :column.displayName.startsWith('Rollover Details'),'results_status_Sticky' :column.displayName.startsWith('View Result Status'),'results_status_Sticky_All' :column.fieldName.startsWith('$result_preview_all'), 'depositer_view_header' :column.fieldName.startsWith('$view_detailss'), 'loan-approval-edit-header' :column.fieldName.startsWith('$loan_approval_info_add'),'loan-approval-preview-header' :column.fieldName.startsWith('$loan_approval_preview'),'depositer_document_preview_header' :column.fieldName.startsWith('$document_previews'), 'internal_scoring_view_header' :column.fieldName.startsWith('$view_details_internalscoring'), 'internal_scoring_preview_header' :column.fieldName.startsWith('$document_preview_internalscoring'), 'document_preview_deposter_other_header' :column.fieldName.startsWith('$document_preview_deposter_other'), 'view_details_depositeer_other_header' :column.fieldName.startsWith('$view_details_depositeer_other'), 'view_details_internalscoring_other_header' :column.fieldName.startsWith('$view_details_internalscoring_other'), 'view_details_reject_other_header' :column.fieldName.startsWith('$view_details_reject_other'), 'document_preview_internalscoring_other_header' :column.fieldName.startsWith('$document_preview_internalscoring_other'), 'document_preview_reject_other_header' :column.fieldName.startsWith('$document_preview_reject_other'), 
+                                'duplicate_preview_reject_other_header' :column.fieldName.startsWith('$duplicate_preview_reject_other'), 'fraud_review_fraud_header' :column.fieldName.startsWith('$fraud'), 'initialStatus_header' :column.fieldName.startsWith('initialStatus') && column.initialStatus, 'probationary_header' :column.fieldName.startsWith('$Probationary'), 'regular_header' :column.fieldName.startsWith('$Regular'), 'employee_progress_document_preview_header' :column.fieldName.startsWith('$employee_progress_document_preview'), 'employee_progress_view_details_header' :column.fieldName.startsWith('$employee_progress_view_details'), 'employee_other_document_previews_header' :column.fieldName.startsWith('$employee_other_document_previews'), 'employee_other_view_detailss_header' :column.fieldName.startsWith('$employee_other_view_detailss'), 'fraud_header' :column.fieldName.startsWith('$fraud'), 'no_fraud_header' :column.fieldName.startsWith('$no_fraud'), 'fraud_document_preview_header' :column.fieldName.startsWith('$fraud_document_preview'), 'fraud_view_detailss_header' :column.fieldName.startsWith('$fraud_view_detailss'),'preview_ciApp_header' :column.fieldName.startsWith('$preview_ciApp'),'document_preview_ciApp_header' :column.fieldName.startsWith('$document_previews_ciApp'),'view_details_ciApp_header' :column.fieldName.startsWith('$view_details_ciApp'), 'reprocess_header' :column.fieldName.startsWith('$reprocess'), 'current_status_header' :column.fieldName.startsWith('current_status'), 'reject_code_header' :column.fieldName.startsWith('reject_code'), 'pulled_date_header' :column.fieldName.startsWith('pulled_date'), 'reprocess_view_details_header' :column.fieldName.startsWith('$reprocess_view_details')}">
+                                <ng-container>
+                                    <div class="lock-icon" style="float: left;margin-right:1rem" [class.locked]="column.lockColumn"
+                                        (click)="column.lockColumn = !column.lockColumn" matRipple>
+                                        <mat-icon style="  transform: scale(0.6)">lock</mat-icon>
+                                    </div>
+                                    <div class="content " style="float: left;">
+                                        <span>{{ column.displayName === 'All Status' ? 'STATUS' : column.displayName | uppercase }}</span>
+                                    </div>
+                                    <div *ngIf="column.fieldName.endsWith('_checkbox')" class="content_check"
+                                        style="float: left">
+                                        <ng-container>
+                                            <mat-checkbox [checked]="allSelect" (change)="selectAll($event)">
+                                            </mat-checkbox>
+                                        </ng-container>
+                                    </div>
+                                    <div class="sort-icon"
+                                        [style.color]="column.fieldName.startsWith('$') ? '#0e2954' : 'white'"
+                                        [class.sort-asc]="column.sortAsc" [class.sort-desc]="column.sortAsc === false"
+                                        (click)="sortClicked(column)" matRipple>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === null">
+                                            swap_vert</mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc">arrow_upward
+                                        </mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === false">
+                                            arrow_downward</mat-icon>
+                                    </div>
+                                </ng-container>
+
+                            </th>
+                        </ng-container>
+
+                    </tr>
+                </thead>
+                <tbody style="margin-top: 2rem;">
+                    <tr *ngFor="let data of tableData; let i = index;" [ngStyle]="{'background-color': getColorByLoanStatus(data.loanStatus)}">
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <td *ngIf="column.columnDisable"
+                                [ngClass]="{'duplicate_column_sticky':column.displayName.startsWith('Kyc Preview'),'loan-approval-edit-column' :column.fieldName.startsWith('$loan_approval_info_add'), 'loan-approval-preview-column' :column.fieldName.startsWith('$loan_approval_preview'),'edit_application_column':column.displayName.startsWith('Edit'),'reason_column_sticky':column.displayName.startsWith('Reason for Rejection'), 'even': i % 2 !== 0 && column.displayName.startsWith('Document Preview') || column.displayName.startsWith('Kyc Preview') || column.displayName.startsWith('View Details'), 'odd': i % 2 == 0 || column.displayName.startsWith('Kyc Preview') || column.displayName.startsWith('Document Preview') || column.displayName.startsWith('View Details'),'preview_column_sticky':column.displayName.startsWith('Document Preview'),'preview_column_sticky_All':column.fieldName.startsWith('$document_preview_all'),'rollover_column_sticky':column.fieldName.startsWith('$rollover_document_preview'),'extension_of_loan_document_preview_column_sticky':column.fieldName.startsWith('$extension_of_loan_document_preview'), 'view_column_sticky':column.displayName.startsWith('View Details'),'view_column_sticky_All':column.fieldName.startsWith('$view_details_all'),'rollover_view_column_sticky':column.fieldName.startsWith('$rollover_view_details'),'extension_of_loan_view_details_column_sticky':column.fieldName.startsWith('$extension_of_loan_view_details'), 'selfAssign_Column_Sticky':column.displayName.startsWith('Self Assign'),'sample-column':column.displayName.startsWith('Underwriting Preview'),'credit_memo-column':column.displayName.startsWith('Credit Memo'),'underwriting_ratio_preview_column':column.displayName.startsWith('Ratio Preview'),'dashboard_Column_Sticky':column.displayName.startsWith('Dashboard') ,'status_Column_Sticky':column.displayName.startsWith('Status'),'status_Column_Sticky_All':column.displayName.startsWith('All Status'),'view_rollover_Column_Sticky' :column.displayName.startsWith('View Rollover Details'),'view_rollover_parent_column_details':column.fieldName.startsWith('$rollover_parent_details'),'view_extension_of_loan_parent_column_details':column.fieldName.startsWith('$extension_parent_details'),'view_extension_of_loan_Column_Sticky' :column.displayName.startsWith('View Extension of Loan Details'),'results_status_Column_Sticky':column.displayName.startsWith('View Result Status'),'results_status_Column_Sticky_All':column.fieldName.startsWith('$result_preview_all'),'rollover_details_Column_Sticky' :column.displayName.startsWith('Rollover Details'),'depositer_view_column' :column.fieldName.startsWith('$view_detailss'), 'depositer_document_preview_column' :column.fieldName.startsWith('$document_previews'), 'internal_scoring_view_column' :column.fieldName.startsWith('$view_details_internalscoring'), 'internal_scoring_preview_column' :column.fieldName.startsWith('$document_preview_internalscoring'), 'document_preview_deposter_other_column' :column.fieldName.startsWith('$document_preview_deposter_other'), 'view_details_depositeer_other_column' :column.fieldName.startsWith('$view_details_depositeer_other'), 'view_details_internalscoring_other_column' :column.fieldName.startsWith('$view_details_internalscoring_other'), 'view_details_reject_other_column' :column.fieldName.startsWith('$view_details_reject_other'), 'document_preview_internalscoring_other_column' :column.fieldName.startsWith('$document_preview_internalscoring_other'),'document_preview_reject_other_column' :column.fieldName.startsWith('$document_preview_reject_other'),
+                                'duplicate_preview_reject_other_column' :column.fieldName.startsWith('$duplicate_preview_reject_other'), 'view_application_initial_column' :column.fieldName.startsWith('initialStatus') && column.initialStatus,  'probationary_column' :column.fieldName.startsWith('$Probationary'), 'regular_column' :column.fieldName.startsWith('$Regular'), 'employee_progress_document_preview_column' :column.fieldName.startsWith('$employee_progress_document_preview'), 'employee_progress_view_details_column' :column.fieldName.startsWith('$employee_progress_view_details'), 'employee_other_document_previews_column' :column.fieldName.startsWith('$employee_other_document_previews'), 'employee_other_view_detailss_column' :column.fieldName.startsWith('$employee_other_view_detailss'), 'fraud_column' :column.fieldName.startsWith('$fraud'), 'no_fraud_column' :column.fieldName.startsWith('$no_fraud'), 'fraud_document_preview_column' :column.fieldName.startsWith('$fraud_document_preview'), 'fraud_view_detailss_column' :column.fieldName.startsWith('$fraud_view_detailss'),'document_preview_ciApp_column' :column.fieldName.startsWith('$document_previews_ciApp'),'preview_ciApp_column' :column.fieldName.startsWith('$preview_ciApp'),'view_details_ciApp_column' :column.fieldName.startsWith('$view_details_ciApp'), 'reprocess_column' :column.fieldName.startsWith('$reprocess'), 'current_status_column' :column.fieldName.startsWith('current_status'), 'reject_code_column' :column.fieldName.startsWith('reject_code'), 'pulled_date_column' :column.fieldName.startsWith('pulled_date'), 'reprocess_view_details_column' :column.fieldName.startsWith('$reprocess_view_details')}">
+                                <div class="content" *ngIf="!column.fieldName.startsWith('$')">
+                                    <ng-container *ngIf="column.dateFormat && !column.subFieldName">
+                                        <ng-container *ngIf="data[column.fieldName]">
+                                            {{formatDate(data[column.fieldName])}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="column.dateFormat && column.subFieldName">
+                                        <ng-container *ngIf="data[column.subFieldName]">
+                                            {{formatDate(data[column.subFieldName])}}
+                                        </ng-container>
+
+                                    </ng-container>
+
+                                    <ng-container
+                                        *ngIf="!column.dateFormat && column.fieldName && column.displayName !='Reason for Rejection' && column.displayName !='Status' && column.displayName != 'Default Access Template' && column.displayName != 'Roles' && column.displayName != 'APPLICANT SIGNATURE' && column.displayName != 'AUTHORIZED SIGNATURES' && column.displayName !='LATEST INTERIM  FINANCIAL STATEMENTS' && column.displayName !='FINANCIAL STATEMENT OF PAST 5 YEARS'
+                                        && column.displayName != 'TAX RETURNS FOR THE LAST 3YEARS' && column.displayName !='GUARANTOR AGREEMENT' && column.displayName !='BUSINESS / PARTNERS DEED (PARTNERSHIP ONLY)/LATEST FORMS' && column.displayName !='PHOTOCOPY OF NRIC FOR SOLE PROPRITER / PARTNERS' && column.displayName !='LATEST 3 YEARS MANAGEMENT ACCOUNTS' && column.fieldName !='latest_6Months_BankStatements' 
+                                        && column.displayName !='LATEST 3 YEARS INCOME TAX RETURNS FORM B / FORM PT/FORM PT  & TAX RECEIPTS' && column.displayName !='PROJECT PROPOSAL  AGREEMENT & CONTRACT ON SUSTAINABILITY' && column.displayName !='GREEN CERTIFICATION' && column.displayName !='SME INDUSTRY' && column.displayName !='KYC OF APPLICANT' && column.displayName !='KYC OF DIRECTOR' && column.displayName !='KYC OF COMPANY' && column.displayName != 'All Status'">
+                                        <ng-container *ngIf="!column.subFieldName">
+                                            {{data[column.fieldName]}}
+                                        </ng-container>
+                                    </ng-container>
+                                    
+                                    
+                                      <ng-container *ngIf="!column.dateFormat && column.fieldName && column.displayName =='Status' && data[column.fieldName] !== 'LOAN_APPROVED' || !column.dateFormat && column.fieldName && column.displayName =='All Status' && data[column.fieldName] !== 'LOAN_APPROVED'">
+                                      <ng-container *ngIf="!column.subFieldName">
+                                          <button class="btn1"
+                                          [ngStyle]="{'background-color': getStatusBackgroundColor(data[column.fieldName])}"
+                                              style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto; width: 29rem;">
+                                              {{data[column.fieldName]}}
+                                          </button>
+
+                                      </ng-container>
+                                  </ng-container>
+                                  <ng-container
+                                  *ngIf="!column.dateFormat && column.fieldName && column.displayName =='Status' || !column.dateFormat && column.fieldName && column.displayName =='All Status'">
+                                  <ng-container *ngIf="!column.subFieldName"  >
+                                    <ng-container *ngIf="data[column.fieldName] === 'LOAN_APPROVED'">
+                                      <button mat-button [matMenuTriggerFor]="menu" 
+                                      [ngStyle]="{'background-color': getStatusBackgroundColor(data[column.fieldName])}"
+                                          style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto; width: 29rem; color:white;">
+                                          {{data[column.fieldName]}}
+                                      </button>
+                                      <mat-menu #menu="matMenu" xPosition="before" 
+                                      style="position: absolute; margin-left: 30px;">                                   
+                                      <button mat-menu-item (click)="onSubmenuCellClicked(column, i, data, $event,'roll')">Roll Over</button>
+                                      <button mat-menu-item (click)="onAdditionalLoanClick(column, i, data, $event,'additionalLoan')">Additional Loan</button>
+                                      <button mat-menu-item (click)="onSubmenuCellClicked(column, i, data, $event,'extension')">Extension of Loan</button>
+                                      </mat-menu>
+                                   </ng-container>
+                                  </ng-container>
+                              </ng-container>
+                                      
+                                    <ng-container
+                                    *ngIf="!column.dateFormat && column.fieldName && column.displayName =='Reason for Rejection'">
+                                    <ng-container>
+                                        <button class="reason_for_rejection_btn" style="width: 29rem;">
+                                            {{data[column.fieldName][column.subFieldName]}}
+                                        </button>
+                                    </ng-container>
+                                </ng-container>
+                                    <!-- <ng-container *ngIf="!column.dateFormat && column.fieldName !='id' && column.displayName !='Failed Logins' && column.displayName !='Roles' && column.displayName !='DefaultAccessTemplate' && column.displayName !='processor'  && !column.isBoolean">
+                                        <ng-container *ngIf="!column.subFieldName">
+                                            {{data[column.fieldName] | titlecase }}
+                                        </ng-container>
+                                    </ng-container> -->
+
+                                    <ng-container *ngIf="column.isList && column.displayName == 'Roles'">
+                                        <ng-container *ngFor="let column of data['roles']">
+                                            <span style="display:flex;flex-direction:column;">
+                                                {{column.name}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="column.isList && column.fieldName == 'processor'">
+                                        <!-- <ng-container *ngFor="let column of data.applicationResult">
+                                            <span style="display:flex;flex-direction:column;">
+                                                {{column.processor}}
+                                            </span>
+                                        </ng-container> -->
+                                        <span style="display:flex;flex-direction:column;">
+                                            {{data.applicationResult !== null ? data.applicationResult['processor'] :''}}
+                                        </span>
+                                    </ng-container>
+
+                                    <ng-container
+                                        *ngIf="column.isList && column.displayName == 'Default Access Template'">
+                                        <ng-container *ngFor="let column of data['defaultAccessTemplate']">
+                                            <span style="display:flex;flex-direction:column;">
+                                                {{column.name}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+
+                                <div *ngIf="column.fieldName.endsWith('_checkbox')" style="margin-left: 40px;">
+                                    <ng-container>
+                                        <mat-checkbox [checked]="selectCheckBox"
+                                            (change)="internalScoringchecked($event,data)"></mat-checkbox>
+                                    </ng-container>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Original Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'Original Details'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">more_revert</mat-icon>Original Details
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('View Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'View Details'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">more_revert</mat-icon>View Details
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Dashboard')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'View Dashboard'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">dashboard</mat-icon>Click to view
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Rollover Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'Add Rollover Info'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">add</mat-icon>Add Info
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Extension of Loan Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'Add Extension of Loan Info'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">add</mat-icon>Add Info
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Document Preview')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;"
+                                        [matTooltip]="'Document Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('View Rollover Details')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;"
+                                        [matTooltip]="'View Rollover Details'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>View Rollover Details 
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('View Extension of Loan Details')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;"
+                                        [matTooltip]="'View Extension of Loan Details'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>View Extension of Loan Details 
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Preview') && !column.fieldName.startsWith('$loan_approval_preview') ">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Preview'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('View Result Status')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;"
+                                        [matTooltip]="'View Results Status'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Kyc Preview')">
+                                    <button class="btn" [disabled]="data.is_Duplicate==false"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Kyc Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Self Assign')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Self Assign'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>person_add</mat-icon>Self Assign
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Ratio Preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon> Ratio Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Credit Memo')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon> Credit Memo
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Underwriting Preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon> Underwriting Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.fieldName.startsWith('$loan_approval_preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Preview'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.fieldName.startsWith('$loan_approval_info_add')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Add Info'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Add Info
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Edit Template')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit Template'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit Roles')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit Roles'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit User')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit User'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit User
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Final Decision')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Self Assign'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>check</mat-icon>To Verify
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Fraud')">
+                                    <button class="btn_fraud"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Fraud'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>close</mat-icon>Reject
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('No Fraud')">
+                                    <button class="btn_no_fraud"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'No Fraud'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>check</mat-icon>Clear by Fraud
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Regular')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Regular'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>check</mat-icon>Regular
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Probationary')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Probationary'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>close</mat-icon>Probationary
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Reprocess')">
+                                    <button class="btn_reprocess"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Reprocess'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>refresh</mat-icon>Reprocess
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.fieldName.startsWith('applicantSignature') || column.displayName.startsWith('APPLICANT SIGNATURE') || column.fieldName.startsWith('shareholdersAuthorizedSignatures') || column.fieldName.startsWith('latestInterimFinancialStatement') || column.fieldName.startsWith('financialStatementOfPast5Years') ||
+                                 column.fieldName.startsWith('taxReturnsForTheLast3Years') || column.fieldName.startsWith('guarantorAgreement') || column.fieldName.startsWith('photoCopyOfNRIC') || column.fieldName.startsWith('latest3YearsManagementAccounts') || column.fieldName.startsWith('latest_6Months_BankStatements') ||
+                                 column.fieldName.startsWith('latest_3Years_IncomeTaxReturns') || column.fieldName.startsWith('projectProposal') || column.fieldName.startsWith('greenCertification') || column.fieldName.startsWith('smeIndustry') || column.fieldName.startsWith('KYCofApplicant') || column.fieldName.startsWith('KYCofDirector') || column.fieldName.startsWith('KYCofCompany')">
+                                    <div *ngFor="let attachment of data[column.fieldName]">
+                                        <div style="cursor:pointer;white-space: nowrap;
+                                        width: 100px; overflow: visible;text-overflow: ellipsis;"  (click)="getAttachementFileDownload(attachment)">
+                                        <mat-icon style="margin: 0.5rem;font-size: 14px;" *ngIf="attachment.attachmentName">attachment</mat-icon>
+                                            <u style="color: blue;margin-right: 1rem;"
+                                                matTooltip="{{attachment.attachmentName}}">{{attachment.attachmentName}}</u>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!displayAllButton">
+        <div class="table-container">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <th *ngIf="!column.columnDisable"
+                                [ngClass]="{'duplicate_sticky':column.displayName.startsWith('Kyc Preview'),'loan-approval-edit-header' :column.fieldName.startsWith('$loan_approval_edit'),'loan-approval-preview-header' :column.fieldName.startsWith('$loan_approval_preview'),'edit_application_header':column.displayName.startsWith('Edit'),'reason-header':column.displayName.startsWith('Reason for Rejection'), 'preview_sticky':column.displayName.startsWith('Document Preview'), 'view_sticky':column.displayName.startsWith('View Details'),'selfassign_sticky':column.displayName.startsWith('Self Assign'),'sample':column.displayName.startsWith('Underwriting Preview'),'credit_memo':column.displayName.startsWith('Credit Memo'),'underwriting_ratio_preview':column.displayName.startsWith('Ratio Preview'),'status_Sticky ' :column.displayName.startsWith('Status'),'results_status_Sticky' :column.displayName.startsWith('View Result Status'), 'depositer_view_header' :column.fieldName.startsWith('$view_detailss'), 'depositer_document_preview_header' :column.fieldName.startsWith('$document_previews'), 'internal_scoring_view_header' :column.fieldName.startsWith('$view_details_internalscoring'), 'internal_scoring_preview_header' :column.fieldName.startsWith('$document_preview_internalscoring'), 'document_preview_deposter_other_header' :column.fieldName.startsWith('$document_preview_deposter_other'), 'view_details_depositeer_other_header' :column.fieldName.startsWith('$view_details_depositeer_other'), 'view_details_internalscoring_other_header' :column.fieldName.startsWith('$view_details_internalscoring_other'),'view_details_reject_other_header' :column.fieldName.startsWith('$view_details_reject_other'), 'document_preview_internalscoring_other_header' :column.fieldName.startsWith('$document_preview_internalscoring_other'), 'document_preview_reject_other_header' :column.fieldName.startsWith('$document_preview_reject_other'), 'fraud_review_fraud_header' :column.fieldName.startsWith('$fraud'), 'initialStatus_header' :column.fieldName.startsWith('initialStatus') && column.initialStatus, 'probationary_header' :column.fieldName.startsWith('$Probationary'), 'regular_header' :column.fieldName.startsWith('$Regular'), 'employee_progress_document_preview_header' :column.fieldName.startsWith('$employee_progress_document_preview'), 'employee_progress_view_details_header' :column.fieldName.startsWith('$employee_progress_view_details'), 'employee_other_document_previews_header' :column.fieldName.startsWith('$employee_other_document_previews'), 'employee_other_view_detailss_header' :column.fieldName.startsWith('$employee_other_view_detailss'), 'fraud_header' :column.fieldName.startsWith('$fraud'), 'no_fraud_header' :column.fieldName.startsWith('$no_fraud'), 'fraud_document_preview_header' :column.fieldName.startsWith('$fraud_document_preview'), 'fraud_view_detailss_header' :column.fieldName.startsWith('$fraud_view_detailss'),'preview_ciApp_header' :column.fieldName.startsWith('$preview_ciApp'),'document_preview_ciApp_header' :column.fieldName.startsWith('$document_previews_ciApp'),'view_details_ciApp_header' :column.fieldName.startsWith('$view_details_ciApp'), 'reprocess_header' :column.fieldName.startsWith('$reprocess'), 'current_status_header' :column.fieldName.startsWith('current_status'), 'reject_code_header' :column.fieldName.startsWith('reject_code'), 'pulled_date_header' :column.fieldName.startsWith('pulled_date'), 'reprocess_view_details_header' :column.fieldName.startsWith('$reprocess_view_details')}">
+                                <ng-container>
+                                    <div class="lock-icon " style="float: left" [class.locked]="column.lockColumn"
+                                        (click)="column.lockColumn = !column.lockColumn" matRipple>
+                                        <mat-icon style="  transform: scale(0.6)">lock</mat-icon>
+                                    </div>
+                                    <div class="content " style="float: left">
+                                        <span>{{column.displayName}}</span>
+                                    </div>
+                                    <div *ngIf="column.fieldName.endsWith('_checkbox')" class="content"
+                                        style="float: left">
+                                        <ng-container>
+                                            <mat-checkbox [checked]="allSelect" (change)="selectAll($event)">
+                                            </mat-checkbox>
+                                        </ng-container>
+                                    </div>
+                                    <div class="sort-icon" [class.sort-asc]="column.sortAsc"
+                                        [class.sort-desc]="column.sortAsc === false" (click)="sortClicked(column)"
+                                        matRipple>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === null">
+                                            swap_vert</mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc">arrow_upward
+                                        </mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === false">
+                                            arrow_downward</mat-icon>
+                                    </div>
+                                </ng-container>
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of tableData; let i = index;" [ngStyle]="{'background-color': getColorByLoanStatus(data.loanStatus)}">
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <td *ngIf="!column.columnDisable"
+                                [ngClass]="{'duplicate_column_sticky':column.displayName.startsWith('Kyc Preview'),'loan-approval-preview-column' :column.fieldName.startsWith('$loan_approval_preview'),'loan-approval-edit-column' :column.fieldName.startsWith('$loan_approval_info_add'),'edit_application_column':column.displayName.startsWith('Edit'),'reason_column_sticky':column.displayName.startsWith('Reason for Rejection'), 'even': i % 2 !== 0 && column.displayName.startsWith('Document Preview') || column.displayName.startsWith('Kyc Preview') || column.displayName.startsWith('View Details'), 'odd': i % 2 == 0 || column.displayName.startsWith('Kyc Preview') || column.displayName.startsWith('Document Preview') || column.displayName.startsWith('View Details'),'depositer_view_column' :column.fieldName.startsWith('$view_detailss'), 'depositer_document_preview_column' :column.fieldName.startsWith('$document_previews'),'internal_scoring_view_column' :column.fieldName.startsWith('$view_details_internalscoring'), 'internal_scoring_preview_column' :column.fieldName.startsWith('$document_preview_internalscoring'),'document_preview_deposter_other_column' :column.fieldName.startsWith('$document_preview_deposter_other'), 'view_details_depositeer_other_column' :column.fieldName.startsWith('$view_details_depositeer_other'),'view_details_internalscoring_other_column' :column.fieldName.startsWith('$view_details_internalscoring_other'), 'view_details_reject_other_column' :column.fieldName.startsWith('$view_details_reject_other'), 'document_preview_internalscoring_other_column' :column.fieldName.startsWith('$document_preview_internalscoring_other'),'document_preview_reject_other_column' :column.fieldName.startsWith('$document_preview_reject_other'), 'view_application_initial_column' :column.fieldName.startsWith('initialStatus') && column.initialStatus, 'preview_column_sticky':column.displayName.startsWith('Document Preview'), 'view_column_sticky':column.displayName.startsWith('View Details'),'selfAssign_Column_Sticky':column.displayName.startsWith('Self Assign'), 'sample-column':column.displayName.startsWith('Underwriting Preview'),'credit_memo-column':column.displayName.startsWith('Credit Memo'),'underwriting_ratio_preview_column':column.displayName.startsWith('Ratio Preview'), 'status_Column_Sticky':column.displayName.startsWith('Status'),'results_status_Column_Sticky':column.displayName.startsWith('View Result Status'), 'probationary_column' :column.fieldName.startsWith('$Probationary'), 'regular_column' :column.fieldName.startsWith('$Regular'), 'employee_progress_document_preview_column' :column.fieldName.startsWith('$employee_progress_document_preview'), 'employee_progress_view_details_column' :column.fieldName.startsWith('$employee_progress_view_details'), 'employee_other_document_previews_header' :column.fieldName.startsWith('$employee_other_document_previews'), 'employee_other_view_detailss_header' :column.fieldName.startsWith('$employee_other_view_detailss'), 'fraud_column' :column.fieldName.startsWith('$fraud'), 'no_fraud_column' :column.fieldName.startsWith('$no_fraud'), 'fraud_document_preview_column' :column.fieldName.startsWith('$fraud_document_preview'), 'fraud_view_detailss_column' :column.fieldName.startsWith('$fraud_view_detailss'),'document_preview_ciApp_column' :column.fieldName.startsWith('$document_previews_ciApp'),'preview_ciApp_column' :column.fieldName.startsWith('$preview_ciApp'),'view_details_ciApp_column' :column.fieldName.startsWith('$view_details_ciApp'), 'reprocess_column' :column.fieldName.startsWith('$reprocess'), 'current_status_column' :column.fieldName.startsWith('current_status'), 'reject_code_column' :column.fieldName.startsWith('reject_code'), 'pulled_date_column' :column.fieldName.startsWith('pulled_date'), 'reprocess_view_details_column' :column.fieldName.startsWith('$reprocess_view_details')}">
+                                <div class="content" *ngIf="!column.fieldName.startsWith('$')">
+                                    <ng-container
+                                        *ngIf="column.dateFormat && !column.subFieldName && column.displayName != 'Date'">
+                                        <ng-container *ngIf="data[column.fieldName]">
+                                            {{formatDate(data[column.fieldName])}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="column.dateFormat && column.subFieldName">
+                                        <ng-container *ngIf="data[column.subFieldName]">
+                                            {{formatDate(data[column.subFieldName])}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="column.dateFormat && column.displayName == 'Date'">
+                                        <ng-container>
+                                            {{formatDate1(data[column.fieldName])}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="!column.dateFormat && column.fieldName && column.displayName !='Reason for Rejection' && column.displayName !='Status' && column.displayName != 'Default Access Template' && column.displayName != 'Roles' && column.displayName != 'APPLICANT SIGNATURE' && column.displayName !='LATEST INTERIM  FINANCIAL STATEMENTS' && column.displayName !='FINANCIAL STATEMENT OF PAST 5 YEARS'
+                                        && column.displayName != 'TAX RETURNS FOR THE LAST 3YEARS' && column.displayName !='GUARANTOR AGREEMENT' && column.displayName !='BUSINESS / PARTNERS DEED (PARTNERSHIP ONLY)/LATEST FORMS' && column.displayName !='PHOTOCOPY OF NRIC FOR SOLE PROPRITER / PARTNERS' && column.displayName !='LATEST 3 YEARS MANAGEMENT ACCOUNTS' && column.fieldName !='latest_6Months_BankStatements' 
+                                        && column.displayName !='LATEST 3 YEARS INCOME TAX RETURNS FORM B / FORM PT/FORM PT  & TAX RECEIPTS' && column.displayName !='PROJECT PROPOSAL  AGREEMENT & CONTRACT ON SUSTAINABILITY' && column.displayName !='GREEN CERTIFICATION' && column.displayName !='SME INDUSTRY' && column.displayName !='KYC OF APPLICANT' && column.displayName !='KYC OF DIRECTOR' && column.displayName !='KYC OF COMPANY'">
+                                        <ng-container *ngIf="!column.subFieldName && column.fieldName !='auditBodies'">
+                                            {{data[column.fieldName]}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- audit bodies parameter -->
+
+                                    <ng-container *ngIf="column.fieldName=='auditBodies'">
+                                        <ng-container *ngIf="data['action']=='Filter'">
+                                            <ng-container *ngIf="!column.subFieldName && data[column.fieldName]">
+                                                <ng-container *ngIf="data['filterValueList']">
+                                                    <span style="font-weight: bold;font-style: italic;color:rgb(109, 102, 102);margin-bottom: 0.5rem;" *ngIf="data['filterValueList'].length>0">Filter Parameter :</span>
+                                                    <ng-container *ngFor="let listCheck of data['filterValueList'];let i=index">
+                                                        <ng-container *ngIf="i<2 && data['isFilterMore']!='Y'">
+                                                            <div style="display:flex;flex-direction:row;margin-top:-1.5rem">
+                                                                <div>
+                                                                    <span><b> {{listCheck.keyValue}}  </b>
+                                                              </span>
+                                                                </div>
+                                                                <div style="margin-right:0.5rem">:</div>
+                                                                <div>
+                                                                    {{listCheck.value}}
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="data['isFilterMore']=='Y'">
+                                                            <div style="display:flex;flex-direction:row;margin-top:-1.5rem">
+                                                                <div>
+                                                                    <span><b> {{listCheck.keyValue}}  </b>
+                                                              </span>
+                                                                </div>
+                                                                <div style="margin-right:0.5rem">:</div>
+                                                                <div>
+                                                                    {{listCheck.value}}
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <div style="margin-top: -1rem;">
+                                                        <span *ngIf="data['filterValueList'].length > 2 && data['isFilterMore']!='Y' " style="color:#394eb4;font-weight: bold;cursor: pointer;" (click)="data['isFilterMore']='Y'">Show More</span>
+                                                        <span style="color:#394eb4;font-weight: bold;cursor: pointer;" *ngIf="data['isFilterMore']=='Y'" (click)="data['isFilterMore']='N'">Show Less</span>
+                                                    </div>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="data['action']!='Filter'">
+                                            <ng-container>
+                                                    <ng-container *ngIf="data['beforeValueList']">
+                                                        <span style="font-weight: bold;font-style: italic;color:rgb(109, 102, 102);margin-bottom: 0.5rem;" *ngIf="data['beforeValueList'].length>0">Before Parameter :</span>
+                                                        <ng-container *ngFor="let listCheck of data['beforeValueList'];let i=index">
+                                                            <ng-container *ngIf="i<2 && data['isBeforeMore']!='Y'">
+                                                                <div style="display:flex;flex-direction:row;margin-top:-1.5rem">
+                                                                    <div>
+                                                                        <span><b> {{listCheck.keyValue}}  </b>
+                                                                  </span>
+                                                                    </div>
+                                                                    <div style="margin-right:0.5rem">:</div>
+                                                                    <div *ngIf="listCheck.keyValue!='Status'">
+                                                                        {{listCheck.value}}
+                                                                    </div>
+                                                                    <div *ngIf="listCheck.keyValue=='Status' && listCheck.value ">
+                                                                        {{listCheck.value | titlecase}}
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <br> -->
+                                                            </ng-container>
+                                                            <ng-container *ngIf="data['isBeforeMore']=='Y'">
+                                                                <div style="display:flex;flex-direction:row;margin-top:-1.5rem">
+                                                                    <div>
+                                                                        <span><b> {{listCheck.keyValue}}  </b>
+                                                                   </span>
+                                                                    </div>
+                                                                    <div style="margin-right:0.5rem">:</div>
+                                                                    <div>
+                                                                        {{listCheck.value}}
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <br> -->
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <div style="margin-top:-1rem;">
+                                                            <span *ngIf="data['beforeValueList'].length > 2 && data['isBeforeMore']!='Y' " style="color:#394eb4;font-weight: bold;cursor: pointer;" (click)="data['isBeforeMore']='Y'">Show More</span>
+                                                            <span style="color:#394eb4;font-weight: bold;cursor: pointer;" *ngIf="data['isBeforeMore']=='Y'" (click)="data['isBeforeMore']='N'">Show Less</span>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="data['afterValueList']">
+                                                    <ng-container>
+                                                        <span style="font-weight: bold;font-style: italic;color:rgb(109, 102, 102);margin-top: 0.5rem;" *ngIf="data['afterValueList'].length>0">After Parameter :</span>
+                                                        <ng-container *ngFor="let listCheck of data['afterValueList'];let i=index">
+                                                            <ng-container *ngIf="i<2 && data['isAfterMore']!='Y'">
+                                                                <div style="display:flex;flex-direction:row;margin-top:-1.5rem">
+                                                                    <div>
+                                                                        <span><b> {{listCheck.keyValue}}  </b>
+                                                                    </span>
+                                                                    </div>
+                                                                    <div style="margin-right:0.5rem">:</div>
+                                                                    <div>
+                                                                        {{listCheck.value}}
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="data['isAfterMore']=='Y'">
+                                                                <div style="display:flex;flex-direction:row;margin-top:-1.5rem">
+                                                                    <div>
+                                                                        <span><b> {{listCheck.keyValue}}  </b>
+                                                                  </span>
+                                                                    </div>
+                                                                    <div style="margin-right:0.5rem">:</div>
+                                                                    <div>
+                                                                        {{listCheck.value}}
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <div style="margin-top:-1rem">
+                                                        <span style="color:#394eb4;font-weight: bold;cursor: pointer;" *ngIf="data['afterValueList'].length > 2 && data['isAfterMore']!='Y'" (click)="data['isAfterMore']='Y'">Show More</span>
+                                                        <span style="color:#394eb4;font-weight: bold;cursor: pointer;" *ngIf="data['isAfterMore']=='Y'" (click)="data['isAfterMore']='N'">Show Less</span>
+                                                    </div>
+                                                </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                 
+                                    <ng-container *ngIf="!column.dateFormat && column.fieldName && column.displayName =='Status' && data[column.fieldName] !== 'LOAN_APPROVED'">
+                                    <ng-container *ngIf="!column.subFieldName">
+                                          <button class="btn1"
+                                          [ngStyle]="{'background-color': getStatusBackgroundColor(data[column.fieldName])}"
+                                              style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto; width: 29rem;">
+                                              {{data[column.fieldName]}}
+                                          </button>
+                                    </ng-container>
+                                  </ng-container>
+                                <ng-container
+                                  *ngIf="!column.dateFormat && column.fieldName && column.displayName =='Status'">
+                                  <ng-container *ngIf="!column.subFieldName"  >
+                                    <ng-container *ngIf="data[column.fieldName] === 'LOAN_APPROVED'">
+                                      <button mat-button [matMenuTriggerFor]="menu" 
+                                      [ngStyle]="{'background-color': getStatusBackgroundColor(data[column.fieldName])}"
+                                          style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto; width: 29rem;">
+                                          {{data[column.fieldName]}}
+                                      </button>
+                                      <mat-menu #menu="matMenu" xPosition="before"
+                                          style="position: absolute; margin-left: 30px;">                                      
+                                          <button mat-menu-item (click)="onSubmenuCellClicked(column, i, data, $event,'roll')">Roll Over</button>
+                                          <!-- <button mat-menu-item (click)="onAdditionalLoanClick(column, i, data, $event,'additionalLoan')">Additional Loan</button> -->
+                                          <button mat-menu-item (click)="onSubmenuCellClicked(column, i, data, $event,'extension')">Extension of Loan</button>
+                                      </mat-menu>
+                                   </ng-container>
+                                  </ng-container>
+                              </ng-container>
+
+
+                                    <ng-container
+                                        *ngIf="!column.dateFormat && column.fieldName && column.displayName =='Reason for Rejection'">
+                                        <ng-container >
+                                            <button class="reason_for_rejection_btn"
+                                                style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto; width: 29rem; color:white;">
+                                                {{data[column.fieldName][column.subFieldName]}}
+                                            </button>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- <ng-container *ngIf="!column.dateFormat && column.fieldName !='id' && column.displayName !='Failed Logins' && column.displayName !='Roles' && column.displayName !='processor' && column.displayName !='DefaultAccessTemplate' && !column.isBoolean ">
+                                        <ng-container *ngIf="!column.subFieldName">
+                                            {{data[column.fieldName] | titlecase }}
+                                        </ng-container>
+                                    </ng-container> -->
+
+                                    <ng-container *ngIf="column.isList && column.displayName == 'Roles'">
+                                        <ng-container *ngFor="let column of data['roles']">
+                                            <span style="display:flex;flex-direction:column;">
+                                                {{column.name}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+
+                                    <div *ngIf="column.fieldName.startsWith('applicantSignature') || column.displayName.startsWith('APPLICANT SIGNATURE') || column.fieldName.startsWith('shareholdersAuthorizedSignatures') || column.fieldName.startsWith('latestInterimFinancialStatement') || column.fieldName.startsWith('financialStatementOfPast5Years') ||
+                                    column.fieldName.startsWith('taxReturnsForTheLast3Years') || column.fieldName.startsWith('guarantorAgreement') || column.fieldName.startsWith('photoCopyOfNRIC') || column.fieldName.startsWith('latest3YearsManagementAccounts') || column.fieldName.startsWith('latest_6Months_BankStatements') ||
+                                    column.fieldName.startsWith('latest_3Years_IncomeTaxReturns') || column.fieldName.startsWith('projectProposal') || column.fieldName.startsWith('greenCertification') || column.fieldName.startsWith('smeIndustry') || column.fieldName.startsWith('KYCofApplicant') || column.fieldName.startsWith('KYCofDirector') || column.fieldName.startsWith('KYCofCompany')">
+                                           <div *ngFor="let attachment of data[column.fieldName]">
+                                            <div style="cursor:pointer;white-space: nowrap;
+                                            width: 100px; overflow: visible;text-overflow: ellipsis;" >
+                                            <mat-icon style="margin: 0.5rem;font-size: 14px;" *ngIf="attachment.attachmentName">attachment</mat-icon>
+                                                <u style="color: blue;margin-right: 1rem;"
+                                                    matTooltip="{{attachment.attachmentName}}">{{attachment.attachmentName}}</u>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ng-container *ngIf="column.isList && column.fieldName == 'processor'">
+                                        <!-- <ng-container *ngFor="let column of data.applicationResult">
+                                            <span style="display:flex;flex-direction:column;">
+                                                {{column.processor}}
+                                            </span>
+                                        </ng-container> -->
+                                        <span style="display:flex;flex-direction:column;">
+                                            {{data.applicationResult !== null ? data.applicationResult['processor'] :
+                                            ''}}
+                                        </span>
+                                    </ng-container>
+
+                                    <ng-container
+                                        *ngIf="column.isList && column.displayName == 'Default Access Template'">
+                                        <ng-container *ngFor="let column of data['defaultAccessTemplate']">
+                                            <span style="display:flex;flex-direction:column;">
+                                                {{column.name}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Original Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'Original Details'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">more_revert</mat-icon>Original Details
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('View Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'View Details'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">more_revert</mat-icon>View Details
+                                    </button>
+                                </div>
+                                <div class="content" *ngIf="column.fieldName.endsWith('_checkbox')" style="margin-left: 40px;">
+                                    <ng-container>
+                                        <mat-checkbox [checked]="selectCheckBox"
+                                            (click)="onCellClicked(column, i, data, $event)"></mat-checkbox>
+                                    </ng-container>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Document Preview')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;"
+                                        [matTooltip]="'Document Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Kyc Preview')">
+                                    <button class="btn" [disabled]="data.is_Duplicate==false"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Duplicate Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Preview') && !column.fieldName.startsWith('$loan_approval_preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Preview'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Edit')  && !column.displayName.startsWith('Edit User') && !column.displayName.startsWith('Edit Roles')&& !column.displayName.startsWith('Edit Groups')&& !column.displayName.startsWith('Edit Templates') && !column.displayName.startsWith('Edited By')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('View Result Status')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;"
+                                        [matTooltip]="'View Results Status'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Self Assign')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Self Assign'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>person_add</mat-icon>Self Assign
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Underwriting Preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon> Underwriting Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Ratio Preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon> Ratio Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Credit Memo')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon> Credit Memo
+                                    </button>
+                                </div>
+                                <div *ngIf="column.fieldName.startsWith('$loan_approval_preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Preview'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+                                <div *ngIf="column.fieldName.startsWith('$loan_approval_info_add')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Add Info'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Add Info
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Final Decision')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'To Verify'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>check</mat-icon>To Verify
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit Templates')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit Template'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit Template
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit Roles')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit Roles'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit Roles
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit Groups')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit Groups'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit Groups
+                                    </button>
+                                </div>
+                                <div *ngIf="column.displayName.startsWith('Edit User')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Edit User'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit User
+                                    </button>
+                                </div>
+                                <!-- <div *ngIf="column.displayName.startsWith('Edit Field')">
+                                    <button class="btn" matTooltip="Edit" style="font-size: 8px;margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>edit</mat-icon>Edit Field
+                                    </button>
+                                </div> -->
+
+                                <div *ngIf="column.displayName.startsWith('Delete')">
+                                    <button mat-button matTooltip="Delete"
+                                        (click)="onCellClicked(column, i, data, $event)" style="font-size: 8px;">
+                                        <mat-icon (click)="onCellClicked(column, i, data, $event)"  style="margin-right: 0rem; color: red;">delete</mat-icon>
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Fraud')">
+                                    <button class="btn_fraud"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Fraud'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>close</mat-icon>Reject
+                                    </button>
+                                </div>
+
+
+                                <div *ngIf="column.displayName.startsWith('No Fraud')">
+                                    <button class="btn_no_fraud"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'No Fraud'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>check</mat-icon>Clear by Fraud
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Regular')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Regular'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>check</mat-icon>Regular
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Probationary')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Probationary'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>close</mat-icon>Probationary
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Reprocess')">
+                                    <button class="btn_reprocess"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Reprocess'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>refresh</mat-icon>Reprocess
+                                    </button>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="placeholder-container" *ngIf="!loading && !dataTable?.length">
+        <span>No items found!</span>
+    </div>
+
+    <div class="paginator-container">
+        <div class="left-container">
+            <ng-container *ngFor="let item of dataTable | paginate: { itemsPerPage: 20, currentPage:pageData.currentPage, totalItems: pageData.totalPages
+                }" let i="index">
+            </ng-container>
+        </div>
+        <div class="middle-container">
+            <pagination-controls class="pagination-controls" (pageChange)="onPageChangeEvent($event)" previousLabel=""
+                nextLabel=""></pagination-controls>
+        </div>
+        <div class="right-container">
+            Total Items: <span style="font-weight: bold">{{this.pageData.totalPages}}</span>
+        </div>
+    </div>
+</div>

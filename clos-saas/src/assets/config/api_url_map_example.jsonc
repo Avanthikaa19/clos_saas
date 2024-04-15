@@ -1,0 +1,8 @@
+{
+    "gateway": "https://ts-loan.finsurge.tech/ts-api",
+    "services": {
+        "auth_service": "[gateway]/clos-auth-service", //access, Ex: jwt, login etc.
+        "domain_data_service": "[gateway]/clos-admin-data-service", //admin-related-data
+        "user_data_service": "[gateway]/lo-user-data-service" //user-specific-data
+    }
+}

@@ -1,0 +1,252 @@
+<!-- <div class="header-container">
+    <div class="header-app-title">
+        <div class="app-title">
+            <span>Trade</span>
+            <mat-icon>lens_blur</mat-icon>
+            <span>Lens</span>
+        </div>
+        <sup>TM</sup>
+        <sub>by FinSurge Pvt. Ltd.</sub>
+    </div>
+    <div class="spacer"></div>
+    <ng-container *ngIf="ac.super || ac.items?.DFM000_MODULE">
+        <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/flows']" [routerLinkActive]="'is-active'">
+            <mat-icon class="header-icon">auto_graph</mat-icon>
+            <a class="header-item">Flows</a>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="ac.super || ac.items?.ALERT_MODULE">
+        <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/alerts']" (click)="setAlertRouter()" [routerLinkActive]="'is-active'">
+            <mat-icon class="header-icon">assignment_late</mat-icon>
+            <a class="header-item">Alerts</a>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="ac.super || ac.items?.REPORT_PORTAL_MODULE">
+        <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/reports']" [routerLinkActive]="'is-active'">
+            <mat-icon class="header-icon">assignment</mat-icon>
+            <a class="header-item">Reports</a>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="ac.super || ac.items?.ADMIN_MODULE">
+        <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/admin']" (click)="setAdminRouter()" [routerLinkActive]="'is-active'">
+            <mat-icon class="header-icon">security</mat-icon>
+            <a class="header-item">Administrator</a>
+        </div>
+    </ng-container>
+    <ng-container >
+        <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/loan-org']"  [routerLinkActive]="'is-active'">
+            <mat-icon class="header-icon">account_balance</mat-icon>
+            <a class="header-item">Loan Origination</a>
+        </div>
+    </ng-container>
+    <div class="spacer"></div>
+    <div *ngIf="userIsLloggedIn()" class="header-item-container">
+        <a style="cursor: default; font-size: 12px; color: grey;">API Testing: </a>
+        <a *ngIf="!userIsLloggedIn()" style="cursor: default; font-size: 12px; color: silver;">Login to see
+      more testing features.</a>
+        <a *ngIf="userIsLloggedIn()" (click)="copyTokenToClipboard()" style="cursor: pointer; font-size: 12px; color: silver; text-decoration: underline;">Copy
+      Token</a>
+    </div>
+    <div style="cursor: context-menu;" *ngIf="userIsLloggedIn()" class="header-item-container">
+        <mat-icon class="header-icon">format_size</mat-icon>
+    </div>
+    <div *ngIf="userIsLloggedIn()" style="margin-right: 1rem;">
+        <input size="6" [(ngModel)]="selectedFont" (keyup.enter)="changeFontSize()" type="number" [matAutocomplete]="auto" style="width: 5rem;" matTooltip="Font Size">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let font of fontsize" [value]="font">
+                {{font}}
+            </mat-option>
+        </mat-autocomplete>
+    </div>
+    <div class="notifications-container" *ngIf="notifiactionsOpen" [@fadeInOut]>
+        <div class="notify__toggle">
+            <button class="tl-btn" (click)="getAllandUnreadData(pageData,'')" [class.btn__active]="status == ''">
+        Show All
+      </button>
+            <button class="tl-btn" (click)="getAllandUnreadData(pageData,'unread')" style="margin-left: 1rem;" [class.btn__active]="status == 'unread'">
+        Unread
+      </button>
+        </div>
+        <div class="notification__inner-container" (scroll)="onScroll($event)">
+            <ng-container *ngIf="notifications.length<=0">
+                <div class="no__notification" *ngIf="status == ''">
+                    <div class="icon">
+                        <mat-icon class="mat-icon-style">notifications_active</mat-icon>
+                    </div>
+                    <div class="text">
+                        <span>Your Notifications Will Appear Here!</span>
+                    </div>
+                </div>
+                <div class="no__unread__notification" *ngIf="status == 'unread'">
+                    <div class="text">
+                        <span> No Unread Notifications! </span>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="notifications.length>0">
+                <div class="mark__al__read" *ngIf="status == 'unread'">
+                    <button class="tl-btn-submit" (click)="setMarkAllasRead()">
+            <mat-icon>done_all</mat-icon>
+            <span> Mark All as read</span>
+          </button>
+                </div>
+                <div class="notification__card-container" *ngFor="let notification of notifications">
+                    <div class="notify__icon">
+                        <mat-icon class="mat-icon-style">notification_important</mat-icon>
+                   
+                    </div>
+                    <div class="notify">
+                        <div class="notify__hdr">{{notification.title}}</div>
+                        <div class="notify__msg">{{notification.message}}</div>
+                    </div>
+                    <div class="mark__as__read">
+                        <button class="tl-btn-submit" matTooltip="Mark as read" aria-label="Button that displays a tooltip when focused or hovered over" (click)="setMarkAsReadNotification(notification.id)" [disabled]="notification.readFlag">
+              <mat-icon style="margin-right: 0;">done_all</mat-icon>
+      
+            </button>
+                      
+                    </div>
+                    <div class="close__btn" matTooltip="Close">
+                        <mat-icon style="font-size: 1.4rem; margin-right: 0;" (click)="setCloseNotification(notification.id)">close
+                        </mat-icon>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div *ngIf="userIsLloggedIn()" style="margin-right: 1rem;">
+        <span style="color: white; text-transform: uppercase;">{{getCurrentUser()}}</span>
+    </div>
+    <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/logout']" [routerLinkActive]="'is-active'">
+        <mat-icon class="header-icon">logout</mat-icon>
+        <a class="header-item">Logout</a>
+    </div>
+
+    <ng-container *ngIf="false">
+        <div *ngIf="userIsLloggedIn()" class="header-item-container" [routerLink]="['/resetpassword']" [routerLinkActive]="'is-active'">
+            <mat-icon class="header-icon">replay</mat-icon>
+            <a class="header-item">ResetPassword</a>
+        </div>
+    </ng-container>
+
+</div> -->
+
+
+<!--Navbar -->
+<!-- 
+<nav class="navbar navbar-expand-lg bg-unique">
+    <a class="navbar-brand">
+        <div class="logo-holder logo-5">
+            <a style="text-decoration: none;">
+                <h3 style="margin: -25px;"><img src="assets/Images/Finsurge_WhiteLogo.png"
+                        style="width: 25%; margin-left: -230px; margin-right: 15px">Corporate - Loan Origination Solution</h3>
+            </a>
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="margin-right: auto;">
+            <li class="nav-item" *ngIf="ac.super || ac.items?.DFM000_MODULE"
+                [style.display]="flow == '/flows'?'block':'none'">
+                <a class="nav-link" *ngIf="userIsLloggedIn()" [routerLink]="['/flows']"
+                    (isActiveChange)="setRouteFlow()" [routerLinkActive]="'is-active'">Flows</a>
+            </li>
+            <li class="nav-item" *ngIf="ac.super || ac.items?.REPORT_PORTAL_MODULE"
+                [style.display]="report == '/reports/home'?'block':'none'">
+                <a class="nav-link" *ngIf="userIsLloggedIn()" [routerLink]="['/reports']"
+                    (isActiveChange)="setRouteReports()" [routerLinkActive]="'is-active'">Reports</a>
+            </li>
+            <li class="nav-item" *ngIf="ac.super || ac.items?.LOAN_ORIGINATION_MODULE"
+                [style.display]="loan == '/loan-org/loan/dashboard'?'block':'none'">
+                <a class="nav-link" *ngIf="userIsLloggedIn()" [routerLink]="['/loan-org']"
+                    (isActiveChange)="setRouteLoan()" (click)="setLoanOrgRouter()" [routerLinkActive]="'is-active'">Loan
+                    Origination</a>
+            </li>
+            <li class="nav-item" *ngIf="ac.super || ac.items?.CASE_MANAGEMENT_MODULE"
+                [style.display]="manage == '/loan-case-manager/loan-case-manager-main/verifier-queue'?'block':'none'">
+                <a class="nav-link" *ngIf="userIsLloggedIn()" [routerLink]="['/loan-case-manager']"
+                    (isActiveChange)="setRouteManage()" [routerLinkActive]="'is-active'">Case Management</a>
+            </li>
+            <li class="nav-item" *ngIf="ac.super || ac.items?.ADMIN_MODULE"
+                [style.display]="admin == '/admin/admin/dashboard'?'block':'none'">
+                <a class="nav-link" *ngIf="userIsLloggedIn()" [routerLink]="['/admin']" (click)="setAdminRouter()"
+                    (isActiveChange)="setRouteAdmin()" [routerLinkActive]="'is-active'">Administrator</a>
+            </li>
+            <li class="nav-item" *ngIf="ac.super"
+                [style.display]="alert == '/alert-config/home/p/details'?'block':'none'">
+                <a class="nav-link" *ngIf="userIsLloggedIn()" routerLink="../alert-config"
+                    (isActiveChange)="setRouteAlert()" [routerLinkActive]="'is-active'">Decision Engine</a>
+            </li>
+        </ul>
+        <div *ngIf="userIsLloggedIn()">
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item nav-user-label" style="background: #3445b4">
+                    <span class="material-symbols-outlined">
+                        <button (click)="onGoBackClick()" mat-stroked-button
+                            style="border:none;background: white;color:#3445b4">
+                            <span class="material-symbols-outlined" style="font-size: 20px;margin-top:-5px;">
+                                Home
+                            </span>
+                            Home
+                        </button>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="userIsLloggedIn()">
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item nav-user-label"
+                    style="height: 40px;padding-top: 10px;background: #3445b4;cursor: not-allowed;">
+                    <span class="material-symbols-outlined">
+                        person_2
+                    </span><h3 style="font-size: 15px;" class="superuser">{{getCurrentUser().toUpperCase()}}</h3>
+                </li>
+                <li class="nav-item nav-user-label" style="background: #3445b4">
+                    <span class="material-symbols-outlined text-light">
+                        <button (click)="logoutPopup()" mat-stroked-button
+                            style="border:none;background: white;color:#3445b4;margin-top: 4.5px;" matTooltip="Log-out"
+                            [routerLinkActive]="'is-active'">
+                            <span class="material-symbols-outlined" style="font-size: 20px;margin-top:-5px;">
+                                logout
+                            </span>
+                            Logout
+                        </button>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> -->
+
+<div class="header-container">
+    <div class="header-app-title">
+        <div class="logo-container">
+            <img src="assets/C-LOS Images/FINSURGE_Logo.png" class="logo">
+        </div>
+        <div class="app-title" >
+            <!-- <span>C-LOS</span> -->
+            <span>Corporate Origination System</span>
+        </div>
+    </div>
+    <div class="spacer"></div>
+    <ng-container *ngIf="userIsLloggedIn()">
+        <div class="header-item-container" (click)="onHomeBtnClick()" matTooltip="Home Page">
+            <mat-icon>home</mat-icon>
+        </div>
+        <div class="header-item-container"  matTooltip="{{getCurrentUser()}}">
+            <mat-icon>person</mat-icon>
+        </div>
+        <div class="header-item-container" matTooltip="Notifications">
+            <mat-icon>notifications_active</mat-icon>
+        </div>
+        <div class="header-item-container" (click)="logoutPopup()" [routerLinkActive]="'is-active'" matTooltip="Logout">
+            <mat-icon>logout</mat-icon>
+            <span style="margin-left: 0.5rem;">Logout</span>
+        </div>
+    </ng-container>
+</div>

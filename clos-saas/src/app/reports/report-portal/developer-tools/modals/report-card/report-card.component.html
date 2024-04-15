@@ -1,0 +1,16 @@
+<div class="report-card" matRipple>
+    <div class="report-card-header noselect">
+        <a>{{report.name}}</a>
+        <div style="font-size:14px">{{report.description}}</div>
+    </div>
+    <div class="report-card-content"> 
+        <div class="sheet-preview-wrapper" *ngFor="let sheet of report.sheets; let i = index;" [style.z-index]="-1 * i">
+            <div class="sheet-preview" [style.clip-path]="sheet.reportCardClipPath ? sheet.reportCardClipPath : 'none'" [style.padding-top.px]="i * 5">
+                <app-layout-card class="layout-preview" *ngIf ="sheet.selectedLayout" [layout]="sheet.selectedLayout" [showHeader]="false" [hoverEffect]="false"></app-layout-card>
+            </div>
+        </div>
+        <!-- <div *ngFor="let sheet of report.sheets;let i = index;">
+            <app-layout-card class="clip" *ngIf ="sheet.selectedLayout" [style.left.px]="report.sheets.length == 1?'50': 30 * (report.sheets.length - 1 - i)" [layout]="sheet.selectedLayout"></app-layout-card>
+        </div> -->
+    </div>
+</div>

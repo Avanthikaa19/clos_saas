@@ -1,0 +1,113 @@
+<div class="content-container">
+    <form #applicationForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Application ID<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%" (keydown.enter)="onEnterPressed($event, +appId.value)">
+                            <input matInput type="number" #appId [disabled]="createEditOption === 'Create Entry'" matTooltip="Enter to view details" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName.id">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Application Number<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" name="text" matInput style="font-size:16px;width:75%">
+                            <input matInput type="number" name="appmNbr" #applicationNumber="ngModel" [(ngModel)]="listFieldName['appmNbr']" (ngModelChange)="setInput()" required [ngClass]="{ 'error-border': applicationForm.controls['appmNbr']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="applicationForm.controls['appmNbr']?.invalid && (applicationNumber.dirty || applicationNumber.touched)" class="error-message">
+                                <div *ngIf="applicationForm.controls['appmNbr']?.errors?.['required']">
+                                    Application Number is required.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Product Type<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select name="appmPdtnbr" #applicationId="ngModel" matInput [(ngModel)]="listFieldName['appmPdtnbr']" (ngModelChange)="setInput()" required [ngClass]="{ 'error-border': applicationForm.controls['appmPdtnbr']?.invalid && (errorBorderStatus) }">
+                                <mat-option *ngFor="let list of productTypeList" [value]="list">{{list}}</mat-option>
+                            </mat-select>
+                            <div *ngIf="applicationForm.controls['appmPdtnbr']?.invalid && (applicationId.dirty || applicationId.touched)" class="error-message">
+                                <div *ngIf="applicationForm.controls['appmPdtnbr']?.errors?.['required']">
+                                    Product Type is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Prin/Supp Card Ind</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" name="text" matInput style="font-size:16px;width:75%">
+                            <input matInput type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCrdind']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Cust Nbr</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" name="text" matInput style="font-size:16px;width:75%">
+                            <input matInput type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmcusNbr']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Emboss Name<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" name="text" matInput style="font-size:16px;width:75%">
+                            <input name="appmEMbl" matInput required #cardEmbossLine="ngModel" type="text" [(ngModel)]="listFieldName['appmEMbl']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': applicationForm.controls['appmEMbl']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="applicationForm.controls['appmEMbl']?.invalid && (cardEmbossLine.dirty || cardEmbossLine.touched)" class="error-message">
+                                <div *ngIf="applicationForm.controls['appmEMbl']?.errors?.['required']">
+                                    Card Emboss Line is required.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Source Code</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" name="text" matInput style="font-size:16px;width:75%">
+                            <input matInput type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSrcCde']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Date Upload</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [min]="todayDate" [max]="todayDate" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmAPLDat']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

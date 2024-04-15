@@ -1,0 +1,45 @@
+<div class="tl-main-container ">
+    <div class="header-container">
+        <div class="icon-container">
+        </div>
+        <div class="title-container">
+            <div style="border-bottom:none">
+                <span>
+                    Fields To Export
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="list-container">
+            <mat-checkbox class="checkbox-content" [(ngModel)]="selectAllInput" [(indeterminate)]="exportDatas"
+                (change)="selectAllExport($event)">Select All</mat-checkbox>
+        </div>
+        <ng-container *ngFor="let field of exportColumns">
+            <div class="list-container" *ngIf="!field.hideExport">
+                <mat-checkbox class="checkbox-content" [(ngModel)]="field.isExport" (change)="selectExport()">
+                    {{field.displayName | titlecase}}</mat-checkbox>
+            </div>
+        </ng-container>
+
+
+    </div>
+    <div class="button-container">
+        <div class="clear" style='float:left;'>
+            <button class="tl-btn" (click)="closeDialog()">
+                <mat-icon>clear</mat-icon>Close
+            </button>
+        </div>
+        <div class="export-button" style='float: right; margin-left: 1rem;'>
+            <button class="tl-btn-submit" [matMenuTriggerFor]="menu" xPosition="before">
+                <mat-icon>get_app</mat-icon>Export
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onExportClick('xlsx')">XLSX</button>
+                <button mat-menu-item (click)="onExportClick('csv')">CSV</button>
+                <button mat-menu-item (click)="onExportClick('pdf')">PDF</button>
+                <button mat-menu-item (click)="onExportClick('xls')">XLS</button>
+            </mat-menu>
+        </div>
+    </div>
+</div>

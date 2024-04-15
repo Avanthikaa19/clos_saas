@@ -1,0 +1,458 @@
+<div class="main-containers view-details">
+    <div class="heading_Section">
+        <div class="header-container">
+            <span>APPLICATION DETAILS</span>
+        </div>
+    </div>
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="content_Section">
+        <div class="content-container">
+            <mat-tab-group [(selectedIndex)]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+                <ng-container *ngFor="let categoryName of categoryList?.category; let i=index">
+                    <mat-tab label="{{categoryName}}">
+                        <ng-container *ngIf="categoryName == 'Collateral Details'">
+                        <div *ngIf="collateralList && collateralList.length > 0">
+                            <ng-container>
+                                <!-- <div style="margin:1rem;">
+                                    <span *ngIf="collateralList" style="font-weight:bold;margin:1rem;">COLLATERALS
+                                        :</span>
+                                </div> -->                            
+                                <div class="header" *ngFor="let owner of collateralList">
+                                    <div class="inner_SEction">
+                                        <div class="input_section"
+                                            *ngFor="let key of getDesiredOrderKeys(owner,'Collateral')">
+                                            <ng-container *ngIf="key != 'COLLATERAL DOCUMENTS'">
+                                                <div class="field_name" style="margin-left: 20px;">
+                                                    <span>{{ key }}</span>
+                                                </div>
+                                                <div>
+                                                    <mat-form-field class="select-field" matInput>
+                                                        <input type="text" matInput [(ngModel)]="owner[key]" readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>                           
+                            </ng-container>
+                        </div>
+                        <div class="header">
+                        <div class="inner_SEction" *ngIf="!collateralList || collateralList.length === 0">
+                            <!-- If collateralList is empty or null, display hardcoded empty fields -->
+                            <div class="input_section" *ngFor="let key of getDesiredOrderKeys({}, 'Collateral')">
+                                <ng-container *ngIf="key != 'COLLATERAL DOCUMENTS'">
+                                    <div class="field_name" style="margin-left: 20px;">
+                                        <span>{{ key }}</span>
+                                    </div>
+                                    <div>
+                                        <mat-form-field class="select-field" matInput>
+                                            <input type="text" matInput value="" readonly>
+                                        </mat-form-field>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        </div>
+                        </ng-container>
+                        <ng-container *ngIf="categoryName != 'Corporate Details' && categoryName != 'Uploads' && categoryName != 'Proxy Details'">
+                            <ng-container *ngIf="categoryList?.category[i]==categoryName">
+                                <div class="input_container">
+                                    <div class="input_Fields" *ngFor="let fieldName of fieldkeyList;let index=index">
+                                        <ng-container
+                                            *ngIf="fieldName != 'userDefined' && fieldName != 'CollateralDetails' && fieldName != 'APPLICANT SIGNATURE' && fieldName != 'GUARANTOR AGREEMENT' && fieldName != 'VENDORS AGREEMENT' && fieldName != 'PARTNERS  AGREEMENT' && fieldName != 'SUPPLIERS AGREEMENT' ">
+                                            <div class="field_name" style="margin-left: 20px;">
+                                                <span>{{fieldName}}</span>
+                                            </div>
+                                            <div class="d-flex">
+                                                <span style="line-height: 7rem;" class="mr-5">:</span>
+                                                <mat-form-field class="select-field" matInput>
+                                                    <input type="text" matInput value=" {{fieldList[fieldName]}}"
+                                                        readonly>
+                                                </mat-form-field>
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+
+                                </div>
+                                <ng-container>
+                                    <div *ngIf="userDefinedFields" style="margin:0.5rem;">
+                                        <span style="font-weight:bold;margin:1rem;">USER DEFINED FIELDS</span>
+                                    </div>
+                                    <div class="input_container">
+                                        <div class="input_Fields"
+                                            *ngFor="let fieldName of userDefinedFields;let index=index">
+                                            <ng-container *ngIf="fieldName != 'userDefined'">
+                                                <div class="field_name" style="margin-left: 20px;">
+                                                    <span>{{fieldName.fieldName}}</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span style="line-height: 7rem;" class="mr-5">:</span>
+                                                    <mat-form-field class="select-field" matInput>
+                                                        <input type="text" matInput value=" {{fieldName.fieldValue}}"
+                                                            readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </ng-container>
+
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="categoryName == 'Corporate Details'">
+                            <mat-tab-group [(selectedIndex)]="activesubtabIndex"
+                                (selectedTabChange)="onSelectsubCategory($event)">
+                                <ng-container *ngFor="let subCategoryName of categoryList?.subCategory; let j=index">
+                                    <mat-tab label="{{subCategoryName}}">
+                                        <ng-container
+                                            *ngIf="subCategoryName != 'Ownership' && subCategoryName != 'Suppliers' && subCategoryName != 'Financial Information'">
+                                            <ng-container *ngIf="categoryList?.subCategory[j]==subCategoryName">
+                                                <div class="input_container">
+                                                    <div class="input_Fields"
+                                                        *ngFor="let fieldName of supfieldKeyList;let index=index">
+                                                        <ng-container
+                                                            *ngIf="fieldName != 'userDefined' && fieldName != 'FINANCIAL STATEMENT OF PAST 5 YEARS' && fieldName != 'LATEST INTERIM  FINANCIAL STATEMENTS' && fieldName != 'TAX RETURNS FOR THE LAST 3YEARS' ">
+                                                            <div class="field_name" style="margin-left: 20px;">
+                                                                <span>{{fieldName}}</span>
+                                                            </div>
+                                                            <div class="d-flex">
+                                                                <span style="line-height: 7rem;" class="mr-5">:</span>
+                                                                <mat-form-field class="select-field" matInput>
+                                                                    <input type="text" matInput
+                                                                        value=" {{corporateFieldList[fieldName]}}"
+                                                                        readonly>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="subCategoryName == 'Ownership'">
+                                            <ng-container *ngIf="categoryList?.subCategory[j]==subCategoryName">
+                                                <div style="margin:1rem;">
+                                                    <span *ngIf="shareHoldersList"
+                                                        style="font-weight:bold;margin:1rem;">SHAREHOLDERS :</span>
+                                                </div>
+                                                <div class="header" *ngFor="let owner of shareHoldersList">
+                                                    <div class="inner_SEction">
+                                                        <div class="input_section"
+                                                            *ngFor="let key of getDesiredOrderKeys(owner,'ShareHolders')">
+                                                            <ng-container *ngIf="key != 'AUTHORIZED SIGNATURES'">
+                                                                <div class="field_name" style="margin-left: 20px;">
+                                                                    <span>{{ key }}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="select-field" matInput>
+                                                                        <input type="text" matInput
+                                                                            [(ngModel)]="owner[key]" readonly>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div style="margin:1rem;">
+                                                    <span *ngIf="partnersList"
+                                                        style="font-weight:bold;margin:1rem;">PARTNERS :</span>
+                                                </div>
+                                                <div class="header" *ngFor="let owner of partnersList">
+                                                    <div class="inner_SEction">
+                                                        <div class="input_section"
+                                                            *ngFor="let key of getDesiredOrderKeys(owner,'Partners')">
+                                                            <ng-container>
+                                                                <div class="field_name" style="margin-left: 20px;">
+                                                                    <span>{{ key }}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="select-field" matInput>
+                                                                        <input type="text" matInput
+                                                                            [(ngModel)]="owner[key]" readonly>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="subCategoryName == 'Financial Information'"
+                                            style="display:flex;">
+                                            <app-financial-information></app-financial-information>
+                                        </ng-container>
+                                        <ng-container *ngIf="subCategoryName == 'Suppliers'">
+                                            <div *ngIf="suppliersList && suppliersList.length > 0">
+                                                <!-- Display supplier data if available -->
+                                                <div class="header" *ngFor="let supplier of suppliersList">
+                                                    <div class="inner_SEction">
+                                                        <div class="input_section"
+                                                            *ngFor="let key of getDesiredOrderKeys(supplier,'Supplier')">
+                                                            <ng-container *ngIf="key != 'AGREEMENT'">
+                                                                <div class="field_name" style="margin-left: 20px;">
+                                                                    <span>{{ key }}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="select-field" matInput>
+                                                                        <input type="text" matInput [(ngModel)]="supplier[key]" readonly>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="header">
+                                                <div class="inner_SEction" *ngIf="!suppliersList || suppliersList.length === 0">
+                                                    <!-- If suppliersList is empty or null, display hardcoded empty fields -->
+                                                    <div class="input_section" *ngFor="let key of getDesiredOrderKeys({}, 'Supplier')">
+                                                        <ng-container *ngIf="key != 'AGREEMENT'">
+                                                            <div class="field_name" style="margin-left: 20px;">
+                                                                <span>{{ key }}</span>
+                                                            </div>
+                                                            <div>
+                                                                <mat-form-field class="select-field" matInput>
+                                                                    <input type="text" matInput value="" readonly>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        
+                                        <ng-container>
+                                            <div *ngIf="userDefinedFields" style="margin:0.5rem;">
+                                                <span style="font-weight:bold;margin:1rem;">USER DEFINED FIELDS</span>
+                                            </div>
+                                            <div class="input_container">
+                                                <div class="input_Fields"
+                                                    *ngFor="let fieldName of userDefinedFields;let index=index">
+                                                    <ng-container *ngIf="fieldName != 'userDefined'">
+                                                        <div class="field_name" style="margin-left: 20px;">
+                                                            <span>{{fieldName.fieldName}}</span>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <span style="line-height: 7rem;" class="mr-5">:</span>
+                                                            <mat-form-field class="select-field" matInput>
+                                                                <input type="text" matInput
+                                                                    value=" {{fieldName.fieldValue}}" readonly>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </ng-container>
+
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="subCategoryName == 'Financial Information'">
+                                            <table style="margin:3rem;" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Attachment Name</th>
+                                                        <th>Attachment Document</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container *ngFor="let innerArray of filename; let i = index">
+                                                        <tr>
+                                                            <td>
+                                                                {{ attachmentFields[i] }}
+                                                            </td>
+                                                            <td>
+                                                                    <ng-container *ngFor="let item of innerArray">
+                                                                        <u (click)="getAttachementFileDownload(item.attachmentId)" style="color:blue;cursor:pointer;">{{
+                                                                            item.attachmentName }}</u><br>
+                                                                    </ng-container>
+                                                                </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="subCategoryName == 'Ownership' || subCategoryName == 'Suppliers'">
+                                            <table style="margin:3rem;" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Attachment Name</th>
+                                                        <th>Attachment Document</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container>
+                                                        <tr>
+                                                            <td>
+                                                                {{attachmentFields}}
+                                                            </td>
+                                                            <td>
+                                                                <ng-container *ngFor="let innerArray of filename; let i = index">
+                                                                            <u (click)="getAttachementFileDownload(innerArray.attachmentId)" style="color:blue;cursor:pointer;">
+                                                                                {{ innerArray?.attachmentName }}
+                                                                            </u><br>
+                                                                        </ng-container>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </ng-container>
+                                    </mat-tab>
+                                </ng-container>
+                            </mat-tab-group>
+                        </ng-container>
+                        <ng-container *ngIf="categoryName == 'Proxy Details'">
+                            <mat-tab-group [(selectedIndex)]="activeproxysubtabIndex"
+                                (selectedTabChange)="onSelectProxysubCategory($event)">
+                                <ng-container *ngFor="let ProxysubCategoryName of categoryList?.proxySubCategory; let j=index">
+                                    <mat-tab label="{{ProxysubCategoryName}}">
+                                        <ng-container *ngIf="ProxysubCategoryName === 'Company Information'">
+                                            <ng-container *ngIf="categoryList?.proxySubCategory[j]==ProxysubCategoryName">
+                                                <div class="input_container">
+                                                    <div class="input_Fields"
+                                                        *ngFor="let fieldName of companyfieldKey;let index=index">
+                                                            <div class="field_name" style="margin-left: 20px;">
+                                                                <span>{{fieldName}}</span>
+                                                            </div>
+                                                            <div class="d-flex">
+                                                                <span style="line-height: 7rem;" class="mr-5">:</span>
+                                                                <mat-form-field class="select-field" matInput>
+                                                                    <input type="text" matInput
+                                                                        value=" {{companyList[fieldName]}}"
+                                                                        readonly>
+                                                                </mat-form-field>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        
+                                        <ng-container *ngIf="ProxysubCategoryName == 'Proxy Financial Information'"
+                                            style="display:flex;">
+                                            <app-proxy-financial-information></app-proxy-financial-information>
+                                        </ng-container>
+                                    </mat-tab>
+                                </ng-container>
+                            </mat-tab-group>
+                        </ng-container>
+
+                        <ng-container *ngIf="categoryName == 'Uploads'">
+                            <table style="margin:3rem;" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Attachment Name</th>
+                                        <th>Attachment Documents</th>
+                                        <th>Attachment Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let upload of processedAttachments; let i = index">
+                                        <tr>
+                                            <td>{{ upload.name }}</td>
+                                            <td style="text-align:center;">
+                                                <ng-container *ngFor="let attachmentData of upload.attachmentData">
+                                                    <u (click)="getAttachementFileDownload(attachmentData.attachmentId)"
+                                                        style="color:blue;cursor:pointer;">
+                                                        {{ attachmentData.attachmentName }}
+                                                    </u><br>
+                                                </ng-container>
+                                            </td>
+                                            <td style="text-align:center;">{{ upload.remarks }}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-container *ngIf="categoryName == 'Reference'">
+                            <table style="margin:3rem;" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Attachment Name</th>
+                                        <th>Attachment Document</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let innerArray of filename; let i = index">
+                                        <tr>
+                                            <td>
+                                                {{ attachmentFields[i] }}
+                                            </td>
+                                            <td>
+                                                    <ng-container *ngFor="let item of innerArray">
+                                                        <u (click)="getAttachementFileDownload(item.attachmentId)" style="color:blue;cursor:pointer;">{{
+                                                            item.attachmentName }}</u><br>
+                                                    </ng-container>
+                                                </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="categoryName == 'Applicant Details'">
+                            <table style="margin:3rem;" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Attachment Name</th>
+                                        <th>Attachment Document</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container>
+                                        <tr>
+                                            <td>{{attachmentName}}</td>
+                                            <td>
+                                                <ng-container *ngFor="let attachment of attachments; let i = index">
+                                                    <u (click)="getAttachementFileDownload(attachment.attachmentId)"
+                                                        style="color:blue;cursor:pointer;">
+                                                        {{ attachment.attachmentName }}
+                                                    </u>
+                                                    <br *ngIf="i < attachments.length - 1">
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-container
+                        *ngIf="categoryName == 'Collateral Details'">
+                        <table style="margin:3rem;" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Attachment Name</th>
+                                    <th>Attachment Document</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let innerArray of filename; let i = index">
+                                    <tr>
+                                        <td>
+                                            {{ attachmentFields[i] }}
+                                        </td>
+                                        <td>
+                                                <ng-container *ngFor="let item of innerArray">
+                                                    <u (click)="getAttachementFileDownload(item.attachmentId)" style="color:blue;cursor:pointer;">{{
+                                                        item.attachmentName }}</u><br>
+                                                </ng-container>
+                                            </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                    </mat-tab>
+                </ng-container>
+            </mat-tab-group>
+        </div>
+    </div>
+    <div class="button_Section">
+        <button mat-raised-button class="close-button" matTooltip="Close" (click)="onCloseClick()">
+            <mat-icon style="font-size: 2rem;">clear</mat-icon>
+            <span>&nbsp;Close</span>
+        </button>
+    </div>
+</div>

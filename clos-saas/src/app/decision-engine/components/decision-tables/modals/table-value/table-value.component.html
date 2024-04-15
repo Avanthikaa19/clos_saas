@@ -1,0 +1,134 @@
+<div style="overflow: hidden;height:100%">
+    <div class="main-container">
+        <div class="header-container">
+            <div class="headline">
+                <span class="header-c">Insert Table Fields</span>
+            </div>
+            <!-- <div class="close-container">
+            <span class="header_close"><mat-icon mat-dialog-close>close</mat-icon></span>
+        </div> -->
+        </div>
+        <div *ngIf="treeData.length>0" class="body-container">
+            <div class="seprate-columns" style="position: relative;top: 20px;">
+                <div class="choose-mode">
+                    <span>Choose Mode:</span>
+                    <mat-select class="min-select" [(ngModel)]="modelMode">
+                        <mat-option value="Object Model">Object Model</mat-option>
+                        <mat-option value="Database">Database</mat-option>
+                    </mat-select>
+                </div>
+                <div class="database" *ngIf="modelMode == 'Database'">
+                    <span>Chooose Database:</span>
+                    <mat-select class="min-select" [(ngModel)]="DatabaseName" [disabled]="true">
+                        <mat-option *ngFor="let dataBase of dataBaselist" [value]="dataBase">{{dataBase}}</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+            <div class="second_portion" style="margin-top: 36px;">
+                <div class="select-container" style="margin-left: 20px;">
+                    <span>Choose Type:</span>
+                    <mat-select class="min-select" [(ngModel)]="columnLable" style="width: 207px; margin-left: 10px;">
+                        <mat-option value="conditionalVariable">Conditional Variable</mat-option>
+                        <mat-option value="actionVariable">Action Variable</mat-option>
+                    </mat-select>
+                </div>
+                <ng-container *ngIf="modelMode == 'Object Model'">
+                    <div class="search-obj-model">
+                        <input style="width: 343px;" [(ngModel)]="objectSearchKey" (keyup)="objectTypeSearch();" placeholder="Search here..">
+                        <!-- <mat-icon class="search-cancel" matTooltip="Search..." (click)="resetSearchvalue()">cancel</mat-icon> -->
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="modelMode == 'Database'">
+                    <div class="search-obj-model">
+                        <span>Choose Table:</span>
+                        <mat-select class="min-select" style="width: 207px; margin-left: 10px;" [(ngModel)]="selectedTables" [multiple]="true" #multiSelect>
+                            <mat-option>
+                                <ngx-mat-select-search placeholderLabel="Search here.." [(ngModel)]="objectSearchKey1" (ngModelChange)="onTableFilter()" noEntriesFoundLabel='No Items Found'>
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-checkbox style="margin-left: 16px;" [checked]="selectAllChecked" (change)="selectAll($event)" [indeterminate]="selectedTables.length > 0 && selectedTables.length < filteredTablelist.length">
+                                Select All
+                            </mat-checkbox>
+                            <span *ngFor="let fields of filteredTablelist"> 
+                        <mat-option [value]="fields">{{fields}}</mat-option>
+                    </span>
+                        </mat-select>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="tree-container">
+                <div *ngIf="modelMode=='Object Model'">
+                    <div style="display: flex;">
+                        <p style="padding-left: 1rem;" class="category-sub-header"><u>All Types</u></p>
+                    </div>
+                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                        <mat-nested-tree-node *matTreeNodeDef="let node" (click)="selectedNode(node)">
+                            <li>
+                                <div class="mat-tree-node list-container" [class.selected-node]="node.name == selectedNodeName">
+                                    <mat-icon>keyboard_arrow_right</mat-icon> {{node.name}} - {{node.type}}
+                                </div>
+                            </li>
+                        </mat-nested-tree-node>
+                        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                            <li class="example-tree-container ">
+                                <div class="mat-tree-node list-container">
+                                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                                    <mat-icon>
+                                        {{treeControl.isExpanded(node) ? 'indeterminate_check_box' : 'add_box'}}
+                                    </mat-icon>
+                                </button> {{node.name}}
+                                </div>
+                                <ul class="example-tree-nested-node">
+                                    <div *ngIf="treeControl.isExpanded(node)">
+                                        <ng-container matTreeNodeOutlet></ng-container>
+                                    </div>
+                                </ul>
+                            </li>
+                        </mat-nested-tree-node>
+                    </mat-tree>
+                </div>
+                <div *ngIf="modelMode=='Database'">
+                    <div style="display: flex;">
+                        <!-- <p style="padding-left: 1rem;" class="category-sub-header"><u>All Types</u></p> -->
+                    </div>
+                    <div class="panel-container">
+                        <mat-expansion-panel class="panel" *ngFor="let tables of selectedTables; let i=index" (opened)="getPanelvalue(tables,i);">
+                            <mat-expansion-panel-header>
+                                {{tables}}
+                            </mat-expansion-panel-header>
+                            <div class="search">
+                                <input style="width: 95%; margin-bottom:1rem;" [(ngModel)]="dbSearch[i]" (keyup)="databaseSearch(i)" placeholder="Search here..">
+                                <mat-icon style="color:red;margin-left: -3rem;" matTooltip="Clear" (click)="dbSearch[i]='';databaseSearch(i)">clear</mat-icon>
+                            </div>
+                            <div class="loading-container" *ngIf="loading">
+                                <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate">
+                                </mat-progress-spinner>
+                                <span>Loading... Please wait...</span>
+                            </div>
+                            <div #scrollContainer style="height:140px;overflow-x:hidden;" (scroll)="onScroll($event)">
+                                <ng-container *ngFor="let fields of filteredFieldsList[tables] || FieldsList[tables]">
+                                    <mat-checkbox style="display: block;" [checked]="isChecked(fields)" (change)="onCheckboxChange($event, fields)">{{fields.join(' - ')}}</mat-checkbox>
+                                </ng-container>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-spinner *ngIf="treeData.length==0" style="margin:25rem;margin-left: 35rem;" diameter="35"></mat-spinner>
+
+    </div>
+    <mat-dialog-actions style="display: block;">
+        <!-- <div class="dialog-footer"> -->
+        <button mat-stroked-button mat-dialog-close style="color: red;margin-left: 26px; position: relative;top: 17px;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+        <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);position: relative;float: right;top: 17px;right: 26px;" [disabled]="selectedNodeId == null && checkedItems.length==0" (click)="onCreateClick()" cdkFocusInitial>
+        <mat-icon>add</mat-icon>Create
+    </button>
+        <!-- </div> -->
+    </mat-dialog-actions>
+</div>
+<notifier-container></notifier-container>

@@ -1,0 +1,11 @@
+<div [style.height.px]="component_height - 65" [style.max-height.px]="component_height - 60" style="overflow: hidden;">
+  <div class="header">
+    <div style="float: right; padding-top: 10px; padding-right: 10px; font-size: 14px; line-height: 25px;">
+      <input [(ngModel)]="enteredId" placeholder="Aggregation Task ID"><button (click)="setTaskId()">Set</button>
+    </div>
+    BUCKET STATUS 
+  </div>
+  <div [style.height.px]="component_height - 115" style="overflow-y: auto;">
+    <app-aggregator-actions *ngIf="taskId" [taskId]="taskId"></app-aggregator-actions>
+  </div>
+</div>

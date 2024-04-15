@@ -1,0 +1,95 @@
+<section class="p-5">
+    <div class=" mb-4">
+        <div style="margin-right: auto;">
+            <p class="mb-1" style="font-weight: 600;">DUPLICATE APPLICATIONS</p>
+            <div class="at-separator-thick"></div>
+        </div>
+        <div style="overflow-y: scroll;height: 700px;" class="content-container mt-3">
+            <table>
+                <thead>
+                    <tr style="color:whitesmoke;background-color: #555353;">
+                        <th style="width:25px;">S.No</th>
+                        <th>Comparator(s)</th>
+                        <th>Duplicate List</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="this.duplicateAppList.length!=0">
+                        <tr *ngFor="let data of duplicateAppList; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{data.comparingFields}}</td>
+                            <td style="padding: 0;border-top: 1px solid #5f9ea075;">
+                                <table style="width: 100%;border: none;">
+                                    <thead>
+                                        <tr style="color:black;background-color: rgb(181, 209, 233);">
+                                            <th *ngFor="let item of applicationHeader">{{item}}</th>
+                                            <th>View Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let element of data.applicationDetails">
+                                            <td>{{element.applicantName == null?'-':element.applicantName}}</td>
+                                            <td>{{element.id == null?'-':element.id}}</td>
+                                            <td>{{element.createdTime ==null?'-':element.createdTime}}</td>
+                                            <td>{{element.idc_status == null?'-':element.idc_status}}</td>
+                                            <td>{{element.fdc_status == null?'-':element.fdc_status}}</td>
+                                            <td>{{element.doc_status == null?'-':element.doc_status}}</td>
+                                            <td>{{element.applicationStage == null?'-':element.applicationStage}}</td>
+                                            <td>
+                                                <button style="border: none;background-color: #f5f5f5;" (click)="openDuplicateDialog(element.id)" [matTooltip]="'View Details'">
+                                  <mat-icon>open_in_new</mat-icon>
+                              </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <!-- <tr *ngFor="let key of comparators; let i=index">
+                <td>{{i+1}}</td>
+                <td>
+                  <div>
+                        {{key.replace('surName','LastName').replace('secTDINo','SEC/DTI Registration No.').replace('name','Name').replace('companyAddress','Company Address').replace('contactNumber','Contact Number').replace('dob','Date of Birth')}}
+                  </div>
+                </td>
+                <td>          
+                  <table>
+                    <thead>
+                      <tr style="color:black;background-color: rgb(181, 209, 233);text-transform: uppercase;">
+                        <th *ngFor="let item of applicationHeader" >{{item}}</th>
+                        <th>View Details</th>
+                    </tr>
+                    </thead> 
+                    <tbody>
+                      <tr  *ngFor="let element of duplicateAppList[i]">
+                        <td>{{element.applicantName == null?'-':element.applicantName}}</td>
+                        <td>{{element.id  == null?'-':element.id}}</td>
+                        <td>{{element.createdTime ==null?'-':element.createdTime}}</td>
+                        <td>{{element.idc_status  == null?'-':element.idc_status}}</td>
+                        <td>{{element.fdc_status  == null?'-':element.fdc_status}}</td>
+                        <td>{{element.doc_status  == null?'-':element.doc_status}}</td>
+                        <td>{{element.applicationStage  == null?'-':element.applicationStage}}</td>
+                        <td>
+                          <button style="border: none;background-color: #f5f5f5;margin-left: 25px;"
+                           (click)="openDuplicateDialog(element.id)" [matTooltip]="'View Details'">
+                              <mat-icon>more_revert</mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>               
+                  </table>
+                </td>
+              </tr> -->
+                </tbody>
+            </table>
+            <ng-container *ngIf="!loadingApplications && duplicateAppList.length==0">
+                <p class="no-content  text-secondary">No items found!</p>
+            </ng-container>
+            <div *ngIf="loadingApplications" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+        </div>
+    </div>
+</section>

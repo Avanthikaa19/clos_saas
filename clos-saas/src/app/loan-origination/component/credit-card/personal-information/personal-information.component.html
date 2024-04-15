@@ -1,0 +1,268 @@
+<!-- MAIN CONTAINER -->
+<section class="mt-2" style="margin-left: 10px;">
+    <div class="row row-shadow">
+        <div class="col-lg-12 p-4" style="background: white;
+        border-top-right-radius: 10px;">
+            <p class="mb-1" style="font-weight: 600;">PERSONAL INFORMATION</p>
+            <div class="at-separator-thick"></div>
+            <div class="pt-4">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-4">
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Credit Card <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" class="mt-2 mb-3 no-underline select-field" style="height: 48px; font-size: 11px; width: 100%;">
+                            <mat-select required>
+                                <mat-option *ngFor="let option of creditCardOption.creditCard" [value]="option">{{option}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>First Name <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Middle Name <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Last Name <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Name to appear on the card <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Date of Birth</strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2  no-underline select-field">
+                            <input matInput [matDatepicker]="picker" placeholder="Enter the Date of Birth" style="font-size: 12px;" (focus)="picker.open()" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Place of Birth <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Gender <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <span>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of genderOption" [value]="option.gender">
+                                    {{option.gender}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </span>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Mother's Full Maiden Name <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                                <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Civil Status <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <span>
+                            <mat-form-field appearance="fill" class="mt-2 mb-3 no-underline select-field" style="height: 48px; font-size: 11px; width: 100%;">
+                                <mat-select required>
+                                    <mat-option *ngFor="let option of civilStatusOption" [value]="option.status">{{option.status}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Number of Dependents <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                                <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Number of Cars Owned <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Education <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <span>
+                            <mat-form-field appearance="fill" class="mt-2 mb-3 no-underline select-field" style="height: 48px; font-size: 11px; width: 100%;">
+                                <mat-select required>
+                                    <mat-option *ngFor="let option of educationOption" [value]="option.education">{{option.education}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Nationality <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <mat-form-field appearance="fill" class="mt-2 mb-3 no-underline select-field" style="height: 48px; font-size: 11px; width: 100%;">
+                                <mat-select placeholder="Nationality" required>
+                                    <input placeholder="Search country.." style="width: 100%;padding: 10px;">
+                                    <mat-option *ngFor="let country of countryList" [value]="country.country">{{country.country}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Tax Identification Number(TIN) <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>SSS/GIS Number <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Mobile Phone Number <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-4">
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Home Phone Number <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Present/Home Address <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the Unit No" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the Street" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the District" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the City" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="number" placeholder="Enter the Zip Code" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Permanent Address <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the Unit No" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the Street" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the District" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="text" placeholder="Enter the City" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2  no-underline select-field">
+                            <input matInput type="numver" placeholder="Enter the Zip Code" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Home Ownership <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <span>
+                            <mat-form-field appearance="fill" class="mt-2 mb-3 no-underline select-field" style="height: 48px; font-size: 11px; width: 100%;">
+                                <mat-select required>
+                                    <mat-option *ngFor="let option of homeOption" [value]="option.home">{{option.home}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Years of Stay <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                                <input matInput type="number" style="font-size: 12px;" autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Best Time to Call(Day/Time) <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Primary E-mail Address <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Alternate E-mail Address <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start">
+                            <strong>Social Media Account <span style="color:red;margin-left: 5px;">*</span>
+                            </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;" class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <div class="d-flex" style="margin-top: 15px;">
+                            <div style="margin-right: auto;"></div>
+                            <button mat-button class="next-btn" [routerLink]="'/loan-org/loan/credit-card/workandfinance'">
+                                <span class="material-symbols-outlined" style="margin-right: 10px;color: white;"> save </span>Save & Proceed </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

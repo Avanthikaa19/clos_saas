@@ -1,0 +1,44 @@
+<div class="tl-main-container">
+    <div class="header-container">
+        <div class="icon-container">
+        </div>
+        <div class="title-container">
+            <div style="border-bottom:none">
+                <span>
+                    To Display All Fields
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="content-container">
+            <div class="list-container">
+                <mat-checkbox class="checkbox-content" [(ngModel)]="selectAllInput" [(indeterminate)]="fieldData" (change)="selectAll($event)">Select All</mat-checkbox>
+            </div>
+            <ng-container *ngFor="let field of allColumns">
+                <div class="list-container" *ngIf="!field.viewSticky && !field.fieldName.startsWith('$') && !field.hideExport">
+                    <mat-checkbox class="checkbox-content" [(ngModel)]="field.columnDisable" (change)="selectList()">
+                        {{field.displayName | titlecase}}
+                    </mat-checkbox>
+                </div>
+                <div class="list-container" *ngIf="!field.viewSticky && field.fieldName.startsWith('$')">
+                    <mat-checkbox class="checkbox-content" [(ngModel)]="field.columnDisable" (change)="selectList()">
+                        {{field.displayName | titlecase}}
+                    </mat-checkbox>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="button-container">
+        <div class="clear" style='float:left;'>
+            <button class="tl-btn" (click)="closeDialog()">
+                <mat-icon>clear</mat-icon>Close
+            </button>
+        </div>
+        <div class="apply" style="margin-left: 1rem;">
+            <button class="tl-btn-submit" (click)="onApply()">
+                <mat-icon>done</mat-icon>Apply
+            </button>
+        </div>
+    </div>
+</div>

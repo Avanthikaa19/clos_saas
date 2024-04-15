@@ -1,0 +1,147 @@
+<mat-toolbar class="tool-bar" *ngIf="((ac.items?.DRC002D_DECISION_RULE_SET_MODIFY || ac.super) && !noAccess)_">
+    <span class="create-table-container">
+        <button mat-stroked-button onclick="history.back()" style="background:blue;color:white">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <span>
+                Go back to Previous
+            </span>
+    </button>
+    </span>
+    <div class="spacer">
+
+    </div>
+    <span class="create-table-container">
+        <button mat-stroked-button  (click)="getRuleSetByID()">
+            <mat-icon>refresh</mat-icon>
+            <span>
+                Refresh
+            </span>
+    </button>
+    </span>
+    <span class="create-table-container" style="padding-left:10px;">
+        <button mat-stroked-button [disabled]="disableSave" [class.save-disable]="disableSave==true" (click)="saveRuleset()">
+            <div *ngIf="!ruleEngineService.saveUpdate"><mat-icon>save</mat-icon><span>{{disableSave  ? 'Saving..' : 'Save'}}</span></div>
+            <div *ngIf="ruleEngineService.saveUpdate"><mat-icon>update</mat-icon><span>{{disableSave  ? 'Updating..' : 'Update'}}</span></div>
+    </button>
+    </span>
+</mat-toolbar>
+<div class="main-container">
+    <div class="header-box" style="margin-bottom:0.5rem;padding:1.5rem;" *ngIf="ruleSet">
+        <span class="flowname" style="font-weight: 500;">Name</span>
+        <span class="flowname" style="padding-right: 10px;font-size: 17px;">:</span>
+        <input class="flowname" style="text-transform: capitalize;" [(ngModel)]="ruleSet.name" class="min-input" style="width:40rem">
+        <span class="flowname" style="font-weight: 500;padding-left: 1rem;">Description</span>
+        <span class="flowname" style="padding-right: 10px;font-size: 17px;">:</span>
+        <input class="flowname" style="text-transform: capitalize;" [(ngModel)]="ruleSet.description" class="min-input" style="width:40rem">
+    </div>
+    <div class="body-container">
+        <div class="sidnav-param-container" *ngIf="false">
+            <div class="insert-param-container">
+                <div class="param-header">
+                    Parameters:
+                </div>
+                <table style="width: 90%;margin-top: 0rem;">
+                    <tr>
+                        <td>Name:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="min-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Type:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mat-select class="min-select">
+                                <mat-option>Sample</mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                </table><br>
+                <button mat-raised-button>
+                    <mat-icon>add</mat-icon>
+                    <span>
+                        Add Parameters
+                    </span>
+                </button>
+            </div>
+            <div class="param-table-container">
+                <div class="fixTableHead">
+                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="!tableDataById"></mat-progress-bar> -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> Name</th>
+                                <th> Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sample 01</td>
+                                <td>Sample 02</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="main-nav-container">
+            <div class="rule-header-container">
+                <div class="left-align">
+                    <!-- <span class="category-sub-header">
+                        Local Variables, Patterns and Initialization Rule:
+                    </span> -->
+                </div>
+                <div class="spacer">
+
+                </div>
+                <div class="right-align">
+                    <ng-container *ngIf="ac.super || ac.items?.DRC002E_DECISION_RULE_ADD_REMOVE">
+                    <button mat-stroked-button (click)="createRule()">
+                        <mat-icon>add</mat-icon>
+                        <span>
+                            Add/Remove Rule
+                        </span>
+                    </button>
+                </ng-container>
+                </div>
+            </div>
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+            <div class="rule-body-container" *ngIf="!loading">
+                <div class="no-record-found" *ngIf="listRules.length == 0">
+                    No records found
+                </div>
+                <div class="card-container" *ngFor="let rule of listRules">
+                    <div class="inner-card-container" matRipple>
+                        <div class="left-card-align ">
+                            <div style="margin-top: 1rem; margin-left: 1rem; ">
+                                <span style="font-size: 1.6rem;  text-transform: capitalize; font-weight: 500;">
+                                    {{rule.name}}
+                                </span><br>
+                                <p></p>
+                                <span style="font-size: 1.3rem; color: gray;">
+                                    {{rule.description}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="right-card-align ">
+                            <ng-container *ngIf="ac.super || ac.items?.DR001D_DECISION_RULES_MODIFY ">
+                            <button style="float: right" (click)="editRuleToView(rule.id)" mat-stroked-button> <mat-icon>edit</mat-icon> Edit</button>
+                        </ng-container>
+                        </div>
+                        <div class="center-card-align">
+                            <!-- center -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="no-access" *ngIf="(!ac.super && !ac.items?.DRC002D_DECISION_RULE_SET_MODIFY) || noAccess">
+    <app-no-access></app-no-access>
+</div>
+<notifier-container></notifier-container>

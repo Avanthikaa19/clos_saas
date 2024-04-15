@@ -1,0 +1,130 @@
+<div class="component-container">
+  <div class="header-container">
+    <span> IMPORT / EXPORT WIZARD<sup>BETA</sup></span>
+</div>
+  <div class="tab-group-container">
+    <mat-tab-group class="my-tab-group" mat-align-tabs="center">
+      <mat-tab label="Export">
+        <mat-drawer-container class="tab-content-container">
+          <mat-drawer mode="side" opened style="width: 25%;">
+            <div>
+              <div class="noselect" style="padding: 10px 0px; background-color: rgba(14, 41, 84, 1); font-size: medium; color: white; 
+                font-size: 15px; width: 100%; position: sticky; top: 0; display: flex; justify-content: center;">
+                <mat-icon>layers</mat-icon>
+                <span style="padding-left: 10px;">All Workflows</span>
+              </div>
+            </div>
+            <mat-card *ngIf="loadingWorkflows" style="margin: 5px; padding: 20px; align-items: center;">
+              <mat-spinner [diameter]="20" style="float: left;"></mat-spinner>
+              <span style="float: left; padding-left: 20px; font-size: 14px;">Loading workflows.. Please wait..</span>
+              <br style="clear: both;">
+            </mat-card>
+            <div *ngIf="!loadingWorkflows" style="position: relative; height: calc(100% - 50px); overflow-y: auto;">
+              <mat-checkbox style="margin: 10px;" (change)="selectAll($event)" [checked]="checked||newArray.length!=0"
+                [(ngModel)]="checked" [indeterminate]="checked||newArray.length!=0">
+                <span style="margin-left: 10px;" *ngIf="checked||newArray.length!=0">Clear All</span>
+                <span style="margin-left: 10px;" *ngIf="!checked&&newArray.length==0">Select All</span>
+              </mat-checkbox>
+              <mat-accordion>
+                <mat-expansion-panel *ngFor="let workflow of workflows; let index = index" multi="true"
+                  style="padding: 0; margin: 0; border-radius: 0;" class="mat-elevation-z2">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title style="font-weight: 500;">
+                      <mat-checkbox class="example-margin" style="height: 3rem;" (click)="$event.stopPropagation();"
+                        [checked]="checked||isWorkflowSelected(workflow.worksheets)"
+                        (change)="setAll($event,workflow.worksheets)"></mat-checkbox>
+                      <span style="padding-left: 10px;">
+                        {{workflow.name}}
+                      </span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-panel-description style="padding: 0; margin: 0;">
+                    <mat-nav-list style="width: 100%;">
+                      <mat-list-item *ngFor="let worksheet of workflow.worksheets" class="nav-list-item">
+                        <mat-checkbox class="example-margin" (change)='dataArray($event,worksheet);'
+                          [checked]="isWorksheetSelected(worksheet)"></mat-checkbox>
+                        <span style="padding-left: 10px; font-size: 14px; margin-top: -5px; width: 270px; border: transparent solid 1px; 
+                  text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; 
+                  -webkit-box-orient: vertical;">
+                          {{worksheet.name}}
+                        </span>
+                      </mat-list-item>
+                    </mat-nav-list>
+                  </mat-panel-description>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </mat-drawer>
+          <mat-drawer-content>
+            <div class="header">
+              Export Selected Worksheets
+            </div>
+            <div class="content-card">
+              <div style="font-size: 15px; padding: 20px;">
+                <i *ngIf="newArray.length" style="color: gray;">
+                  Worksheets Selected: <a style="color: black;">{{newArray.length}}</a>
+                </i>
+                <i *ngIf="!newArray.length" style="color: gray;">
+                  Select at least one worksheet.
+                </i>
+              </div>
+              <div style="color: black; font-size: 15px; padding: 20px;" *ngIf="newArray.length">
+                <i style="padding-right: 20px;">
+                  Click to proceed:
+                </i>
+                <button mat-stroked-button color="primary" (click)='exportWorksheets()' style="background-color: white;">
+                  <mat-icon>cloud_download</mat-icon>
+                  <span style="padding-left: 10px;">Export As JSON</span>
+                </button>
+              </div>
+            </div>
+          </mat-drawer-content>
+        </mat-drawer-container>
+      </mat-tab>
+      <mat-tab label="Import">
+        <div class="tab-content-container">
+          <div class="header">
+            Import Worksheets
+          </div>
+          <div class="import-content-ontainer">
+            <div style="height: 50px;" class="right-align1">
+              <input class="center-align upload-button" type="file" accept=".json" #file style="display: none"
+                (change)="selectFile($event)" />
+              <div *ngIf="fileArray.length==0 && !uploading" style="color: silver; font-size: 15px; padding: 20px; display: flex; align-items: center; justify-content: flex-start;">
+                <i style="padding-right: 10px;">
+                  Click to select JSON file:
+                </i>
+                <button mat-stroked-button color="primary" (click)="file.click()">
+                  <mat-icon> backup</mat-icon>
+                  <span style="padding-left: 10px;">Select A JSON File</span>
+                </button>
+              </div>
+              <div *ngIf="fileArray.length>0" style="color: silver; font-size: 15px; padding: 20px; display: flex; align-items: center; justify-content: flex-start;">
+                <i style="padding-right: 10px;">
+                  Click to import the selected JSON file:
+                </i>
+                <button mat-stroked-button color="primary" style="margin-right: 10px;"
+                  (click)="upload()" [disabled]="uploading">
+                  <mat-icon>cloud_upload</mat-icon>
+                  <span style="padding-left: 10px;">{{uploading ? 'Importing' : 'Confirm Import'}}</span>
+                </button>
+                <button mat-stroked-button color="warn" (click)="fileArray=[]"
+                  *ngIf="fileArray.length>0 && !uploading">
+                  <mat-icon>clear</mat-icon>
+                  <span style="padding-left: 10px;">Clear Selection</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="actions-container">
+    <div class="spacer"></div>
+    <button mat-stroked-button  class="clos-btn" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+      <span>Close</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div>
+    <p style="font-weight: 500;font-size: 17px">ADD VARIABLE</p>
+    <div class="row">
+        <div class="col-6">
+            <span>Choose Mode:</span>
+            <span>
+                <mat-select class="mit-select" [(ngModel)]="modelMode" (ngModelChange)="getDatabaseName()">
+                    <mat-option value="Object Model">Object Model</mat-option>
+                    <mat-option value="Database">Database</mat-option>
+                </mat-select>
+            </span>
+        </div>
+        <div class="database col-6" *ngIf="modelMode == 'Database'">
+            <span>Chooose Database:</span>
+            <mat-select class="mit-select" [(ngModel)]="DatabaseName" [disabled]="true">
+                <mat-option *ngFor="let dataBase of dataBaselist" [value]="dataBase">{{dataBase}}</mat-option>
+            </mat-select>
+        </div>
+        <div class="col-6" style="margin-top:1rem;" *ngIf="modelMode == 'Database'">
+            <span>Choose Table:</span>
+            <span>
+                <mat-select class="mit-select" [(ngModel)]="checkedTableNames"  multiple >
+                    <mat-option><ngx-mat-select-search placeholderLabel="Search here.." [(ngModel)]="searchText" (ngModelChange)="onTableFilter()"  noEntriesFoundLabel='No Items Found'>
+                    </ngx-mat-select-search></mat-option>
+                    <span *ngFor="let table of filteredList">
+                        <mat-option [value]="table">{{table}}</mat-option>
+                    </span>
+                </mat-select>
+            </span>
+        </div>
+    </div>
+    <div style="margin-top: 10px;" *ngIf="modelMode == 'Object Model'">
+        <input [(ngModel)]="objSearchKey" (keyup)="objModelSearch()" style="width:100%" placeholder="Search Variables">
+    </div>
+    <div style="overflow: auto;height: 450px;margin-top: 20px" *ngIf="modelMode == 'Object Model'">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let item of objName" [expanded]="item.panelOpenState" (opened)="item.panelOpenState = true" (closed)="item.panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{item.name}} - {{item.type}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <!-- <p style="margin-left: 20px;cursor: pointer;" *ngFor="let name of item.children" class="edit" (click)="variable(name)">
+            <mat-icon style="position: absolute;left: 5px">list</mat-icon>{{name}}</p> -->
+                <p style="margin-left: 20px;cursor: pointer;" *ngFor="let chileObj of item.children" class="edit" [hidden]="!chileObj.name.toLowerCase().includes(objSearchKey.toLowerCase())" (click)="variable(chileObj.name,chileObj.type)">
+                    <mat-icon style="position: absolute;left: 5px">list</mat-icon>{{chileObj.name}} - {{chileObj.type}}</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div style="margin-top:40%;margin-left:40%">
+            <div *ngIf="loading" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate" style="left: 50px;bottom: 10px"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+        </div>
+    </div>
+    <div style="overflow: auto;height: 450px;margin-top: 20px" *ngIf="modelMode == 'Database'">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let item of checkedTableNames; let i=index" (opened)="getPanelvalue(item,i)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{item}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div #scrollContainer style="height: 145px;overflow-x:hidden;" (scroll)="onScroll($event)">
+                    <ng-container *ngFor="let fields of FieldsList[item]">
+                        <p style="margin-left: 20px;cursor: pointer;" class="edit" (click)="type1 = fields[0];type2 = fields[1]">
+                            <mat-icon style="position: absolute;left: 5px">list</mat-icon>{{fields.join(' - ')}}
+                        </p>
+                    </ng-container>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div style="margin-top:40%;margin-left:40%">
+            <div *ngIf="loading" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate" style="left: 50px;bottom: 10px"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+        </div>
+    </div>
+    <div class="node-data" style="margin-top: 30px">
+        <div class="node-detail">
+            <div class="label">
+                <span>Display Name : </span>
+            </div>
+            <div class="value">
+                <input class="min-input" [(ngModel)]="type1" readonly style="width:100%;margin-top:1rem;">
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 5px">
+        <span class="flex-unstetch" style="margin-left: 1rem;">
+    <button mat-flat-button mat-dialog-close [disabled]="!type1" style="margin-top: 10px;color:white;background: #3445b4;" (click)="addVariable()">
+        <mat-icon>add</mat-icon>
+        <span>
+            Add Variable
+        </span>
+        </button>
+        </span>
+        <span class="flex-unstetch" style="margin-left: 1rem;">
+    <button mat-flat-button mat-dialog-close style="margin-top:10px;color:white;background: red;">
+        <mat-icon style="margin-right:0">clear</mat-icon>
+        <span>
+            Cancel
+        </span>
+        </button>
+        </span>
+        <span class="flex-unstetch" style="margin-left: 1rem;">     
+        <mat-select class="mit-select" (mousedown)="$event.stopPropagation();" [(ngModel)]="selectedName" (ngModelChange)="handleSelectionChange($event)">
+            <mat-option  *ngFor="let name of variableNames" [value]="name">{{name}}</mat-option>
+       </mat-select>
+    </span>
+    </div>

@@ -1,0 +1,62 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 80%;
+    .header-container {
+        // height: 20px;
+        border-bottom: 1px solid gainsboro;
+        font-size: 16px;
+        font-weight: 500;
+        justify-content: center;
+        padding: 10px;
+    }
+    .body-container {
+        height: calc(100% - 50px);
+        padding: 10px;
+        .node-data {
+            border-bottom: solid gainsboro 1px;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            .node-detail {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                margin-left: 20px;
+                .label {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 150px;
+                    text-align: left;
+                }
+                .colen {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 50px;
+                    text-align: center;
+                }
+                .value {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 300px;
+                    input {
+                        width: 100%;
+                    }
+                }
+                .node-id {
+                    width: 100px;
+                }
+                .value-hint {
+                    padding-left: 10px;
+                    text-align: left;
+                    color: silver;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep mat-dialog-actions {
+    position: relative;
+    top: 31px;
+}

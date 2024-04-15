@@ -1,0 +1,135 @@
+.theme-card {
+    width: 250px;
+    height: 350px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    transition: all linear 100ms;
+    overflow: hidden;
+    > .theme-card-header {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 30px;
+        height: 65px;
+        padding-top: 5px;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+        box-sizing: border-box;
+        border-bottom: solid whitesmoke 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    > .theme-card-header:hover {
+        overflow: visible;
+        white-space: normal;
+        display: block;
+        height: auto;
+        min-height: 65px;
+    }
+    > .theme-card-content {
+        max-height: 285px;
+        padding: 10px 5px 5px 5px;
+        margin-top: 10px;
+        > .theme-title {
+            height: 20px;
+            margin: auto;
+            width: 100%;
+            background-color: whitesmoke;
+            border: solid transparent 1px;
+            > .theme-title-data {
+                width: 70%;
+                border-top: solid black 2px;
+            }
+        }
+        > .theme-subtitle {
+            height: 20px;
+            margin: auto;
+            margin-top: 5px;
+            width: 60%;
+            background-color: whitesmoke;
+            border: solid transparent 1px;
+            > .theme-subtitle-data {
+                width: 70%;
+                border-top: solid gray 2px;
+            }
+        }
+        > .theme-header-item {
+            height: 20px;
+            width: 30px;
+            margin-top: 5px;
+            background-color: whitesmoke;
+            border: solid transparent 1px;
+            > .theme-header-data {
+                width: 50%;
+                border-top: dashed black 2px;
+            }
+        }
+        > .theme-data {
+            > table {
+                border-collapse: collapse;
+                margin-top: 20px;
+                width: 100%;
+                .field-header {
+                    // padding: 3px 1px 3px 1px;
+                    // border: 2px solid gainsboro;
+                    .field-header-item {
+                        height: 20px;
+                        background-color: whitesmoke;
+                        border: solid transparent 1px;
+                        > .field-header-data {
+                            width: calc(100% - 10px);
+                            border-top: solid #4169e1 2px;
+                        }
+                    }
+                }
+                .field-data {
+                    // padding: 3px 1px 3px 1px;
+                    // border: 2px solid gainsboro;
+                    .field-data-item {
+                        height: 20px;
+                        background-color: whitesmoke;
+                        border: solid transparent 1px;
+                        > .field-data-data {
+                            width: calc(100% - 20px);
+                            border-top: solid black 2px;
+                        }
+                    }
+                }
+            }
+        }
+        > .theme-footer-item {
+            height: 20px;
+            width: 30px;
+            margin-top: 20px;
+            background-color: whitesmoke;
+            border: solid transparent 1px;
+            > .theme-footer-data {
+                width: 50%;
+                border-top: dashed black 2px;
+            }
+        }
+    }
+}
+.theme-card:hover {
+    -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+.theme-element {
+    border-radius: 4px;
+    padding: 5px;
+    position: relative;
+}
+
+.center-align {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

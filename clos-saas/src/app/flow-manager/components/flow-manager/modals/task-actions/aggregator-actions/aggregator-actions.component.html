@@ -1,0 +1,318 @@
+<!-- <div style="height: 100%; width: 100%; background-color: white; font-size: 14px; overflow-y: hidden; overflow-x: hidden;">
+    <div class="category-header" style="margin-bottom: 5px;">
+        <button mat-button style="float: right; color: black;" (click)="refreshLiveStatuses();">
+            <mat-icon>refresh</mat-icon>
+            <span style="padding-left: 10px;">Refresh</span>
+        </button>
+        <input class="min-input" [(ngModel)]="searchLiveBucketString"
+            style="float: right; color: black; background-color: rgb(250, 250, 250); width: 200px; height: 35px;"
+            placeholder="Search with ID or grouping key.">
+            <mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="16" style="float: right; top: 8px; margin-right: 10px;"></mat-progress-spinner>
+        LIVE BUCKETS:
+    </div>
+    <div class="hscroll-container">
+        <ng-container *ngIf="loading">
+            <div style="width: 100%;min-height: 50px; max-height: 100px; text-align: center;">
+                <span style="font-size: 12px; font-style: italic; color: silver; line-height: 30px; vertical-align: middle;">Loading..</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!loading && bucketStatuses.length == 0">
+            <div style="width: 100%; min-height: 50px; max-height: 100px; text-align: center;">
+                <span style="font-size: 12px; font-style: italic; color: silver; line-height: 30px; vertical-align: middle;">No live buckets found.</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!loading && bucketStatuses.length > 0">
+            <ng-container *ngFor="let bucketStatus of bucketStatuses">
+                <div *ngIf="bucketStatus.bucket.id == searchLiveBucketString || bucketStatus.bucket.groupKey.includes(searchLiveBucketString)"
+                    class="hdiv bucket-status-container">
+                    <div class="bucket-id">
+                        <span>ID: {{bucketStatus.bucket.id}}</span>
+                    </div>
+                    <div class="bucket-type">
+                        <span>{{bucketStatus.bucket.released == 'Y' ? 'RELEASED BUCKET' : 'NON RELEASED BUCKET'}}</span>
+                    </div>
+                    <div class="bucket-spinner-container">
+                        <ngx-gauge [type]="'arch'" [size]="145" [thick]="10"
+                            [value]="bucketStatus.quantityPct == null ? 0 : (bucketStatus.quantityPct > 100 ? bucketStatus.quantityPct.toFixed(0) : bucketStatus.quantityPct.toFixed(2))"
+                            [label]="'Quantity'" [thresholds]="thresholdConfig" [append]="'%'" style="margin-left: 5px;"
+                            [class.semi-opaque]="bucketStatus.quantityPct == null">
+                        </ngx-gauge>
+                        <ngx-gauge [type]="'arch'" [size]="145" [thick]="10"
+                            [value]="bucketStatus.timePct == null ? 0 : (bucketStatus.timePct > 100 ?  bucketStatus.timePct.toFixed(0) : bucketStatus.timePct.toFixed(2))"
+                            [label]="'Time'" [thresholds]="thresholdConfig" [append]="'%'">
+                        </ngx-gauge>
+                    </div>
+                    <div class="bucket-key">
+                        <p>{{bucketStatus.bucket.groupKey}}</p>
+                    </div>
+                    <div class="bucket-data">
+                        <table>
+                            <tbody>
+                                <tr [class.semi-opaque]="bucketStatus.quantityPct == null">
+                                    <td valign="top">
+                                        <span class="min-label">
+                                            Quantity
+                                        </span>
+                                    </td>
+                                    <td valign="top">:</td>
+                                    <td>
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Limit
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.quantityLimit == null ? 'None' : bucketStatus.quantityLimit}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Utilized
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.quantity == null ? 'N.A.' : bucketStatus.quantity}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr [class.semi-opaque]="bucketStatus.timePct == null">
+                                    <td valign="top">
+                                        <span class="min-label">
+                                            Time
+                                        </span>
+                                    </td>
+                                    <td valign="top">:</td>
+                                    <td>
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Limit
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.timeLimit == null ? 'None' : bucketStatus.timeLimit}}
+                                                            Seconds
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Utilized
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.time == null ? 'N.A.' : bucketStatus.time}}
+                                                            Seconds
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bucket-contributors">
+                        <span>CONTRIBUTORS: {{bucketStatus.bucket.bucketItems.length}}</span>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalLiveRecords">
+            <div>
+                <button mat-icon-button [disabled]="currentLivePage <= 1" (click)="prevLivePage()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+            </div>
+            <div>
+                <span>Page {{currentLivePage}} of {{totalLivePages}} </span>(<span>{{currentLivePageStart}}</span>-<span>{{currentLivePageEnd}}</span> of <span>{{totalLiveRecords}}</span>)
+            </div>
+            <div>
+                <button mat-icon-button [disabled]="currentLivePage >= totalLivePages" (click)="nextLivePage()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="category-header" style="margin-bottom: 5px;">
+        <button mat-button style="float: right; color: black;" (click)="refreshDeadStatuses();">
+            <mat-icon>refresh</mat-icon>
+            <span style="padding-left: 10px;">Refresh</span>
+        </button>
+        <input class="min-input" [(ngModel)]="searchDeadBucketString"
+            style="float: right; color: black; background-color: rgb(250, 250, 250); width: 200px; height: 35px;"
+            placeholder="Search with ID or grouping key.">
+            <mat-progress-spinner *ngIf="loadingDead" mode="indeterminate" diameter="16" style="float: right; top: 8px; margin-right: 10px;"></mat-progress-spinner>
+        RELEASED BUCKETS:
+    </div>
+    <div class="hscroll-container1">
+        <ng-container *ngIf="loadingDead">
+            <div style="width: 100%; min-height: 40px; max-height: 100px; text-align: center;">
+                <span style="font-size: 12px; font-style: italic; color: silver; line-height: 30px; vertical-align: middle;">Loading..</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingDead && deadBucketStatuses.length == 0">
+            <div style="width: 100%; min-height: 40px; max-height: 100px; text-align: center;">
+                <span style="font-size: 12px; font-style: italic; color: silver; line-height: 30px; vertical-align: middle;">No released buckets found.</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingDead && deadBucketStatuses.length > 0">
+            <ng-container *ngFor="let bucketStatus of deadBucketStatuses">
+                <div *ngIf="bucketStatus.bucket.id == searchDeadBucketString || bucketStatus.bucket.groupKey.includes(searchDeadBucketString)"
+                    class="hdiv bucket-status-container" style="background-color:  rgb(250, 250, 250);">
+                    <div class="bucket-id">
+                        <span>ID: {{bucketStatus.bucket.id}}</span>
+                    </div>
+                    <div class="bucket-type">
+                        <span>{{bucketStatus.bucket.released == 'Y' ? 'RELEASED BUCKET' : 'NON RELEASED BUCKET'}}</span>
+                    </div>
+                    <div class="bucket-spinner-container">
+                        <ngx-gauge [type]="'arch'" [size]="100" [thick]="10"
+                            [value]="bucketStatus.quantityPct == null ? 0 : (bucketStatus.quantityPct > 100 ? bucketStatus.quantityPct.toFixed(0) : bucketStatus.quantityPct.toFixed(2))"
+                            [label]="'Quantity'" [thresholds]="deadThresholdConfig" [append]="'%'" style="margin-left: 5px;"
+                            [class.semi-opaque]="bucketStatus.quantityPct == null">
+                        </ngx-gauge>
+                        <ngx-gauge [type]="'arch'" [size]="100" [thick]="10"
+                            [value]="bucketStatus.timePct == null ? 0 : (bucketStatus.timePct > 100 ?  100 : bucketStatus.timePct.toFixed(2))"
+                            [label]="'Time'" [thresholds]="deadThresholdConfig" [append]="'%'">
+                        </ngx-gauge>
+                    </div>
+                    <div class="bucket-key">
+                        <p>{{bucketStatus.bucket.groupKey}}</p>
+                    </div>
+                    <div class="bucket-data">
+                        <table>
+                            <tbody>
+                                <tr [class.semi-opaque]="bucketStatus.quantityPct == null">
+                                    <td valign="top">
+                                        <span class="min-label">
+                                            Quantity
+                                        </span>
+                                    </td>
+                                    <td valign="top">:</td>
+                                    <td>
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Limit
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.quantityLimit == null ? 'None' : bucketStatus.quantityLimit}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Utilized
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.quantity == null ? 'N.A.' : bucketStatus.quantity}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr [class.semi-opaque]="bucketStatus.timePct == null">
+                                    <td valign="top">
+                                        <span class="min-label">
+                                            Time
+                                        </span>
+                                    </td>
+                                    <td valign="top">:</td>
+                                    <td>
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Limit
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.timeLimit == null ? 'None' : bucketStatus.timeLimit}}
+                                                            Seconds
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            Utilized
+                                                        </span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span class="min-label">
+                                                            {{bucketStatus.time == null ? 'N.A.' : bucketStatus.time}}
+                                                            Seconds
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bucket-contributors">
+                        <span>CONTRIBUTORS: {{bucketStatus.bucket.bucketItems.length}}</span>
+                    </div>
+                    <div class="bucket-release-reason">
+                        <span>{{bucketStatus.bucket.releaseReason.includes('TIME EXCEEDED') ? 'TIME EXCEEDED' : 
+                        (bucketStatus.bucket.releaseReason.includes('QUANTITY EXCEEDED') ? 'QUANTITY EXCEEDED' : 'OTHER')}}</span>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalDeadRecords">
+            <div>
+                <button mat-icon-button [disabled]="currentDeadPage <= 1" (click)="prevDeadPage()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+            </div>
+            <div>
+                <span>Page {{currentDeadPage}} of {{totalDeadPages}} </span>(<span>{{currentDeadPageStart}}</span>-<span>{{currentDeadPageEnd}}</span> of <span>{{totalDeadRecords}}</span>)
+            </div>
+            <div>
+                <button mat-icon-button [disabled]="currentDeadPage >= totalDeadPages" (click)="nextDeadPage()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div> -->

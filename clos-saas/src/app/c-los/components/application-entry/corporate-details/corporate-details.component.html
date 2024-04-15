@@ -1,0 +1,2450 @@
+<div class="main-container">
+    <div class="content-container">
+        <div class="table-container" style="overflow: auto;height: 50rem;"
+            *ngIf="activeSubTabName === 'Business and operation Information'">
+            <table>
+                <tr *ngIf="applicationDetails.id && action === 'ADDITIONAL_LOAN'">
+                    <td>Application ID <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="applicationDetails.id"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Registered Name of the Company <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.legalNameOfTheCompany"
+                            (ngModelChange)="saveApplicationData('legalNameOfTheCompany','string') "
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Type of Business <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.typeOfBusiness"
+                            (ngModelChange)="saveApplicationData('typeofBusiness','string') ">
+                            <mat-option *ngFor="let type of typeofBusiness" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                    <td>Organization Type <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.organizationType"
+                            (ngModelChange)="saveApplicationData('organizationType','string') ">
+                            <mat-option *ngFor="let type of organizationType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Types of Loan <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.typesOfLoan"
+                            (ngModelChange)="saveApplicationData('typesOfLoan','string');getRatioByLoan() ">
+                            <mat-option *ngFor="let loan of loanType" [value]="loan">
+                                {{loan}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                    <td>Business Registration Number <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.businessRegistrationNumber"
+                            (ngModelChange)="saveApplicationData('businessRegistrationNumber','string') "
+                            (keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                    <td>Country of Registration <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <div (mousedown)="onDropdownClick()">
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.countryOfRegistration"
+                                (ngModelChange)="getCountryAndCurrency();saveApplicationData('countryOfRegistration','string')">
+                                <div style="top: 0;position: sticky;z-index: 10;">
+                                    <input style="width: 100%;height: 4.5rem;" type="text" [(ngModel)]="searchCountry"
+                                        (input)="onCountryFilter()" placeholder="Search Country...">
+                                </div>
+                                <mat-option *ngFor="let name of country" [value]="name">
+                                    {{name}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date of Incorporation <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="date" class="min-select" [(ngModel)]="applicationDetails.dateOfIncorporation"
+                            [max]="currentDate" (ngModelChange)="calculateAge();saveApplicationData('dateOfIncorporation','string') ">
+                    </td>
+                    <td>Business Age <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.businessAge"
+                            (ngModelChange)="saveApplicationData('businessAge','number')" readonly
+                            (keydown)="preventLetterE($event)">
+                    </td>
+                    <td>Resident <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.resident"
+                            (ngModelChange)="saveApplicationData('resident','string') ">
+                            <mat-option *ngFor="let type of selectType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Registered Address <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea "
+                            [(ngModel)]="applicationDetails.registeredAddress"
+                            (ngModelChange)="saveApplicationData('registeredAddress','string') "
+                            appPreventSpace></textarea>
+                    </td>
+                    <td>Business Operating Address <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea "
+                            [(ngModel)]="applicationDetails.businessOperatingAddress"
+                            (ngModelChange)="saveApplicationData('businessOperatingAddress','string') "
+                            appPreventSpace></textarea>
+                    </td>
+                    <td>Mailing Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" class="min-select-textarea" style="resize:none"
+                            [(ngModel)]="applicationDetails.mailingAddress"
+                            (ngModelChange)="saveApplicationData('mailingAddress','string') "
+                            appPreventSpace></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Corporate tax Identification Number <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.corporateTaxIdentificationNumber"
+                            (ngModelChange)="saveApplicationData('corporateTaxIdentificationNumber', 'string')"
+                            appPreventSpace>
+                    </td>
+                    <td>Office Contact Number<span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="applicationDetails.officeContactNumber"
+                            (ngModelChange)="saveApplicationData('officeContactNumber', 'number')"
+                            (keydown)="preventLetterE($event)">
+                    </td>
+                    <td>Number of Employees
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.numberOfEmployees"
+                            (ngModelChange)="saveApplicationData('numberOfEmployees','number') "
+                            (keydown)="preventLetterE($event)" appCommaSeparatedInput>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Business Email ID<span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.businessEmailAddress"
+                            (ngModelChange)="saveApplicationData('businessEmailAddress','string')"
+                            #businessEmailAddress="ngModel" matInput [ngModelOptions]="{ standalone: true }"
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" appPreventSpace>
+                        <div *ngIf="businessEmailAddress.errors?.['pattern']" class="error-message">
+                            Invalid email format.
+                        </div>
+                    </td>
+                    <td>Business with Foreign Countries
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.businessWithForeignCountries"
+                            (ngModelChange)="saveApplicationData('businessWithForeignCountries','string') ">
+                            <mat-option *ngFor="let type of selectType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                    <td>Nature of Business/Industry
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.natureOfBusiness"
+                            (ngModelChange)="saveApplicationData('natureOfBusiness','string') " appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Expected Number of Transactions Per Month
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.expectedNumberOfTransactionsPerMonth"
+                            (ngModelChange)="saveApplicationData('expectedNumberOfTransactionsPerMonth','number') "
+                             (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                    <td>Expected Transaction Amount Per Month
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.expectedTransactionAmountPerMonth"
+                            (ngModelChange)="saveApplicationData('expectedTransactionAmountPerMonth','number') "
+                             (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                    <td>Paid Up Capital
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.businessPaidUpCapital"
+                            (ngModelChange)="saveApplicationData('businessPaidUpCapital','number') "
+                             (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Annual Sales
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.annualSales"
+                            (ngModelChange)="saveApplicationData('annualSales','number')" 
+                            (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                    <td>Business Website (URL)
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.businessWebsiteURL"
+                            (ngModelChange)="saveApplicationData('businessWebsiteURL','string')" appPreventSpace>
+                    </td>
+                    <td>ESG information
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.esgInformation"
+                            (ngModelChange)="saveApplicationData('esgInformation','string')">
+                            <mat-option *ngFor="let type of esgInfoType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Annual Turnover <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input  type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.annualTurnover"
+                            (ngModelChange)="saveApplicationData('annualTurnover','string')"
+                            (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                    <td>KYC Document Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.businessKYCDocumentNumber"
+                            (ngModelChange)="saveApplicationData('businessKYCDocumentNumber','string')" appPreventSpace>
+                    </td>
+                    <td>Business Unique Identifier <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.businessUniqueIdentifier"
+                            (ngModelChange)="saveApplicationData('businessUniqueIdentifier','string')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sustainability Practises
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.sustainabilityPractises"
+                            (ngModelChange)="saveApplicationData('sustainabilityPractises','string')">
+                            <mat-option *ngFor="let type of sustainabilityType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+            </table>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfFieldName"
+                                        style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField" [value]="udfFieldName">{{
+                                            udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputField(index)" matTooltip="Add Fields"
+                                        style="background-color:#0e2954;color: white;">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldNames;let i=index">
+                                <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{
+                                    fieldName }}</td>
+                                <td>:</td>
+                                <td>
+                                    <ng-container [ngSwitch]="getFieldType(fieldName)">
+                                        <input *ngSwitchCase="'ALPHA_NUMERIC'"
+                                            [(ngModel)]="userCustomFields1[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="text" class="udf-input">
+                                        <input *ngSwitchCase="'DATE'" [(ngModel)]="userCustomFields1[i].fieldValue"
+                                        [max]="currentDate" (ngModelChange)="fieldValuechecking();" type="date" class="udf-input">
+                                        <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                        <input *ngSwitchCase="'DATE_TIME'" [(ngModel)]="userCustomFields1[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="datetime-local"
+                                            class="udf-input">
+                                        <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomFields1[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button style="border-radius: 44%;background-color: aliceblue;border: none;"
+                                        matTooltip="Remove">
+                                        <mat-icon (click)="removeInput(i)" style="color: red;">remove</mat-icon>
+                                    </button>
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <!-- Ownership Input Fields -->
+        <div class="table-container" style="overflow: auto;height: 50rem;" *ngIf="activeSubTabName === 'Ownership'">
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            Shareholders / Board of Directors
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                    <!-- Move the button here -->
+                    <button style="margin:1rem;float:right;position: absolute; top:6.2rem; right: 1rem;"
+                        class="clos-submit-btn" mat-raised-button (click)="addHeader()">
+                        <mat-icon style="font-size: 2.5rem;">add</mat-icon>
+                        <span>Add</span>
+                    </button>
+                </div><br><br>
+                <div class="header-container">
+                    <div class="header" *ngFor="let header of headers ;let i = index">
+                        <table>
+                            <tr>
+                                <td>
+                                    <mat-icon class="remove-mat_icon" (click)="removeShareHolder(i)">clear</mat-icon>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>Name
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholderName"
+                                        (ngModelChange)="saveShareHoldersDetails()"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                                </td>
+                                <td>Designation
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholdersDesignation"
+                                        (ngModelChange)="saveShareHoldersDetails()"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                                </td>
+                                <td>Contact Number
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="number" class="min-select"
+                                        [(ngModel)]="header.shareholdersContactNumber"
+                                        (ngModelChange)="saveShareHoldersDetails() " (keydown)="preventLetterE($event)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Office Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <textarea type="text" style="resize:none" class="min-select-textarea "
+                                        [(ngModel)]="header.shareholdersOfficeAddress"
+                                        (ngModelChange)="saveShareHoldersDetails() " appPreventSpace></textarea>
+                                </td>
+                                <td>Home Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <textarea type="text" style="resize:none" class="min-select-textarea "
+                                        [(ngModel)]="header.shareholdersHomeAddress"
+                                        (ngModelChange)="saveShareHoldersDetails() " appPreventSpace></textarea>
+                                </td>
+                                <td>Mail ID
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholdersMailId"
+                                        (ngModelChange)="saveShareHoldersDetails()" #shareholdersMailId="ngModel"
+                                        matInput [ngModelOptions]="{ standalone: true }"
+                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" appPreventSpace>
+                                    <div *ngIf="shareholdersMailId.errors?.['pattern']" class="error-message">
+                                        Invalid email format.
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Passport Number
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select"
+                                        [(ngModel)]="header.shareholdersPassportNumber"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td>
+                                    <input type="date" class="min-select" [(ngModel)]="header.shareholdersDob"
+                                    [max]="currentDate" (ngModelChange)="calculateShareholdersAge(i); saveShareHoldersDetails()" />
+                                </td>
+                                <td>Age</td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholdersAge"
+                                        (ngModelChange)="saveShareHoldersDetails()"
+                                        (keydown)="preventLetterE($event)" />
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Nation ID
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholdersNationId"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                                <td>TIN
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholdersTin"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                                <td>Authorized Signature
+                                </td>
+                                <td>:</td>
+                                <td class="d-flex"> <span>
+                                        <input prohibitedChars type="file" #uploadFile4
+                                            accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                            (change)="onMultipleDetailsFileSelected($event, 'shareholdersAuthorizedSignatures', i);"
+                                            style="display: none;" />
+                                        <mat-icon (click)="uploadFile4.click();" class="inverted_icon mt-3">attach_file
+                                        </mat-icon>
+                                    </span>
+                                    <div class="scrollable-content">
+                                        <label class="file-input-label1">
+                                            <div class="selected-files">
+                                                <div
+                                                    *ngFor="let fileName of header.shareholdersAuthorizedSignatures; let j = index">
+                                                    <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                        style="color:blue;margin:1rem;">{{ fileName.attachmentName
+                                                        }}</u>
+                                                    <button mat-icon-button>
+                                                        <mat-icon
+                                                            (click)="removeAttachment('shareholdersAuthorizedSignatures',i,j)"
+                                                            class="remove-icon">clear</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nationality
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.shareholdersNationality"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="table-responsive mt-5 mb-4 mr-3">
+                    <table class="table collateral_table">
+                        <thead>
+                            <tr>
+                                <ng-container *ngFor="let ownershipHeader of shareHolderTableHeader">
+                                    <th style="text-transform: capitalize;">{{ ownershipHeader }}</th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let header of headers ;let i = index">
+                                <td>{{header.shareholderName}}</td>
+                                <td>{{header.shareholdersDesignation}}</td>
+                                <td>{{header.shareholdersContactNumber}}</td>
+                                <td>{{header.shareholdersOfficeAddress}}</td>
+                                <td>{{header.shareholdersHomeAddress}}</td>
+                                <td>{{header.shareholdersMailId}}</td>
+                                <td>{{header.shareholdersPassportNumber}}</td>
+                                <td>{{header.shareholdersDob}}</td>
+                                <td>{{header.shareholdersAge}}</td>
+                                <td>{{header.shareholdersNationId}}</td>
+                                <td>{{header.shareholdersTin}}</td>
+                                <td>{{header.shareholdersNationality}}</td>
+                                <td>
+                                    <div
+                                        *ngFor="let fileName of header.shareholdersAuthorizedSignatures; let j = index">
+                                        <u style="color:blue;margin:1rem;">{{ fileName.attachmentName}}</u>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            Partnership:-
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                    <!-- Move the button here -->
+                    <button style="margin:1rem;float:right;position: absolute; top:6.2rem; right: 1rem;"
+                        class="clos-submit-btn" mat-raised-button (click)="addPartnerHeader()">
+                        <mat-icon style="font-size: 2.5rem;">add</mat-icon>
+                        <span>Add</span>
+                    </button>
+                </div><br><br>
+                <div class="header-container">
+                    <div class="header" *ngFor="let header of partnerHeaders ; let i = index">
+                        <table>
+                            <tr>
+                                <td>
+                                    <mat-icon class="remove-mat_icon" (click)="removePartnerShip(i)">clear</mat-icon>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>Entity Name
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.partnershipEntityName"
+                                        (ngModelChange)="saveShareHoldersDetails()"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                                </td>
+                                <td>Director Name
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.partnershipDirectorName"
+                                        (ngModelChange)="saveShareHoldersDetails()"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                                </td>
+                                <td>Office Address
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <textarea type="text" style="resize:none" class="min-select-textarea "
+                                        [(ngModel)]="header.partnershipOfficeAddress"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Contact number
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="number" class="min-select"
+                                        [(ngModel)]="header.partnershipContactNumber"
+                                        (ngModelChange)="saveShareHoldersDetails()" (keydown)="preventLetterE($event)">
+                                </td>
+                                <td>Mail ID
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.partnershipMailId"
+                                        (ngModelChange)="saveShareHoldersDetails()" #partnersMailId="ngModel" matInput
+                                        [ngModelOptions]="{ standalone: true }"
+                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" appPreventSpace>
+                                    <div *ngIf="partnersMailId.errors?.['pattern']" class="error-message">
+                                        Invalid email format.
+                                    </div>
+                                </td>
+                                <td>Ultimate Beneficial Owner (UBO)
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.ultimateBeneficialOwner"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>KYC Document Number
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.kycdocumentNumber"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                                <td>Unique Identifier
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input type="text" class="min-select" [(ngModel)]="header.uniqueIdentifier"
+                                        (ngModelChange)="saveShareHoldersDetails()" appPreventSpace>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="table-responsive mt-5 mb-4 mr-3">
+                    <table class="table collateral_table">
+                        <thead>
+                            <tr>
+                                <ng-container *ngFor="let ownershipHeader of partershipTableHeader">
+                                    <th style="text-transform: capitalize;">{{ ownershipHeader }}</th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let header of partnerHeaders">
+                                <td>{{header.partnershipEntityName}}</td>
+                                <td>{{header.partnershipDirectorName}}</td>
+                                <td>{{header.partnershipOfficeAddress}}</td>
+                                <td>{{header.partnershipContactNumber}}</td>
+                                <td>{{header.partnershipMailId}}</td>
+                                <td>{{header.ultimateBeneficialOwner}}</td>
+                                <td>{{header.kycdocumentNumber}}</td>
+                                <td>{{header.uniqueIdentifier}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </mat-expansion-panel>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfOwnership"
+                                        style="width: 50rem;" (ngModelChange)="fieldValuechecking1();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField1" [value]="udfFieldName">
+                                            {{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputownership(index)" matTooltip="Add Fields"
+                                        style="background-color:#0e2954;color: white;">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldOwnership;let i=index">
+                                <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{
+                                    fieldName }}</td>
+                                <td>:</td>
+                                <td>
+                                    <ng-container [ngSwitch]="getFieldType1(fieldName)">
+                                        <input *ngSwitchCase="'ALPHA_NUMERIC'"
+                                            [(ngModel)]="userCustomOwnership[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking1();" type="text" class="udf-input">
+                                        <input *ngSwitchCase="'DATE'" [(ngModel)]="userCustomOwnership[i].fieldValue"
+                                        [max]="currentDate"  (ngModelChange)="fieldValuechecking1();" type="date" class="udf-input">
+                                        <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomOwnership[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking1();" type="number" class="udf-input">
+                                        <input *ngSwitchCase="'DATE_TIME'"
+                                            [(ngModel)]="userCustomOwnership[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking1();" type="datetime-local"
+                                            class="udf-input">
+                                        <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomOwnership[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking1();" type="number" class="udf-input">
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button style="border-radius: 44%;background-color: aliceblue;border: none;"
+                                        matTooltip="Remove">
+                                        <mat-icon (click)="removeInputOwnership(i)" style="color: red;">remove
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <!-- Subsidiaries Input Fields -->
+        <div class="table-container" style="overflow: auto;" *ngIf="activeSubTabName === 'Subsidiaries'">
+            <table>
+                <tr>
+                    <td>Type of Business
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.branchTypeOfBusiness"
+                            (ngModelChange)="saveApplicationData('branchTypeOfBusiness','string')">
+                            <mat-option *ngFor="let type of typeofBusiness" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                    <td>Organization Type
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.branchOrganizationType"
+                            (ngModelChange)="saveApplicationData('branchOrganizationType','string')">
+                            <mat-option *ngFor="let type of organizationType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                    <td>Registered Name
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.branchRegisteredName"
+                            (ngModelChange)="saveApplicationData('branchRegisteredName','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Business Registration Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.branchBusinessRegistrationNumber"
+                            (ngModelChange)="saveApplicationData('branchBusinessRegistrationNumber','string')"
+                            appPreventSpace>
+                    </td>
+                    <td>Country of Registration
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.branchCountryOfRegistration"
+                            (ngModelChange)="saveApplicationData('branchCountryOfRegistration','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Date of Incorporation
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="date" class="min-select" [(ngModel)]="applicationDetails.branchDateOfIncorporation"
+                        [max]="currentDate" (ngModelChange)="saveApplicationData('branchDateOfIncorporation','string')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Corporate tax Identification Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.branchCorporateTaxIdentificationNumber"
+                            (ngModelChange)="saveApplicationData('branchCorporateTaxIdentificationNumber','string')"
+                            (keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                    <td>Resident
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="applicationDetails.branchResident"
+                            (ngModelChange)="saveApplicationData('branchResident','string')">
+                            <mat-option *ngFor="let type of selectType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                    <td>Office Contact Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select"
+                            [(ngModel)]="applicationDetails.branchOfficeContactNumber"
+                            (ngModelChange)="saveApplicationData('branchOfficeContactNumber','number')"
+                            (keydown)="preventLetterE($event)">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Business Operating Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea "
+                            [(ngModel)]="applicationDetails.branchBusinessOperatingAddress"
+                            (ngModelChange)="saveApplicationData('branchBusinessOperatingAddress','string')"
+                            appPreventSpace></textarea>
+                    </td>
+                    <td>Registered Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea "
+                            [(ngModel)]="applicationDetails.branchRegisteredAddress"
+                            (ngModelChange)="saveApplicationData('branchRegisteredAddress','string')"
+                            appPreventSpace></textarea>
+                    </td>
+                    <td>Mailing Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" class="min-select-textarea" style="resize:none"
+                            [(ngModel)]="applicationDetails.branchMailingAddress"
+                            (ngModelChange)="saveApplicationData('branchMailingAddress','string')"
+                            appPreventSpace></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Business Website (URL)
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.branchBusinessWebsite"
+                            (ngModelChange)="saveApplicationData('branchBusinessWebsite','string')" appPreventSpace>
+                    </td>
+                    <td>Business Email ID</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.branchBusinessEmailAddress"
+                            (ngModelChange)="saveApplicationData('branchBusinessEmailAddress','string')"
+                            #branchBusinessEmailAddress="ngModel" matInput [ngModelOptions]="{ standalone: true }"
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" appPreventSpace>
+                        <div *ngIf="branchBusinessEmailAddress.errors?.['pattern']" class="error-message">
+                            Invalid email format.
+                        </div>
+                    </td>
+                    <td>Expected Number of Transactions Per Month
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.branchExpectedNumberOfTransactionsPerMonth"
+                            (ngModelChange)="saveApplicationData('branchExpectedNumberOfTransactionsPerMonth','number')"
+                            appInputseperatecomma (keydown)="preventLetterE($event)">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Expected Transaction Amount Per Month
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="applicationDetails.branchExpectedTransactionAmountPerMonth"
+                            (ngModelChange)="saveApplicationData('branchExpectedTransactionAmountPerMonth','number')"
+                            appInputseperatecomma (keydown)="preventLetterE($event)">
+                    </td>
+                    <td>Paid Up Capital
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.branchPaidUpCapital"
+                            (ngModelChange)="saveApplicationData('branchPaidUpCapital','number')" appInputseperatecomma
+                            (keydown)="preventLetterE($event)">
+                    </td>
+                    <td>Annual Sales
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.branchAnnualSales"
+                            (ngModelChange)="saveApplicationData('branchAnnualSales','number');" appInputseperatecomma
+                            (keydown)="preventLetterE($event)">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Number of Employees
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.branchNumberOfEmployees"
+                            (ngModelChange)="saveApplicationData('branchNumberOfEmployees','number')"
+                            appCommaSeparatedInput (keydown)="preventLetterE($event)">
+                    </td>
+                </tr>
+            </table>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfSubsideries"
+                                        style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField2" [value]="udfFieldName">
+                                            {{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputSubsideries(index)"
+                                        matTooltip="Add Fields" style="background-color:#0e2954;color: white;">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldSubsideries;let i=index">
+                                <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{
+                                    fieldName }}</td>
+                                <td>:</td>
+                                <td>
+                                    <ng-container [ngSwitch]="getFieldType2(fieldName)">
+                                        <input *ngSwitchCase="'ALPHA_NUMERIC'"
+                                            [(ngModel)]="userCustomSubsideries[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="text" class="udf-input">
+                                        <input *ngSwitchCase="'DATE'" [(ngModel)]="userCustomSubsideries[i].fieldValue"
+                                        [max]="currentDate" (ngModelChange)="fieldValuechecking();" type="date" class="udf-input">
+                                        <input *ngSwitchCase="'NUMERIC'"
+                                            [(ngModel)]="userCustomSubsideries[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                        <input *ngSwitchCase="'DATE_TIME'"
+                                            [(ngModel)]="userCustomSubsideries[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="datetime-local"
+                                            class="udf-input">
+                                        <input *ngSwitchCase="'DECIMAL'"
+                                            [(ngModel)]="userCustomSubsideries[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button style="border-radius: 44%;background-color: aliceblue;border: none;"
+                                        matTooltip="Remove">
+                                        <mat-icon (click)="removeInputSubsideries(i)" style="color: red;">remove
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <!-- Suppliers Input Fields -->
+        <div class="table-container" style="overflow-y: auto;overflow-x: hidden;height: 50rem;"
+            *ngIf="activeSubTabName === 'Suppliers'">
+            <div>
+                <!-- Move the button here -->
+                <button class="clos-submit-btn" mat-raised-button (click)="addSupplierHeader()">
+                    <mat-icon style="font-size: 2.5rem;">add</mat-icon>
+                    <span>Add</span>
+                </button>
+            </div>
+            <br><br>
+            <div class="header-container">
+                <div class="header" *ngFor="let header of supplierheaders ; let i = index">
+                    <table>
+                        <tr>
+                            <td>
+                                <mat-icon class="remove-mat_icon" (click)="removeSupplier(i)">clear</mat-icon>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>Company Name
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" class="min-select" [(ngModel)]="header.supplierCompanyName"
+                                    (ngModelChange)="saveShareHoldersDetails()"
+                                    oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                            </td>
+                            <td>Company Contact Number
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select"
+                                    [(ngModel)]="header.supplierCompanyContactNumber"
+                                    (ngModelChange)="saveShareHoldersDetails()" (keydown)="preventLetterE($event)">
+                            </td>
+                            <td>Contact Person
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" class="min-select" [(ngModel)]="header.supplierContactPerson"
+                                    (ngModelChange)="saveShareHoldersDetails()"
+                                    oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="header.supplierContactNumber"
+                                    (ngModelChange)="saveShareHoldersDetails()" (keydown)="preventLetterE($event)">
+                            </td>
+                            <td>Contact Email
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" class="min-select" [(ngModel)]="header.supplierContactEmail"
+                                    (ngModelChange)="saveShareHoldersDetails()" #supplierContactEmail="ngModel" matInput
+                                    [ngModelOptions]="{ standalone: true }"
+                                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" appPreventSpace>
+                                <div *ngIf="supplierContactEmail.errors?.['pattern']" class="error-message">
+                                    Invalid email format.
+                                </div>
+                                <!-- <input type="text" class="min-select"
+                                [(ngModel)]="applicationDetails.shareholdersMailId"
+                                (ngModelChange)="saveApplicationData('annualSales','number')" #shareholdersMailId="ngModel" matInput
+                                [ngModelOptions]="{ standalone: true }"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                            <div *ngIf="shareholdersMailId.errors?.['pattern']" class="error-message">
+                                Invalid email format.
+                            </div> -->
+                            </td>
+                            <td>Company Address
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <textarea type="text" style="resize:none" class="min-select-textarea "
+                                    [(ngModel)]="header.supplierCompanyAddress"
+                                    (ngModelChange)="saveShareHoldersDetails()" appPreventSpace></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Company Registration Number
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="string" class="min-select"
+                                    [(ngModel)]="header.supplierCompanyRegistrationNumber"
+                                    (ngModelChange)="saveShareHoldersDetails()" (keydown)="preventLetterE($event)">
+                            </td>
+                            <td>Supplier Agreement
+                            </td>
+                            <td>:</td>
+                            <td class="d-flex"> <span>
+                                    <input prohibitedChars type="file" #uploadFile1
+                                        accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                        (change)="onMultipleDetailsFileSelected($event, 'supplierAgreement', i);"
+                                        style="display: none;" />
+                                    <mat-icon (click)="uploadFile1.click();" class="inverted_icon mt-3">attach_file
+                                    </mat-icon>
+                                </span>
+                                <div class="scrollable-content">
+                                    <label class="file-input-label1">
+                                        <div class="selected-files">
+                                            <div *ngFor="let fileName of header.supplierAgreement; let j = index">
+                                                <u style="color:blue;margin:1rem;">{{ fileName.attachmentName}}</u>
+                                                <button mat-icon-button>
+                                                    <mat-icon (click)="removeAttachment('supplierAgreement',i,j)"
+                                                        class="remove-icon">clear</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="table-responsive mt-5 mb-4 mr-3">
+                <table class="table collateral_table">
+                    <thead>
+                        <tr>
+                            <ng-container *ngFor="let supplierHeader of supplierTableHeader">
+                                <th style="text-transform: capitalize;">{{ supplierHeader }}</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let header of supplierheaders">
+                            <td>{{header.supplierCompanyName}}</td>
+                            <td>{{header.supplierCompanyContactNumber}}</td>
+                            <td>{{header.supplierContactPerson}}</td>
+                            <td>{{header.supplierContactNumber}}</td>
+                            <td>{{header.supplierContactEmail}}</td>
+                            <td>{{header.supplierCompanyAddress}}</td>
+                            <td>{{header.supplierCompanyRegistrationNumber}}</td>
+                            <td>
+                                <div *ngIf="header.supplierAgreement && header.supplierAgreement.length > 0">
+                                    <div *ngFor="let file of header.supplierAgreement;let i=index">
+                                        <u (click)="getAttachementFileDownload(file.attachmentId)"
+                                            style="color:blue;margin:1rem;">{{ file.attachmentName }}</u>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfSuppliers"
+                                        style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField3" [value]="udfFieldName">
+                                            {{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputSuppliers(index)" matTooltip="Add Fields"
+                                        style="background-color:#0e2954;color: white;">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldSuppliers;let i=index">
+                                <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{
+                                    fieldName }}</td>
+                                <td>:</td>
+                                <td>
+                                    <ng-container [ngSwitch]="getFieldType3(fieldName)">
+                                        <input *ngSwitchCase="'ALPHA_NUMERIC'"
+                                            [(ngModel)]="userCustomSuppliers[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="text" class="udf-input">
+                                        <input *ngSwitchCase="'DATE'" [(ngModel)]="userCustomSuppliers[i].fieldValue"
+                                        [max]="currentDate" (ngModelChange)="fieldValuechecking();" type="date" class="udf-input">
+                                        <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomSuppliers[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                        <input *ngSwitchCase="'DATE_TIME'"
+                                            [(ngModel)]="userCustomSuppliers[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="datetime-local"
+                                            class="udf-input">
+                                        <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomSuppliers[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button style="border-radius: 44%;background-color: aliceblue;border: none;"
+                                        matTooltip="Remove">
+                                        <mat-icon (click)="removeInputSuppliers(i)" style="color: red;">remove
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <!-- Financial Information Input Fields -->
+        <div class="table-container-2" style="overflow: hidden;" *ngIf="activeSubTabName === 'Financial Information'">
+            <div class="content-container-2">
+                <mat-tab-group [selectedIndex]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+                    <mat-tab label="{{matHead.name}}" *ngFor="let matHead of matTabHeader">
+                        <ng-template mat-tab-label>
+                            <span [class.tabColor]="activeTabName === matHead.name"
+                                style="font-weight: 600;text-shadow:2px 2px rgb(223, 223, 223)">
+                                {{matHead.name}}</span>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <div class="btn_content">
+                <input prohibitedChars hidden type="file" accept=".pdf" (change)="onFinancialFile($event)" #fileuploads
+                    style="display: none;">
+                <button [disabled]="!applicationDetails.yearCalculation"
+                    style="margin:1rem;float:right;position: absolute;right: 1rem;cursor: pointer;"
+                    class="clos-submit-btn" mat-raised-button (click)="fileuploads.click()">
+                    <mat-icon>upload</mat-icon>
+                    <span>Upload Financial Report</span>
+                </button>
+            </div>
+            <div class="table-container"
+                style="overflow: auto;margin: -4px;float:right;position: absolute;right: 26rem;cursor: pointer;">
+                <table>
+                    <tr>
+                        <!-- <td> 
+                            <label for="conversionDropdown" style="font-size: 16px; padding-right: 10px;">Conversion<span style="color:red;">*</span>:</label>                          
+                            <mat-select class="min-select_dropdown" [(ngModel)]="applicationDetails.valueConversion"
+                            (ngModelChange)="saveApplicationData('valueConversion','string') " >
+                              <mat-option *ngFor="let conversionOption of conversionOptions" [value]="conversionOption">
+                                {{conversionOption}}
+                              </mat-option>
+                            </mat-select>                 
+                        </td> -->
+                        <td>
+                            <label for="financialYearDropdown" style="font-size: 16px; padding-right: 10px;">Financial
+                                years<span style="color:red;padding-left: 4px">*</span> :</label>
+                            <mat-select class="min-select_dropdown" [(ngModel)]="applicationDetails.yearCalculation"
+                                (ngModelChange)="calculateYears();">
+                                <mat-option *ngFor="let range of yearrange" [value]="range">
+                                    {{range}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top: 6.5rem;">
+                <!-- Financial Information - Statement SubTab Input Fields  -->
+                <ng-container *ngIf="option == 0">
+                    <div class="flex-container m-3" style="overflow: auto;">
+                        <!-- Revenue Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel expanded="true">
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Revenue (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <!-- <div class="scrollable-content"> -->
+                                <table>
+                                    <tr>
+                                        <td>Proxy Company</td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="applicationDetails.financialProxyCompany"
+                                                (ngModelChange)="saveApplicationData('financialProxyCompany','string');onProxyCompanyChange($event)"
+                                                class="min-select" [value]="'No'">
+                                                <mat-option value="No">No</mat-option>
+                                                <mat-option value="Yes">Yes</mat-option>
+                                            </mat-select>
+                                        </td>
+                                    </tr>
+                                    <!-- Latest Interim Financial Statement -->
+                                    <tr>
+                                        <td>Latest Interim Financial Statement <span style="color:red;">*</span></td>
+                                        <td>:
+                                            <label for="latestInterimFinancialStatementFileInput">
+                                                <input prohibitedChars hidden type="file" #uploadFile1
+                                                    accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                                    (change)="onFilesSelected($event, 'latestInterimFinancialStatement')"
+                                                    multiple />
+                                                <mat-icon (click)="uploadFile1.click();" class="inverted-icon">
+                                                    attach_file
+                                                </mat-icon>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="selected-files-container">
+                                                <div class="scrollable-content">
+                                                    <div *ngFor="let fileName of applicationDetails.latestInterimFinancialStatement; let i = index"
+                                                        class="selected-file">
+                                                        <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                            style="color:blue;margin:1rem;">{{fileName.attachmentName}}</u>
+                                                        <button mat-icon-button>
+                                                            <mat-icon
+                                                                (click)="removeAttachment('latestInterimFinancialStatement',i)"
+                                                                class="remove-icon">clear</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <textarea placeholder="Remarks" class="min-select"
+                                                [(ngModel)]="applicationDetails.latestInterimFinancialStatementUploadsRemarks"
+                                                (ngModelChange)="saveApplicationData('latestInterimFinancialStatementUploadsRemarks','string')"
+                                                appPreventSpace></textarea>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Financial Statement of Past 5 years -->
+                                    <tr>
+                                        <td style="vertical-align: middle;">Financial Statement of Past 5 years <span
+                                                style="color:red;">*</span></td>
+                                        <td>:
+                                            <label for="financialStatementOfPast5YearsFileInput">
+                                                <input prohibitedChars hidden type="file" #uploadFile2
+                                                    accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                                    (change)="onFilesSelected($event, 'financialStatementOfPast5Years')"
+                                                    multiple />
+                                                <mat-icon (click)="uploadFile2.click();" class="inverted-icon">
+                                                    attach_file
+                                                </mat-icon>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="selected-files-container">
+                                                <div class="scrollable-content">
+                                                    <div *ngFor="let fileName of applicationDetails.financialStatementOfPast5Years; let i = index"
+                                                        class="selected-file">
+                                                        <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                            style="color:blue;margin:1rem;">{{ fileName.attachmentName
+                                                            }}</u>
+                                                        <button mat-icon-button>
+                                                            <mat-icon
+                                                                (click)="removeAttachment('financialStatementOfPast5Years',i)"
+                                                                class="remove-icon">clear</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <textarea placeholder="Remarks" class="min-select"
+                                                [(ngModel)]="applicationDetails.financialStatementOfPast5YearsUploadsRemarks"
+                                                (ngModelChange)="saveApplicationData('financialStatementOfPast5YearsUploadsRemarks','string')"
+                                                appPreventSpace></textarea>
+                                        </td>
+                                    </tr>
+                                    <!-- Tax returns for the last 3 years -->
+                                    <tr>
+                                        <td>Tax returns for the last 3 years <span style="color:red;">*</span> </td>
+                                        <td>:
+                                            <label for="taxReturnsForTheLast3YearsFileInput">
+                                                <input prohibitedChars hidden type="file" #uploadFile3
+                                                    accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                                    (change)="onFilesSelected($event, 'taxReturnsForTheLast3Years')"
+                                                    multiple />
+                                                <mat-icon (click)="uploadFile3.click();" class="inverted-icon">
+                                                    attach_file
+                                                </mat-icon>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="selected-files-container">
+                                                <div class="scrollable-content">
+                                                    <div *ngFor="let fileName of applicationDetails.taxReturnsForTheLast3Years; let i = index"
+                                                        class="selected-file">
+                                                        <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                            style="color:blue;margin:1rem;">{{ fileName.attachmentName
+                                                            }}</u>
+                                                        <button mat-icon-button>
+                                                            <mat-icon
+                                                                (click)="removeAttachment('taxReturnsForTheLast3Years',i)"
+                                                                class="remove-icon">clear</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <textarea placeholder="Remarks" class="min-select"
+                                                [(ngModel)]="applicationDetails.taxReturnsForTheLast3YearsUploadsRemarks"
+                                                (ngModelChange)="saveApplicationData('taxReturnsForTheLast3YearsUploadsRemarks','string')"
+                                                appPreventSpace></textarea>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                    <td>Retained Earnings
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.revenueRetainedEarnings"
+                                            (ngModelChange)="saveApplicationData('revenueRetainedEarnings','number')" appCommaSeparatedInput (keydown)="preventLetterE($event)">
+                                    </td>
+                                </tr> -->
+                                </table>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Revenue (In {{ statement[0]?.numerals }})</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Common Stock</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.commonStock"
+                                                            (ngModelChange)="calculateRatio('commonStock', i, year.commonStock);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Treasury Stock</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" appInputseperatecomma
+                                                            [(ngModel)]="year.treasuryStock"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Other Comprehensive Income</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" appInputseperatecomma
+                                                            [(ngModel)]="year.otherComprehensiveIncome"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Equity</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" appInputseperatecomma
+                                                            [(ngModel)]="year.totalEquity"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Debts Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Debts (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Debts (In {{ statement[0]?.numerals }})</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Debts</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.debts"
+                                                            (ngModelChange)="calculateRatio('debts', i, year.debts);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Long Term Debt</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.longTermDebt"
+                                                            (ngModelChange)="calculateRatio('longTermDebt', i, year.longTermDebt);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Debt Period</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.debtPeriod"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Liabilities Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Liabilities (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Liabilities (In {{ statement[0]?.numerals }})</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Liabilities</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.totalLiabilities"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Term Liabilities</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.termLiabilities"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Current Liabilities</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.currentLiabilities"
+                                                            (ngModelChange)="calculateRatio('currentLiabilities', i, year.currentLiabilities);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Assets Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Assets (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Assets (In {{ statement[0]?.numerals }})</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.totalAssets"
+                                                            (ngModelChange)="calculateRatio('totalAssets', i, year.totalAssets);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Fixed Assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.fixedAssets"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Current Assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.currentAssets"
+                                                            (ngModelChange)="calculateRatio('currentAssets', i, year.currentAssets);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Non-Current Assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.nonCurrentAssets"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Tangible Assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.tangibleAssets"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Intangible Assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.intangibleAssets"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Capital Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Capital (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Capital (In {{ statement[0]?.numerals }})</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Issued Capital</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.issuedCapital"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Paid-up Capital</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.paidUpCapital"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Additional Paid-In Capital</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.additionalPaidInCapital"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>General Reserves</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.generalReserves"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Surplus Expansion Panel  -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Surplus (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Surplus (In {{ statement[0]?.numerals }})</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Credit Balance</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.creditBalance"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+
+                        </div>
+                        <!-- Additional Financial Information Expansion Panel  -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Additional Financial Information (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Additional Financial Information (In {{ statement[0]?.numerals }})
+                                                </th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Inventory</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.inventory"
+                                                            (ngModelChange)="calculateRatio('inventory', i, year.inventory);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Shareholders equity</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text"
+                                                            [(ngModel)]="year.financialShareholdersEquity"
+                                                            (ngModelChange)="calculateRatio('financialShareholdersEquity', i, year.financialShareholdersEquity);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>EBIT</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.ebit"
+                                                            (ngModelChange)="calculateRatio('ebit', i, year.ebit);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>EBITDA</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.ebitda"
+                                                            (ngModelChange)="calculateRatio('ebitda', i, year.ebitda);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Expense</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.interestExpense"
+                                                            (ngModelChange)="calculateRatio('interestExpense', i, year.interestExpense);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Gross Profit</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.grossProfit"
+                                                            (ngModelChange)="calculateRatio('grossProfit', i, year.grossProfit);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Total revenue</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.totalRevenue"
+                                                            (ngModelChange)="calculateRatio('totalRevenue', i, year.totalRevenue);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Operating Income</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.operatingIncome"
+                                                            (ngModelChange)="calculateRatio('operatingIncome', i, year.operatingIncome);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Net Income</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.netIncome"
+                                                            (ngModelChange)="calculateRatio('netIncome', i, year.netIncome);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Payable</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.interestPayable"
+                                                            (ngModelChange)="calculateRatio('interestPayable', i, year.interestPayable);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Net Sales</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.netSales"
+                                                            (ngModelChange)="calculateRatio('netSales', i, year.netSales);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average total assets</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.averageTotalAssets"
+                                                            (ngModelChange)="calculateRatio('averageTotalAssets', i, year.averageTotalAssets);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Cost of goods sold</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.costOfGoodsSold"
+                                                            (ngModelChange)="calculateRatio('costOfGoodsSold', i, year.costOfGoodsSold);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average inventory</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.averageInventory"
+                                                            (ngModelChange)="calculateRatio('averageInventory', i, year.averageInventory);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average accounts receivable</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.averageAccountsReceivable"
+                                                            (ngModelChange)="calculateRatio('averageAccountsReceivable', i, year.averageAccountsReceivable);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Purchases</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.purchases"
+                                                            (ngModelChange)="calculateRatio('purchases', i, year.purchases);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average accounts payable</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.averageAccountsPayable"
+                                                            (ngModelChange)="calculateRatio('averageAccountsPayable', i, year.averageAccountsPayable);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Lease payments</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.leasePayments"
+                                                            (ngModelChange)="calculateRatio('leasePayments', i, year.leasePayments);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Principal repayments</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.principalRepayments"
+                                                            (ngModelChange)="calculateRatio('principalRepayments', i, year.principalRepayments);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Market price per share</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.marketPricePerShare"
+                                                            (ngModelChange)="calculateRatio('marketPricePerShare', i, year.marketPricePerShare);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Earnings per share</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.earningsPerShare"
+                                                            (ngModelChange)="calculateRatio('earningsPerShare', i, year.earningsPerShare);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Book value per share</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.bookValuePerShare"
+                                                            (ngModelChange)="calculateRatio('bookValuePerShare', i, year.bookValuePerShare);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Working capital</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.workingCapital"
+                                                            (ngModelChange)="calculateRatio('workingCapital', i, year.workingCapital);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Retained earnings</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.financialRetainedEarnings"
+                                                            (ngModelChange)="calculateRatio('financialRetainedEarnings', i, year.financialRetainedEarnings);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Market value of equity</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.marketValueOfEquity"
+                                                            (ngModelChange)="calculateRatio('marketValueOfEquity', i, year.marketValueOfEquity);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Sales</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.sales"
+                                                            (ngModelChange)="calculateRatio('sales', i, year.sales);fieldbinding()"
+                                                            appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Cashflows Expansion Panel -->
+                        <div class="flex-item" style="min-height: 350px;">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Cashflows (In {{ statement[0]?.numerals }})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <span
+                                    style="display: inline-block; white-space: nowrap; font-size: 1.8rem; text-align: left; padding: 1.5rem; color: #0e2954;">
+                                    <span style="text-decoration: underline;">Operation
+                                        Activities</span>&nbsp;:&nbsp;-
+                                </span>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Operation Activities</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Cash</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.operationActivitiesNetCash"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Depreciation and Amortization</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text"
+                                                            [(ngModel)]="year.depreciationAndAmortization"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Changes in Working Capital </td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.changesInWorkingCapital"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <span
+                                    style="display: inline-block; white-space: nowrap; font-size: 1.8rem; text-align: left; padding: 1.5rem; color: #0e2954;">
+                                    <span style="text-decoration: underline;">Investing
+                                        Activities</span>&nbsp;:&nbsp;-
+                                </span>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Investing Activities</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Cash </td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.investingActivitiesNetCash"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <span
+                                    style="display: inline-block; white-space: nowrap; font-size: 1.8rem; text-align: left; padding: 1.5rem; color: #0e2954;">
+                                    <span style="text-decoration: underline;">Financing
+                                        Activities</span>&nbsp;:&nbsp;-
+                                </span>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Financing Activities</th>
+                                                <th style="text-align: center;" *ngFor="let year of statement">{{
+                                                    year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Cash</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.financingActivitiesNetCash"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Proceeds from Borrowings </td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.proceedsFromBorrowings"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Repayment of Borrowings</td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.repaymentOfBorrowings"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Dividends Paid </td>
+                                                <ng-container *ngFor="let year of statement;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.dividendsPaid"
+                                                            (ngModelChange)="fieldbinding()" appInputseperatecomma>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                            <div class="table-container" style="height: 20rem;">
+                                <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                        <mat-panel-title class="header-banner">
+                                            <b>
+                                                User Defined Fields
+                                            </b>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <td>User Defined fields</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <mat-select class="min-select" [(ngModel)]="selectedUdfFinInfo"
+                                                        style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                                        <mat-option *ngFor="let udfFieldName of selectedField4"
+                                                            [value]="udfFieldName">{{ udfFieldName }}</mat-option>
+                                                    </mat-select>
+                                                </td>
+                                                <td>
+                                                    <button mat-raised-button (click)="addInputFinInfo(index)"
+                                                        matTooltip="Add Fields"
+                                                        style="background-color:#0e2954;color: white;">
+                                                        <mat-icon>add</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <div *ngFor="let fieldName of selectedFieldFinInfo;let i=index">
+                                                <td
+                                                    style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">
+                                                    {{ fieldName }}</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <ng-container [ngSwitch]="getFieldType4(fieldName)">
+                                                        <input *ngSwitchCase="'ALPHA_NUMERIC'"
+                                                            [(ngModel)]="userCustomFinInfo[i].fieldValue"
+                                                            (ngModelChange)="fieldValuechecking();" type="text"
+                                                            class="udf-input">
+                                                        <input *ngSwitchCase="'DATE'"
+                                                            [(ngModel)]="userCustomFinInfo[i].fieldValue"
+                                                            [max]="currentDate" (ngModelChange)="fieldValuechecking();" type="date"
+                                                            class="udf-input">
+                                                        <input *ngSwitchCase="'NUMERIC'"
+                                                            [(ngModel)]="userCustomFinInfo[i].fieldValue"
+                                                            (ngModelChange)="fieldValuechecking();" type="number"
+                                                            class="udf-input">
+                                                        <input *ngSwitchCase="'DATE_TIME'"
+                                                            [(ngModel)]="userCustomFinInfo[i].fieldValue"
+                                                            (ngModelChange)="fieldValuechecking();"
+                                                            type="datetime-local" class="udf-input">
+                                                        <input *ngSwitchCase="'DECIMAL'"
+                                                            [(ngModel)]="userCustomFinInfo[i].fieldValue"
+                                                            (ngModelChange)="fieldValuechecking();" type="number"
+                                                            class="udf-input">
+                                                    </ng-container>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        style="border-radius: 44%;background-color: aliceblue;border: none;"
+                                                        matTooltip="Remove">
+                                                        <mat-icon (click)="removeInputFinInfo(i)" style="color: red;">
+                                                            remove</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </div>
+                                        </tr>
+                                    </table>
+                                </mat-expansion-panel>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- Financial Information - Ratio SubTab Input Fields -->
+                <ng-container *ngIf="option == 1">
+                    <div style="height: 80%; overflow-y: auto;">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                <mat-panel-title class="header-banner">
+                                    <b>
+                                        Loan Type : {{applicationDetails.typesOfLoan}}
+                                    </b>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ng-container>
+                                <div class="scrollable-content" style="max-height:300px">
+                                    <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                        <table class="table collateral_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{applicationDetails.typesOfLoan}}</th>
+                                                    <th style="text-align: center;" *ngFor="let year of yearsList">{{
+                                                        year }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let ratio of ratioList">
+                                                    <td>{{ratio}}</td>
+                                                    <ng-container *ngFor="let year of yearsList;let i=index">
+                                                        <td style="text-align: center; vertical-align: middle;">
+                                                            <input type="number" readonly appCommaSeparatedInput
+                                                                appInputseperatecomma
+                                                                [ngModel]="ratioDetails[i]?.[getPropertyBasedOnRatio(ratio)]"
+                                                                (ngModelChange)="updateCheckValue(i, getPropertyBasedOnRatio(ratio), $event)">
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </mat-expansion-panel>
+                    </div>
+                </ng-container>
+            </div>
+
+        </div>
+        <!-- Industry Information Input Fields -->
+        <div class="table-container" style="overflow: auto;" *ngIf="activeSubTabName === 'Industry Information'">
+            <table>
+                <tr>
+                    <td>Products offered
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.productsOffered"
+                            (ngModelChange)="saveApplicationData('productsOffered','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Services offered
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.servicesOffered"
+                            (ngModelChange)="saveApplicationData('servicesOffered','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Sales Regions
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.salesRegions"
+                            (ngModelChange)="saveApplicationData('salesRegions','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Customers
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.customers"
+                            (ngModelChange)="saveApplicationData('customers','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Key Competitors
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.keyCompetitors"
+                            (ngModelChange)="saveApplicationData('keyCompetitors','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Key Suppliers
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.keySuppliers"
+                            (ngModelChange)="saveApplicationData('keySuppliers','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Revenue Streams
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.revenueStreams"
+                            (ngModelChange)="saveApplicationData('revenueStreams','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Contracts
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.contracts"
+                            (ngModelChange)="saveApplicationData('contracts','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                </tr>
+            </table>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfIndInfo"
+                                        style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField5" [value]="udfFieldName">
+                                            {{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputIndInfo(index)" matTooltip="Add Fields"
+                                        style="background-color:#0e2954;color: white;">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldIndInfo;let i=index">
+                                <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{
+                                    fieldName }}</td>
+                                <td>:</td>
+                                <td>
+                                    <ng-container [ngSwitch]="getFieldType5(fieldName)">
+                                        <input *ngSwitchCase="'ALPHA_NUMERIC'"
+                                            [(ngModel)]="userCustomIndInfo[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="text" class="udf-input">
+                                        <input *ngSwitchCase="'DATE'" [(ngModel)]="userCustomIndInfo[i].fieldValue"
+                                        [max]="currentDate" (ngModelChange)="fieldValuechecking();" type="date" class="udf-input">
+                                        <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomIndInfo[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                        <input *ngSwitchCase="'DATE_TIME'" [(ngModel)]="userCustomIndInfo[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="datetime-local"
+                                            class="udf-input">
+                                        <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomIndInfo[i].fieldValue"
+                                            (ngModelChange)="fieldValuechecking();" type="number" class="udf-input">
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button style="border-radius: 44%;background-color: aliceblue;border: none;"
+                                        matTooltip="Remove">
+                                        <mat-icon (click)="removeInputIndInfo(i)" style="color: red;">remove</mat-icon>
+                                    </button>
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <!-- Previous and Next Buttons -->
+        <div class="button-container">
+            <span style="color: red;font-weight: bold;margin:2rem;">
+                {{errMsg()}}
+            </span>
+            <button style="margin:1rem;" class="clos-submit-btn" [disabled]="!disable()" mat-raised-button
+                (click)="nexttab()">
+                <mat-icon style="font-size: 2.5rem;">forward</mat-icon>
+                <span>Next</span>
+            </button>
+        </div>
+    </div>

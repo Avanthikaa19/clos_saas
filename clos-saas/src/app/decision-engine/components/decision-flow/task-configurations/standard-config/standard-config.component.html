@@ -1,0 +1,54 @@
+<div class="popup-box">
+    <div class="header">
+        <span class="title">
+            Standard :
+        </span>
+        <br>
+        <br>
+        <mat-divider></mat-divider>
+
+        <div class="search-container">
+            <div>
+                <mat-icon class="icon-search">search</mat-icon>
+
+                <input class="min-input" placeholder="Search Standard  by name" [(ngModel)]="searchText" (ngModelChange)="filterColumns($event);">
+
+            </div>
+            <mat-icon class="icon-search" style="margin-left:80rem;cursor:pointer; margin-top: 6rem;" *ngIf="searchText" (click)="clearSearchField()">close</mat-icon>
+
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="row-main mt-5" *ngIf="standardList.length > 0 && !loading">
+            <div class="col" *ngFor="let standard of filteredColumns" (click)="selectStandard(standard)" [class.selected-card]="standard.id==selectedStandard">
+                <div class="image">
+                    <img src="assets/Icons/check.png">
+                </div>
+                <div class="card-content-container">
+                    <div class="card_body-content" matTooltip={{standard.name}}>
+                        {{standard.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="no-record-found" *ngIf="standardList.length == 0 && !loading">
+            No Standards found
+        </div>
+        <div class="no-record-found" *ngIf="filteredColumns.length == 0 && !loading">
+            No Standards found
+        </div>
+        <mat-spinner *ngIf="loading" style="margin: 20rem;margin-left:44rem;" diameter="40"></mat-spinner>
+    </div>
+
+</div>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close (click)="oncancelClick()">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button mat-raised-button class="selectButton" [disabled]="!selectedStandard" (click)="onSelectStandardClick()">
+        <mat-icon>done</mat-icon>
+        <span>Select Standard</span>
+    </button>
+</mat-dialog-actions>

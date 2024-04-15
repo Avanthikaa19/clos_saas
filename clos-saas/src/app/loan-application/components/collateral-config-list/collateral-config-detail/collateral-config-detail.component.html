@@ -1,0 +1,82 @@
+<div class="popup-container">
+    <div class="header-container">
+        <div class="title-container">
+            <span style="font-size:1.8rem;font-weight: bold;">
+                Add Collateral
+            </span>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table>
+                    <tr>
+                        <td>Loan Type <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="collateralData.loanType">
+                                <mat-option *ngFor="let loan of loanType" [value]="loan">
+                                    {{loan}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Collateral Catogery <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td><mat-select class="min-select" [(ngModel)]="collateralData.collateralCategory"
+                                (ngModelChange)="collateralTypeDropdown(collateralData.collateralCategory)">
+                                <mat-option *ngFor="let loan of collateralCategory" [value]="loan">
+                                    {{loan}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Collateral Type <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td> 
+                            
+                            <ng-container>
+                                <mat-select class="min-select" #collateralTypeSelect  [(ngModel)]="collateralData.collateralType" *ngIf="(collateralData.collateralCategory == undefined || collateralData.collateralCategory === 'Real Estate' || 
+                                collateralData.collateralCategory === 'Equipment' || collateralData.collateralCategory === 'Accounts Receivable' 
+                                || collateralData.collateralCategory === 'Inventory' || collateralData.collateralCategory === 'Securities') && (collateralData.collateralType != 'Others')">
+                                  <mat-option *ngFor="let type of collateralType" [value]="type">
+                                    {{type}}
+                                  </mat-option>
+                                </mat-select>
+                                </ng-container>
+                                <ng-container *ngIf="collateralData.collateralType == 'Others' || collateralData.collateralCategory == 'Others'">
+                                    <div class="d-flex">
+                                        <input class="min-select"  [(ngModel)]="collateralData.collateralInputType" type="text" placeholder="Enter Collateral Type">
+                                        <button *ngIf="collateralData.collateralType || collateralData.collateralCategory" matSuffix mat-icon-button aria-label="Clear"
+                                        (click)="collateralData.collateralType = ''">
+                                        <mat-icon style="font-size: 1.5rem;color: red;"*ngIf="collateralData.collateralType == 'Others' || collateralData.collateralCategory == 'Others'" (click)="collateralData.collateralInputType = ''">close</mat-icon>
+                                       </button>
+                                    </div>
+                               </ng-container>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="close-action-actions-container">
+        <span style="color: red;font-weight: bold;margin:2rem;">
+            {{errMsg()}}
+        </span>
+        <div class="btn-container">
+            <button style="margin-top:1rem;" [disabled]="disable()"
+            mat-raised-button mat-dialog-close class="clos-submit-btn"
+                (click)="saveCollateralConfig()">
+                <mat-icon>{{ data ? 'update' : 'save' }}</mat-icon>
+                <span>{{ data ? 'Update' : 'Save' }}</span>
+            </button>
+        </div>
+        <div class="spacer"></div>
+        <button mat-raised-button style="margin-top:1rem;float: left;" class="clos-btn" matTooltip="Close"
+            mat-dialog-close>
+            <mat-icon>close</mat-icon>Close
+        </button>
+    </div>
+</div>

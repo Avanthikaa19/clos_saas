@@ -1,0 +1,114 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/modern-table/modern-table.component.scss);
+@import url(../../../../common-css/commonstyles.scss);
+.main-nav-container {
+    width: 100%;
+    flex: 1 1 auto;
+    height: 100%;
+    >.example-container {
+        background-color: rgb(236, 236, 236);
+        >.right-header {
+            padding: 10px;
+            color: rgb(185, 184, 184);
+            font-size: 1.6rem;
+            font-style: bold;
+        }
+        >.list-checkeditems {
+            background-color: whitesmoke;
+            height: 100%;
+            // margin-top: 50px;
+            >.list-containeritems {
+                padding: 10px;
+                border: 10px solid rgb(255, 255, 255);
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+.param-main-container {
+    height: 64vh;
+    width: 100%;
+    >.inner-container {
+        height: 60vh;
+        width: 100%;
+        background-color: whitesmoke;
+        >.check-card-container {
+            background-color: white;
+            height: 4rem;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+
+/*Tree*/
+
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+
+/*
+   * This padding sets alignment of the nested nodes.
+   */
+
+.example-tree .mat-nested-tree-node div[role=group] {
+    padding-left: 40px;
+}
+
+
+/*
+   * Padding for leaf nodes.
+   * Leaf nodes need to have padding so as to align with other non-leaf nodes
+   * under the same parent.
+   */
+
+.example-tree div[role=group]>.mat-tree-node {
+    padding-left: 40px;
+}
+
+
+/*Drag card container*/
+
+.drage-card-container {
+    height: 5rem;
+    background-color: whitesmoke;
+    width: 99%;
+    margin-bottom: 0.5rem;
+    border: 1px solid lightgray;
+    border-radius: 1rem;
+    margin-left: 0.5rem;
+}
+
+li {
+    list-style: none;
+}
+
+.left-align {
+    margin-top: 20px;
+    height: 480px;
+    overflow: auto;
+}
+
+.label {
+    width: 250px;
+    font-size: 1.6rem;
+    padding-right: 20px;
+}
+
+.colon {
+    width: 50px;
+    padding: 10px;
+}
+
+.value {
+    width: 350px;
+}

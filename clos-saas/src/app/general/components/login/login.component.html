@@ -1,0 +1,31 @@
+<div class="login-container" style="background-image: url(assets/C-LOS%20Images/ab.jpeg);">
+    <div class="glowing-circle"></div>
+    <div class="login-card">
+        <div class="header-container">
+            <h1>WELCOME BACK !</h1>
+            <h3>Login to continue</h3>
+        </div>
+        <div class="input-container">
+            <div class="input-group" [ngClass]="{'has-error': userNameInput.touched && !userName}">
+                <mat-icon class="icon">person</mat-icon>
+                <input type="text" placeholder="USERNAME" id="userName" (input)="onInputChange()" [(ngModel)]="userName" (keyup.enter)="login()" required #userNameInput="ngModel">
+                <div class="error-message" *ngIf="userNameInput.touched && !userName">Username is required</div>
+            </div>
+        </div>
+        <div class="input-container">
+            <div class="input-group" [ngClass]="{'has-error': passwordInput.touched && !userName}">
+                <mat-icon class="icon">lock</mat-icon>
+                <input type="password" placeholder="PASSWORD" id="password" [type]="hide ? 'password' : 'text'" id="password" [(ngModel)]="password" (keyup.enter)="login()" required #passwordInput="ngModel">
+                <mat-icon class="icon show-password" (click)="myFunction()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <div class="error-message" *ngIf="passwordInput.touched && !password">Password is required</div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn" [disabled]="disable()" (click)="login()" (keyup.enter)="login()"><span>Login</span></button>
+        </div>
+        <br>
+        <div style="color: red;">
+            <span>{{errorMsg}}</span>
+        </div>
+    </div>
+</div>

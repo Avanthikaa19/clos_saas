@@ -1,0 +1,95 @@
+//custom palette for material
+$primary-palette: (
+  50 : #e4e4e4,
+  100 : #bcbcbc,
+  200 : #909090,
+  300 : #646464,
+  400 : #424242,
+  500 : #212121,
+  600 : #1d1d1d,
+  700 : #181818,
+  800 : #141414,
+  900 : #0b0b0b,
+  A100 : #efefef,
+  A200 : #e1e1e1,
+  A400 : #cbcbcb,
+  A700 : #b9b9b9,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$accent-palette: (
+  50 : #e0ffff,
+  100 : #b3ffff,
+  200 : #80ffff,
+  300 : #4dffff,
+  400 : #4860ca,
+  500 : rgb(52 69 180),
+  600 : rgb(52 69 180),
+  700 : rgb(52 69 180),
+  800 : rgb(52 69 180),
+  900 : rgb(52 69 180),
+  A100 : #ffffff,
+  A200 : #f2ffff,
+  A400 : #bfffff,
+  A700 : #a6ffff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+@function get-color($palette, $value: 500) {
+  @return map-get($palette, $value);
+}
+
+$accent-color: get-color($accent-palette);
+$primary-color: get-color($primary-palette, 500);
+$secondary-color: get-color($primary-palette, 300);
+$light-color: black;
+$dark-color: white;
+
+//app main header
+$header-bg-color: $primary-color;
+$header-app-title-color: $accent-color;
+$header-item-icon-color: $dark-color;
+$header-item-text-color: $dark-color;
+$header-item-bg-color: rgba(255, 255, 255, 0.05);
+$header-item-hover-bg-color: rgba(255, 255, 255, 0.1);
+$header-item-active-bg-color: rgba(255, 255, 255, 0.07);
+$header-item-selected-bg-color: $accent-color;
+$header-item-selected-icon-color: $light-color;
+$header-item-selected-text-color: $light-color;
+
+//sub-module header
+$sub-header-text-colour: $light-color;
+$sub-second-header-text-colour: get-color($primary-palette, A700);
+
+//tab header colour
+$tab-text-color: rgb(52 69 180);

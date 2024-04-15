@@ -1,0 +1,264 @@
+<div class="systems-overview-container">
+    <div class="header-container noselect">
+        <mat-icon>search</mat-icon>
+        <input type="text" class="min-input" [(ngModel)]="search" (ngModelChange)="onSearchChanged()" placeholder="Search system..">
+        <span>Sort By:</span>
+        <mat-select class="min-select" [(ngModel)]="sortBy" placeholder="Sort By">
+            <mat-option value="Tasks Status">System Status</mat-option>
+            <mat-option value="System Name">System Name</mat-option>
+            <mat-option value="Display Name">Display Name</mat-option>
+        </mat-select>
+        <span>Order:</span>
+        <mat-select class="min-select" [(ngModel)]="sortAsc" placeholder="Sort Order">
+            <mat-option [value]="true">Ascending</mat-option>
+            <mat-option [value]="false">Descending</mat-option>
+        </mat-select>
+    </div>
+    <div class="content-container-wrapper">
+        <div class="content-container noselect">
+            <div class="placeholder" [@fadeInOut] *ngIf="data && filteredSystemStatuses.length === 0">
+                <div class="placeholder-container">
+                    <mat-icon>info</mat-icon>
+                    <span>No systems available (or) match the search criteria.</span>
+                </div>
+            </div>
+            <div class="placeholder" [@fadeInOut] *ngIf="refreshing && !data">
+                <div class="placeholder-container">
+                    <mat-progress-spinner mode="indeterminate" diameter="20" strokeWidth="2"></mat-progress-spinner>
+                    <span>Loading data..</span>
+                </div>
+            </div>
+            <table [@fadeInOut] *ngIf="filteredSystemStatuses?.length">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="center-align">System</th>
+                        <th class="center-align">Input</th>
+                        <th class="center-align">Processing</th>
+                        <th class="center-align">Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let sysStatus of filteredSystemStatuses; let i = index">
+                        <tr [style.opacity]="tasksDetailsIndex == -1 || tasksDetailsIndex === i ? 1 : 0.3">
+                            <td>{{(i+1)}}.</td>
+                            <td>
+                                <div class="tl-system-wrapper">
+                                    <span class="system-display-chip" [style.background-color]="sysStatus.system.displayColor">
+                                        {{sysStatus.system.displayName}}
+                                    </span>
+                                    <div class="system-details">
+                                        <span><a>Name: </a>{{sysStatus.system.systemName}}</span>
+                                        <p><a>Description: </a>{{sysStatus.system.systemDescription}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="tl-layer-status-wrapper">
+                                    <div class="tl-layer-status" [class.layer-up]="sysStatus.inputStatus === 'UP'"
+                                    [class.layer-partial-up]="sysStatus.inputStatus === 'PARTIAL_UP'" [class.layer-down]="sysStatus.inputStatus === 'DOWN'">
+                                        <div class="overlay"></div>
+                                    </div>
+                                    <div class="tl-layer-details">
+                                        <div class="total-count">
+                                            <span class="label">Total</span>
+                                            <a>:</a>
+                                            <span class="value">{{sysStatus.totalInputTasks}}</span>
+                                        </div>
+                                        <div *ngIf="sysStatus.inputStatus != 'NA'">
+                                            <span class="label">Running</span>
+                                            <a>:</a>
+                                            <span class="value" [class.value-red]="sysStatus.totalInputTasks > 0 && sysStatus.runningInputTasks === 0">{{sysStatus.runningInputTasks}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="tl-tasks">
+                                        <button mat-button class="tl-tasks-btn" [class.tl-tasks-btn-pressed]="tasksDetailsIndex === i && focusedSystemLayer === 'INPUT'" 
+                                            (click)="toggleTasksDetails(i, 'INPUT')" [disabled]="sysStatus.totalInputTasks === 0">
+                                            <mat-icon>data_usage</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="tl-layer-entries">
+                                    </div>
+                                </div>
+                                <div class="tl-layer-summary">
+                                    <span *ngIf="sysStatus.inputStatus === 'NA'" class="layer-na">
+                                        No relevant tasks.
+                                    </span>
+                                    <span *ngIf="sysStatus.inputStatus === 'DOWN'" class="layer-down">
+                                        <a>All</a> the tasks are <a>stopped</a>.
+                                    </span>
+                                    <span *ngIf="sysStatus.inputStatus === 'PARTIAL_UP'" class="layer-partial-up">
+                                        <a>Some</a> tasks are <a>stopped</a>.
+                                    </span>
+                                    <span *ngIf="sysStatus.inputStatus === 'UP'" class="layer-up">
+                                        <a>All</a> tasks are <a>running</a>.
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="tl-layer-status-wrapper">
+                                    <div class="tl-layer-status" [class.layer-up]="sysStatus.processingStatus === 'UP'"
+                                    [class.layer-partial-up]="sysStatus.processingStatus === 'PARTIAL_UP'" [class.layer-down]="sysStatus.processingStatus === 'DOWN'">
+                                        <div class="overlay"></div>
+                                    </div>
+                                    <div class="tl-layer-details">
+                                        <div class="total-count">
+                                            <span class="label">Total Tasks</span>
+                                            <a>:</a>
+                                            <span class="value">{{sysStatus.totalProcessingTasks}}</span>
+                                        </div>
+                                        <div *ngIf="sysStatus.processingStatus != 'NA'">
+                                            <span class="label">Running Tasks</span>
+                                            <a>:</a>
+                                            <span class="value" [class.value-red]="sysStatus.totalProcessingTasks > 0 && sysStatus.runningProcessingTasks === 0">{{sysStatus.runningProcessingTasks}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="tl-tasks">
+                                        <button mat-button class="tl-tasks-btn" [class.tl-tasks-btn-pressed]="tasksDetailsIndex === i && focusedSystemLayer === 'PROCESSING'" 
+                                            (click)="toggleTasksDetails(i, 'PROCESSING')" [disabled]="sysStatus.totalProcessingTasks === 0">
+                                            <mat-icon>data_usage</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="tl-layer-summary">
+                                    <span *ngIf="sysStatus.processingStatus === 'NA'" class="layer-na">
+                                        No relevant tasks in this layer.
+                                    </span>
+                                    <span *ngIf="sysStatus.processingStatus === 'DOWN'" class="layer-down">
+                                        <a>All</a> the tasks in this layer are <a>stopped</a>.
+                                    </span>
+                                    <span *ngIf="sysStatus.processingStatus === 'PARTIAL_UP'" class="layer-partial-up">
+                                        <a>Some</a> of the tasks in this layer are <a>stopped</a>.
+                                    </span>
+                                    <span *ngIf="sysStatus.processingStatus === 'UP'" class="layer-up">
+                                        <a>All</a> the tasks in this layer are <a>running</a>.
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="tl-layer-status-wrapper">
+                                    <div class="tl-layer-status" [class.layer-up]="sysStatus.outputStatus === 'UP'"
+                                    [class.layer-partial-up]="sysStatus.outputStatus === 'PARTIAL_UP'" [class.layer-down]="sysStatus.outputStatus === 'DOWN'">
+                                        <div class="overlay"></div>
+                                    </div>
+                                    <div class="tl-layer-details">
+                                        <div class="total-count">
+                                            <span class="label">Total Tasks</span>
+                                            <a>:</a>
+                                            <span class="value">{{sysStatus.totalOutputTasks}}</span>
+                                        </div>
+                                        <div *ngIf="sysStatus.outputStatus != 'NA'">
+                                            <span class="label">Running Tasks</span>
+                                            <a>:</a>
+                                            <span class="value" [class.value-red]="sysStatus.totalOutputTasks > 0 && sysStatus.runningOutputTasks === 0">{{sysStatus.runningOutputTasks}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="tl-tasks">
+                                        <button mat-button class="tl-tasks-btn" [class.tl-tasks-btn-pressed]="tasksDetailsIndex === i && focusedSystemLayer === 'OUTPUT'" 
+                                            (click)="toggleTasksDetails(i, 'OUTPUT')" [disabled]="sysStatus.totalOutputTasks === 0">
+                                            <mat-icon>data_usage</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="tl-layer-summary">
+                                    <span *ngIf="sysStatus.outputStatus === 'NA'" class="layer-na">
+                                        No relevant tasks in this layer.
+                                    </span>
+                                    <span *ngIf="sysStatus.outputStatus === 'DOWN'" class="layer-down">
+                                        <a>All</a> the tasks in this layer are <a>stopped</a>.
+                                    </span>
+                                    <span *ngIf="sysStatus.outputStatus === 'PARTIAL_UP'" class="layer-partial-up">
+                                        <a>Some</a> of the tasks in this layer are <a>stopped</a>.
+                                    </span>
+                                    <span *ngIf="sysStatus.outputStatus === 'UP'" class="layer-up">
+                                        <a>All</a> the tasks in this layer are <a>running</a>.
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="tl-tasks-details-container" [class.tl-tasks-details-container-open]="tasksDetailsIndex != -1">
+            <div class="tl-tasks-details" *ngIf="focusedSystem">
+                <div class="tl-tasks-details-header noselect">
+                    <span class="tl-t-d-h-title">{{focusedSystem.systemName}} </span>
+                    <span class="tl-t-d-h-title-highlight">{{focusedSystemLayer}} </span>
+                    <span class="tl-t-d-h-title">Tasks</span>
+                    <div class="separator"></div>
+                </div>
+                <div class="tl-tasks-details-content">
+                    <ng-template let-taskStatuses="taskStatuses" #tasksStatusTemplate>
+                        <ng-container *ngFor="let taskStatus of taskStatuses">
+                            <div class="tl-tasks-details-item-container">
+                                <div class="tl-tasks-details-item-header h-flex-parent noselect">
+                                    <span>Task: <a>{{taskStatus.taskName}}</a></span>
+                                    <mat-icon class="error-icon" *ngIf="taskStatus.stopReason === 'ERROR'">error</mat-icon>
+                                    <div class="spacer"></div>
+                                    <button mat-button color="primary" (click)="goToWorksheet(taskStatus.task.worksheetId)">
+                                        <mat-icon>input</mat-icon>
+                                        <span>Go To Flow</span>
+                                    </button>
+                                </div>
+                                <div class="tl-tasks-details-item-header h-flex-parent noselect">
+                                    <span>Flow: <a>{{taskStatus.workflowName}}</a> &bull; <a>{{taskStatus.worksheetName}}</a></span>
+                                    <div class="spacer"></div>
+                                </div>
+                                <div class="tl-tasks-details-item-status noselect">
+                                    <div class="running" *ngIf="taskStatus.running">
+                                        <mat-icon>done</mat-icon>
+                                        <span>Task Is Running</span>
+                                    </div>
+                                    <div class="stopped" *ngIf="!taskStatus.running">
+                                        <mat-icon>stop</mat-icon>
+                                        <span>Task Is Stopped</span>
+                                    </div>
+                                </div>
+                                <div class="tl-tasks-details-item-reason" *ngIf="!taskStatus.running">
+                                    <div>
+                                        <span>Stop Reason: <a>{{taskStatus.stopReason ? taskStatus.stopReason : 'Unavailable'}}</a></span>
+                                    </div>
+                                    <div *ngIf="taskStatus.stopReason === 'ERROR'">
+                                        <span>Stop Error: <a>{{taskStatus.stopErrorLog}}</a></span>
+                                    </div>
+                                    <div *ngIf="taskStatus.stopReason === 'MANUAL'">
+                                        <span>Stopped By: <a>{{taskStatus.stoppedByUser}}</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                    <div class="tl-tasks-details-list-container">
+                        <ng-container [ngTemplateOutlet]="tasksStatusTemplate" *ngIf="focusedSystemLayer === 'INPUT'"
+                        [ngTemplateOutletContext]="{taskStatuses: focusedSystem.inputTaskStatuses}">
+                        </ng-container>
+                        <ng-container [ngTemplateOutlet]="tasksStatusTemplate" *ngIf="focusedSystemLayer === 'PROCESSING'"
+                        [ngTemplateOutletContext]="{taskStatuses: focusedSystem.processingTaskStatuses}">
+                        </ng-container>
+                        <ng-container [ngTemplateOutlet]="tasksStatusTemplate" *ngIf="focusedSystemLayer === 'OUTPUT'"
+                        [ngTemplateOutletContext]="{taskStatuses: focusedSystem.outputTaskStatuses}">
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="tl-tasks-details-separator">
+                    <div class="separator"></div>
+                </div>
+                <div class="tl-tasks-details-actions h-flex-parent">
+                    <div class="spacer"></div>
+                    <button mat-stroked-button color="primary" (click)="clearFocusedTaskDetails()">
+                        <mat-icon>close</mat-icon>
+                        <span>Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loading-spinner noselect">
+        <div class="spinner-container">
+            <mat-progress-spinner mode="indeterminate" diameter="20" strokeWidth="2"></mat-progress-spinner>
+            <div class="live-signal"></div>
+        </div>
+        <span>LIVE</span>
+    </div>
+</div>

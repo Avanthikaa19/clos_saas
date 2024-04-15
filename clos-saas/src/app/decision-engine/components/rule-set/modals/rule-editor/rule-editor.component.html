@@ -1,0 +1,45 @@
+<div class="main-container">
+    <div class="header-container">
+        <div class="category-header">
+            Python Code Editor:
+        </div>
+    </div>
+    <div class="theme-selection-container flex-row-parent">
+        <div class="flex-stetch ">
+            <div class="category-sub-header">
+                File Name:
+            </div>
+        </div>
+        <div class="flex-unstetch ">
+            <div class="flex-unstetch" style="max-width: 25rem; margin-left: 1rem;">
+                <input class="min-input" [(ngModel)]="pythonCode.fileName">
+            </div>
+        </div>
+        <div class="flex-stetch ">
+            <div class="category-sub-header">
+                Theme:
+            </div>
+        </div>
+        <div class="flex-unstetch" style="max-width: 25rem; margin-left: 1rem;">
+            <mat-select [(ngModel)]="editorOptions.theme" (ngModelChange)="onThemeChange(editorOptions.theme)"
+                class="min-select">
+                <mat-option *ngFor="let theme of editorTheme" [value]="theme">
+                    {{theme}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <div class="editor-container">
+        <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="pythonCode.code">
+        </ngx-monaco-editor>
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close style="color: red;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="editorFields()"
+        cdkFocusInitial>
+        <mat-icon>save</mat-icon>Save
+    </button>
+</mat-dialog-actions>

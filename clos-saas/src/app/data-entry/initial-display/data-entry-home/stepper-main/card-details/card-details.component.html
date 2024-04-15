@@ -1,0 +1,515 @@
+<div class="content-container">
+    <form #cardDetailsInfoForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Issuer 1</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="listFieldName['appMccRdt1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Number 1</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcRdn1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Issuer 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcRdt2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Number 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcRdn2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Issuer 3</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcRdt3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Number 3</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcRdn3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 1 Credit Limit</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrLm1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 1 Balance</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCoBal1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 1 Issue Date</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcris1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 1 Expiry</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrex1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 1 History</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCchis1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 1 Rating</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrat1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 2 Credit Limit</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrlm2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 2 Balance</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCoBal2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 2 Issue Date</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcris2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 2 Expiry</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrex2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 2 History</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCchis2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 2 Rating</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrat2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 3 Credit Limit</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrlm3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 3 Balance</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCoBal3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 3 Issue Date</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcris3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 3 Expiry</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrex3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 3 History</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCchis3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 3 Rating</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCcrat3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nfis Type</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMnfType']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nfis bank</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmNfBnk']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nfis Date</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmnFDate']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nfis Amount</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmnFamt']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nfis Memo</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmNfMemo']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Ccap Dump Details</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmCCap']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Issuer 4</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRdt4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Number 4</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRdn4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 4 Credit Limit</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRlm4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 4 Balance</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCOBal4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 4 Issue Date</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRis4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 4 Expiry</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRex4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 4 History</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCHis4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 4 Rating</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRat4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Issuer 5</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRdt5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card Number 5</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRdn5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 5 Credit Limit</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRlm5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 5 Balance</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCOBal5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 5 Issue Date</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRis5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 5 Expiry</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRex5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 5 History</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCHis5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Card 5 Rating</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxCCRat5']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

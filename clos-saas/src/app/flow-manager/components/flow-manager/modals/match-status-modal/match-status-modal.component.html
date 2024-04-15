@@ -1,0 +1,38 @@
+<div class="header">MATCHER STATUS </div>
+<div>
+   <!-- LOADING -->
+ <div [@fadeInOut] *ngIf="loading && matchStatus.length == 0" class="loading-spinner-container">
+   <mat-spinner strokeWidth="3" [diameter]="40"></mat-spinner>
+   <span style="padding-left: 20px; font-size: 14px;">Loading ... Please wait..</span>
+</div>
+<div [@fadeInOut] *ngIf="!loading && matchStatus.length == 0" class="no-content">
+   <span>No entries available.</span>
+</div>
+  <table>
+     <td *ngFor="let row of matchStatus; let i = index">
+        <div class="sub-header" >
+             <h6 matLine style="padding-left: 80px;color:black;margin-bottom: 20px;margin-top: 20px;">
+              {{1+i}}. <i> Match Key: {{row.matchKey}} </i> 
+             </h6> 
+        </div>
+        <div class="tableContainer" style="padding: 10px;">
+          <table cellpadding="0" cellspacing="0" width="100%">
+             <thead class="fixedHeader">
+                <tr>
+                   <th><a>Contributor keys</a></th>
+                </tr>
+             </thead>
+              <tbody  class="scrollContent">
+                 <tr *ngFor="let row of listData">
+                   <td style="text-align: center;">{{row}}</td>
+                 </tr>
+              </tbody>
+          </table>
+        </div>
+    </td>
+  </table>
+</div>
+
+
+   
+   

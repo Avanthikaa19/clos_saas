@@ -1,0 +1,103 @@
+@import url(../../../../../../common-styles/form-style.scss);
+
+.page__main-container {
+    height: 93.5%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    > .header-container {
+        height: 3.5rem;
+        span {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+    }
+    .main-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        background-color: whitesmoke;
+        overflow: auto;
+        
+    .search-container {
+        height: 5rem;
+        padding: 1rem;
+        position: relative;
+        display: flex;
+        align-items: center; /* Center vertically */
+        
+        > .min-input {
+            flex: 1; /* Take remaining space */
+            background-color: white;
+            height: 3.5rem;
+            padding-left: 3rem;
+        }
+    
+        > .icon-search {
+            position: absolute;
+            left: 1.5rem;
+            color: rgb(80, 80, 80);
+            transform: translateY(-50%);
+        }
+    
+        > .icon-cancel {
+            position: absolute;
+            top: 50%;
+            right: 1.5rem;
+            transform: translateY(-50%);
+            color: rgb(80, 80, 80);
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    }
+    
+        > .content-container {
+            >.list__template-container{
+                height: 3.5rem;
+                background-color: white;
+                margin: 1rem;
+                border-radius: 0.8rem;
+                display: grid;
+                grid-template-columns: auto auto 1fr;
+                >.check__box-container{
+                    padding-top: 1rem;
+                    width: 3rem;
+                    margin-left: 1rem;
+                    text-align: center;
+                }
+                >.template__icon-container{
+                    padding-top: 0.5rem;
+                    width: 3rem;
+                    color: lightgray;
+                    text-align: center;
+                }
+                >.template__name-container{
+                    margin-left: 1rem;
+                    padding-top: 1rem;
+                }
+                &:hover{
+                    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                }
+            }
+        }
+    }
+    > .paginated-container {
+        height: 56px;
+        background-color: whitesmoke;
+        position: relative;
+    }
+}
+.button-container{
+    display:flex;
+    >.apply_btn-container{
+     flex:1 1 auto;
+    }
+    >.submit_btn-container{
+     flex:0 0 auto;
+    }
+ }
+
+ ::ng-deep .mat-dialog-container{
+    overflow: hidden !important;
+  }

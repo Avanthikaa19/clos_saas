@@ -1,0 +1,207 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-sub-header">
+        HOLD TIME LIMIT:
+    </div>
+    <table *ngIf="config.holdTimeLimit">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Enabled</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.holdTimeLimit.enabled" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Minutes</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input class="min-input" [(ngModel)]="config.holdTimeLimit.minutes" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        FILTER & ACTIONS:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Condition Type</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.conditionType" class="min-select" style="width: 100%;">
+                        <mat-option [value]="'JAVASCRIPT'">JAVASCRIPT</mat-option>
+                        <mat-option [value]="'SQL'">SQL</mat-option>
+                        <mat-option [value]="'CHECK FREQUENCY'">CHECK FREQUENCY</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr *ngIf="config.releaseScript && config.conditionType == 'JAVASCRIPT'">
+                <td colspan="3">
+                    <span class="min-label">Release Script:</span>
+                    <button mat-button color="primary" (click)="editJSFormula('RELEASE_SCRIPT')">
+                    <mat-icon>code</mat-icon>
+                    <span>Editor</span>
+                </button>
+                </td>
+            </tr>
+            <tr *ngIf="config.releaseScript && config.conditionType == 'JAVASCRIPT'">
+                <td colspan="3">
+                    <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;" (click)="$event.stopPropagation();">
+                        <ngx-monaco-editor class="my-code-editor" [options]="jsEditorOptions" [(ngModel)]="config.releaseScript"></ngx-monaco-editor>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="config.sql && config.conditionType == 'SQL'">
+                <td>
+                    <span class="min-label">SQL</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input class="min-input" style="margin-top: 7px;" [(ngModel)]="config.sql">
+                </td>
+            </tr>
+            <!-- <tr *ngIf="config.checkFrequency && config.conditionType == 'CHECK FREQUENCY'">
+            <td>
+              <span class="min-label">Check Frequency</span>
+            </td>
+            <td>:</td>
+            <td>
+              <input type="checkbox" name="enabled" [(ngModel)]="config.checkFrequency"
+                     style="margin-top: 7px;">
+            </td>
+          </tr> -->
+            <tr *ngIf="config.conditionType == 'CHECK FREQUENCY'">
+                <td>
+                    <span class="min-label">Check time  Limit</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input class="min-input" [(ngModel)]="config.checkTimeLimit" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr *ngIf="config.conditionType == 'CHECK FREQUENCY'">
+                <td>
+                    <span class="min-label">Check Frequency Value</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input class="min-input" [(ngModel)]="config.checkFrequencyValue" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr *ngIf="config.conditionType == 'CHECK FREQUENCY'">
+                <td>
+                    <span class="min-label">System Date Change</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.sysDateChange" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr *ngIf="config.conditionType == 'CHECK FREQUENCY'">
+                <td>
+                    <span class="min-label">FO Date Change</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.FODateChange" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr *ngIf="config.conditionType == 'CHECK FREQUENCY'">
+                <td>
+                    <span class="min-label">UX Refresh Event</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.uxRefreshEvent" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Release Entry</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.releaseEntry" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Entry Instance</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input class="min-input" [(ngModel)]="config.entryInstance" style="margin-top: 7px;">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Reject Entry</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="config.rejectEntry" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-input" class="min-label">Reject Instance</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input class="min-input" [(ngModel)]="config.rejectInstance" style="margin-top: 7px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<app-field-mapper-fragment *ngIf="config?.fieldMapping" [(config)]="config.fieldMapping" [hideInputField]="hideData"></app-field-mapper-fragment>
+
+<div class="category-header">
+    ADVANCED
+</div>
+<table *ngIf="config?.task">
+    <tbody>
+        <tr>
+            <td>
+                <span class="min-label">Batch Size</span>
+            </td>
+            <td>:</td>
+            <td>
+                <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="min-label">Input Polling (ms)</span>
+            </td>
+            <td>:</td>
+            <td>
+                <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="min-label">Maximum Threads</span>
+            </td>
+            <td>:</td>
+            <td>
+                <input name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div style="position: relative; height: 50px;">
+    <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <mat-icon>bug_report</mat-icon>
+        <span style="padding-left: 10px;">Print Config To Console</span>
+      </button>
+</div>

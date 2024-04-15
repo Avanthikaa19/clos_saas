@@ -1,0 +1,238 @@
+@import "../task-configurations/field-mapper-fragment/field-mapper-fragment.component.scss";
+
+.formula-editor-container {
+    width: 100%;
+    max-height: 90%;
+    font-size: 14px;
+    > .formula-title {
+        width: 100%;
+        height: 50px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        border-bottom: solid transparent 5px;
+        cursor: move;
+        > span {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .formula-type {
+            padding: 3px 10px;
+            margin-right: 5px;
+            background-color: whitesmoke;
+            border-radius: 5px;
+            color: crimson;
+        }
+    }
+    > .formula-title:hover {
+        border-bottom: solid whitesmoke 5px;
+    }
+}
+
+/*CODE EDITOR */
+.my-code-editor-description {
+    font-size: 14px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    white-space: pre-wrap;
+    .highlight1 {
+        color: crimson;
+    }
+    .highlight2 {
+        color: royalblue;
+    }
+    mat-icon {
+        margin-left: 5px;
+        color: royalblue;
+        opacity: 0.5;
+        transition: opacity linear 100ms;
+        cursor: pointer;
+    }
+    mat-icon:hover {
+        opacity: 1;
+    }
+}
+
+.my-code-editor-wrapper {
+    height: calc(100vh - 650px);
+    overflow: hidden;
+    border: solid whitesmoke 1px;
+    .my-code-editor {
+        height: calc(100% + 8px);
+        -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        .editor-container {
+            height: 100%;
+        }
+    }
+}
+.formula-tester-container {
+    height: 250px;
+    background-color: whitesmoke;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px;
+    overflow: hidden;
+    .formula-tester-title {
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        height: 30px;
+    }
+    .formula-tester-content {
+        height: calc(100% - 30px);
+        display: flex;
+        align-items: center;
+        .formula-params-container {
+            height: 100%;
+            flex: 0 0 auto;
+            width: 400px;
+            margin-right: 5px;
+            background: white;
+            border-radius: 5px;
+            padding: 5px;
+            .inputs-title {
+                height: 35px;
+                padding-left: 5px;
+                border-bottom: solid whitesmoke 1px;
+                position: relative;
+                span {
+                    line-height: 35px;
+                    font-weight: 500;
+                }
+                .refresh-btn {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    span {
+                        padding-left: 5px;
+                    }
+                }
+            }
+            .inputs-list-container {
+                height: calc(100% - 35px);
+                overflow-y: scroll;
+                .input-item {
+                    background-color: white;
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 3px;
+                    border-bottom: solid whitesmoke 1px;
+                    margin-top: 3px;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    span {
+                        min-width: 30%;
+                        max-width: 40%;
+                        flex: 0 0 auto;
+                        text-align: center;
+                        overflow: hidden;
+                        white-space:nowrap;
+                        text-overflow:ellipsis;
+                        display:inline-block;
+                    }
+                    input {
+                        flex: 1 1 80%;
+                    }
+                }
+            }
+        }
+        .formula-output-container {
+            height: 100%;
+            flex: 1 1 auto;
+            background: white;
+            border-radius: 5px;
+            padding: 5px;
+            .output-title {
+                height: 35px;
+                padding-left: 5px;
+                border-bottom: solid whitesmoke 1px;
+                position: relative;
+                span {
+                    line-height: 35px;
+                    font-weight: 500;
+                }
+                .run-btn {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    span {
+                        padding-left: 5px;
+                    }
+                }
+            }
+            .error-output {
+                background-color: rgba(255, 0, 0, 0.1);
+                color: red;
+            }
+            .output-data-container {
+                height: calc(100% - 35px);
+                padding: 5px;
+                overflow-y: auto;
+                position: relative;
+                .loading-card {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    padding: 5px 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: white;
+                    border-radius: 5px;
+                    -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+                    -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+                    span {
+                        margin-left: 5px;
+                    }
+                }
+                .placeholder {
+                    color: gray;
+                }
+                p {
+                    white-space: pre-wrap;
+                }
+            }
+        }
+    }
+}
+
+.my-code-diffeditor-wrapper {
+    height: calc(100vh - 400px);
+    overflow: hidden;
+    border: solid whitesmoke 1px;
+    .my-code-diffeditor {
+        height: calc(100% + 8px);
+        -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        .editor-container {
+            height: 100%;
+        }
+    }
+}
+
+.tab-label-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    color: black;
+    opacity: 1;
+}
+
+.formula-details-action {
+    margin-top: 10px;
+    clear: both;
+    > .item-left {
+        float: left;
+        margin-right: 10px;
+    }
+    > .item-right {
+        float: right;
+        margin-left: 10px;
+    }
+}

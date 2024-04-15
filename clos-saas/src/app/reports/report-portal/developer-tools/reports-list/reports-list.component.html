@@ -1,0 +1,46 @@
+<div class="reports-list-container">
+    <div class="feature-header">
+        <div class="tools-right">
+            <button [@fadeInOut] *ngIf="!isCreateScrolledIntoView" mat-raised-button color="primary" (click)="openItemDetails(null)">
+                <mat-icon>add</mat-icon>
+                <span style="padding-left: 10px;">Create Report</span>
+            </button>
+        </div>
+        <span class="feature-title">Create & Edit Reports</span>
+        <br>
+        <span class="feature-subtitle">You can create and edit report configurations listed in this section.</span>
+    </div>
+    <div class="feature-content" (scroll)="createIsInView($event)">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <!-- CARD VIEW -->
+        <div class="report-cards-container">
+            <div #creationDiv class="report-card-create noselect" (click)="openItemDetails(null)" matTooltip="Create a new report." matRipple>
+                <div class="report-card-create-title">
+                    Create A New Report
+                </div>
+                <mat-icon class="report-card-create-icon">add_circle</mat-icon>
+            </div>
+            <app-report-card *ngFor="let report of report" [report]="report" (click)="openItemDetails(report)"></app-report-card>
+        </div>
+    </div>
+    <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+        <div>
+            <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+        </div>
+        <div>
+            <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+        </div>
+        <div>
+            <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <button mat-fab color="primary" matTooltip="Reload items in page." class="refresh-button" [disabled]="loadingItems" (click)="refreshItems()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</div>

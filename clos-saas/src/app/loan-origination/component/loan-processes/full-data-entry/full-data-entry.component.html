@@ -1,0 +1,466 @@
+<!-- CHECKS FOR ACCESS RIGHTS -->
+<div class="no-access" *ngIf="!ac.super && !ac.items?.FULL_DATA_CAPTURE_VIEW">
+    <app-no-access></app-no-access>
+</div>
+
+<!-- LOADING CONTAINER - ON FETCHING FULL DATA -->
+<div class="loading-container" [@fadeInOut] *ngIf="loading">
+    <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+    <span>Fetching Data... Please wait...</span>
+</div>
+
+<!-- MAIN CONATINER - FULL DATA CAPTURE-->
+<section *ngIf="ac.super || ac.items?.FULL_DATA_CAPTURE_VIEW" [hidden]="loading">
+    <p class="mb-1" style="font-weight: 600;margin-left: 17px;margin-top: 15px;">FULL DATA CAPTURE</p>
+    <div class="at-separator-thick"></div>
+    <!-- STEPPER STARTS -->
+    <mat-stepper [linear]="true" [selectedIndex]="SelectedTabIndex" #stepper>
+        <!-- COMPANY DETAILS - FORM -->
+        <mat-step label="Company Details">
+            <div class="row">
+                <div class="col-lg-6 p-4" style="    background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                height: max-content;
+                border-top-left-radius: 10px;">
+                    <div class="pt-4">
+                        <mat-hint style="margin: 6px;" align="start"><strong>Main Activity</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="text" placeholder="Enter the Main Activity"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.mainActivity"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Sector</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field select-field">
+                            <mat-select [(ngModel)]="loanService.applicationObject.fullData.companyDetails.sector">
+                                <mat-option value="Retail">Retail</mat-option>
+                                <mat-option value="F&B">F&B</mat-option>
+                                <mat-option value="Services">Services</mat-option>
+                                <mat-option value="Wholesale">Wholesale</mat-option>
+                                <mat-option value="Construction">Construction</mat-option>
+                                <mat-option value="Agriculture">Agriculture</mat-option>
+                                <mat-option value="Others">Others</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Years in Business<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="number" placeholder="Enter the Years in Business"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.companyYearsInBusiness"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Declared Revenue</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="number" placeholder="Enter the Declared Revenue"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.declaredRevenue"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Company Address<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint><br>
+                        <br>
+                        <mat-hint style="margin: 6px;font-size: 12px;" align="start" class="pt-3"><strong>Unit No</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="text" placeholder="Enter the Unit No" (ngModelChange)="addressDisable($event)"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.companyAddress == null?'':loanService.applicationObject.fullData.companyDetails.companyAddress.unitNo"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;font-size: 12px;" align="start"><strong>Street</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="text" placeholder="Enter the Street" (ngModelChange)="addressDisable($event)"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.companyAddress == null?'':loanService.applicationObject.fullData.companyDetails.companyAddress.streetAddress"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;font-size: 12px;" align="start"><strong>District</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="text" placeholder="Enter the District" (ngModelChange)="addressDisable($event)"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.companyAddress == null?'':loanService.applicationObject.fullData.companyDetails.companyAddress.district"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;font-size: 12px;" align="start"><strong>City</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="text" placeholder="Enter the City" (ngModelChange)="addressDisable($event)"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.companyAddress == null?'':loanService.applicationObject.fullData.companyDetails.companyAddress.city"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;font-size: 12px;" align="start"><strong>Zip Code</strong> </mat-hint>
+
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="numver" placeholder="Enter the Zip Code" (ngModelChange)="addressDisable($event)"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.companyAddress == null?'':loanService.applicationObject.fullData.companyDetails.companyAddress.zipCode"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Number of Employees</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="number" placeholder="Enter the Number of Employees"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.numberOfEmployees"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Last Year Revenue </strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="number" placeholder="Enter the Revenue in last financial year"
+                                [(ngModel)]="loanService.applicationObject.fullData.companyDetails.lastYearRevenue"
+                                autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex" style="margin-top: 5px;">
+                        <div style="margin-right: auto;">
+                            <button mat-button class="go-back-btn" style="background:blue;color:white"
+                                [routerLink]="'/loan-org/loan/main-app-list/loan-processes/process/1'">
+                                <span class="material-symbols-outlined" style="margin-right: 10px;font-size: 12px;">
+                                    arrow_back_ios_new
+                                </span>Go to Initial Data</button>
+                        </div>
+                        <button mat-button class="next-btn" *ngIf="ac.super || ac.items?.FULL_DATA_CAPTURE_AMEND"
+                        [disabled]="!loanService.applicationObject.fullData.companyDetails.companyYearsInBusiness ||
+                        addressFeild==''"
+                            (click)="appID == null?createCompanyFullData():saveCompanyFullData();getApplicant();"><span class="material-symbols-outlined"
+                                style="margin-right: 10px;color: white;">
+                                save
+                            </span>Save & Next</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+        <!-- APPLICANT DETAILS - FORM -->
+        <mat-step label="Applicant Details">
+            <!-- <div *ngIf="showApplicant=='true'">
+                <div>
+                <mat-form-field appearance="fill" style="font-size: 12px;
+                width: 85%;
+                float: left;"  class="mt-2 no-underline select-field" >
+                <span class="material-symbols-outlined" matPrefix>
+                    search
+                    </span>
+                    <input matInput type="text" style="font-size: 14px;margin-left: 10px;" placeholder="Search all applicants" [matAutocomplete]="autoGroup" />
+                    <span class="material-symbols-outlined" matSuffix>
+                        tune
+                        </span>
+                        <mat-autocomplete #autoGroup="matAutocomplete">
+                            <mat-optgroup >
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p class="mb-0 font-weight-bold ">Customer Name</p>
+                                        <p class="mb-0 font-weight-bold ">Email Address</p>
+                                        <p class="mb-0 font-weight-bold ">Phone Number</p>
+                                        <p class="mb-0 font-weight-bold ">CIF Number</p>
+                                        <p class="mb-0 font-weight-bold ">ID Type</p>
+                                        <p class="mb-0 font-weight-bold ">ID Number</p>
+                                        <p class="mb-0 font-weight-bold">ID Issue Country</p>
+                                        <p class="mb-0 font-weight-bold">Date of Birth</p>
+                                        <p class="mb-0 font-weight-bold">Application Date (From - To)</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput >
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <input matInput [matDatepicker]="picker1">
+                                            <mat-hint>MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                          </mat-form-field>
+                                          <mat-form-field class="filter-field">
+                                            <mat-date-range-input [rangePicker]="picker">
+                                              <input matStartDate>
+                                              <input matEndDate>
+                                            </mat-date-range-input>
+                                            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-date-range-picker #picker></mat-date-range-picker>
+                                          </mat-form-field>
+                                    </div>
+                                    <div class="d-flex" style="margin-top: 5px;">
+                                        <div style="margin-right: auto;">
+                                        </div>
+                                        <button mat-button class="go-back-btn" style="
+                                        margin-right:10px">
+                                            Reset</button>
+                                        <button mat-button class="next-btn" >Search</button>
+                                    </div>
+                                </div>
+                                <mat-option disabled>
+                             </mat-option>
+                          </mat-optgroup>
+                        </mat-autocomplete>
+                </mat-form-field>
+                <button mat-button class="save-btn mb-3" *ngIf="ac.super || ac.items?.FULL_DATA_CAPTURE_AMEND" style="float: right;margin: 8px;"(click)="showApplicant = 'false'" ><span
+                        class="material-symbols-outlined" style="margin-right: 10px;color: blue;">
+                        group_add
+                    </span>Add New Applicant</button></div>
+                <table>
+                    <tr style="color:#6b6666;background-color: aliceblue;">
+                        <th>SI.No</th>
+                        <th>Customer Name</th>
+                        <th>ID Type</th>
+                        <th>ID Number</th>
+                        <th>ID Issue Country</th>
+                        <th>ID Expiry Date</th>
+                        <th>Salutation</th>
+                        <th>Customer Number</th>
+                        <th>Date of Birth</th>
+                        <th>Nationality</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr *ngFor="let item of loanProcess">
+                        <td style="color: gray">{{item.sno}}</td>
+                        <td style="color: gray">{{item.appName}}</td>
+                        <td style="color: gray">-</td>
+                        <td style="color: gray">1DGC8970</td>
+                        <td style="color: gray">xxx</td>
+                        <td style="color: gray">11-09-2021</td>
+                        <td style="color: gray">-</td>
+                        <td style="color: gray">476TUI988</td>
+                        <td style="color: gray">10-04-1998</td>
+                        <td style="color: gray">US</td>
+                        <td style="color: green"><span class="material-symbols-outlined" style="cursor: pointer;" (click)="showApplicant = 'false'" >edit_note</span></td>
+                        <td style="color: red"><span class="material-symbols-outlined">delete</span></td>
+                    </tr>
+                </table>
+                <div class="d-flex" style="margin-top: 15px;">
+                    <div style="margin-right: auto;">
+                        <button mat-button class="go-back-btn" matStepperPrevious>
+                            <span class="material-symbols-outlined" style="margin-right: 10px;font-size: 12px;">
+                                arrow_back_ios_new
+                            </span>Go Back</button>
+                    </div>
+                    <button mat-button class="next-btn" *ngIf="ac.super || ac.items?.FULL_DATA_CAPTURE_AMEND" (click)="notify()" matStepperNext><span
+                            class="material-symbols-outlined" style="margin-right: 10px;color: white;">
+                            save
+                        </span>Save & Next</button>
+                </div>
+            </div>
+            <app-applicant-detail *ngIf="showApplicant=='false'" (showPage)="getValue($event)"></app-applicant-detail> -->
+            <div class="row">
+                <div class="col-lg-12 p-4" 
+                    style="background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                    height: max-content;
+                    border-top-left-radius: 10px;"> 
+                    <div>
+                        <button mat-button class="save-btn mb-3" (click)="goToCreateEdit(data)"><span
+                            class="material-symbols-outlined" style="margin-right: 10px;color: blue;">
+                            group_add
+                        </span>Create Applicant</button>
+                    </div>
+                    <div class="content-container">
+                        <table>
+                            <tr style="color:#6b6666;">
+                                <th *ngFor="let list of headers">{{list}}</th>
+                            </tr>
+                            <tr *ngFor="let list of applicants">
+                                <td>{{list.name == ''?'-':list.name}}</td>
+                                <td>{{list.surName == ''?'-':list.surName}}</td>
+                                <td>{{list.dob == null?'-':list.dob | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{list.applicantYearInBusiness == null?'-':list.applicantYearInBusiness}}</td>
+                                <td>{{list.position == ''?'-':list.position}}</td>
+                                <td>{{list.ownerShip == null?'-':list.ownerShip}}</td>
+                                <td>{{list.bureauSearchConsent == null?'-':list.bureauSearchConsent}}</td>
+                                <td>{{list.emailId == ''?'-':list.emailId}}</td>
+                                <td><button style="border: none;color: green;background-color: whitesmoke;" (click)="goToCreateEdit(list)" [matTooltip]="'Edit'"><mat-icon>edit</mat-icon></button></td>
+                                <td><button style="border: none;color: red;background-color: whitesmoke;"(click)="deleteApplicant(list.id)" [matTooltip]="'Delete'"><mat-icon>delete</mat-icon></button></td>
+                            </tr>
+                        </table>
+                        <ng-container *ngIf="!loadingApplications && applicants?.length==0">
+                            <p class="no-content" style="position: absolute;margin-top: 400px;margin-left: 550px;font-size: 21px;font-weight: bolder;letter-spacing: 1px">No items found!</p>
+                          </ng-container>
+                          <div *ngIf="loadingApplications" class="loading-spinner">
+                            <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                            <span>Loading.. Please wait..</span>
+                          </div>
+                    </div>
+                    <div class="mt-4 d-flex">
+                        <button mat-button style="color: grey;background:blue;font-weight: 600;color:white"
+                            matStepperPrevious> <span class="material-symbols-outlined"
+                                style="margin-right: 10px;font-size: 12px;">
+                                arrow_back_ios_new
+                            </span>Go to Company Details</button>
+                        <button mat-button class="next-btn ml-auto" 
+                            *ngIf="ac.super || ac.items?.FULL_DATA_CAPTURE_AMEND"
+                            (click)="appID == null?createApplicantFullData():saveApplicantFullData()"><span class="material-symbols-outlined"
+                                style="margin-right: 10px;color: white;">
+                                save
+                            </span>Save & Next</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+        <!-- COLLATERAL DETAILS - FORM -->
+        <mat-step label="Collateral Overview">
+            <div class="row">
+                <div class="col-lg-6 p-4" style="    background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                height: max-content;
+                border-top-left-radius: 10px;">
+                    <div class="pt-4">
+                        <mat-hint style="margin: 6px;" align="start" ><strong>Proposed Collateral Type<span style="color:red;margin-left: 5px;" *ngIf="isChecked.length==0">*</span></strong>
+                        </mat-hint>
+                        <!-- Property -->
+                        <div style="width: 0px;margin: 10px">
+                            <ng-container>
+                                <mat-checkbox style="margin-left: 10px" [(ngModel)]="item.checked"
+                                    *ngFor="let item of collateralTypeChecklist"
+                                    (change)="getCollateralFields(item.name,item.checked)"
+                                    [hidden]="item.name == 'Cash'||item.name == 'Machinery'||item.name == 'Inventory'||item.name == 'Receivables'">
+                                    {{item.name}}
+                                </mat-checkbox>
+                            </ng-container>
+                        </div>
+                        <div *ngIf="property" style="margin-left: 15px;">
+                            <mat-hint style="margin: 6px;" align="start"><strong>Address</strong> </mat-hint>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="text" placeholder="Enter the Unit No" (ngModelChange)="addressDisable($event)"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.collateralAddress == null?'':loanService.applicationObject.fullData.collateralDetails.collateralAddress.unitNo"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="text" placeholder="Enter the Street" (ngModelChange)="addressDisable($event)"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.collateralAddress == null?'':loanService.applicationObject.fullData.collateralDetails.collateralAddress.streetAddress"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="text" placeholder="Enter the District" (ngModelChange)="addressDisable($event)"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.collateralAddress == null?'':loanService.applicationObject.fullData.collateralDetails.collateralAddress.district"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="text" placeholder="Enter the City" (ngModelChange)="addressDisable($event)"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.collateralAddress == null?'':loanService.applicationObject.fullData.collateralDetails.collateralAddress.city"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="number" placeholder="Enter the Zip Code" (ngModelChange)="addressDisable($event)"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.collateralAddress == null?'':loanService.applicationObject.fullData.collateralDetails.collateralAddress.zipCode"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                            <mat-hint style="margin: 6px;" align="start"><strong>Type of Property</strong> </mat-hint>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field select-field">
+                                <mat-select
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.propertyType">
+                                    <mat-option value="Residental">Residental</mat-option>
+                                    <mat-option value="Commercial">Commercial</mat-option>
+                                    <mat-option value="Industrial">Industrial</mat-option>
+                                    <mat-option value="MixedUse">Mixed Use</mat-option>
+                                    <mat-option value="Land">Land</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- Machinery -->
+                        <div style="width: 0px;margin: 10px">
+                            <ng-container>
+                                <mat-checkbox style="margin-left: 10px" [(ngModel)]="item.checked"
+                                    *ngFor="let item of collateralTypeChecklist"
+                                    (change)="getCollateralFields(item.name,item.checked)"
+                                    [hidden]="item.name == 'Property'||item.name == 'Inventory'||item.name == 'Cash'||item.name == 'Receivables'">{{item.name}}</mat-checkbox>
+                            </ng-container>
+                        </div>
+                        <!-- Cash -->
+                        <div style="width: 0px;margin: 10px">
+                            <ng-container>
+                                <mat-checkbox style="margin-left: 10px" [(ngModel)]="item.checked"
+                                    *ngFor="let item of collateralTypeChecklist"
+                                    (change)="getCollateralFields(item.name,item.checked)"
+                                    [hidden]="item.name == 'Property'||item.name == 'Inventory'||item.name == 'Machinery'||item.name == 'Receivables'">
+                                    {{item.name}}
+                                </mat-checkbox>
+                            </ng-container>
+                        </div>
+                        <div *ngIf="cash" style="margin-left: 15px;">
+                            <mat-hint style="margin: 6px;" align="start"><strong>Cash</strong> </mat-hint>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="number" placeholder="Enter the Amount Of Deposit"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.depositAmount"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="font-size: 8px;"
+                                class="mt-2 d-block no-underline input-field">
+                                <input matInput type="text" placeholder="Enter the Current Bank"
+                                    [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.currentBank"
+                                    autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                         <!-- Inventory -->
+                         <div style="width: 0px;margin: 10px">
+                            <ng-container>
+                                <mat-checkbox style="margin-left: 10px" [(ngModel)]="item.checked"
+                                    *ngFor="let item of collateralTypeChecklist"
+                                    (change)="getCollateralFields(item.name,item.checked)"
+                                    [hidden]="item.name == 'Property'||item.name == 'Machinery'||item.name == 'Cash'||item.name == 'Receivables'">{{item.name}}</mat-checkbox>
+                            </ng-container>
+                        </div>
+                         <!-- Receivables -->
+                         <div style="width: 0px;margin: 10px">
+                            <ng-container>
+                                <mat-checkbox style="margin-left: 10px" [(ngModel)]="item.checked"
+                                    *ngFor="let item of collateralTypeChecklist"
+                                    (change)="getCollateralFields(item.name,item.checked)"
+                                    [hidden]="item.name == 'Property'||item.name == 'Inventory'||item.name == 'Cash'||item.name == 'Machinery'">{{item.name}}</mat-checkbox>
+                            </ng-container>
+                        </div>
+                        <!-- Approximate Value -->
+                        <mat-hint style="margin: 6px;" align="start"><strong>Approximate Value</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 d-block no-underline input-field">
+                            <input matInput type="number" placeholder="Enter the Approximate Value"
+                                [(ngModel)]="loanService.applicationObject.fullData.collateralDetails.approximateValue"
+                                autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex" style="margin-top: 15px;">
+                                <button mat-button style="background:blue;font-weight: 600;color:white"
+                                    matStepperPrevious> <span class="material-symbols-outlined"
+                                        style="margin-right: 10px;font-size: 12px;">
+                                        arrow_back_ios_new
+                                    </span>Go to Applicant Details</button>
+                                    <!-- [disabled]="isChecked.length==0  ||
+                                !loanService.applicationObject.fullData.collateralDetails.propertyType ||
+                                addressFeild==''" -->
+                                <button mat-button class="next-btn ml-auto" matStepperNext 
+                                    *ngIf="ac.super || ac.items?.FULL_DATA_CAPTURE_AMEND" 
+                                    (click)="appID == null?createCollateralFullData():saveCollateralFullData()">
+                                    <span class="material-symbols-outlined" style="margin-right: 10px;">
+                                        save
+                                    </span>Save & Continue
+                                </button>
+                                <!-- [style.color]="(isChecked.length==0)?'rgba(0, 0, 0, 0.26)':'white'" -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</section>

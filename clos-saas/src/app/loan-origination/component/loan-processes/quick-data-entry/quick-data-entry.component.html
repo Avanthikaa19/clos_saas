@@ -1,0 +1,135 @@
+<!-- CHECKS FOR ACCESS RIGHTS -->
+<div class="no-access" *ngIf="!ac.super && !ac.items?.INITIAL_DATA_CAPTURE_VIEW">
+    <app-no-access></app-no-access>
+</div>
+
+<!-- LAODING CONTAINER - ON FETCHING FULL DATA -->
+<div class="loading-container" [@fadeInOut] *ngIf="loading">
+    <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+    <span>Fetching Data... Please wait...</span>
+</div>
+
+<!-- MAIN CONTAINER -->
+<section class="mt-2" style="margin-left: 10px;" *ngIf="ac.super || ac.items?.INITIAL_DATA_CAPTURE_VIEW"
+    [hidden]="loading">
+    <div class="row row-shadow">
+        <div class="col-lg-12 p-4" style="background: white;
+        border-top-right-radius: 10px;">
+            <p class="mb-1" style="font-weight: 600;">INITIAL DATA CAPTURE</p>
+            <div class="at-separator-thick"></div> 
+            <div class="pt-4">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <mat-hint style="margin: 6px;" align="start"><strong>Company Name<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;"
+                                [(ngModel)]="loanService.applicationObject.initialData.companyName"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Company Type<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <mat-select [(ngModel)]="loanService.applicationObject.initialData.companyType">
+                                <mat-option value="Individual">Individual</mat-option>
+                                <mat-option value="Sole Proprietorship">Sole Proprietorship</mat-option>
+                                <mat-option value="Partnership">Partnership</mat-option>
+                                <mat-option value="Corporation">Corporation</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>SEC/DTI Registration No.<span style="color:red;margin-left: 5px;">*</span></strong>
+                        </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;"
+                                [(ngModel)]="loanService.applicationObject.initialData.secTDINo" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Applicant Name<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <input matInput type="text" style="font-size: 12px;"
+                                [(ngModel)]="loanService.applicationObject.initialData.applicantName"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Contact Number<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <input matInput type="number" style="font-size: 12px;"
+                                [(ngModel)]="loanService.applicationObject.initialData.contactNumber"
+                                autocomplete="off" />
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Loan Type<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <section class="d-flex mt-4 text-secondary" style="font-size: 13px;">
+                            <mat-radio-group [(ngModel)]="loanService.applicationObject.initialData.loanType"
+                                (ngModelChange)="loanService.applicationObject.initialData.loanPurpose = null;getLoanPurposeList(loanService.applicationObject.initialData.loanType)">
+                                <mat-radio-button style="margin: 10px;" [value]="'Revolving Credit Line'">Revolving
+                                    Credit Line</mat-radio-button>
+                                <mat-radio-button style="margin: 10px;" [value]="'Short Term Loan'">Short Term Loan
+                                </mat-radio-button>
+                                <mat-radio-button style="margin: 10px;" [value]="'Trade Loan'">Trade Loan
+                                </mat-radio-button>
+                                <mat-radio-button style="margin: 10px;" [value]="'Term Loan'">Term Loan
+                                </mat-radio-button>
+                                <mat-radio-button style="margin: 10px;" [value]="'Business Card'">Business Card
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </section>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Loan Purpose<span style="color:red;margin-left: 5px;">*</span></strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <mat-select [(ngModel)]="loanService.applicationObject.initialData.loanPurpose">
+                                <mat-option *ngFor="let item of loanPurpose" value={{item}}>{{item}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-hint style="margin: 6px;" align="start"><strong>Loan Amount</strong> </mat-hint>
+                        <mat-form-field appearance="fill" style="font-size: 8px;"
+                            class="mt-2 no-underline select-field">
+                            <input matInput type="number" min="500000"
+                                [(ngModel)]="loanService.applicationObject.initialData.loanAmount"
+                                onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 46 && event.charCode <= 57"
+                                style="font-size: 12px;" autocomplete="off" />
+                        </mat-form-field>
+                        <mat-error *ngIf="value<500000">Amount can't be less than 5,00,000</mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex" style="margin-top: 15px;">
+                        <div style="margin-right: auto;">
+                            <button mat-button class="go-back-btn" style="color:white;background:blue"
+                                [routerLink]="'/loan-org/loan/main-app-list'">
+                                <span class="material-symbols-outlined" style="margin-right: 10px;font-size: 12px;">
+                                    arrow_back_ios_new
+                                </span>Go Back to Main Screen</button>
+                        </div>
+                        <div style="margin-right: auto;"></div>
+                        <button mat-button class="next-btn" *ngIf="ac.super || ac.items?.INITIAL_DATA_CAPTURE_AMEND"
+                            [routerLink]="'/loan-org/loan/main-app-list/loan-processes/process/2'"
+                            (click)="saveInitialData()" [disabled]="value<500000 || 
+                                loanService.applicationObject.initialData.companyName == ''||
+                                loanService.applicationObject.initialData.companyType == ''|| 
+                                loanService.applicationObject.initialData.secTDINo == ''||
+                                loanService.applicationObject.initialData.applicantName == ''||
+                                loanService.applicationObject.initialData.loanType == ''||
+                                loanService.applicationObject.initialData.contactNumber == null ||
+                                loanService.applicationObject.initialData.loanPurpose == null
+                            "><span 
+                            [style.opacity]="(
+                                loanService.applicationObject.initialData.companyName == ''||
+                                loanService.applicationObject.initialData.companyType == ''||
+                                loanService.applicationObject.initialData.secTDINo == ''||
+                                loanService.applicationObject.initialData.applicantName == ''||
+                                loanService.applicationObject.initialData.loanType == ''||
+                                loanService.applicationObject.initialData.contactNumber == null ||
+                                loanService.applicationObject.initialData.loanPurpose == null
+                            )?'0':''"
+                                class="material-symbols-outlined" style="margin-right: 10px;color: white;">
+                                save
+                            </span>Save & Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

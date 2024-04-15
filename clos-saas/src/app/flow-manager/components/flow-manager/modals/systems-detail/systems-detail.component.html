@@ -1,0 +1,121 @@
+<div class="component-container">
+    <div class="header-wrapper">
+      <div class="icon noselect">
+        <mat-icon>dvr</mat-icon>
+      </div>
+      <div class="header-container noselect">
+        <span class="title">Interface System {{system.id ? '- ' + originalName : ''}}</span>
+        <span class="description">You can edit your interface system here.</span>
+      </div>
+    </div>
+    <div class="content-container">
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+        <mat-tab>
+          <ng-template mat-tab-label style="padding: 0; margin: 0;">
+            <div class="noselect custom-mat-tab-label" [class.custom-mat-tab-label-selected]="selectedTabIndex === 0">
+              <mat-icon>info</mat-icon>
+              <span>Details</span>
+            </div>
+          </ng-template>
+          <div class="tab-content-container">
+            <div class="details-card">
+              <div class="details-row" *ngIf="system.id">
+                <div class="details-label noselect">
+                  ID:
+                </div>
+                <div class="details-data">
+                  <input class="min-input-id" [(ngModel)]="system.id" readonly disabled>
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: systemName">
+                  Name:
+                </div>
+                <div class="details-data">
+                  <input class="min-input" [(ngModel)]="system.systemName">
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: systemDescription">
+                  Description:
+                </div>
+                <div class="details-data">
+                  <input class="min-input" [(ngModel)]="system.systemDescription">
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: systemCategory">
+                  Category:
+                </div>
+                <div class="details-data">
+                  <input class="min-input" [(ngModel)]="system.systemCategory">
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: critical">
+                  Critical System:
+                </div>
+                <div class="details-data">
+                  <mat-slide-toggle [(ngModel)]="system.critical" color="warn"></mat-slide-toggle>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="details-header noselect">
+                <span>Display Layout:</span>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: displayName">
+                  Display Name:
+                </div>
+                <div class="details-data">
+                  <input class="min-input" [(ngModel)]="system.displayName">
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: displayColor">
+                  Display Color:
+                </div>
+                <div class="details-data">
+                  <input class="min-input" [(ngModel)]="system.displayColor">
+                  <div class="color-preview" [style.background-color]="system.displayColor && isColor(system.displayColor) ? system.displayColor : 'dimgray'"></div>
+                </div>
+              </div>
+              <div *ngIf="!isColor(system.displayColor)" class="color-error">
+                Not a valid color! Default value of dimgray will be used.
+              </div>
+              <div class="divider"></div>
+              <div class="details-header noselect">
+                <span>Alert Configuration:</span>
+              </div>
+              <div class="details-row">
+                <div class="details-label noselect" matTooltip="Import Field: alertConfig">
+                  Alert Configuration:
+                </div>
+                <div class="details-data">
+                  <input class="min-input" [(ngModel)]="system.alertConfig">
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div class="actions-container">
+      <mat-icon *ngIf="canSave() && messageIcon">{{messageIcon}}</mat-icon>
+      <span *ngIf="canSave()" class="message noselect">{{canSave()}}</span>
+      <div class="spacer"></div>
+      <button mat-stroked-button color="warn" (click)="onClose()" cdkFocusInitial>
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+      </button>
+      <button mat-raised-button color="primary" *ngIf="!system.id" (click)="createSystem()"
+        [disabled]="canSave()">
+        <mat-icon>add</mat-icon>
+        <span>{{ saving ? 'Creating..' : 'Create'}}</span>
+      </button>
+      <button mat-raised-button color="primary" *ngIf="system.id" (click)="updateSystem()" [disabled]="canSave()">
+        <mat-icon>save</mat-icon>
+        <span>{{ saving? 'Updating..': 'Update'}}</span>
+      </button>
+    </div>
+  </div>

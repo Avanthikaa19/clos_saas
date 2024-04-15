@@ -1,0 +1,648 @@
+<div class="full-container" style="background:aliceblue;width:100%">
+<div style="text-align: center;
+font-family: cursive;
+font-size: 25px;
+font-weight: bold;
+letter-spacing: 3px;">
+    VIEW DUPLICATION DETAILS  <br>
+    <span style="color:black;font-size: 20px; font-weight: bold;">APPLICANT ID:<span
+        style="color:red;font-size: 20px; font-weight: bold;">{{data}}</span></span>
+</div>
+<div class="main-container" style="overflow:hidden">
+    <section>
+        <!-- STEPPER STARTS -->
+        <mat-stepper [linear]="true"  #stepper>
+            <mat-step label="Initial Details">
+                    <div style="height: 650px;overflow: auto; background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);border-top-left-radius: 10px;">
+                        <ng-container>
+                            <div class="section-container">
+                                <ng-container>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                                Company Name :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.companyName" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                                Company Type :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.companyType" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                               SEC/DTI Registration No  :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.secTDINo" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                                Applicant Name :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.applicantName" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                                Contact Number :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.contactNumber" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div> <div class="section-content">
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Loan Type :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.loanType" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Loan Purpose :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.loanPurpose" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <ng-container>
+                                            <div class="section-name">
+                                                Loan Amount :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.loanAmount" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                                Created Time :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.createdTime" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name">
+                                                IDC Status :
+                                            </div>
+                                            <div class="input-type">
+                                                <input style="width: 25%" [(ngModel)]="sectionDetails?.initialData.idc_status" readonly>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <!-- <div class="section-content">
+                                        <ng-container>
+                                            <div class="section-name" style="font-weight:900">
+                                                User Defined Fields :
+                                            </div>
+                                            <table>
+                                                <tr style="color:#6b6666;">
+                                                <th *ngFor="let list of udfHeaders">{{list}}</th>
+                                                </tr>
+                                                <tr *ngFor="let item of udfList">
+                                                <td style="color: #606266">{{item.id}}</td>
+                                                <td style="color: #606266">{{item.fieldId}}</td>
+                                                <td style="color: #606266">{{item.decimalValue}}</td>
+                                                <td style="color: #606266">{{item.dateValue}}</td>
+                                                <td style="color: #606266">{{item.booleanValue}}</td>
+                                                <td style="color: #606266">{{item.targetId}}</td>
+                                                <td style="color: #606266">{{item.tableId}}</td>
+                                                <td style="color: #606266">{{item.stringValue}}</td>
+                                                <td style="color: #606266">{{item.numberValue}}</td>  
+                                                <td style="color: #606266">{{item.modifiedByName}}</td>  
+                                                <td style="color: #606266">{{item.modificationTime}}</td>      
+                                            </tr>
+                                            </table>
+                                      <ng-container *ngIf="udfList?.length==0">
+                                       <p class="no-content text-secondary" style="margin-top: 2%;margin-left: 50%;font-size: 15px;font-weight: bolder;letter-spacing: 1px">No items found!</p>
+                                     </ng-container>
+                                    </ng-container>
+                                 </div> -->
+                                </ng-container>                      
+                    </div>       
+                    </ng-container> 
+                    <div style="margin: 1rem; float: right">
+                        <button class="tl-btn-submit" matStepperNext >
+                            <mat-icon>done_all</mat-icon>
+                            <span>Next</span>
+                        </button>
+                    </div>       
+                </div>      
+            </mat-step>    
+        
+            <mat-step label="Applicant Details">
+                <div style="height: 650px;overflow: auto; background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);border-top-left-radius: 10px;">
+                    <ng-container>
+                        <div class="section-container">
+                            <ng-container>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                           First Name :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.name" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Last Name :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.surName" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Dob :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.dob" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Title/Position :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.position" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Email Id :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.emailId" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Ownership :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.ownerShip" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Applicant Year in Business :
+                                        </div>
+                                        <div class="input-type">
+                                            <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.applicantDetails.applicantYearInBusiness" readonly>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="section-content">
+                                    <ng-container>
+                                        <div class="section-name">
+                                            Bureau Search Consent :
+                                        </div>
+                                        <div class="input-type">
+                                            <mat-checkbox style="margin-left:10px"
+                                                [(ngModel)]="sectionDetails?.fullData.applicantDetails.bureauSearchConsent"disabled readonly >
+                                            </mat-checkbox>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                    <div style="margin: 1rem; float: right">
+                        <button class="tl-btn-submit" matStepperNext >
+                            <mat-icon>done_all</mat-icon>
+                            <span>Next</span>
+                        </button>
+                    </div>
+                    <div style="margin: 1rem; float: right">
+                        <button class="tl-btn-submit" matStepperPrevious>
+                            <mat-icon>keyboard_return</mat-icon>
+                            <span>Back</span>
+                        </button>
+                    </div>
+                </div>   
+                </mat-step>
+                
+                    <mat-step label="Company Details">
+                        <div style="background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                        border-top-left-radius: 10px;overflow: scroll;" [ngStyle]="{'height': sectionDetails['fullData']['companyDetails']['companyAddress'] ? '650px' : '1050px',
+                         'overflow': sectionDetails['fullData']['companyDetails']['companyAddress'] ? 'auto' : 'hidden'}">
+                            <ng-container>
+                                <div class="section-container">
+                                    <ng-container>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Main Activity :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.mainActivity" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Sector :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.sector" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Years in Business :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.companyYearsInBusiness" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Declared Revenue :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.declaredRevenue" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content" *ngIf="sectionDetails?.fullData.companyDetails.companyAddress != null">
+                                            <ng-container>
+                                                <div class="section-name" style="font-weight:800">
+                                                    Company Address :
+                                                </div>
+                                                <div class="section-name mt-3">
+                                                    Unit No :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.companyAddress.unitNo" readonly>
+                                                </div>
+                                                <div class="section-name mt-5">
+                                                    Street Address :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.companyAddress.streetAddress" readonly>
+                                                </div>
+                                                <div class="section-name mt-5">
+                                                    District :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.companyAddress.district" readonly>
+                                                </div>
+                                                <div class="section-name mt-5">
+                                                    City :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.companyAddress.city" readonly>
+                                                </div>
+                                                <div class="section-name  mt-5">
+                                                    Zip Code :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.companyAddress.zipCode" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Number of Employees :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.numberOfEmployees" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="section-content">
+                                            <ng-container>
+                                                <div class="section-name">
+                                                    Last Year Revenue :
+                                                </div>
+                                                <div class="input-type">
+                                                    <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.companyDetails.lastYearRevenue" readonly>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <div style="margin: 1rem; float: right">
+                                <button class="tl-btn-submit" matStepperNext >
+                                    <mat-icon>done_all</mat-icon>
+                                    <span>Next</span>
+                                </button>
+                            </div>
+                            <div style="margin: 1rem; float: right">
+                                <button class="tl-btn-submit" matStepperPrevious >
+                                    <mat-icon>keyboard_return</mat-icon>
+                                    <span>Back</span>
+                                </button>
+                            </div>
+                        </div>
+                        </mat-step>
+                        
+
+                            <mat-step label="Collateral Details">
+                            <div style="background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);  border-top-left-radius: 10px;"
+                            [ngStyle]="{'height': sectionDetails['fullData']['collateralDetails']['collateralAddress'] ? '650px' : '1050px',
+                                     'overflow': sectionDetails['fullData']['collateralDetails']['collateralAddress']? 'auto' : 'hidden'}">
+                                <ng-container>
+                                    <div class="section-container">
+                                        <ng-container>
+                                            <div class="section-content">
+                                                <ng-container>
+                                                    <div class="section-name">
+                                                        Collateral Type :
+                                                    </div>
+                                                    <div class="input-type">
+                                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.collatralType" readonly>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                            <div class="section-content" *ngIf="sectionDetails?.fullData.collateralDetails.collateralAddress != null">
+                                <ng-container>
+                                    <div class="section-name" style="font-weight:800">
+                                        Collateral Address :
+                                    </div>
+                                    <div class="section-name">
+                                        City :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.collateralAddress.city" readonly>
+                                    </div>
+                                    <div class="section-name">
+                                        District :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.collateralAddress.district" readonly>
+                                    </div>
+                                    <div class="section-name">
+                                        Street Address :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.collateralAddress.streetAddress" readonly>
+                                    </div>
+                                    <div class="section-name">
+                                        Unit No :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.collateralAddress.unitNo" readonly>
+                                    </div>
+                                    <div class="section-name">
+                                        Zip Code :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.collateralAddress.zipCode" readonly>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="section-content">
+                                <ng-container>
+                                    <div class="section-name">
+                                        Approximate Value :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.approximateValue" readonly>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="section-content">
+                                <ng-container>
+                                    <div class="section-name">
+                                        Current Bank :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.currentBank" readonly>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="section-content">
+                                <ng-container>
+                                    <div class="section-name">
+                                        Deposit Amount :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.depositAmount" readonly>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="section-content">
+                                <ng-container>
+                                    <div class="section-name">
+                                        FDC Status :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.fdc_status" readonly>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="section-content">
+                                <ng-container>
+                                    <div class="section-name">
+                                        Property Type :
+                                    </div>
+                                    <div class="input-type">
+                                        <input style="width: 25%" [(ngModel)]="sectionDetails?.fullData.collateralDetails.propertyType" readonly>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            </ng-container>
+                            </div>
+                            </ng-container>
+                            <div style="margin: 1rem; float: right">
+                                <button class="tl-btn-submit" matStepperNext >
+                                    <mat-icon>done_all</mat-icon>
+                                    <span>Next</span>
+                                </button>
+                            </div>
+                            <div style="margin: 1rem; float: right">
+                                <button class="tl-btn-submit" matStepperPrevious >
+                                    <mat-icon>keyboard_return</mat-icon>
+                                    <span>Back</span>
+                                </button>
+                            </div>
+                            </div>               
+                           </mat-step>
+                           
+                        <mat-step label="Documentations"> 
+                                <section class="mt-3" style="margin-left: 10px;height: 610px;background:whitesmoke;">
+                                    <mat-tab-group>
+                                        <mat-tab color="accent">
+                                            <ng-template mat-tab-label>
+                                                <span class="material-symbols-outlined" style="padding: 5px;">
+                                                    person
+                                                    </span>
+                                                Applicant Level
+                                            </ng-template>
+                                            <div class="row row-shadow">
+                                                <div class="col-lg-12 p-4" style="background: whitesmoke;border-top-right-radius: 10px;background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                                                height: max-content;  border-top-left-radius: 10px;">
+                                                    <div class="row mt-2" style="overflow:auto;height:450px;">
+                                                        <div class="col-lg-12">
+                                                        <table>
+                                                            <tr style="color:#6b6666;">
+                                                            <th *ngFor="let list of headers">{{list}}</th>
+                                                            </tr>
+                                                            <tr *ngFor="let item of applicantLevel">
+                                                            <td style="color: #606266">{{item.documentName}}<span class="text-danger ml-1" *ngIf="item.required == 'Mandatory'">*</span></td>
+                                                            <td style="color: #606266">{{item.documentType}}</td>
+                                                            <td style="color: #606266">{{item.documentDate}}</td>
+                                                            <td style="color: #606266">{{item.required}}</td>
+                                                            <td style="color: #606266">{{item.stage}}</td>
+                                                            <td style="color: #606266">{{item.documentStatus}}</td>
+                                                            <td style="color: #606266">{{item.dataCapture}}</td>
+                                                            <td style="color: #606266">{{item.daysInStatus}}</td>
+                                                            <td style="color: #606266">{{item.fileName}}</td>
+                                                            <td style="color: #606266">{{item.fileType}}</td>
+                                                            
+                                                        </tr>
+                                                        </table>
+                                                        <ng-container *ngIf="applicantLevel?.length==0">
+                                                            <p class="no-content text-secondary" style="margin-top: 250px;margin-left: 550px;font-weight: bolder;font-size: 21px;letter-spacing: 1px;">No items found!</p>
+                                                        </ng-container>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </mat-tab>
+                                        <mat-tab color="accent">
+                                            <ng-template mat-tab-label>
+                                                <span class="material-symbols-outlined" style="padding: 5px;">
+                                                    fact_check
+                                                    </span>
+                                                Application Level
+                                            </ng-template>
+                                             <div class="row row-shadow">
+                                                <div class="col-lg-12 p-4" style="background: white;border-top-right-radius: 10px;background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                                                height: max-content;  border-top-left-radius: 10px;">
+                                                    <div class="row mt-2" style="overflow:auto;height:450px">
+                                                        <div class="col-lg-12">
+                                                        <table>
+                                                            <tr style="color:#6b6666;">
+                                                            <th *ngFor="let list of headers">{{list}}</th>
+                                                            </tr>
+                                                            <tr *ngFor="let item of applicationsLevel">
+                                                            <td style="color: #606266">{{item.documentName}}<span class="text-danger ml-1" *ngIf="item.required == 'Mandatory'">*</span></td>
+                                                            <td style="color: #606266">{{item.documentType}}</td>
+                                                            <td style="color: #606266">{{item.documentDate}}</td>
+                                                            <td style="color: #606266">{{item.required}}</td>
+                                                            <td style="color: #606266">{{item.stage}}</td>
+                                                            <td style="color: #606266">{{item.documentStatus}}</td>
+                                                            <td style="color: #606266">{{item.dataCapture}}</td>
+                                                            <td style="color: #606266">{{item.daysInStatus}}</td>
+                                                            <td style="color: #606266">{{item.fileName}}</td>
+                                                            <td style="color: #606266">{{item.fileType}}</td>
+                                                            
+                                                        </tr>
+                                                        </table>
+                                                        <ng-container *ngIf="applicationsLevel?.length==0">
+                                                            <p class="no-content text-secondary" style="margin-top: 250px;font-weight: bolder;margin-left: 550px;font-size: 21px;letter-spacing: 1px;">No items found!</p>
+                                                        </ng-container>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-tab>
+                                        <mat-tab color="accent">
+                                            <ng-template mat-tab-label>
+                                                <span class="material-symbols-outlined" style="padding: 5px;">
+                                                    real_estate_agent
+                                                    </span>
+                                                 Collateral Level
+                                            </ng-template>
+                                            <div class="row row-shadow">
+                                                <div class="col-lg-12 p-4" style="background: white;border-top-right-radius: 10px;background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+                                                height: max-content;  border-top-left-radius: 10px;">
+                                                    <div class="row mt-2" style="overflow:auto;height:450px">
+                                                        <div class="col-lg-12">
+                                                        <table>
+                                                            <tr style="color:#6b6666;">
+                                                            <th *ngFor="let list of headers">{{list}}</th>
+                                                            </tr>
+                                                            <tr *ngFor="let item of collateralLevel">
+                                                            <td style="color: #606266">{{item.documentName}}<span class="text-danger ml-1" *ngIf="item.required == 'Mandatory'">*</span></td>
+                                                            <td style="color: #606266">{{item.documentType}}</td>
+                                                            <td style="color: #606266">{{item.documentDate}}</td>
+                                                            <td style="color: #606266">{{item.required}}</td>
+                                                            <td style="color: #606266">{{item.stage}}</td>
+                                                            <td style="color: #606266">{{item.documentStatus}}</td>
+                                                            <td style="color: #606266">{{item.dataCapture}}</td>
+                                                            <td style="color: #606266">{{item.daysInStatus}}</td>
+                                                            <td style="color: #606266">{{item.fileName}}</td>
+                                                            <td style="color: #606266">{{item.fileType}}</td>
+                                                            
+                                                        </tr>
+                                                        </table>
+                                                        <ng-container *ngIf="collateralLevel?.length==0">
+                                                            <p class="no-content text-secondary" style="margin-top: 250px;margin-left: 550px;font-weight: bolder;font-size: 21px;letter-spacing: 1px;">No items found!</p>
+                                                        </ng-container>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-tab>   
+                                                                        
+                                    </mat-tab-group>  
+                                    <div style="margin: 1rem; float: right">
+                                        <button class="tl-btn-submit" (click)="deleteDuplicate();" >
+                                            <mat-icon>done_all</mat-icon>
+                                            <span>Reject</span>
+                                        </button>
+                                    </div>
+                                    <div style="margin: 1rem; float: right">
+                                        <button class="tl-btn-submit"  matStepperPrevious >
+                                            <mat-icon>keyboard_return</mat-icon>
+                                            <span>Back</span>
+                                        </button>
+                                    </div>                       
+                                </section>
+                              
+                        </mat-step>
+                       </mat-stepper>
+</section>
+</div>
+
+</div>

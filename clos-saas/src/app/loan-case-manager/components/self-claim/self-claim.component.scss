@@ -1,0 +1,60 @@
+.main-container {
+    height: 80%;
+    >.userdropdown-contaniner {
+        height: 40%;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        >.span {
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+    }
+    >.assignbtn {
+        margin-top: 2rem;
+        height: 40%;
+        padding-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        >.claim_btnn {
+            background-color: rgba(14, 41, 84, 1);
+            color: white;
+        }
+    }
+}
+
+.btn-container {
+    width: 100%;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.clear_btnn {
+    background-color: black;
+    color: white;
+}
+
+.apply_btnn {
+    background-color: rgba(14, 41, 84, 1);
+    color: white;
+}
+
+mat-form-field {
+    width: 60%;
+    padding-left: 1rem;
+}
+
+::ng-deep .dropdownlist .mat-form-field-underline {
+    display: none;
+}
+
+::ng-deep .mat-dialog-container {
+    overflow: hidden;
+}
+
+mat-select {
+    padding: 1rem;
+    box-shadow: inset 0 0 5px 2px rgba(194, 194, 194, 0.39);
+}

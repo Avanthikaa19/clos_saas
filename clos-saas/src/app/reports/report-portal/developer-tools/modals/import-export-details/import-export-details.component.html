@@ -1,0 +1,70 @@
+
+<div class="layout-detail-container">
+<div class="header-container">
+    <div class="layout-name-wrapper">
+        <span *ngIf="!editingTemplateName">New Export Template</span>
+        <input *ngIf="editingTemplateName" class="min-input">
+        <button mat-icon-button class="edit-btn" (click)="editingTemplateName = !editingTemplateName">
+            <mat-icon [@fadeInOut] *ngIf="!editingTemplateName" style="color: royalblue;">edit</mat-icon>
+            <mat-icon [@fadeInOut] *ngIf="editingTemplateName" style="color: crimson;">done</mat-icon>
+        </button>
+        <span *ngIf="!editingTemplateDesc">New Export Template Description</span>
+        <input *ngIf="editingTemplateDesc" maxlength="255" class="min-input">
+        <button mat-icon-button class="edit-btn" (click)="editingTemplateDesc = !editingTemplateDesc">
+            <mat-icon [@fadeInOut] *ngIf="!editingTemplateDesc" style="color: royalblue;">edit</mat-icon>
+            <mat-icon [@fadeInOut] *ngIf="editingTemplateDesc" style="color: crimson;">done</mat-icon>
+        </button>
+    </div>
+    <div class="title">
+        Export Template Details
+    </div>
+</div>
+
+<div class="export-card-create noselect">
+    <div class="export-card-header">
+        <div class="export-card-header-content">Report Name</div>
+        <div class="export-card-header-content">Extraction Query Name</div>
+        <div class="export-card-header-content">Computation Query Name</div>
+        <div class="export-card-header-content">Layout Name</div>
+        <div class="export-card-header-content">Theme Name</div>
+    </div>
+    <div class="export-card-data">
+        <div class="export-card-data-items">
+            <div class="data-content" (click)="selected(x)" [class.data-content-active]="selectIcon[x]" *ngFor="let x of [1,2,3,4,5,6,7,8,9,10]">
+                <mat-icon *ngIf="selectIcon[x]">done_all</mat-icon>
+                Reports Name {{x}}
+            </div>
+        </div>
+        <div class="export-card-data-items" >
+            <div class="data-content" (click)="selected(x)" [class.data-content-active]="selectIcon[x]" *ngFor="let x of [1,2,3,5]">
+                <mat-icon *ngIf="selectIcon[x]">done_all</mat-icon>
+                Extraction Query Name {{x}}
+            </div>
+        </div>
+        <div class="export-card-data-items">
+            <div class="data-content" (click)="selected(x)" [class.data-content-active]="selectIcon[x]" *ngFor="let x of [1,2,3]">
+                <mat-icon *ngIf="selectIcon[x]">done_all</mat-icon>
+                Computation Query Name {{x}}
+            </div>
+        </div>
+        <div class="export-card-data-items">
+            <div class="data-content" (click)="selected(x)" [class.data-content-active]="selectIcon[x]"  *ngFor="let x of [1,2,3,4,5]">
+                <mat-icon *ngIf="selectIcon[x]">done_all</mat-icon>
+                Layout Name {{x}}
+            </div>
+        </div>
+        <div class="export-card-data-items">
+            <div class="data-content" (click)="selected(x)" [class.data-content-active]="selectIcon[x]"  *ngFor="let x of [1,2]">
+                <mat-icon *ngIf="selectIcon[x]">done_all</mat-icon>
+                Theme Name {{x}}
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <button class="tb-btn noselect" matRipple>
+        <mat-icon>save</mat-icon>
+        <span>Save</span>
+    </button>
+</div>
+</div>

@@ -1,0 +1,435 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,500&display=swap");
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+* {
+    font-size: 1.5rem;
+}
+
+.main-container {
+    background-color: whitesmoke;
+    overflow: hidden;
+}
+
+//FLOW CONTAINER
+.decision-flow-container {
+    >.flow-container {
+        >.tool-bar {
+            display: flex;
+            // margin-left:3px;
+            justify-content: space-between;
+            align-items: center;
+            // border-left: blueviolet 4px solid;
+            // border-right: blueviolet 4px solid;
+            border-radius: 5px;
+            >.create-flow-container {
+                //  float: right;
+                flex: 0 0 auto;
+            }
+            div.spacer {
+                flex: 1 1 auto;
+            }
+            *:not(spacer) {
+                flex: 0 0 auto;
+            }
+        }
+        >.header-box {
+            background-color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            .header {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row;
+            }
+        }
+        >.chart-container {
+            overflow: hidden;
+            background-color: rgb(255, 255, 255);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.01) 4px, transparent 4px), linear-gradient(90deg, rgba(0, 0, 0, 0.01) 4px, transparent 4px), linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+            // -webkit-box-shadow: inset 0px 52px 5px 0px rgba(216, 216, 216, 0.4);
+            // -moz-box-shadow: inset 0px 52px 5px 0px rgba(236, 236, 236, 0.4);
+            // box-shadow: inset 0px 52px 5px 0px rgba(177, 177, 177, 0.4);
+        }
+    }
+}
+
+//RIGHT SIDNAV-CONTAINER
+.example-container {
+    .header-container {
+        height: 50px;
+        border-bottom: 1px solid whitesmoke;
+        >.right-align {
+            float: right;
+            right: 10px;
+        }
+        >.left-align {
+            font-size: 16px;
+            padding: 15px 0px 0px 15px;
+            font-family: "Josefin Sans", sans-serif;
+        }
+    }
+}
+
+.nav-container {
+    width: 350px;
+}
+
+.nav-content-container {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: whitesmoke;
+    border: 0.25px solid lightgray;
+    height: calc(100% - 200px);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    .table-container {
+        border-collapse: collapse;
+        width: 100%;
+        height: 500px;
+        tr {
+            width: 100%;
+            height: 30px;
+        }
+        .min-input {
+            background-color: white;
+            box-sizing: border-box;
+            border: solid transparent 1px;
+            border-radius: 3px;
+            transition: all linear 100ms;
+            width: 85%;
+            margin: 0px 0px 10px 10px;
+            color: silver;
+        }
+        .min-input_black {
+            background-color: white;
+            box-sizing: border-box;
+            border: solid transparent 1px;
+            border-radius: 3px;
+            transition: all linear 100ms;
+            width: 85%;
+            margin: 0px 0px 10px 10px;
+            color: rgb(117, 112, 112);
+        }
+        .min-input:hover {
+            border: solid rgb(218, 218, 218) 1px;
+        }
+        .min-input:focus {
+            border: solid rgba(192, 192, 192, 0.5) 1px;
+        }
+        .min-input:focus:focus-visible {
+            border: solid silver 0.5px;
+            outline: none;
+            box-shadow: none;
+        }
+        .min-input:focus-within {
+            -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        }
+        .min-label {
+            padding: 0 10px 0 10px;
+        }
+        .min-select {
+            background-color: white;
+            padding-left: 2px;
+            min-height: 24px;
+            line-height: 24px;
+            border-radius: 3px;
+            width: 85%;
+            border: solid transparent 1px;
+            transition: all linear 100ms;
+            margin: 0px 0px 10px 10px;
+        }
+        .min-select:hover {
+            border: solid rgb(218, 218, 218) 1px;
+        }
+    }
+}
+
+// :host ::ng-deep .mat-select-value {
+//   color: lightgray !important;
+// }
+:host ::ng-deep .mat-select-value {
+    color: rgb(117, 112, 112) !important;
+}
+
+.card-image-container {
+    // text-align: center;
+    padding: 20px 0px 0px 115px;
+    background-color: whitesmoke;
+    width: 30%;
+    height: 15%;
+    border-radius: 10px 0px 0px 10px;
+    // background: url(../../../../../../assets/Icons/decision_tree_02.png);
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+//GRAPH
+.selected-node {
+    fill: lightgray;
+}
+
+.graph {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.graph .edge {
+    stroke: #666;
+    fill: none;
+}
+
+.graph .edge .edge-label {
+    stroke: none;
+    font-size: 12px;
+    fill: #666;
+}
+
+.graph .panning-rect {
+    fill: transparent;
+    cursor: move;
+}
+
+.graph .node-group .node:focus {
+    outline: none;
+}
+
+.graph {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.graph .edge {
+    stroke: #666;
+    fill: none;
+}
+
+.graph .edge .edge-label {
+    stroke: none;
+    font-size: 12px;
+    fill: #666;
+}
+
+.graph .panning-rect {
+    fill: transparent;
+    cursor: move;
+}
+
+.graph .node-group .node:focus {
+    outline: none;
+}
+
+.edge {
+    path {
+        stroke: #666 !important;
+    }
+}
+
+//ICONS
+//node icons
+//node normal
+g.node.selected-node {
+    >rect {
+        // fill: #008ae6;
+        stroke: rgb(247, 198, 252);
+    }
+}
+
+//edges
+g.edge {
+    >path {
+        cursor: pointer;
+        transition-property: all, fill;
+        transition-timing-function: linear, linear;
+        transition-duration: 150ms, 150ms;
+    }
+}
+
+//node icons
+.svg-icon {
+    width: 1em;
+    height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: #000000d8;
+}
+
+.svg-icon circle {
+    stroke: #ffffff00;
+    stroke-width: 1;
+}
+
+.icon-tick path,
+.icon-tick polygon,
+.icon-tick rect {
+    fill: rgb(188, 226, 188);
+}
+
+.icon-cross path,
+.icon-cross polygon,
+.icon-cross rect {
+    fill: rgb(230, 46, 46);
+}
+
+.icon-reload path,
+.icon-reload polygon,
+.icon-reload rect {
+    fill: rgba(255, 255, 255, 0.6);
+}
+
+.split {
+    display: flex;
+    direction: row;
+}
+
+.header-container {
+    height: 8rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 0.4rem solid #394eb4;
+    border-right: 0.5rem solid #394eb4;
+    border-radius: 5px;
+    margin: 0px 5px 0px 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    div {
+        height: 100%;
+    }
+    >.content-container {
+        flex: 0 0 auto;
+        min-width: 35vw;
+        table {
+            margin-top: 0.8rem;
+        }
+        th,
+        td {
+            padding-left: 3rem;
+            color: gray;
+            font-weight: 500;
+            font-family: "Roboto", sans-serif;
+        }
+    }
+    >.return-type-container {
+        flex: 0 0 auto;
+        min-width: 15vw;
+    }
+    div.spacer {
+        flex: 1 1 auto;
+    }
+    *:not(spacer) {
+        flex: 0 0 auto;
+    }
+}
+
+.flowname {
+    padding-right: 10px;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    color: rgb(88, 87, 87);
+}
+
+.value {
+    height: 3.5rem;
+}
+
+:host ::ng-deep .mat-spinner circle,
+.mat-spinner circle {
+    stroke: #4d4e4d;
+}
+
+.spinner-container {
+    display: grid !important;
+    padding-top: 0px !important;
+    height: 70rem !important;
+    overflow: hidden !important;
+}
+
+.spinner-class {
+    margin: 28rem;
+    margin-left: 58rem;
+    z-index: 1;
+    position: absolute;
+    // left: 0;
+    // right: 0;
+    // bottom: 20px;
+    // color: white;
+    // padding: 0
+}
+
+.button-class:hover {
+    background-color: none;
+}
+
+.loading__line {
+    .load-1 .line:nth-last-child(1) {
+        animation: loadingA 1.5s 1s infinite;
+    }
+    .load-1 .line:nth-last-child(2) {
+        animation: loadingA 1.5s 0.5s infinite;
+    }
+    .load-1 .line:nth-last-child(3) {
+        animation: loadingA 1.5s 0s infinite;
+    }
+    .line {
+        display: inline-block;
+        width: 10px;
+        height: 15px;
+        border-radius: 15px;
+        background-color: #4b9cdb;
+        margin: 0.2rem;
+    }
+    @keyframes loadingA {
+        0% {
+            height: 15px;
+        }
+        50% {
+            height: 35px;
+        }
+        100% {
+            height: 15px;
+        }
+    }
+    p {
+        font-size: 1.6rem;
+        margin-left: 1.2rem;
+        font-weight: 500;
+    }
+}
+
+// :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+//     height: 5rem;
+// }
+:host ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+:host ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    color: rgb(52 69 180);
+    opacity: 1;
+}
+
+::ng-deep .mat-tooltip {
+    font-size: 13px;
+}
+
+.save-disable {
+    color: #394eb4 !important;
+    background-color: white !important;
+    cursor: not-allowed;
+}
+
+.disable-icon {
+    background-color: rgb(236, 229, 222);
+    cursor: not-allowed;
+}

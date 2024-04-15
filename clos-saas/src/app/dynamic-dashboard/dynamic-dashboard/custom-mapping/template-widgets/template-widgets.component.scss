@@ -1,0 +1,26 @@
+.demo-chart{
+    transition: transform 1s;
+}
+
+.demo-chart:hover{
+    transform: scale3d(1.1,1.1,1.5);
+}
+
+.cards-theme-dark {
+    background: #21252b;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.cards-theme-light {
+    // background-color: #fff;
+    padding: 15px;
+    // border: 1px solid rgba(0,0,0,.125);
+}
+.table-hov{
+    transition: all 600ms ease;
+    transform: scale(1); 
+}
+.table-hov:hover{
+    transition: all 600ms ease;
+    transform: scale(1.2); 
+}

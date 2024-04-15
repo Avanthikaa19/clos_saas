@@ -1,0 +1,41 @@
+<div class="main-container">
+    <span class="header-name">
+        AuditBodies List
+    </span>
+    <br>
+    <div class="content-container">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr style="text-transform: capitalize;">
+                        <th *ngFor="let header of auditBodiesHeaders">{{header}}</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr style="top: 5.5%; text-transform: capitalize;">
+                        <th *ngFor="let header of auditBodiesHeaders">
+                            <div class="parent__row-flex">
+                                <input class="min-input flex-grow" style="background-color: white;min-width: 15rem;">
+                                <mat-icon class="flex-shrink" style="font-size: 1.4rem; margin-top: 1rem;">filter_list
+                                </mat-icon>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container>
+                        <tr *ngFor="let auditBodies of auditbodies">
+                            <td *ngFor="let header of auditBodiesHeaders">{{auditBodies[header]}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="button-container">
+        <button mat-raised-button mat-dialog-close color="warn">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+    </mat-dialog-actions>
+</div>

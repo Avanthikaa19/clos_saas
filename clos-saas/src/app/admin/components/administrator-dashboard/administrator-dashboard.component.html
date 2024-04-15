@@ -1,0 +1,193 @@
+<!-- <div class="main-container" *ngIf="ac.super || ac.items?.AD001A_DASHBOARD_VIEW">
+
+    <div class="content-container">
+
+        <div class="top__content-container">
+            <div class="count-container">
+                <div class="ugr__count-container">
+                    <div class="user__count-container">
+                        <div class="uc parent__column-flex">
+                            <div class="header flex-shrink">
+                                Users Count
+                            </div>
+                            <div class="content flex-grow parent__row-flex">
+                                <div class="name flex-grow">
+                                    <mat-icon style="font-size: 10rem;">person</mat-icon>
+                                </div>
+                                <div class="count flex-grow">
+                                    {{userCount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group__count-container">
+                        <div class="gc parent__column-flex">
+                            <div class="header flex-shrink">
+                                Groups Count
+                            </div>
+                            <div class="content flex-grow parent__row-flex">
+                                <div class="name flex-grow">
+                                    <mat-icon style="font-size: 10rem;">groups</mat-icon>
+                                </div>
+                                <div class="count flex-grow">
+                                    {{groupsCount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="role__count-container">
+                        <div class="rc parent__column-flex">
+                            <div class="header flex-shrink">
+                                Roles Count
+                            </div>
+                            <div class="content flex-grow parent__row-flex">
+                                <div class="name flex-grow">
+                                    <mat-icon style="font-size: 10rem;">how_to_reg</mat-icon>
+                                </div>
+                                <div class="count flex-grow">
+                                    {{rolesCount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="approval__count__pending-container">
+                    <div class="approval__count__header">
+                       Monthly Approval
+                    </div>
+                    <div class="approval__count__graph">
+                        <div echarts [options]="approvalCount" class="demo-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="proportion-container">
+                <div class="ugr__proportion-container">
+                    <div class="ugr__proportion__header">
+                        Proportions:-
+                    </div>
+                    <div class="ugr__proportion__content">
+                        <div echarts [options]="userGroupRoleProportion" class="demo-chart"></div>
+                    </div>
+                </div>
+                <div class="approval__pending-container">
+                    <div class="pending__header">
+                        Approval Pending Status:-
+                    </div>
+                    <div class="pending__content parent__row-flex">
+                 <div style="width:450px;height:200px" echarts [options]="pending" class="demo-chart"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom__content-container">
+            <div class="recent__activities-container">
+                6
+            </div>
+            <div class="change__approval__summary-container">
+                7
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="no-access" *ngIf="!ac.super && !(ac.items?.AD001A_DASHBOARD_VIEW && ac.items?.AD001C_DASHBOARD_HAS_ACCESS)">
+    <app-no-access></app-no-access>
+</div>
+
+<section class="dashboard-container" *ngIf="ac.super || (ac.items?.AD001A_DASHBOARD_VIEW && ac.items?.AD001C_DASHBOARD_HAS_ACCESS)">
+    <div class="dashboard-bg">
+        <div>
+            <!-- <button mat-stroked-button style="float:right;background: #00000021;color:#3445b4;margin-right: 15px;background: white;margin-top: 28px;" [matTooltip]="'Duplicate Finder'" (click)="openDialog()">
+        <span class="material-symbols-outlined" style="font-size: 20px;margin-top:-5px;">
+            settings
+        </span>
+        Duplicate Finder
+    </button> -->
+        </div>
+        <div class="welcome-box">
+            <p>Welcome back, Cooper</p>
+            <span>Here is your Administrative Dashboard</span>
+        </div>
+        <div class="card-container">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 class="success">{{userCount}}</h3>
+                                        <span>Users</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined">
+                            diversity_3
+                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 class="warning">{{rolesCount}}</h3>
+                                        <span>Roles</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined">
+                            interests
+                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 class="success">{{templateCount}}</h3>
+                                        <span>Access Templates</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined">
+                            security
+                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-sm-6 col-12 mt-5">
+                    <div class="card" style="margin-left: 10px;">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div echarts [options]="approvalCount" class="demo-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-6 col-12 mt-5">
+                    <div class="card" style="margin-right: 10px;">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div echarts [options]="userGroupRoleProportion" class="demo-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,117 @@
+<div class="main-container" style="overflow: hidden;">
+    <div class="header-container flex-items-row">
+        <span class="flex-stetch">
+            Query Builder :
+        </span>
+        <span class="flex-stetch">
+            <!-- <mat-slide-toggle>Slide me!</mat-slide-toggle> -->
+        </span>
+        <span class="flex-stetch">
+            <button mat-raised-button style="color: green;" (click)="executeQuery()">
+                <mat-icon>play_arrow</mat-icon>
+                <span>
+                    Run Query
+                </span>
+        </button>
+        </span>
+    </div>
+    <div class="body-container flex-column-parent">
+        <div class="db-name-container flex-stetch">
+            <span>
+                Database Name:
+            </span>
+            <span style="color: crimson;">
+                {{list.db_name}}
+            </span>
+        </div>
+        <div class="query-container flex-unstetch" *ngIf="raw">
+            <div class="category-sub-header">
+                Query / Input :
+            </div>
+            <ngx-monaco-editor style="height: 25%;" [options]="editorOptions" [(ngModel)]="query"></ngx-monaco-editor>
+        </div>
+        <div class="query-container flex-unstetch" *ngIf="builder">
+            <div>
+                <mat-select class="min-select" style="min-width: 20rem; max-width: 25rem; text-transform: capitalize;background-color: whitesmoke;">
+                    <mat-option>
+
+                    </mat-option>
+                </mat-select>
+                <button mat-button style="margin-left: 1px;margin-top: 2px; height:30px;">Basic</button>
+            </div>
+            <div class="spacer">
+
+            </div>
+            <div class="content-container">
+
+            </div>
+            <div class="spacer">
+
+            </div>
+            <div class="button-container">
+
+            </div>
+        </div>
+        <div class="toggle-container">
+            <mat-button-toggle-group (change)="onValChange($event.value)">
+                <mat-button-toggle value="section1">Raw Query</mat-button-toggle>
+                <mat-button-toggle value="section2">Query Builder</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div class="output-container flex-stetch">
+            <div class="category-sub-header">
+                Output :
+            </div>
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+            <div class="no-record-found" *ngIf="tableHeaders.length == 0 && !loading" style="margin-left: 50%;">
+                No records found
+            </div>
+            <div class="table-container" *ngIf="!loading">
+                <table class="table">
+                    <thead class="fixedHeader">
+                        <tr style="text-transform: capitalize;">
+                            <th *ngFor="let header of tableHeaders" matTooltip="{{header}}" [matTooltipPosition]="'above'">
+                                {{header}}
+                                <!-- <button mat-button [matMenuTriggerFor]="menu"
+                                    style="min-width: 0px;  line-height: 0px;">
+                                    <mat-icon style=" font-size: 1.5rem; margin-right: 0rem; padding-top: 0.5rem;">
+                                        filter_list</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" [hasBackdrop]="false">
+                                    <ng-container (click)="$event.stopPropagation(); false;">
+                                        <mat-form-field class="example-form-field" appearance="fill">
+                                            <mat-label>Clearable input</mat-label>
+                                            <input matInput type="text" [(ngModel)]="value">
+                                            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                                (click)="value=''">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </mat-menu> -->
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let fields of outputFields">
+                            <td *ngFor="let header of tableHeaders" matTooltip="{{fields[header]}}" [matTooltipShowDelay]="1000">{{fields[header]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <div class="no-record-found" *ngIf="tableHeaders.length == 0">
+                    No records found
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close style="color: red;">
+        <mat-icon>close</mat-icon>
+        <span>
+            Close
+        </span>
+    </button>
+    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>

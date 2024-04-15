@@ -1,0 +1,64 @@
+<div class="main-containers">
+    <div class="heading_Section">
+        <div class="header-container">
+            <div class="header-content">
+                <span class="material-symbols-outlined" style="color:#012970">list_alt</span>
+                <h2>Ratio Preview</h2>
+            </div>
+            <div class="row mb-4 pt-4">
+                <div class="col-md-10">
+                    <div class="application-list">
+                        <ul>
+                            <li>
+                                <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                                <span style="color: royalblue;">{{applicationDetails?.id}}</span>
+                            </li>
+                            <li>
+                                <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                                <span style="color: royalblue;">{{applicationDetails?.legalNameOfTheCompany}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content_Section">
+        <div class="content-container">
+            <div style="background-color: whitesmoke; padding: 10px;">
+                <h3 class="header-banner_1">
+                    <b>Loan Type: Term Loan</b>
+                </h3>
+            </div>
+            <ng-container>
+                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                    <table class="table collateral_table">
+                        <thead>
+                            <tr>
+                                <th>Term Loan</th>
+                                <th style="text-align: center;" *ngFor="let year of yearsList">{{ year }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let ratio of ratioList">
+                                <td>{{ratio}}</td>
+                                <ng-container *ngFor="let year of yearsList;let i=index">
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <input type="text" readonly appCommaSeparatedInput [ngModel]="ratioDetails[i]?.[getPropertyBasedOnRatio(ratio)]"
+                                        (ngModelChange)="updateCheckValue(i, getPropertyBasedOnRatio(ratio), $event)">
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="button_Section">
+        <button mat-raised-button class="close-button" matTooltip="Close" (click)="onCloseClick()">
+            <mat-icon>close</mat-icon>
+            Close
+        </button>
+    </div>
+</div>

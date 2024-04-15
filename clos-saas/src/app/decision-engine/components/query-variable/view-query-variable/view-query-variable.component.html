@@ -1,0 +1,298 @@
+<ng-container *ngIf="((ac.super || ac.items?.QV004C_QUERY_VARIABLE_CREATE || ac.items?.QV004D_QUERY_VARIABLE_MODIFY) && !noAccess )">
+    <mat-toolbar class="tool-bar" style="border-bottom: 0.3px solid lightgray;">
+        <span class="create-table-container">
+        <button mat-flat-button (click)="goBack()" style="background-color: #0e2954;color: white;">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <span>
+               Go back to query variables
+            </span>
+        </button>
+        </span>
+        <div class="spacer">
+
+        </div>
+        <span class="create-table-container" style="position: relative;left: 3rem;top: 2px;">
+        <mat-slide-toggle [(ngModel)]="switchQueryscreen">{{switchQueryscreen===true ?"Query Variable":"Query Builder"}}
+        </mat-slide-toggle>
+    </span>
+        <span class="create-table-container" style="width: 200px;">
+        <input hidden type="file" #uploadcsv accept=".csv" (input)="handleFileInput1($event)" multiple />
+        <button mat-flat-button (click)="uploadcsv.click();" [disabled]="uploading" style="margin-left: 5rem;background-color: #0e2954;">
+            <mat-icon style="color: white;">cloud_upload</mat-icon>
+            <span style="color: white;">
+                {{uploading ? 'File Uploading..' : 'File Upload'}}
+            </span>
+        </button>
+        </span>
+        <ng-container *ngIf="ac.super || ac.items?.QV004H_QUERY_VARIABLE_SAVE">
+            <span class="create-table-container">
+        <button mat-flat-button [disabled]="!queryvar.name||disableSave" [class.save-disable]="disableSave==true"
+            (click)="onSaveClick()" class="queryvar-btn">
+            <div *ngIf="!this.queryService.saveUpdate"><mat-icon>save</mat-icon><span>{{disableSave ? 'Saving..' :
+                    'Save'}}</span></div>
+            <div *ngIf="this.queryService.saveUpdate">
+                <mat-icon style="position: relative;bottom: 3px;">update</mat-icon><span>{{disableSave ? 'Updating..' :
+                    'Update'}}</span>
+            </div>
+            </button>
+            </span>
+        </ng-container>
+    </mat-toolbar>
+    <mat-drawer-container class="main-container" autosize>
+        <mat-drawer #drawer class="sidenav" mode="side" [opened]=true position="end">
+            <div class="node-detail">
+                <div class="label">
+                    <span>Query Name :</span>
+                </div><br>
+                <div class="value">
+                    <input class="min-input" [(ngModel)]="queryvar.name">
+                </div>
+            </div><br>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Description :</span>
+                </div><br>
+                <div class="value">
+                    <textarea class="min-input" rows="6" cols="80" [(ngModel)]="queryvar.description"></textarea>
+                </div>
+            </div><br>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Database :</span>
+                </div><br>
+                <div class="value">
+                    <mat-select [disabled]="(!ac.items?.QV004G_QUERY_VARIABLE_VIEW_EDIT_DATABASE) && !ac.super" class="min-select" style="width:320px;" [(ngModel)]="queryvar.db_id">
+                        <mat-option *ngFor="let dataSource of mysqlDbList" [value]="dataSource.id">{{dataSource.name}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+
+            </div><br>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Query params :</span>
+                </div><br>
+                <div class="value">
+                    <mat-select [disabled]="!ac.super && !ac.items?.QV004G_QUERY_VARIABLE_VIEW_EDIT_DATABASE" class="min-select" style="width:270px;" placeholder="available params">
+                        <mat-option *ngFor="let params of queryParams;let i=index" disabled><span>{{params.name}}</span>
+                            <button mat-flat-button color="warn" class="button-class" (click)="onDeleteClick(i)">delete</button>
+                            <button mat-flat-button color="primary" class="button-class" (click)="onEditClick(i)">edit</button>
+                        </mat-option>
+                    </mat-select>
+                    <button [disabled]="!ac.super && !ac.items?.QV004G_QUERY_VARIABLE_VIEW_EDIT_DATABASE" mat-flat-button color="primary" class="button-cls" (click)="addParams()">New</button>
+                </div>
+
+            </div><br>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Date Type :</span>
+                </div><br>
+                <div class="value">
+                    <mat-select [disabled]="!ac.super && !ac.items?.QV004G_QUERY_VARIABLE_VIEW_EDIT_DATABASE" class="min-select" style="width:320px;" [(ngModel)]="queryvar.date_choices">
+                        <mat-option *ngFor="let type of datetype" [value]="type">{{type}}</mat-option>
+                    </mat-select>
+                </div>
+
+            </div><br>
+            <div *ngIf="queryvar.date_choices == 'Standard'">
+                <div class="node-detail">
+                    <div class="label">
+                        <span>Duration :</span>
+                    </div><br>
+                    <div class="value">
+                        <mat-select class="min-select" style="width:320px;" [(ngModel)]="queryvar.date_value">
+                            <mat-option *ngFor="let duration of durations" [value]="duration.id">{{duration['date_value']+" "+duration['date_type']}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div><br>
+            </div>
+            <div *ngIf="queryvar.date_choices == 'Custom' || queryvar.id">
+                <div class="node-detail">
+                    <div class="label">
+                        <span>From :</span>
+                    </div><br>
+                    <div class="value">
+                        <input class="min-input" [(ngModel)]="queryvar.start_date" placeholder="Start date" (click)="picker.open()" />
+                    </div>
+                </div><br>
+                <div class="node-detail">
+                    <div class="label">
+                        <span>To :</span>
+                    </div><br>
+                    <div class="value">
+                        <input class="min-input" [(ngModel)]="queryvar.end_date" placeholder="End date" (click)="picker.open()" />
+
+                    </div>
+                </div><br>
+
+                <mat-form-field appearance="fill" style="visibility:hidden">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [value]="start" placeholder="Start date" #dateRangeStart />
+                        <input matEndDate [value]="end" placeholder="End date" #dateRangeEnd (dateChange)="onChange(dateRangeStart,dateRangeEnd);" />
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker [calendarHeaderComponent]="ExampleHeaderComponent" class="datepicker">
+                    </mat-date-range-picker>
+                </mat-form-field>
+            </div>
+
+        </mat-drawer>
+        <div class="sidenav-content" *ngIf="switchQueryscreen">
+            <div class="query-definition-container">
+                <div class="category-header" style="height:39px; color: #4e4949;">
+                    Query Variable
+                    <button [disabled]="!ac.super || ac.items?.QV004G_QUERY_VARIABLE_VIEW_EDIT_DATABASE" mat-flat-button (click)="drawer.toggle()" style="float:right;">
+                    <mat-icon>{{drawer.opened ? 'chevron_left' : 'chevron_right'}}</mat-icon>
+                </button>
+
+                </div>
+                <div class="execution-container">
+                    <div class="default-container" *ngIf="show">
+                        {{message}}
+                    </div>
+                    <div *ngIf="loading" style="margin-top: 15%; margin-left: 40%;">
+                        <div class="loading__line">
+                            <div class="load-1">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <p style="display: inline-block;"> Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container" *ngIf="!loading" style="height: 300px;">
+                        <table class="table">
+                            <thead class="fixedHeader">
+                                <tr style="text-transform: capitalize;">
+                                    <th *ngFor="let header of tableHeaders" matTooltip="{{header}}" [matTooltipPosition]="'above'">
+                                        {{header}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let fields of outputFields">
+                                    <td *ngFor="let header of tableHeaders" matTooltip="{{fields[header]}}" [matTooltipShowDelay]="1000">
+                                        <ng-container *ngIf="fields[header] != null && fields[header] !== ''; else emptyOrNullCell">
+                                            {{fields[header]}}
+                                        </ng-container>
+                                        <ng-template #emptyOrNullCell>
+                                            <ng-container *ngIf="fields[header] == null; else emptyCell">
+                                                NULL
+                                            </ng-container>
+                                            <ng-template #emptyCell>
+                                            </ng-template>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="spacer"></div>
+                <div class="query-container-box">
+                    <div class="query-container flex-unstetch" *ngIf="raw">
+                        <div class="category-sub-header" style="color: #4e4949;">
+                            Query / Input :
+
+                        </div>
+                        <ngx-monaco-editor style="height: 120px;width:98%;" [options]="editorOptions" [(ngModel)]="queryvar.query"></ngx-monaco-editor>
+                        <div style="height: 40px;background-color: whitesmoke;padding: 10px;">
+                            <span>{{conquery}}</span>
+                        </div>
+                    </div>
+                    <div class="query-container flex-unstetch" *ngIf="builder">
+                        <div>
+                            <mat-select class="min-select" style="min-width: 20rem; max-width: 25rem; text-transform: capitalize;background-color: whitesmoke;">
+                                <mat-option>
+
+                                </mat-option>
+                            </mat-select>
+                            <button mat-button style="margin-left: 1px;margin-top: 2px; height:30px;">Basic</button>
+                        </div>
+                        <div class="spacer">
+
+                        </div>
+                        <div class="content-container">
+
+                        </div>
+                        <div class="spacer">
+
+                        </div>
+                        <div class="button-container">
+
+                        </div>
+                    </div>
+                    <div class="toggle-container">
+                        <button mat-flat-button style="color: white;float:right;background-color: green;" (click)="executeQuery()">
+                        <mat-icon>play_arrow</mat-icon>
+                        <span>
+                            Run Query
+                        </span>
+                    </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidenav-content" *ngIf="!switchQueryscreen">
+            <div class="query-definition-container quey-builder-container">
+                <div class="category-header" style="height:50px; color: #4e4949;">
+                    <span>Query Builder</span>
+                    <ng-container *ngIf="ac.super || ac.items?.QV004F_QUERY_VARIABLE_CREATE_OR_RUN_QUERY">
+                        <button mat-flat-button style="position: absolute;right: 8rem;top:4px;background-color: #0e2954;color: white;" (click)="tableSearch ='';searchKey='';this.queryInfo.push({databaseName: '',tableName: '',fields: [],tablevalues: [],fieldValues: []})">
+                    <mat-icon>add</mat-icon><span>Add Query</span></button>
+                    </ng-container>
+                    <ng-container *ngIf="ac.super || ac.items?.QV004G_QUERY_VARIABLE_VIEW_EDIT_DATABASE">
+                        <button mat-flat-button (click)="drawer.toggle()" style="float:right;top:4px">
+                    <mat-icon>{{drawer.opened ? 'chevron_left' : 'chevron_right'}}</mat-icon>
+                </button>
+                    </ng-container>
+                </div>
+                <div class="Addmore-container">
+                    <div class="field-container" *ngFor="let emptyLogicList of queryInfo; let j=index">
+                        <div class="tableChoose">
+                            <label for="name">Database</label>
+                            <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="emptyLogicList.databaseName" (ngModelChange)="emptyTableDropDwn(j, $event,emptyLogicList)">
+                                <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="tableChoose">
+                            <label for="name">Table</label>
+                            <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="queryInfo[j].tableName" (ngModelChange)="actionField(j,$event,emptyLogicList)">
+                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                    <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,emptyLogicList)">
+                                </div>
+                                <mat-option *ngFor="let emptyVariableList of emptyLogicList.filteredTableOptions || emptyLogicList.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="tableChoose">
+                            <label for="name">Fields</label>
+                            <mat-select placeholder="Choose Field" class="min-select" [(ngModel)]="queryInfo[j].fields" multiple>
+                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                    <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,emptyLogicList,queryInfo[j].fields)">
+                                </div>
+                                <mat-option *ngFor="let emptyVariableList of emptyLogicList.filteredFields || emptyLogicList.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                </mat-option>
+                                <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="tableChoose" *ngIf="j!=0">
+                            <div class="remove-field">
+                                <mat-icon (click)="queryInfo.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                    remove</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </mat-drawer-container>
+</ng-container>
+<div class="no-access" *ngIf="(!ac.super && !ac.items?.QV004C_QUERY_VARIABLE_CREATE && !ac.items?.QV004D_QUERY_VARIABLE_MODIFY) || noAccess">
+    <app-no-access></app-no-access>
+</div>

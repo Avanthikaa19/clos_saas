@@ -1,0 +1,120 @@
+<mat-toolbar class="tool-bar">
+    <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+    <span class="separator-div">
+        <div class="separator"></div>
+    </span>
+    <span [routerLink]="'/desicion-engine/config/config-nav'" style="cursor: pointer">
+        Data Administration
+    </span>
+    <span class="separator-div">
+      <div class="separator"></div>
+    </span>
+    <span [routerLink]="'/desicion-engine/config/config-nav/db-connection'" style="cursor: pointer">
+        Database Connection
+    </span>
+    <span class="separator-div">
+    <div class="separator"></div>
+    </span>
+    <span [routerLink]="'/desicion-engine/config/config-nav/db-list'" style="cursor: pointer">
+        Database Connection List
+    </span>
+    <span class="separator-div">
+        <div class="separator"></div>
+        </span>
+    <span>
+            {{db_type}}
+        </span>
+    <span class="spacing"></span>
+    <button mat-flat-button class="btn-toolbar" (click)="onBackClick()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        Go Back
+    </button>
+</mat-toolbar>
+<div class="main-container">
+    <div class="header-container flex-row-parent">
+        <div class="left-align flex-stetch">
+        </div>
+        <div class="center-left-align flex-stetch">
+            <img *ngIf="db_type == 'mysql'" src="assets/Icons/mysql_logo.svg" alt="" style="margin: 0.8rem;" />
+            <img *ngIf="db_type != 'mysql'" src="assets/Icons/db.jpg" alt="" style="margin: 0.8rem;" />
+        </div>
+        <div class="center-right-align flex-unstetch flex-column-parent">
+            <div class="flex-stetch header-container" style="text-transform: capitalize;">
+                Data Source/{{db_type}}
+            </div>
+            <div class="flex-unstetch sub-header-container">
+                Configure your datasource.
+            </div>
+        </div>
+        <div class="right-align flex-stetch">
+        </div>
+    </div>
+    <div class="content-container flex-row-parent">
+        <div class="left-align flex-stetch">
+        </div>
+        <div class="center-align flex-unstetch" style="background-color: white;">
+            <div class="header-container category-sub-header">
+                CONFIGURATION:-
+            </div>
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+            <div class="inputs-container " style="overflow-y: auto; padding-top: 1rem;" *ngIf="!loading">
+                <span class="flex-row-parent" *ngFor="let data of dbFieldConfig">
+                <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                   <input class="min-input"
+                      style="background-color: white; margin-bottom: 1rem; text-transform: capitalize; border: 0rem;"
+                      placeholder="{{getLableName(data.lable)}}" readonly>
+                </div>
+                <div class="flex-stetch colen">
+                   <span>
+                      :
+                   </span>
+            </div>
+            <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 1rem;">
+                <ng-container *ngIf="data.field == 'string' && data.lable == 'password'">
+                    <input class="min-input" style=" margin-bottom: 0.5rem; width: 50%;" type="password" [(ngModel)]="data.value">
+                </ng-container>
+                <ng-container *ngIf="data.field == 'string' && data.lable != 'password'">
+                    <input class="min-input" style=" margin-bottom: 0.5rem; width: 50%;" [(ngModel)]="data.value">
+                </ng-container>
+                <ng-container *ngIf="data.field == 'number'">
+                    <input class="min-input" style=" margin-bottom: 0.5rem; width: 10%;" type="number" [(ngModel)]="data.value">
+                </ng-container>
+                <ng-container *ngIf="data.field == 'boolean'">
+                    <input style=" margin-bottom: 1rem;" type="checkbox" [(ngModel)]="data.value">
+                </ng-container>
+
+            </div>
+            </span>
+        </div>
+        <div class="bottom-container flex-row-parent" *ngIf="!loading">
+            <!-- <div class="flex-unstetch">
+                <button mat-stroked-button style="margin-top: 2rem; margin-right: 1rem; " (click)="onBackClick()">
+                   <mat-icon>keyboard_arrow_left</mat-icon>
+                   Go Back
+                </button>
+            </div> -->
+            <div class="flex-stetch">
+                <button mat-raised-button (click)="deleteConfiguration()" *ngIf="config_id" style="margin-top: 2rem; margin-right: 1rem;background-color: rgb(250, 77, 46); color: white;">
+                   <mat-icon>delete</mat-icon>
+                   Delete
+                </button>
+                <button mat-stroked-button *ngIf="!config_id" style="margin-top: 2rem; margin-right: 1rem;" (click)="onResetClick()">
+                   <mat-icon>clear_all</mat-icon>
+                   Reset
+                </button>
+                <button mat-raised-button style="margin-top: 2rem; margin-right: 1rem; background-color: #394eb4; color: white;" (click)="onSaveClick()">
+                    <div *ngIf="!dbSourceService.saveUpdate"><mat-icon>save</mat-icon>Test & Save Connection</div>
+                    <div *ngIf="dbSourceService.saveUpdate"><mat-icon>update</mat-icon>Test & Update Connection</div>
+                </button>
+                <button mat-stroked-button *ngIf="queryLoading" (click)="openQueryBuilder()" style="margin-top: 2rem; margin-right: 1rem;">
+                   <mat-icon>query_builder</mat-icon>
+                   Query Builder
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="right-align flex-stetch">
+    </div>
+</div>
+</div>
+<notifier-container></notifier-container>

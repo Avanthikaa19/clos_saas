@@ -1,0 +1,114 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        DATA INJECTION:
+    </div>
+    <table *ngIf="config.dataInjection">
+        <tbody>
+            <!-- <tr>
+                <td>
+                    <span class="min-label">Enabled</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.dataInjection.enabled" style="margin-top: 7px;">
+                </td>
+            </tr> -->
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        FILTER & ACTIONS:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Fetch By Column</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="text" [(ngModel)]="config.dataInjection.fetchByColumn" class="min-select" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Fetch By Value</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.dataInjection.fetchByValue" class="min-select" style="width: 100%;">
+                        <mat-option *ngFor="let column of columnDropdown" [value]="column">{{column}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Update Status To</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.dataInjection.updateStatusOnInject" class="min-select" style="width: 100%;">
+                        <mat-option *ngFor="let status of columnDropdown" [value]="status">{{status}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Table Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.dataInjection.tableName" class="min-select" style="width: 100%;">
+                        <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                            <input placeholder="Search.." style="width: 100%;" [(ngModel)]="searchTable" (keyup)="tableNameDrop(searchTable.toUpperCase())">
+                        </div>
+                        <mat-option *ngFor="let tablename of tableDropdown" [value]="tablename">{{tablename}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <app-field-mapper-fragment [(config)]="config.dataInjection.entryFieldMap"></app-field-mapper-fragment> -->
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="main-house-keeping-container">
+
+    <div class="toolbar-house-keeping-container">
+        <div class="toolbar-search-container">
+            <!-- <div class="search-container-label">
+                <span>Search by Column Name :</span>
+            </div>
+            <div class="search-input-container">
+                <input style="margin-left: 2rem;width: 80%;">
+            </div> -->
+             </div>
+             <div class="toolbar-buttons-container">
+                <div class="button-container">
+                    <button class="btn" class="apply_filter" (click)="openCreateNewJobModal()" matTooltip="Create new Job" mat-raised-button>
+                        <mat-icon style="margin-right: 2rem;">add</mat-icon>
+                        <span> Create Job</span>
+                    </button>
+                </div>
+                <div class="button-container">
+                    <button mat-raised-button class="apply_filter"  (click)="onFilterBtnClick()"  matTooltip="Apply Filter" >
+                        <span class="material-symbols-outlined">
+                            filter_list
+                        </span>
+                        <span style="margin-left: 1rem;">
+                            Apply Filter
+                        </span>
+                    </button>
+                </div>
+                <div class="button-container">
+                    <button mat-raised-button class="clear_filter" (click)="onClearBtnClick()" matTooltip="Clear Filters" >
+                        <span class="material-symbols-outlined">
+                            clear_all
+                        </span>
+                        <span style="margin-left: 1rem;">
+                            Clear Filter
+                        </span>
+                    </button>
+                </div>
+                <div class="button-container">
+                    <button mat-raised-button class="export" (click)="onExportBtnClick()"  matTooltip="Export" >
+                        <span class="material-symbols-outlined">
+                            download
+                        </span>
+                        <span style="margin-left: 1rem;">
+                            Export
+                        </span>
+                    </button>
+                </div>
+              
+             </div>
+</div>
+
+<div class="jobs-house-keeping-container">
+    <div class="jobs-list-container" *ngFor="let jobs of houseKeepingJobs">
+        <div class="jobs-card-container" >
+            <div class="image-container"  (click)="stopRunJob(jobs)">  
+                <div class="image-content" *ngIf="jobs.status =='Deactive'">
+             <img alt="Img not found"  width="50" height="50" src="assets/Icons/stop.png" >
+
+                </div>
+                <div class="image-content" *ngIf="jobs.status =='Active'">
+             <img alt="Img not found"  width="50" height="50"  src="assets/Icons/triangle.png" >
+       
+                       </div>
+            </div>
+            <div class="job-name-container" (click)="onCardEditClick(jobs)">  
+             <div class="job-name">
+                {{jobs.jobName }}
+             </div>
+             <div class="job-details">
+               Scheduled :  {{jobs.scheduler}} 
+             </div>
+             <div class="job-details">
+                Table Name :  {{jobs.tableName | titlecase}}
+              </div>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<div class="pagination-house-keeping-container">
+    <div class="left-container">
+         <ng-container *ngFor="let item of houseKeepingJobs | paginate: { itemsPerPage: pageData.pageSize, currentPage:pageData.currentPage, totalItems: pageData.totalRecords}" let i="index">
+        </ng-container>
+    </div>
+    <div class="middle-container">
+        <pagination-controls class="pagination-controls" (pageChange)="onPageChangeEvent($event)"  previousLabel="" nextLabel=""></pagination-controls>
+    </div>
+    <div class="right-container">
+        Total Items: <span style="font-weight: bold">
+            {{pageData.totalRecords}}
+        </span>
+    </div>
+</div>
+
+</div>

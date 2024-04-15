@@ -1,0 +1,89 @@
+.card{
+  border: none;
+  color: white;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+  .card-body{
+    padding: 0 1.5rem 0;
+  }
+  .card-content{
+    position: absolute;
+    top: 10px;
+    .numbers{
+      font-size: 30px;
+    }
+  }
+  .card-icon{
+    position: relative;
+    font-size: 90px;
+    opacity: 0.2;
+    float: right;
+    top: 10px;
+  }
+}
+
+.card-footer{
+  border: none;
+  height: 25px;
+}
+
+.at-separator-thick {
+  background: #d4d4d4;
+  height:4px;
+  margin: 0%;
+  width: 60px;
+}
+
+.col-half-offset{
+  margin-left:3%;
+}
+
+input{
+  box-shadow: none;
+}
+input:focus{
+      outline: none;
+      background: transparent;
+}
+
+::ng-deep .input-field .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .input-field .mat-form-field-flex{
+  white-space: nowrap;
+  background-color: rgb(245 245 245);
+  color: #606266;
+  -webkit-appearance: none;
+  -webkit-box-sizing: border-box;
+  outline: 0;
+  -webkit-transition: .1s;
+  transition: .1s;
+  font-weight: 500;
+  border-radius: 4px;
+}
+.button_toogle {
+  font-size: 9px;
+  height: 37px;
+  float: right;
+  margin: 0px 5px;
+  background: white;
+  align-items: center;
+}
+
+.button_toogle-theme-dark .mat-button-toggle {
+  background-color: #131620 !important;
+  color: white;
+}
+.clearDate {
+  position: relative;
+  float: right;
+  top: -14px;
+  right: -9px;
+  font-size: 16px;
+  height: 0px;
+}
+.button_toogle-theme-dark .mat-button-toggle-checked {
+  border: 1px #f9f7f7 solid !important;
+  border-radius: 5px !important;
+  background-color:#172d47 !important;
+}

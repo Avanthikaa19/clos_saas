@@ -1,0 +1,148 @@
+<div class="main-container">
+    <ng-container>
+        <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="selectTab($event)">
+            <mat-tab label="{{data}}" *ngFor="let data of duplicateId; let i = index;">
+                <ng-template mat-tab-label style="font-weight: 600;">
+                    <span style="font-weight: 600;">{{data}}</span>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </ng-container>
+    <div class="middle_Section">
+        <section class="container-fluid dup-section">
+            <div class="row mb-5 pt-5">
+                <div class="col-md-7">
+                    <div class="application-list">
+                        <ul>
+                            <li>Application Id: <span style="color:royalblue">{{appDetails?.ID}}</span></li>
+                            <li>Applicant Name: <span style="color:royalblue">{{appDetails?.APPMLNAME}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;">
+                <div class="multiTable_tabs">
+                    <mat-tab-group>
+                        <mat-tab label="{{databaseDetail[i].tableName}}" *ngFor="let dataKey of databaseDetail; let i=index">
+                            <div class="matchedCategory">
+                                <span class="matched-status">Matched Status:&nbsp;&nbsp;</span><span [style.color]="(dataKey.matchedCategory ==='MATCHED') ? '#' + dataKey.highMatchCCCode : '#' + dataKey.lowMatchCCCode && (dataKey.matchedCategory ==='POSSIBLE_MATCHES') ? '#' + dataKey.avgMatchCCCode : '#' + dataKey.lowMatchCCCode ">{{dataKey.matchedCategory}}</span>
+                                <span style="float: right;font-weight: 600;">Average Percentage:<span>{{dataKey.averagePercentage}}%</span></span>
+                            </div>
+                            <div class="matched-columns">
+                                <p class="mb-4 mt-5">Compared Columns :
+                                    <ng-container *ngIf="dataKey.matchedColumns !=null">
+                                        <span class="matched-columns-sub" *ngFor="let matchedList of dataKey.matchedColumns; let m=index">
+                                                    <ul class="matching-list">
+                                                        <li> &nbsp;<span [style.background-color]="'#' + matchedList.colorCode" class="TabField-Color"></span> &nbsp;&nbsp;&nbsp;
+                                        <span style="position: relative;bottom: 4px;">{{matchedList.appFields}} - {{matchedList.tableFields}} - {{matchedList.percentage}}%&nbsp;&nbsp;</span>
+                                        </li>
+                                        </ul>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="dataKey.matchedColumns ==null"><span style="color: #016CB9;">Not Found</span>
+                                    </ng-container>
+                                </p>
+                            </div>
+                            <div style="width:98%;background-color: white;padding: 0 14px;">
+                                <p class="mb-4 mt-4"> ASCEND FILE (.csv) :</p>
+                            </div>
+                            <div style="padding: 0 14px;">
+                                <div class=" table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <ng-container *ngFor="let csvFields of dataKey.inquiredAppFields">
+                                                    <th>{{csvFields}}</th>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <ng-container *ngFor="let fieldData of dataKey.inquiredAppFields">
+                                                    <ng-container *ngFor="let inquiredData of dataKey.inquiredRecordDetails let j=index">
+                                                        <td [style.color]="'#' + highLighter[i].get(fieldData)">{{dataKey.inquiredRecordDetails[j][fieldData]}}</td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div style="width:98%;background-color: white;padding: 0 14px;">
+                                <p class="mb-4 mt-5"> {{databaseDetail[i].tableName}}:</p>
+                            </div>
+                            <div style="padding: 0 14px;">
+                                <div class="result-table table-responsive">
+                                    <table style="border: 1px solid rgb(233, 233, 233);" *ngIf="dataKey.matchedRecordDetails?.length!=0">
+                                        <thead>
+                                            <tr>
+                                                <ng-container *ngFor="let tableField of dataKey.matchedTableFields">
+                                                    <th>{{tableField}}</th>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <ng-container *ngFor="let tableData of dataKey.matchedTableFields">
+                                                    <ng-container *ngFor="let matchedTableData of dataKey.matchedRecordDetails let k=index">
+                                                        <td [style.color]="'#' + highLighter[i].get(tableData)">{{dataKey.matchedRecordDetails[k][tableData]}}</td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="not-found" *ngIf="dataKey.matchedRecordDetails.length==0">
+                                        <span class="not-match">No Match Found</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="decision-btn" *ngIf="!statuses[i]&&databaseDetail[i].finalDecisionStage == null">
+                                <span>Reason Code:</span>
+                                <mat-select class="code_tag" placeholder="Choose Tag" [(ngModel)]="selectedCodeTag[i]">
+                                    <mat-option *ngFor="let tag of codeTagging" [value]="tag">{{tag}}</mat-option>
+                                </mat-select>
+                                <button mat-raised-button [disabled]="!selectedCodeTag[i]" class="not-match" (click)="notMatch(appDetails?.ID,dataKey.tableName,'NO_MATCH',dataKey.ruleUsed);statuses[i] = 'NO_MATCH'"><mat-icon>close</mat-icon> &nbsp;Not Match</button>
+                                <button mat-raised-button style="margin-right: 10px;" [disabled]="!selectedCodeTag[i]" class="exact-match" (click)="exactMatch(appDetails?.ID,dataKey.tableName,'EXACT_MATCH',dataKey.ruleUsed);statuses[i] = 'EXACT_MATCH'"><mat-icon>done</mat-icon> &nbsp;Exact Match</button>
+                                <button mat-raised-button [disabled]="!selectedCodeTag[i]" class="possible-match" *ngIf="dataKey.tableName === 'LOS_DUP_DOSRI' || dataKey.tableName === 'LOS_DUP_CWL'" (click)="unVerified(appDetails?.ID,dataKey.tableName,'UNVERIFIED',dataKey.ruleUsed);statuses[i] = 'UNVERIFIED'"
+                                    style="margin-left: 10px;margin-right: 15px;"><mat-icon>close</mat-icon>&nbsp;Unverified</button>
+                            </div>
+                            <div class="decision-btn" style="color:green;font-weight: bold;padding: 0 17px;" *ngIf="statuses[i]">
+                                STATUS: {{statuses[i]}}
+                            </div>
+                            <div class="decision-btn" style="color:green;font-weight: bold;padding: 0 17px;" *ngIf="databaseDetail[i].finalDecisionStage != null">
+                                STATUS: {{databaseDetail[i].finalDecisionStage}}
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+    <div class="close_Container">
+        <div class="d-flex justify-content-between inner_buttons">
+            <button mat-raised-button class="close_btnn" matTooltip="Close" (click)="onCloseClick()">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+                <span>
+                    Close
+                </span>
+            </button>
+            <button mat-raised-button class="close_btnn" matTooltip="Proceed" [hidden]="noMatch != null && closeBtn && hideProceedBtn" (click)="onProceed(appDetails?.ID,selectedCodeTag,statuses,databaseDetail)" [disabled]="selectedCodeTag.length != length && !closeBtn && noMatch == null">
+                <span class="material-symbols-outlined">
+                    done_all
+                </span>
+                <span>
+                    Proceed
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+</div>

@@ -1,0 +1,909 @@
+<div class="config-main-container">
+    <div class="tab-main-container" style="overflow: hidden;">
+        <mat-tab-group [(selectedIndex)]="selectedIndex" (selectedTabChange)="onTabSelectionChange($event)">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="material-symbols-outlined" style="margin-right: 2rem;">checklist</span>
+                    <span>Rule Configuration</span>
+                </ng-template>
+                <div class="tab_one-container">
+                    <span class="flex-row-parent">
+                        <div class="flex-stetch lable" style="padding: 0.5rem; ">Rule Name</div>
+                        <div class="flex-stetch colen">
+                            <span> : </span>
+                            <span style="color: red;margin-left: 0.5rem;">*</span>
+                        </div>
+                        <div class="flex-unstetch field" style="margin-left: 2rem;">
+                            <input class="min-select1" [(ngModel)]="ruleName">
+                        </div>
+                    </span>
+                    <span class="flex-row-parent">
+                        <div class="flex-stetch lable" style="padding: 0.5rem; ">Description
+                        </div>
+                        <div class="flex-stetch colen">
+                            <span>:</span>
+                            <span style="color: red;margin-left: 0.5rem;">*</span>
+                        </div>
+                        <div class="flex-unstetch field" style="margin-left: 2rem;">
+                            <textarea class="min-select-textarea" [(ngModel)]="ruleDescription" rows="1" cols="50"
+                                style="resize: none;"></textarea>
+                        </div>
+                    </span>
+                    <span class="flex-row-parent">
+                        <div class="flex-stetch lable" style="padding: 0.5rem; ">Stage
+                        </div>
+                        <div class="flex-stetch colen">
+                            <span> : </span>
+                            <span style="color: red;margin-left: 0.5rem;">*</span>
+                        </div>
+                        <div class="flex-unstetch field" style="margin-left: 5rem;">
+                            <mat-select class="min-select1" [(ngModel)]="stage">
+                                <mat-option *ngFor="let option of stageDropdown"
+                                    [value]="option">{{option}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </span>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="material-symbols-outlined" style="margin-right: 1rem;">join_inner</span>
+                    <span> Matching Criteria Configuration</span>
+                </ng-template>
+
+                <div class="add_table mr-3 mt-2" style="float: right;" *ngIf="showAddTableButton">
+                    <button mat-raised-button (click)="addTable()" style="background-color: black; color: white;">
+                        <mat-icon>add</mat-icon>Add Table
+                    </button>
+                </div>
+                    <div class="tab_two-container" style="overflow-x:hidden;border:1px solid gainsboro;">
+                        <ng-container  *ngFor="let item of config; let i=index">
+                            <div class="table_field-container">
+                                <div class="table_input">
+                                    <mat-slide-toggle style="margin-left: 750px;" *ngIf="item.multipleTable == false"
+                                        [(ngModel)]="item.multipleTable"
+                                        (ngModelChange)="configs(item.configurationMultiple)">
+                                        Multiple</mat-slide-toggle>
+                                    <span class="flex-row-parent" style="margin-top: -25px;"
+                                        *ngIf="item.multipleTable == false">
+                                        <div class="flex-stetch lable">
+                                            <span style="margin-left: 1rem;color: rgba(14, 41, 84, 1);font-weight: 500;text-shadow:2px 2px rgb(223, 223, 223);">Table Name : 
+                                            </span>
+                                            <span style="color: red;margin-left: 0.3rem;">*</span>
+                                        </div>
+                                        <div class="flex-unstetch field">
+                                            <ng-container>
+                                                <mat-select [(ngModel)]="item.tableName"
+                                                    (click)="overallTablename = ''; getTable('');"
+                                                    placeholder="{{item.tableName?.length == 0?'Nil':''}}"
+                                                    class="min-select"
+                                                    style="margin-left: 2rem;margin-bottom: 0.5rem; width: 50%;">
+                                                    <div
+                                                        style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: #f5f5f5;top:0">
+                                                        <input placeholder="Search.." [(ngModel)]="overallTablename"
+                                                            style="width: 100%;"
+                                                            (ngModelChange)="getTable(overallTablename);">
+                                                    </div>
+                                                    <mat-option *ngFor="let data of tableDrpdwn" [value]="data"
+                                                        (click)="item.tableName = data;condition(item);">{{data}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-icon class="ml-3 mat-icn rule" style="color:red; font-size: 12px;"
+                                                    matTooltip="Remove Table" (click)="removeTable(i)">remove</mat-icon>
+                                            </ng-container>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="add_table mr-3 mt-2" style="float: right;">
+                                    <button mat-raised-button (click)="addTable()"
+                                        style="background-color: black; color: white;">
+                                        <mat-icon>add</mat-icon>Add Table
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div *ngIf="item.multipleTable == false">
+                                <p style="margin-left: 15px;font-weight: bold;color:red;">
+                                    {{item.tableName}}
+                                </p>
+                            </div>
+                            <div class="database_field-container" *ngFor="let name of item.fieldsDetails;let j=index">
+                                <div class="database_input">
+                                    <span class="flex-row-parent" style="margin-left: 50px;"
+                                        *ngIf="item.multipleTable == false">
+                                        <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                            1.&nbsp;&nbsp;&nbsp;Database Field<span style="color: red;">*</span>
+                                        </div>
+                                        <div class="flex-stetch colen">
+                                            <span> : </span>
+                                        </div>
+                                        <div class="flex-unstetch field"
+                                            style="padding: 0.5rem;  margin-left: 12.8rem;">
+                                            <ng-container>
+                                                <mat-select [(ngModel)]="name.tableFields" class="min-select"
+                                                    (mousedown)="dbKeyword = ''; getDbDrpdwn('', item.tableName,i,j);"
+                                                    matTooltip="{{name.tableFields}}"
+                                                    style="margin-bottom: 0.5rem; width: 50%;" multiple>
+                                                    <div
+                                                        style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                        <input placeholder="Search.." style="width: 100%;"
+                                                            [(ngModel)]="dbKeyword"
+                                                            (ngModelChange)="getDbDrpdwn(dbKeyword, item.tableName,i, j,name.tableFields);">
+                                                    </div>
+                                                    <ng-container *ngIf="dbDropdown[i]">
+                                                        <mat-option [hidden] *ngFor="let option of dbDropdown[i][j]"
+                                                            [value]="option">
+                                                            {{ option }}
+                                                        </mat-option>
+                                                        <mat-option *ngFor="let option of dbDropdown1[i][j]"
+                                                            [value]="option">
+                                                            {{ option }}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </ng-container>
+                                            <mat-icon class="ml-3 mat-icn rule"
+                                                style="color:red;font-size: 12px;cursor: pointer;"
+                                                matTooltip="Remove Field" (click)="removeField(i,j)">remove</mat-icon>
+                                        </div>
+                                    </span>
+                                    <span class="flex-row-parent" style="margin-left: 50px;"
+                                        *ngIf="item.multipleTable == false">
+                                        <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                            2.&nbsp;&nbsp;&nbsp;Application Field<span style="color: red;">*</span>
+                                        </div>
+                                        <div class="flex-stetch colen">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="flex-unstetch field"
+                                            style="padding: 0.5rem;  margin-left: 11.5rem;">
+                                            <ng-container>
+                                                <mat-select [(ngModel)]="name.applicationFields" class="min-select"
+                                                    (mousedown)="appKeyword = ''; getAppDrpdwn('', i, j);"
+                                                    matTooltip="{{name.applicationFields}}"
+                                                    style="margin-bottom: 0.5rem; width: 57%;" multiple>
+                                                    <div
+                                                        style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                        <input placeholder="Search.." style="width: 100%;"
+                                                            [(ngModel)]="appKeyword"
+                                                            (ngModelChange)="getAppDrpdwn(appKeyword, i, j,name.applicationFields);">
+                                                    </div>
+                                                    <ng-container *ngIf="appDropdown[i]">
+                                                        <mat-option [hidden] *ngFor="let option of appDropdown[i][j]"
+                                                            [value]="option">
+                                                            {{ option }}
+                                                        </mat-option>
+                                                        <mat-option *ngFor="let option of appDropdown2[i][j]"
+                                                            [value]="option">
+                                                            {{ option }}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </ng-container>
+                                        </div>
+                                        <div class="add_field mr-3" style="float: right;"
+                                            *ngIf="item.multipleTable == false;">
+                                            <button mat-raised-button style="background-color: black; color: white;"
+                                                (click)="addField(item)">
+                                                <mat-icon>add</mat-icon>Add Field
+                                            </button>
+                                        </div>
+                                    </span>
+                                    <span class="flex-row-parent" style="margin-left: 50px;"
+                                        *ngIf="item.multipleTable == false">
+                                        <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                            3.&nbsp;&nbsp;&nbsp;Algorithm
+                                        </div>
+                                        <div class="flex-stetch colen"><span>:</span>
+                                        </div>
+                                        <div class="flex-unstetch field"
+                                            style="padding: 0.5rem;  margin-left: 16.5rem;">
+                                            <ng-container>
+                                                <mat-select class="min-select" [(ngModel)]="name.chosenAlgorithm"
+                                                    style=" margin-bottom: 0.5rem; width: 50%;">
+                                                    <mat-option *ngFor="let option of algorithm" [value]="option.value">
+                                                        {{option.displayValue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </ng-container>
+                                        </div>
+                                    </span>
+                                    <span class="flex-row-parent" style="margin-left: 50px;"
+                                        *ngIf="item.multipleTable == false">
+                                        <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                            4.&nbsp;&nbsp;&nbsp;Special Characters (Exclude)
+                                        </div>
+                                        <div class="flex-stetch colen"><span>:</span>
+                                        </div>
+                                        <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 5rem;">
+                                            <ng-container>
+                                                <mat-select class="min-select" (click)="charKeyword = ''"
+                                                    placeholder="{{name.characters.length == 0?'Nil':''}}"
+                                                    style=" margin-bottom: 0.5rem; width: 50%;" multiple
+                                                    [value]="name.characters">
+                                                    <div
+                                                        style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top:0">
+                                                        <input placeholder="Search.." style="width: 100%;"
+                                                            [(ngModel)]="charKeyword">
+                                                    </div>
+                                                    <mat-option *ngFor="let data of splchr" [value]="data"
+                                                        (onSelectionChange)="charField(data,$event,name.characters)">
+                                                        {{data}}</mat-option>
+                                                </mat-select>
+                                            </ng-container>
+                                        </div>
+                                    </span>
+                                    <span class="flex-row-parent" style="margin-left: 60px;"
+                                        *ngIf="item.multipleTable == false">
+                                        <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 0rem;">
+                                            5.&nbsp;&nbsp;&nbsp;Highlight Match Field
+                                        </div>
+                                        <div class="flex-stetch colen"><span> : </span>
+                                        </div>
+                                        <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 8rem;">
+                                            <mat-slide-toggle [(ngModel)]="name.doHighlight" style="margin-left: 17px;">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </span>
+                                    <span class="flex-row-parent" style="margin-left: 50px;"
+                                        *ngIf="name.doHighlight == true">
+                                        <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1.1rem;">
+                                            6.&nbsp;&nbsp;&nbsp;Color
+                                        </div>
+                                        <div class="flex-stetch colen"><span>:</span>
+                                        </div>
+                                        <div class="flex-unstetch field"
+                                            style="padding: 0.5rem;  margin-left: 12.5rem;">
+                                            <input class="min-input" type="color" [(ngModel)]="'#'+name.chosenColor"
+                                                (ngModelChange)="colorChange($event,name)" matTooltip="choose color"
+                                                style=" margin-bottom: 0.5rem; width: 5%;margin-left: 6.9rem;cursor: pointer;padding: 2px;">
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="flex-row-parent" style="margin-left: 50px;"
+                                *ngIf="item.multipleTable == false">
+                                <div class="flex-stetch lable"
+                                    style="padding: 0.5rem; margin-left: 1rem;margin-top: 2rem;">
+                                    Display Fields :
+                                </div>
+                            </span>
+                            <span class="flex-row-parent" style="margin-left: 50px;"
+                                *ngIf="item.multipleTable == false">
+                                <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                    1.&nbsp;&nbsp;&nbsp;Inquire Field
+                                </div>
+                                <div class="flex-stetch colen"><span>:</span>
+                                </div>
+                                <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 14.8rem;">
+                                    <ng-container>
+                                        <mat-select [(ngModel)]="item.inquiredApplicationFields" class="min-select"
+                                            matTooltip="{{item.inquiredApplicationFields}}"
+                                            (click)="inquireKeyword = ''; getInquireDrpdwn('', i);"
+                                            style="margin-bottom: 0.5rem; width: 44%;" multiple>
+                                            <div
+                                                style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                <input placeholder="Search.." style="width: 100%;"
+                                                    [(ngModel)]="inquireKeyword"
+                                                    (ngModelChange)="getInquireDrpdwn(inquireKeyword, i,item.inquiredApplicationFields);">
+                                            </div>
+                                            <mat-option *ngFor="let option of inquireDropdown[i]" [value]="option">
+                                                {{ option }}
+                                            </mat-option>
+                                            <mat-option [hidden] *ngFor="let option of inquireDropdown2[i]"
+                                                [value]="option">
+                                                {{ option }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </ng-container>
+                                </div>
+                            </span>
+                            <span class="flex-row-parent" style="margin-left: 50px;"
+                                *ngIf="item.multipleTable == false">
+                                <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                    2.&nbsp;&nbsp;&nbsp;Matched Field
+                                </div>
+                                <div class="flex-stetch colen"><span>:</span>
+                                </div>
+                                <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 13.6rem;">
+                                    <ng-container>
+                                        <mat-select [(ngModel)]="item.matchedTableFields" class="min-select"
+                                            matTooltip="{{item.matchedTableFields}}"
+                                            (click)="matchKeyword = ''; getMatchDrpdwn('', item.tableName,i);"
+                                            style="margin-bottom: 0.5rem; width: 44%;" multiple>
+                                            <div
+                                                style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                <input placeholder="Search.." style="width: 100%;"
+                                                    [(ngModel)]="matchKeyword"
+                                                    (ngModelChange)="getMatchDrpdwn(matchKeyword, item.tableName,i,item.matchedTableFields);">
+                                            </div>
+                                            <mat-option *ngFor="let option of matchDropdown[i]" [value]="option">
+                                                {{ option }}
+                                            </mat-option>
+                                            <mat-option [hidden] *ngFor="let option of matchDropdown2[i]"
+                                                [value]="option">
+                                                {{ option }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </ng-container>
+                                </div>
+                            </span>
+                            <div class="default-ruels" style="margin-left:60px;margin-top: 3rem;"
+                                *ngIf="item.multipleTable == false">
+                                <span class="flex-row-parent" style="margin-bottom: 1rem;">
+                                    <div class="flex-stetch lable" style="padding: 0.5rem;">Default % Rules
+                                        Configuration:-
+                                    </div>
+                                </span>
+                                <!-- Matched color table -->
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="flex-stetch lable mr-5">1.&nbsp;&nbsp;&nbsp;Greater than</div>
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <input type="number" onkeydown="return event.keyCode !== 69"
+                                                class="min-input" [(ngModel)]="item.highMatchThreshold"> %
+                                        </td>
+                                        <td style="padding: 5px;"><input class="min-input" [value]="'Matched'" readonly>
+                                        </td>
+                                        <td><input class="min-input" style="display: none;" readonly></td>
+                                        <td style="padding: 5px;"> <input class="min-input" type="color"
+                                                [(ngModel)]="item.highMatchCCode"
+                                                style="width:70px;cursor: pointer;padding: 1.5px;"></td>
+                                    </tr>
+                                    <!-- <tr class="mt-5">
+                                    <td>
+                                        <div class="flex-stetch lable mr-5">2.&nbsp;&nbsp;&nbsp;Between</div>
+                                    </td>
+                                    <td style="padding: 5px;"><input type="number" class="min-input"
+                                            onkeydown="return event.keyCode !== 69"
+                                            [(ngModel)]="item.averageFromMatchThreshold"> %
+                                        <span style=" font-weight: bold;">and</span>
+                                <tr>
+                                    <td>
+                                        <ng-container *ngIf="item.highMatchThreshold">
+                                            <span class="threshold"
+                                                *ngIf="item.highMatchThreshold <= item.averageFromMatchThreshold">Value
+                                                must be less than {{item.highMatchThreshold}}</span>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                </td> -->
+                                    <!-- <td style="padding: 5px;"><input type="number" class="min-input"
+                                        onkeydown="return event.keyCode !== 69"
+                                        [(ngModel)]="item.averageToMatchThreshold">
+                                    %
+                                    <tr>
+                                        <td>
+                                            <ng-container
+                                                *ngIf="item.averageFromMatchThreshold && item.highMatchThreshold">
+                                                <span class="threshold"
+                                                    *ngIf="item.averageFromMatchThreshold >= item.averageToMatchThreshold || item.highMatchThreshold <= item.averageToMatchThreshold">Value
+                                                    must be greater than {{item.averageFromMatchThreshold}} and less
+                                                    than {{item.highMatchThreshold}}</span>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </td>
+                                <td style="padding: 5px;">
+                                    <input class="min-input" [value]="'Possible Match'" readonly>
+                                </td>
+                                <td style="padding: 5px;">
+                                    <input class="min-input" type="color" [(ngModel)]="item.avgMatchCCode"
+                                        style="width:70px;cursor: pointer;padding: 1.5px;">
+                                </td>
+                                </tr> -->
+                                    <tr class="mt-5" style="padding-top: 30px;">
+                                        <td>
+                                            <div class="flex-stetch lable">2.&nbsp;&nbsp;&nbsp;Less than</div>
+                                        </td>
+                                        <td style="padding: 5px;"> <input type="number"
+                                                onkeydown="return event.keyCode !== 69" class="min-input"
+                                                [(ngModel)]="item.lowMatchThreshold"> %
+                                    <tr>
+                                        <td>
+                                            <ng-container
+                                                *ngIf="item.averageFromMatchThreshold && item.averageToMatchThreshold">
+                                                <span class="threshold"
+                                                    *ngIf="item.averageToMatchThreshold <= item.lowMatchThreshold || item.averageFromMatchThreshold <= item.lowMatchThreshold">Value
+                                                    must be less than {{item.averageFromMatchThreshold}} and
+                                                    {{item.averageToMatchThreshold}}</span>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    </td>
+                                    <td style="padding: 5px;">
+                                        <input class="min-input" [value]="'Not Match'" readonly>
+                                    </td>
+                                    <td>
+                                        <input class="min-input" style="display: none;" readonly>
+                                    </td>
+                                    <td style="padding: 5px;">
+                                        <input class="min-input" type="color" [(ngModel)]="item.lowMatchCCode"
+                                            style=" width:70px;cursor: pointer;padding: 1.5px;">
+                                    </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br><br><br>
+                            <div class="database_field-container" [style.margin-top]="j==0?'-54px':'0px'"
+                                *ngFor="let config of item.configurationMultiple; let j=index;">
+                                <span *ngIf="item.multipleTable == true">
+                                    <div *ngIf="j==0;">
+                                        <span style="margin-left: 1rem;">Table Name :<span style="color: red;">*</span>
+                                        </span>
+                                        <span>
+                                            <ng-container>
+                                                <mat-select [(ngModel)]="item.configurationMultiple"
+                                                    (ngModelChange)="tablename(item)"
+                                                    placeholder="{{config.tableName?.length == 0?'Nil':''}}"
+                                                    class="min-select"
+                                                    style="margin-left: 2rem;margin-bottom: 0.5rem; width: 50%;"
+                                                    multiple>
+                                                    <mat-option><ngx-mat-select-search placeholderLabel="Search here.."
+                                                            [(ngModel)]="overallTablename"
+                                                            noEntriesFoundLabel='No Items Found'>
+                                                        </ngx-mat-select-search></mat-option>
+                                                    <ng-container *ngFor="let data of configDetail">
+                                                        <mat-option *ngIf="data.tableName.includes(overallTablename)"
+                                                            [value]="data">{{data.tableName}}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                                <mat-icon class="ml-3 mat-icn rule" style="color:red; font-size: 12px;"
+                                                    matTooltip="Remove Table" (click)="removeTable(i)">remove</mat-icon>
+                                            </ng-container>
+                                        </span>
+                                        <span>
+                                            <mat-slide-toggle [(ngModel)]="item.multipleTable">
+                                                Multiple
+                                            </mat-slide-toggle>
+                                        </span>
+                                        <span style="margin-left: 30px;">
+                                            <mat-select [(ngModel)]="item.tableName" class="min-select"
+                                                style="margin-left: 2rem;margin-bottom: 0.5rem; width: 15%;">
+                                                <mat-option [value]="'DUPTEL_HOME'">DUPTEL_HOME</mat-option>
+                                                <mat-option [value]="'DUPTEL_OFFICE'">DUPTEL_OFFICE</mat-option>
+                                                <mat-option [value]="'DUPTEL_MOBILE'">DUPTEL_MOBILE</mat-option>
+                                            </mat-select>
+                                        </span>
+                                    </div>
+                                </span>
+                                <div *ngIf="item.multipleTable == true" style="margin-right: -13rem;margin-top: 30px;">
+                                    <span
+                                        style="color:red;margin-left: 15px;font-weight: bold;">{{config.tableName}}</span>
+                                    <span style="font-weight: bold;float: right;margin-right: 1rem;">TABLE PRIORITY
+                                        <input type="number" style="margin-left: 10px;width:22%;"
+                                            [(ngModel)]="config.tablePriority">
+                                    </span>
+                                </div>
+                                <div *ngFor="let name of config.fieldsDetails; let k=index;">
+                                    <div class="database_input" style="margin-top: 30px;">
+                                        <span class="flex-row-parent" style="margin-left: 50px;"
+                                            *ngIf="item.multipleTable == true">
+                                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                                1.&nbsp;&nbsp;&nbsp;Database Field<span style="color: red;">*</span>
+                                            </div>
+                                            <div class="flex-stetch colen">
+                                                <span> : </span>
+                                            </div>
+                                            <div class="flex-unstetch field"
+                                                style="padding: 0.5rem;  margin-left: 12.8rem;">
+                                                <ng-container>
+                                                    <mat-select [(ngModel)]="name.tableFields" class="min-select"
+                                                        (click)="dbKeyword = ''; getDbDrpdwns('', config.tableName,i,j,k);"
+                                                        matTooltip="{{name.tableFields}}"
+                                                        style="margin-bottom: 0.5rem; width: 57%;" multiple>
+                                                        <div
+                                                            style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                            <input placeholder="Search.." style="width: 100%;"
+                                                                [(ngModel)]="dbKeyword"
+                                                                (ngModelChange)="getDbDrpdwns(dbKeyword, config.tableName,i,j,k,name.tableFields);">
+                                                        </div>
+                                                        <ng-container>
+                                                            <mat-option [hidden]
+                                                                *ngFor="let option of dbDropdowns[i]?.[j]?.[k]"
+                                                                [value]="option">
+                                                                {{ option }}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </mat-select>
+                                                </ng-container>
+                                                <mat-icon class="ml-3 mat-icn rule"
+                                                    style="color:red;font-size: 12px;cursor: pointer;"
+                                                    matTooltip="Remove Field"
+                                                    (click)="removeMultiple(j,k,item)">remove</mat-icon>
+                                            </div>
+                                            <div class="add_field mr-3" *ngIf="item.multipleTable == true;">
+                                                <button mat-raised-button
+                                                    style="background-color: black; color: white;width: 12.2rem;width: 12.2rem;top: -1rem;left: 0rem;"
+                                                    (click)="addFieldMultiple(item,j)">
+                                                    <mat-icon>add</mat-icon>Add Field
+                                                </button>
+                                            </div>
+                                        </span>
+                                        <div *ngIf="item.multipleTable == true"
+                                            style="margin-right: -13rem;margin-top: 5px;">
+                                            <span style="font-weight: bold;float: right;margin-right: 1rem;">FIELD
+                                                PRIORITY
+                                                <input type="number" style="margin-left: 10px;width:22%;"
+                                                    [(ngModel)]="name.fieldPriority">
+                                            </span>
+                                        </div>
+                                        <span class="flex-row-parent" style="margin-left: 50px;"
+                                            *ngIf="item.multipleTable == true">
+                                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                                2.&nbsp;&nbsp;&nbsp;Application Field<span style="color: red;">*</span>
+                                            </div>
+                                            <div class="flex-stetch colen">
+                                                <span>:</span>
+                                            </div>
+                                            <div class="flex-unstetch field"
+                                                style="padding: 0.5rem;  margin-left: 11.5rem;">
+                                                <ng-container>
+                                                    <mat-select [(ngModel)]="name.applicationFields" class="min-select"
+                                                        (click)="appKeyword = ''; getAppDrpdwns('', i, j, k);"
+                                                        matTooltip="{{name.applicationFields}}"
+                                                        style="margin-bottom: 0.5rem; width: 61%;" multiple>
+                                                        <div
+                                                            style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                            <input placeholder="Search.." style="width: 100%;"
+                                                                [(ngModel)]="appKeyword"
+                                                                (ngModelChange)="getAppDrpdwns(appKeyword, i, j, k,name.applicationFields);">
+                                                        </div>
+                                                        <ng-container>
+                                                            <mat-option *ngFor="let option of appDropdowns[i]?.[j]?.[k]"
+                                                                [value]="option">
+                                                                {{ option }}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </mat-select>
+                                                </ng-container>
+                                            </div>
+                                        </span>
+                                        <span class="flex-row-parent" style="margin-left: 50px;"
+                                            *ngIf="item.multipleTable == true">
+                                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                                3.&nbsp;&nbsp;&nbsp;Algorithm
+                                            </div>
+                                            <div class="flex-stetch colen"><span>:</span>
+                                            </div>
+                                            <div class="flex-unstetch field"
+                                                style="padding: 0.5rem;  margin-left: 16.5rem;">
+                                                <ng-container>
+                                                    <mat-select class="min-select" [(ngModel)]="name.chosenAlgorithm"
+                                                        style=" margin-bottom: 0.5rem; width: 50%;">
+                                                        <mat-option *ngFor="let option of algorithm"
+                                                            [value]="option.value">
+                                                            {{option.displayValue }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+                                            </div>
+                                        </span>
+                                        <span class="flex-row-parent" style="margin-left: 50px;"
+                                            *ngIf="item.multipleTable == true">
+                                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                                4.&nbsp;&nbsp;&nbsp;Special Characters (Exclude)
+                                            </div>
+                                            <div class="flex-stetch colen"><span>:</span>
+                                            </div>
+                                            <div class="flex-unstetch field"
+                                                style="padding: 0.5rem;  margin-left: 5rem;">
+                                                <ng-container>
+                                                    <mat-select class="min-select" (click)="charKeyword = ''"
+                                                        placeholder="{{name.characters.length == 0?'Nil':''}}"
+                                                        style=" margin-bottom: 0.5rem; width: 50%;" multiple
+                                                        [value]="name.characters">
+                                                        <div
+                                                            style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top:0">
+                                                            <input placeholder="Search.." style="width: 100%;"
+                                                                [(ngModel)]="charKeyword">
+                                                        </div>
+                                                        <mat-option *ngFor="let data of splchr" [value]="data"
+                                                            (onSelectionChange)="charField(data,$event,name.characters)">
+                                                            {{data}}</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+                                            </div>
+                                        </span>
+                                        <span class="flex-row-parent" style="margin-left: 60px;"
+                                            *ngIf="item.multipleTable == true">
+                                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 0rem;">
+                                                5.&nbsp;&nbsp;&nbsp;Highlight Match Field
+                                            </div>
+                                            <div class="flex-stetch colen"><span> : </span>
+                                            </div>
+                                            <div class="flex-unstetch field"
+                                                style="padding: 0.5rem;  margin-left: 8rem;">
+                                                <mat-slide-toggle [(ngModel)]="name.doHighlight"
+                                                    style="margin-left: 17px;">
+                                                </mat-slide-toggle>
+                                            </div>
+                                        </span>
+                                        <span class="flex-row-parent" style="margin-left: 50px;"
+                                            *ngIf="name.doHighlight == true">
+                                            <div class="flex-stetch lable"
+                                                style="padding: 0.5rem; margin-left: 1.1rem;">
+                                                6.&nbsp;&nbsp;&nbsp;Color
+                                            </div>
+                                            <div class="flex-stetch colen"><span>:</span>
+                                            </div>
+                                            <div class="flex-unstetch field"
+                                                style="padding: 0.5rem;  margin-left: 12.5rem;">
+                                                <input class="min-input" type="color" [(ngModel)]="'#'+name.chosenColor"
+                                                    (ngModelChange)="colorChange($event,name)" matTooltip="choose color"
+                                                    style=" margin-bottom: 0.5rem; width: 5%;margin-left: 6.9rem;cursor: pointer;padding: 2px;">
+                                            </div>
+                                        </span>
+                                        <div class="default-ruels" style="margin-left:60px;margin-top: 3rem;"
+                                            *ngIf="item.multipleTable == true">
+                                            <span class="flex-row-parent" style="margin-bottom: 1rem;">
+                                                <div class="flex-stetch lable" style="padding: 0.5rem;">Default % Rules
+                                                    Configuration:-
+                                                </div>
+                                            </span>
+                                            <!-- Matched color table -->
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flex-stetch lable mr-5">1.&nbsp;&nbsp;&nbsp;Greater
+                                                            than
+                                                        </div>
+                                                    </td>
+                                                    <td style="padding: 5px;">
+                                                        <input type="number" onkeydown="return event.keyCode !== 69"
+                                                            class="min-input" [(ngModel)]="name.highMatchThreshold">
+                                                        %
+                                                    </td>
+                                                    <td style="padding: 5px;"><input class="min-input"
+                                                            [value]="'Matched'" readonly>
+                                                    </td>
+                                                    <td><input class="min-input" style="display: none;" readonly></td>
+                                                    <td style="padding: 5px;"> <input class="min-input" type="color"
+                                                            [(ngModel)]="name.highMatchCCode"
+                                                            style="width:70px;cursor: pointer;padding: 1.5px;"></td>
+                                                </tr>
+                                                <!-- <tr class="mt-5">
+                                                <td>
+                                                    <div class="flex-stetch lable mr-5">2.&nbsp;&nbsp;&nbsp;Between
+                                                    </div>
+                                                </td>
+                                                <td style="padding: 5px;"><input type="number" class="min-input"
+                                                        onkeydown="return event.keyCode !== 69"
+                                                        [(ngModel)]="name.averageFromMatchThreshold">
+                                                    %
+                                                    <span style=" font-weight: bold;">and</span>
+                                            <tr>
+                                                <td>
+                                                    <ng-container *ngIf="name.highMatchThreshold">
+                                                        <span class="threshold"
+                                                            *ngIf="name.highMatchThreshold <= name.averageFromMatchThreshold">Value
+                                                            must be less than
+                                                            {{name.highMatchThreshold}}</span>
+                                                    </ng-container>
+                                                </td>
+                                            </tr>
+                                            </td>
+                                            <td style="padding: 5px;"><input type="number" class="min-input"
+                                                    onkeydown="return event.keyCode !== 69"
+                                                    [(ngModel)]="name.averageToMatchThreshold">
+                                                %
+                                                <tr>
+                                                    <td>
+                                                        <ng-container
+                                                            *ngIf="name.averageFromMatchThreshold && name.highMatchThreshold">
+                                                            <span class="threshold"
+                                                                *ngIf="name.averageFromMatchThreshold >= name.averageToMatchThreshold || name.highMatchThreshold <= name.averageToMatchThreshold">Value
+                                                                must be greater than
+                                                                {{name.averageFromMatchThreshold}}
+                                                                and
+                                                                less
+                                                                than
+                                                                {{name.highMatchThreshold}}</span>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                            <td style="padding: 5px;">
+                                                <input class="min-input" [value]="'Possible Match'" readonly>
+                                            </td> -->
+                                                <!-- <td style="padding: 5px;">
+                                                <input class="min-input" type="color" [(ngModel)]="name.avgMatchCCode"
+                                                    style="width:70px;cursor: pointer;padding: 1.5px;">
+                                            </td>
+                                            </tr> -->
+                                                <tr class="mt-5" style="padding-top: 30px;">
+                                                    <td>
+                                                        <div class="flex-stetch lable">2.&nbsp;&nbsp;&nbsp;Less than
+                                                        </div>
+                                                    </td>
+                                                    <td style="padding: 5px;"> <input type="number"
+                                                            onkeydown="return event.keyCode !== 69" class="min-input"
+                                                            [(ngModel)]="name.lowMatchThreshold">
+                                                        %
+                                                <tr>
+                                                    <td>
+                                                        <ng-container
+                                                            *ngIf="name.averageFromMatchThreshold && name.averageToMatchThreshold">
+                                                            <span class="threshold"
+                                                                *ngIf="name.averageToMatchThreshold <= name.lowMatchThreshold || name.averageFromMatchThreshold <= name.lowMatchThreshold">Value
+                                                                must be less than
+                                                                {{name.averageFromMatchThreshold}}
+                                                                and
+                                                                {{name.averageToMatchThreshold}}</span>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                                </td>
+                                                <td style="padding: 5px;">
+                                                    <input class="min-input" [value]="'Not Match'" readonly>
+                                                </td>
+                                                <td>
+                                                    <input class="min-input" style="display: none;" readonly>
+                                                </td>
+                                                <td style="padding: 5px;">
+                                                    <input class="min-input" type="color"
+                                                        [(ngModel)]="name.lowMatchCCode"
+                                                        style=" width:70px;cursor: pointer;padding: 1.5px;">
+                                                </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="item.multipleTable == true;">
+                                            <div style="margin-top:20px;"
+                                                *ngFor="let keyword of name.routingResultsAndPriority;let l = index;">
+                                                <p style="margin-left: 60px;font-weight: bold;">RESULT:
+                                                    <span style="margin-left: 5px;">
+                                                        <mat-select [(ngModel)]="keyword.result" class="min-select"
+                                                            style="margin-left: 2rem;margin-bottom: 0.5rem; width: 20%;">
+                                                            <mat-option [value]="'EXACT_MATCH'">EXACT_MATCH</mat-option>
+                                                            <mat-option [value]="'NO_MATCH'">NO_MATCH</mat-option>
+                                                        </mat-select>
+                                                    </span>
+                                                    <span style="margin-left:200px;">
+                                                        <mat-select [(ngModel)]="keyword.chosenPriorityLevel"
+                                                            class="min-select"
+                                                            style="margin-left: 2rem;margin-bottom: 0.5rem; width: 20%;">
+                                                            <mat-option
+                                                                [value]="'FIELD_LEVEL_PRIORITY'">FIELD_LEVEL_PRIORITY</mat-option>
+                                                            <mat-option
+                                                                [value]="'TABLE_LEVEL_PRIORITY'">TABLE_LEVEL_PRIORITY</mat-option>
+                                                        </mat-select>
+                                                    </span>
+                                                    <span style="margin-left: 30px;">
+                                                        <input type="number" [(ngModel)]="keyword.routingPriority">
+                                                    </span>
+                                                    <span>
+                                                        <mat-icon style="color:red;cursor: pointer;font-size: 17px;"
+                                                            [matTooltip]="'Add Result'"
+                                                            (click)="addRoute(name.routingResultsAndPriority)">add</mat-icon>
+                                                    </span>
+                                                    <span>
+                                                        <mat-icon style="color:red;cursor: pointer;font-size: 17px;"
+                                                            [matTooltip]="'Remove Result'"
+                                                            (click)="removeRoute(name.routingResultsAndPriority,l)">remove</mat-icon>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <hr *ngIf="item.multipleTable == true">
+                                    </div>
+                                </div>
+                                <span class="flex-row-parent" style="margin-left: 50px;"
+                                    *ngIf="item.multipleTable == true">
+                                    <div class="flex-stetch lable"
+                                        style="padding: 0.5rem; margin-left: 1rem;margin-top: 2rem;">
+                                        Display Fields :
+                                    </div>
+                                </span>
+                                <span class="flex-row-parent" style="margin-left: 50px;"
+                                    *ngIf="item.multipleTable == true">
+                                    <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                        1.&nbsp;&nbsp;&nbsp;Inquire Field
+                                    </div>
+                                    <div class="flex-stetch colen"><span>:</span>
+                                    </div>
+                                    <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 14.8rem;">
+                                        <ng-container>
+                                            <mat-select [(ngModel)]="config.inquiredApplicationFields"
+                                                class="min-select" matTooltip="{{config.inquiredApplicationFields}}"
+                                                (click)="inquireKeyword = ''; getInquireDrpdwn('', i);"
+                                                style="margin-bottom: 0.5rem; width: 44%;" multiple>
+                                                <div
+                                                    style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                    <input placeholder="Search.." style="width: 100%;"
+                                                        [(ngModel)]="inquireKeyword"
+                                                        (ngModelChange)="getInquireDrpdwn(inquireKeyword, i,config.inquiredApplicationFields);">
+                                                </div>
+                                                <mat-option *ngFor="let option of inquireDropdown[i]" [value]="option">
+                                                    {{ option }}
+                                                </mat-option>
+                                                <mat-option [hidden] *ngFor="let option of inquireDropdown2[i]"
+                                                    [value]="option">
+                                                    {{ option }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </ng-container>
+                                    </div>
+                                </span>
+                                <span class="flex-row-parent" style="margin-left: 50px;"
+                                    *ngIf="item.multipleTable == true">
+                                    <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                        2.&nbsp;&nbsp;&nbsp;Matched Field
+                                    </div>
+                                    <div class="flex-stetch colen"><span>:</span>
+                                    </div>
+                                    <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 13.6rem;">
+                                        <ng-container>
+                                            <mat-select [(ngModel)]="config.matchedTableFields" class="min-select"
+                                                matTooltip="{{config.matchedTableFields}}"
+                                                (click)="matchKeyword = ''; getMatchDrpdwn('', config.tableName,i);"
+                                                style="margin-bottom: 0.5rem; width: 44%;" multiple>
+                                                <div
+                                                    style="position: sticky; padding: 10px; border-bottom: 1px solid #ccc; z-index: 1; background-color: whitesmoke; top: 0">
+                                                    <input placeholder="Search.." style="width: 100%;"
+                                                        [(ngModel)]="matchKeyword"
+                                                        (ngModelChange)="getMatchDrpdwn(matchKeyword, config.tableName,i,config.matchedTableFields);">
+                                                </div>
+                                                <mat-option *ngFor="let option of matchDropdown[i]" [value]="option">
+                                                    {{ option }}
+                                                </mat-option>
+                                                <mat-option [hidden] *ngFor="let option of matchDropdown2[i]"
+                                                    [value]="option">
+                                                    {{ option }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </ng-container>
+                                    </div>
+                                </span>
+                            </div>
+
+                        </ng-container>
+                    </div>
+                <!-- </div> -->
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <ng-container>
+        <div class="button-container">
+            <div class="left-align-container">
+                <button (click)="onCloseClick()" mat-stroked-button style="background-color: black;color:white">
+                    <mat-icon style="margin-right: 1rem;color: white;">close</mat-icon>
+                    <span>Close</span>
+                </button>
+            </div>
+            <div class="right-align-container">
+                <button mat-raised-button style="background-color:  #0e2954; color: white;" (click)="selectedIndex = 1;"
+                    *ngIf="previousSelectedIndex == 0" [disabled]="buttonDisable()">
+                    <mat-icon style="margin-right: 1rem;" [style.color]="buttonDisable() ? 'grey' : 'white'">
+                        keyboard_arrow_right
+                    </mat-icon>
+                    <span [style.color]="buttonDisable() ? 'grey' : 'white'">{{this.data ?'Update': 'Save'}} & Proceed
+                        Next</span>
+                </button>
+
+                <button mat-raised-button style="background-color:  #0e2954; color: white;" (click)="selectedIndex = 0;"
+                    *ngIf="previousSelectedIndex == 1">
+                    <mat-icon style="margin-right: 1rem;">keyboard_arrow_left</mat-icon>
+                    <span>Go Back to Previous</span>
+                </button>
+                <button mat-raised-button [hidden]="this.data" (click)="createRules()"
+                    *ngIf="previousSelectedIndex == 1"  [disabled]="isButtonDisabled()"
+                    style="margin-left: 1rem;background-color:  #0e2954; color: white;" [style.color]="isButtonDisabled() ? 'grey' : 'white'">
+                    <mat-icon style="margin-right: 1rem;" [style.color]="isButtonDisabled() ? 'grey' : 'white'">
+                        done_all</mat-icon>
+                    <span>Submit</span>
+                </button>
+
+                <button mat-raised-button *ngIf="this.data && previousSelectedIndex == 1" (click)="updateRules()"
+                    style="margin-left: 1rem;background-color:  #0e2954; color: white;">
+                    <mat-icon style="margin-right: 1rem;">done_all</mat-icon>
+                    <span>Update</span>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</div>

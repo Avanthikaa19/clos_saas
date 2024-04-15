@@ -1,0 +1,150 @@
+.computations-list-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+//LIST VIEW
+.computation-section {
+    border-bottom: dashed gainsboro 1px;
+    > .computation-section-label {
+        font-weight: bold;
+        color: silver;
+        padding: 5px;
+        padding-left: 10px;
+    }
+}
+
+//CARD VIEW
+.computation-cards-container {
+    padding: 20px 20px 130px 20px;
+    > * {
+        // margin-right: 20px;
+        margin-bottom: 10px;
+    }
+    > .computation-card-create {
+        width: calc(100%);
+        height: 100px;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: white;
+        transition: all linear 100ms;
+        overflow: hidden;
+        position: relative;
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: center;
+        > mat-icon {
+            position: absolute;
+            top: calc(50% - 15px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: whitesmoke;
+            font-size: 60px;
+            width: 60px;
+            height: 60px;
+            // display: flex;
+            // align-self: center;
+        }
+        > .computation-card-create-title {
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            top: calc(50% + 30px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: dimgray;
+        }
+    }
+    > .computation-card {
+        width: calc(100%);
+        height: 100px;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: white;
+        transition: all linear 100ms;
+        overflow: hidden;
+        position: relative;
+        .computation-details1 {
+            height: 50px;
+            width: 100%;
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            .computation-card-name {
+                flex-grow: 0;
+                flex-shrink: 0;
+                font-size: 16px;
+                font-weight: 500;
+                min-width: 200px;
+                line-height: 40px;
+                margin-right: 10px;
+            }
+            .computation-card-separator {
+                flex-grow: 0;
+                flex-shrink: 0;
+                color: silver;
+            }
+            .computation-card-description {
+                flex-grow: 1;
+                flex-shrink: 1;
+                font-size: 14px;
+                font-weight: normal;
+                color: rgb(45, 45, 45);
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+        }
+        .computation-details-separator {
+            margin-left: 10px;
+            width: calc(100% - 20px);
+            border-top: solid rgb(240, 240, 240) 1px;
+        }
+        .computation-details2 {
+            font-size: 14px;
+            font-weight: normal;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: white;
+            height: 50px;
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+    }
+    > .computation-card-create:hover, .computation-card:hover {
+        -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.computation-element {
+    border-radius: 4px;
+    padding: 5px;
+    position: relative;
+}
+
+.center-align {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+:host ::ng-deep .mat-progress-bar-fill::after {
+    background-color: crimson;
+}
+
+:host ::ng-deep .mat-progress-bar-buffer {
+    background: #e7e7e7;
+}
+
+:host ::ng-deep .mat-progress-bar {
+    border-radius: 0px;
+}

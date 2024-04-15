@@ -1,0 +1,1122 @@
+<div class="main-container">
+    <div class="content-container">
+        <div class="table-container" style="overflow: auto;height: 50rem;"
+            *ngIf="activeSubTabName === 'Company Information'">
+            <table>
+                <tr>
+                    <td>Proxy Company Name</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="proxyDetails.proxyCompanyName"
+                            (ngModelChange)="saveCompanyData('proxyCompanyName','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
+                    </td>
+                    <td>Organization Type</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="proxyDetails.proxyOrganizationType"
+                            (ngModelChange)="saveCompanyData('proxyOrganizationType','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
+                    </td>
+                    <td>Business Registration Number</td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select"
+                            [(ngModel)]="proxyDetails.companyBusinessRegistrationNumber"
+                            (ngModelChange)="saveCompanyData('companyBusinessRegistrationNumber','string')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date of Incorporation</td>
+                    <td>:</td>
+                    <td>
+                        <input type="date" class="min-select" [(ngModel)]="proxyDetails.proxyBranchDateOfIncorporation"
+                            (ngModelChange)="saveCompanyData('proxyBranchDateOfIncorporation','string')">
+                    </td>
+                    <td>Business Age</td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="proxyDetails.proxyBusinessAge"
+                            (ngModelChange)="saveCompanyData('proxyBusinessAge','string')">
+                    </td>
+                    <td>Type of Business</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="proxyDetails.proxyBranchTypeOfBusiness"
+                            (ngModelChange)="saveCompanyData('proxyBranchTypeOfBusiness','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Corporate Tax Identification Number</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"
+                            [(ngModel)]="proxyDetails.proxyBranchCorporateTaxIdentificationNumber"
+                            (ngModelChange)="saveCompanyData('proxyBranchCorporateTaxIdentificationNumber','string')">
+                    </td>
+                    <td>Office Contact Number</td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="proxyDetails.proxyOfficeContactNumber"
+                            (ngModelChange)="saveCompanyData('proxyOfficeContactNumber','string')">
+                    </td>
+                    <td>Business Email ID</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="proxyDetails.proxyBusinessEmailId"
+                            (ngModelChange)="saveCompanyData('proxyBusinessEmailId','string')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Paid Up Capital</td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="proxyDetails.proxyCompanyPaidUpCapital"
+                            (ngModelChange)="saveCompanyData('proxyCompanyPaidUpCapital','string')">
+                    </td>
+                    <td>Annual Sales</td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="proxyDetails.proxyAnnualSales"
+                            (ngModelChange)="saveCompanyData('proxyAnnualSales','string')">
+                    </td>
+                    <td>Annual Turnover</td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" [(ngModel)]="proxyDetails.proxyAnnualTurnover"
+                            (ngModelChange)="saveCompanyData('proxyAnnualTurnover','string')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Registered Address</td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" class="min-select-textarea" style="resize: none;"
+                            [(ngModel)]="proxyDetails.proxyRegisteredAddress"
+                            (ngModelChange)="saveCompanyData('proxyRegisteredAddress','string')"
+                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="table-container" style="overflow: hidden;" *ngIf="activeSubTabName === 'Financial Information'">
+            <div class="content-container-2">
+                <mat-tab-group [selectedIndex]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+                    <mat-tab label="{{matHead.name}}" *ngFor="let matHead of matTabHeader">
+                        <ng-template mat-tab-label>
+                            <span [class.tabColor]="activeTabName === matHead.name"
+                                style="font-weight: 600;text-shadow:2px 2px rgb(223, 223, 223)">
+                                {{matHead.name}}</span>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <div class="btn_content">
+                <input prohibitedChars hidden type="file" accept=".pdf" (change)="onFinancialFile($event)" #fileuploads style="display: none;">
+                <button  style="margin:1rem;float:right;position: absolute;right: 1rem;cursor: pointer;"
+                    class="clos-submit-btn" mat-raised-button (click)="fileuploads.click()">
+                    <mat-icon>upload</mat-icon>
+                    <span>Upload Financial Report</span>
+                </button>
+            </div>
+            <div class="table-container"
+                style="overflow: auto;margin: -4px;float:right;position: absolute;right: 26rem;cursor: pointer;">
+                <table>
+                    <tr>
+                        <!-- <td> 
+                            <label for="conversionDropdown" style="font-size: 16px; padding-right: 10px;">Conversion<span style="color:red; padding-left: 4px">*</span> :</label>                          
+                            <mat-select class="min-select_dropdown" [(ngModel)]="proxyDetails.proxyValueConversion"
+                            (ngModelChange)="saveApplicationData('proxyValueConversion','string') " >
+                              <mat-option *ngFor="let conversionOption of conversionOptions" [value]="conversionOption">
+                                {{conversionOption}}
+                            </mat-option>
+                            </mat-select>                 
+                        </td> -->
+                        <td>
+                            <label for="financialYearDropdown" style="font-size: 16px; padding-right: 10px;">Financial years<span style="color:red; padding-left: 4px">*</span> :</label>
+                            <mat-select class="min-select_dropdown" [(ngModel)]="proxyDetails.proxyYearCalculation"
+                                (ngModelChange)="calculateYears();saveCompanyData('proxyYearCalculation','string');">
+                                <mat-option *ngFor="let range of yearrange" [value]="range">
+                                    {{range}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top: 6.5rem;">
+                <!-- Financial Information - Statement SubTab Input Fields  -->
+                <ng-container *ngIf="option == 0">
+                    <div class="flex-container m-3" style="overflow: auto;">
+                        <!-- Revenue Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel expanded="true">
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Revenue (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <!-- <div class="scrollable-content"> -->
+                                <table>
+                                    <!-- Latest Interim Financial Statement -->
+                                    <!-- <tr>
+                                    <td>Latest Interim Financial Statement <span style="color:red;">*</span></td>
+                                    <td>:
+                                        <label for="latestInterimFinancialStatementFileInput">
+                                            <input prohibitedChars hidden type="file" #uploadFile1
+                                                accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                                (change)="onFinancialFile($event, 'latestInterimFinancialStatement')"
+                                                multiple />
+                                            <mat-icon (click)="uploadFile1.click();" class="inverted-icon">attach_file
+                                            </mat-icon>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="scrollable-content">
+                                            <div class="selected-files-container">
+                                                <div *ngFor="let fileName of applicationDetails.latestInterimFinancialStatement; let i = index"
+                                                    class="selected-file">
+                                                    <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                        style="color:blue;margin:1rem;">{{fileName.attachmentName}}</u>
+                                                    <button mat-icon-button>
+                                                        <mat-icon
+                                                            (click)="removeAttachment('latestInterimFinancialStatement',i)"
+                                                            class="remove-icon">clear</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea placeholder="Remarks" class="min-select"
+                                            [(ngModel)]="proxyFinancialInformation.proxyLatestInterimFinancialStatementUploadsRemarks"
+                                            (ngModelChange)="saveApplicationData('proxyLatestInterimFinancialStatementUploadsRemarks','string')"></textarea>
+                                    </td>
+                                </tr> -->
+
+                                    <!-- Financial Statement of Past 5 years -->
+                                    <!-- <tr>
+                                    <td style="vertical-align: middle;">Financial Statement of Past 5 years <span
+                                            style="color:red;">*</span></td>
+                                    <td>:
+                                        <label for="financialStatementOfPast5YearsFileInput">
+                                            <input prohibitedChars hidden type="file" #uploadFile2
+                                                accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                                (change)="onFinancialFile($event, 'financialStatementOfPast5Years')"
+                                                multiple />
+                                            <mat-icon (click)="uploadFile2.click();" class="inverted-icon">attach_file
+                                            </mat-icon>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="scrollable-content">
+                                            <div class="selected-files-container">
+                                                <div *ngFor="let fileName of applicationDetails.financialStatementOfPast5Years; let i = index"
+                                                    class="selected-file">
+                                                    <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                        style="color:blue;margin:1rem;">{{ fileName.attachmentName
+                                                        }}</u>
+                                                    <button mat-icon-button>
+                                                        <mat-icon
+                                                            (click)="removeAttachment('financialStatementOfPast5Years',i)"
+                                                            class="remove-icon">clear</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea placeholder="Remarks" class="min-select"
+                                            [(ngModel)]="proxyFinancialInformation.proxyFinancialStatementOfPast5YearsUploadsRemarks"
+                                            (ngModelChange)="saveApplicationData('proxyFinancialStatementOfPast5YearsUploadsRemarks','string')"></textarea>
+                                    </td>
+                                </tr> -->
+                                    <!-- Tax returns for the last 3 years -->
+                                    <!-- <tr>
+                                    <td>Tax returns for the last 3 years <span style="color:red;">*</span> </td>
+                                    <td>:
+                                        <label for="taxReturnsForTheLast3YearsFileInput">
+                                            <input prohibitedChars hidden type="file" #uploadFile3
+                                                accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                                (change)="onFinancialFile($event, 'taxReturnsForTheLast3Years')"
+                                                multiple />
+                                            <mat-icon (click)="uploadFile3.click();" class="inverted-icon">attach_file
+                                            </mat-icon>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="scrollable-content">
+                                            <div class="selected-files-container">
+                                                <div *ngFor="let fileName of applicationDetails.taxReturnsForTheLast3Years; let i = index"
+                                                    class="selected-file">
+                                                    <u (click)="getAttachementFileDownload(fileName.attachmentId)"
+                                                        style="color:blue;margin:1rem;">{{ fileName.attachmentName
+                                                        }}</u>
+                                                    <button mat-icon-button>
+                                                        <mat-icon
+                                                            (click)="removeAttachment('taxReturnsForTheLast3Years',i)"
+                                                            class="remove-icon">clear</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea placeholder="Remarks" class="min-select"
+                                            [(ngModel)]="proxyFinancialInformation.proxyTaxReturnsForTheLast3YearsUploadsRemarks"
+                                            (ngModelChange)="saveApplicationData('proxyTaxReturnsForTheLast3YearsUploadsRemarks','string')"></textarea>
+                                    </td>
+                                </tr> -->
+                                    <!-- <tr>
+                                    <td>Retained Earnings
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.revenueRetainedEarnings"
+                                            (ngModelChange)="saveApplicationData('revenueRetainedEarnings','number')" appCommaSeparatedInput (keydown)="preventLetterE($event)">
+                                    </td>
+                                </tr> -->
+                                </table>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Revenue (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Common Stock</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyCommonStock"
+                                                            (ngModelChange)="calculateRatio('proxyCommonStock', i, year.proxyCommonStock);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Treasury Stock</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTreasuryStock"
+                                                            (ngModelChange)="calculateRatio('proxyTreasuryStock', i, year.proxyTreasuryStock);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Other Comprehensive Income</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyOtherComprehensiveIncome"
+                                                            (ngModelChange)="calculateRatio('proxyOtherComprehensiveIncome', i, year.proxyOtherComprehensiveIncome);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Equity</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTotalEquity"
+                                                            (ngModelChange)="calculateRatio('proxyTotalEquity', i, year.proxyTotalEquity);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Debts Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Debts (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Debts (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Debts</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyDebts"
+                                                            (ngModelChange)="calculateRatio('proxyDebts', i, year.proxyDebts);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Long Term Debt</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.proxyLongTermDebt"
+                                                            (ngModelChange)="calculateRatio('proxyLongTermDebt', i, year.proxyLongTermDebt);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Debt Period</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="text" [(ngModel)]="year.proxyDebtPeriod"
+                                                            (ngModelChange)="calculateRatio('proxyDebtPeriod', i, year.proxyDebtPeriod);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Liabilities Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Liabilities (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Liabilities (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Liabilities</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTotalLiabilities"
+                                                            (ngModelChange)="calculateRatio('proxyTotalLiabilities', i, year.proxyTotalLiabilities);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Term Liabilities</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTermLiabilities"
+                                                            (ngModelChange)="calculateRatio('proxyTermLiabilities', i, year.proxyTermLiabilities);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Current Liabilities</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyCurrentLiabilities"
+                                                            (ngModelChange)="calculateRatio('proxyCurrentLiabilities', i, year.proxyCurrentLiabilities);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Assets Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Assets (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Assets (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTotalAssets"
+                                                            (ngModelChange)="calculateRatio('proxyTotalAssets', i, year.proxyTotalAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Fixed Assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyFixedAssets"
+                                                            (ngModelChange)="calculateRatio('proxyFixedAssets', i, year.proxyFixedAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Current Assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyCurrentAssets"
+                                                            (ngModelChange)="calculateRatio('proxyCurrentAssets', i, year.proxyCurrentAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Non-Current Assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyNonCurrentAssets"
+                                                            (ngModelChange)="calculateRatio('proxyNonCurrentAssets', i, year.proxyNonCurrentAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Tangible Assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTangibleAssets"
+                                                            (ngModelChange)="calculateRatio('proxyTangibleAssets', i, year.proxyTangibleAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Intangible Assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyIntangibleAssets"
+                                                            (ngModelChange)="calculateRatio('proxyIntangibleAssets', i, year.proxyIntangibleAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Capital Expansion Panel -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Capital (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Capital (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Issued Capital</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyIssuedCapital"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Paid-up Capital</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyFinancialPaidUpCapital"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Additional Paid-In Capital</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyAdditionalPaidInCapital"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>General Reserves</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyGeneralReserves"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Surplus Expansion Panel  -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Surplus (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Surplus (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Credit Balance</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyCreditBalance"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+
+                        </div>
+                        <!-- Additional Financial Information Expansion Panel  -->
+                        <div class="flex-item">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Additional Financial Information (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Additional Financial Information (In {{proxyDetails.proxyValueConversion}})</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Inventory</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyInventory"
+                                                            (ngModelChange)="calculateRatio('proxyInventory', i, year.proxyInventory);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Shareholders equity</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyFinancialShareholdersEquity"
+                                                            (ngModelChange)="calculateRatio('proxyFinancialShareholdersEquity', i, year.proxyFinancialShareholdersEquity);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>EBIT</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyEbit"
+                                                            (ngModelChange)="calculateRatio('proxyEbit', i, year.proxyEbit);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>EBITDA</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyEbitda"
+                                                            (ngModelChange)="calculateRatio('proxyEbitda', i, year.proxyEbitda);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Expense</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyInterestExpense"
+                                                            (ngModelChange)="calculateRatio('proxyInterestExpense', i, year.proxyInterestExpense);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Gross Profit</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyGrossProfit"
+                                                            (ngModelChange)="calculateRatio('proxyGrossProfit', i, year.proxyGrossProfit);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Total revenue</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyTotalRevenue"
+                                                            (ngModelChange)="calculateRatio('proxyTotalRevenue', i, year.proxyTotalRevenue);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Operating Income</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyOperatingIncome"
+                                                            (ngModelChange)="calculateRatio('proxyOperatingIncome', i, year.proxyOperatingIncome);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Net Income</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyNetIncome"
+                                                            (ngModelChange)="calculateRatio('proxyNetIncome', i, year.proxyNetIncome);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Payable</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyInterestPayable"
+                                                            (ngModelChange)="calculateRatio('proxyInterestPayable', i, year.proxyInterestPayable);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Net Sales</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyNetSales"
+                                                            (ngModelChange)="calculateRatio('proxyNetSales', i, year.proxyNetSales);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average total assets</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyAverageTotalAssets"
+                                                            (ngModelChange)="calculateRatio('proxyAverageTotalAssets', i, year.proxyAverageTotalAssets);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Cost of goods sold</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyCostOfGoodsSold"
+                                                            (ngModelChange)="calculateRatio('proxyCostOfGoodsSold', i, year.proxyCostOfGoodsSold);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average inventory</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyAverageInventory"
+                                                            (ngModelChange)="calculateRatio('proxyAverageInventory', i, year.proxyAverageInventory);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average accounts receivable</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyAverageAccountsReceivable"
+                                                            (ngModelChange)="calculateRatio('proxyAverageAccountsReceivable', i, year.proxyAverageAccountsReceivable);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Purchases</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyPurchases"
+                                                            (ngModelChange)="calculateRatio('proxyPurchases', i, year.proxyPurchases);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Average accounts payable</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyAverageAccountsPayable"
+                                                            (ngModelChange)="calculateRatio('proxyAverageAccountsPayable', i, year.proxyAverageAccountsPayable);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Lease payments</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyLeasePayments"
+                                                            (ngModelChange)="calculateRatio('proxyLeasePayments', i, year.proxyLeasePayments);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Principal repayments</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyPrincipalRepayments"
+                                                            (ngModelChange)="calculateRatio('proxyPrincipalRepayments', i, year.proxyPrincipalRepayments);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Market price per share</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyMarketPricePerShare"
+                                                            (ngModelChange)="calculateRatio('proxyMarketPricePerShare', i, year.proxyMarketPricePerShare);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Earnings per share</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyEarningsPerShare"
+                                                            (ngModelChange)="calculateRatio('proxyEarningsPerShare', i, year.proxyEarningsPerShare);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Book value per share</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyBookValuePerShare"
+                                                            (ngModelChange)="calculateRatio('proxyBookValuePerShare', i, year.proxyBookValuePerShare);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Working capital</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyWorkingCapital"
+                                                            (ngModelChange)="calculateRatio('proxyWorkingCapital', i, year.proxyWorkingCapital);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Retained earnings</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyFinancialRetainedEarnings"
+                                                            (ngModelChange)="calculateRatio('proxyFinancialRetainedEarnings', i, year.proxyFinancialRetainedEarnings);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Market value of equity</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyMarketValueOfEquity"
+                                                            (ngModelChange)="calculateRatio('proxyMarketValueOfEquity', i, year.proxyMarketValueOfEquity);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Sales</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxySales"
+                                                            (ngModelChange)="calculateRatio('proxySales', i, year.proxySales);fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                        <!-- Cashflows Expansion Panel -->
+                        <div class="flex-item" style="min-height: 350px;">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                    <mat-panel-title class="header-banner">
+                                        <b>Cashflows (In {{proxyDetails.proxyValueConversion}})</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <span
+                                    style="display: inline-block; white-space: nowrap; font-size: 1.8rem; text-align: left; padding: 1.5rem; color: #0e2954;">
+                                    <span style="text-decoration: underline;">Operation
+                                        Activities</span>&nbsp;:&nbsp;-
+                                </span>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Operation Activities</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Cash</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyOperationActivitiesNetCash"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Depreciation and Amortization</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyDepreciationAndAmortization"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Changes in Working Capital </td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyChangesInWorkingCapital"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <span
+                                    style="display: inline-block; white-space: nowrap; font-size: 1.8rem; text-align: left; padding: 1.5rem; color: #0e2954;">
+                                    <span style="text-decoration: underline;">Investing
+                                        Activities</span>&nbsp;:&nbsp;-
+                                </span>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Investing Activities</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Cash </td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyInvestingActivitiesNetCash"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <span
+                                    style="display: inline-block; white-space: nowrap; font-size: 1.8rem; text-align: left; padding: 1.5rem; color: #0e2954;">
+                                    <span style="text-decoration: underline;">Financing
+                                        Activities</span>&nbsp;:&nbsp;-
+                                </span>
+                                <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                    <table class="table collateral_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Financing Activities</th>
+                                                <th style="text-align: center;"
+                                                    *ngFor="let year of proxyFinancialInformation">{{ year.year }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Cash</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyFinancingActivitiesNetCash"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Proceeds from Borrowings </td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyProceedsFromBorrowings"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Repayment of Borrowings</td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number"
+                                                            [(ngModel)]="year.proxyRepaymentOfBorrowings"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td>Dividends Paid </td>
+                                                <ng-container
+                                                    *ngFor="let year of proxyFinancialInformation;let i=index">
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <input type="number" [(ngModel)]="year.proxyDividendsPaid"
+                                                            (ngModelChange)="fieldbinding()">
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- Financial Information - Ratio SubTab Input Fields -->
+                <ng-container *ngIf="option == 1">
+                    <div style="height: 80%; overflow-y: auto;">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header style="background-color: whitesmoke;">
+                                <mat-panel-title class="header-banner">
+                                    <b>
+                                        Loan Type : {{applicationDetails.typesOfLoan}}
+                                    </b>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ng-container>
+                                <div class="scrollable-content" style="max-height:300px">
+                                    <div class="table-responsive mt-5 mb-4 mr-3 ">
+                                        <table class="table collateral_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{applicationDetails.typesOfLoan}}</th>
+                                                    <th style="text-align: center;" *ngFor="let year of yearsList">{{
+                                                        year }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let ratio of ratioList">
+                                                    <td>{{ratio}}</td>
+                                                    <ng-container *ngFor="let year of yearsList;let i=index">
+                                                        <td style="text-align: center; vertical-align: middle;">
+                                                            <input type="text" readonly appCommaSeparatedInput
+                                                                [ngModel]="ratioDetails[i]?.[getPropertyBasedOnRatio(ratio)]"
+                                                                (ngModelChange)="updateCheckValue(i, getPropertyBasedOnRatio(ratio), $event)">
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </mat-expansion-panel>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="button-container">
+            <span style="color: red;font-weight: bold;margin:2rem;">
+                <!-- {{errMsg()}} -->
+            </span>
+            <button class="clos-submit-btn" style="margin:1rem;" mat-raised-button (click)="nexttab()">
+                <mat-icon>forward</mat-icon>
+                <span>Next</span>
+            </button>
+            <button class="clos-submit-btn" style="margin:1rem;" mat-raised-button (click)="previoustab()">
+                <mat-icon style="transform: rotate(180deg)">forward</mat-icon>
+                <span>Previous</span>
+            </button>
+        </div>
+    </div>

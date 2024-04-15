@@ -1,0 +1,144 @@
+// <============New=============>
+.config-main-container {
+    height: 80vh;
+    width: 75vw;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    >.tab-main-container {
+        flex: 1 1 auto;
+        border-bottom: 1px solid whitesmoke;
+        .tab_one-container {
+            padding: 3rem 0rem 0rem 1rem;
+            height: 65vh;
+            overflow: auto;
+            border: 1px solid gainsboro;
+        }
+        .tab_two-container {
+            padding: 3rem 0rem 0rem 1rem;
+            height: 65vh;
+            overflow: auto;
+            width: 100%;
+            >.table_field-container {
+                display: flex;
+                flex-direction: row;
+                >.table_input {
+                    flex: 1 1 auto;
+                }
+                >.add_table {
+                    flex: 0 0 auto;
+                }
+            }
+            // >.database_field-container {
+            //     display: flex;
+            //     flex-direction: row;
+            //     >.database_input {
+            //         flex: 1 1 auto;
+            //         display: flex;
+            //         flex-direction: column;
+            //     }
+            //     >.add_field {
+            //         flex: 0 0 auto;
+            //     }
+            // }
+        }
+    }
+    >.button-container {
+        flex: 0 0 auto;
+        height: 5rem;
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: row;
+        >.left-align-container {
+            flex: 1 1 auto;
+            margin-left: 1rem;
+        }
+        >.right-align-container {
+            flex: 0 0 auto;
+            margin-right: 1rem;
+        }
+    }
+}
+
+.flex-column-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.flex-row-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 2rem;
+}
+
+.flex-stetch {
+    flex: 0 0 auto;
+}
+
+.flex-unstetch {
+    flex: 1 1 auto;
+}
+
+
+/* active tab */
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color: rgba(14, 41, 84, 1);
+}
+
+
+/* ink bar */
+
+::ng-deep .mat-ink-bar {
+    background-color: var(--primary-color, rgba(14, 41, 84, 1)) !important;
+}
+
+.threshold {
+    font-size: 8px;
+    color: red;
+}
+
+ ::ng-deep .mat-select-placeholder {
+    margin-left: 9px;
+}
+
+ ::ng-deep .mat-select-value-text {
+    margin-left: 9px;
+}
+
+ ::ng-deep .mat-select-panel {
+    margin-left: 40px;
+}
+
+ ::ng-deep .mat-tooltip {
+    max-width: 400px !important;
+    white-space: pre-line;
+    height: auto !important;
+    word-wrap: break-word;
+}
+
+.min-select1 {
+    width: 30rem;
+    padding: 5px;
+    border-radius: 0.4rem;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem
+}
+.min-select-textarea {
+    width: 30rem;
+    height: 7rem;
+    padding: 5px;
+    border-radius: 0.4rem;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem
+}

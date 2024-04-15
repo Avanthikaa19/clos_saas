@@ -1,0 +1,589 @@
+<!-- <ng-container *ngIf="ac.super || ac.items.DFM002A_WORKFLOWS_VIEW"> -->
+  <div [style.height.px]="component_height" [style.max-height.px]="component_height" style="overflow: hidden;">
+    <mat-drawer-container class="main-container">
+      <mat-drawer mode="side" opened>
+        <div style="height: 100%; position: relative;">
+          <mat-toolbar class="noselect" style="background-color: gainsboro; font-size: medium; justify-content: center;tab-size: 5px;color: black;
+              font-size: 15px; height: 50px;">
+            <mat-icon>layers</mat-icon>
+            <span style="padding-left: 10px;">All Workflows</span>
+          </mat-toolbar>
+          <mat-card *ngIf="loadingWorkflows"
+            style=" font-size: 14px; margin: 5px; padding: 20px; display: flex; align-items: center; justify-content: center;">
+            <mat-progress-spinner diameter="20" strokeWidth="2" mode="indeterminate" color="primary">
+            </mat-progress-spinner>
+            <span style="margin-left: 20px;">Loading workflows.. Please wait..</span>
+          </mat-card>
+          <div *ngIf="!loadingWorkflows" style="position: relative; height: calc(100% - 100px); overflow-y: auto;">
+            <mat-accordion style="padding: 0; margin: 0 auto;">
+              <!-- <mat-expansion-panel *ngFor="let workflow of workflows; first as isFirst" [expanded]="isFirst" style="padding: 0; margin: 0; border-radius: 0;"
+                  class="mat-elevation-z1"> -->
+              <mat-expansion-panel *ngFor="let workflow of workflows; let index = index" [expanded]="index==0"
+                style="padding: 0; margin: 0; border-radius: 0;" class="mat-elevation-z1">
+                <mat-expansion-panel-header (contextmenu)="childWorkflowComponent($event, workflow)"
+                  (click)="closeAllOpenTabs()">
+                  <mat-panel-title style="font-size: 14px; font-weight: 500;" matTooltip={{workflow.description}}>
+                    <mat-icon *ngIf="ac.super || ac.items?.DFM002C_WORKFLOWS_MODIFY" class="workflow-icon"
+                      (click)="openWorkflowDetails(workflow, $event)">label</mat-icon>
+                    <span style="padding-top: 2px; padding-left: 10px;">
+                      {{workflow.name}}
+                    </span>
+                    <!-- Mat-menu - WORKFLOW -->
+                    <app-mat-menu-workflow (parentWorkflowFun)="parentWorkflowFun()"></app-mat-menu-workflow>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-panel-description style="padding: 0; margin: 0;">
+                  <mat-nav-list>
+                    <mat-list-item *ngFor="let worksheet of workflow.worksheets" matTooltip={{worksheet.description}}
+                      (contextmenu)="childWorksheetComponent($event, worksheet)"
+                      (click)="onWorksheetSelected(workflow, worksheet);closeAllOpenTabs()" class="nav-list-item"
+                      [class.nav-list-item-selected]="worksheet==selectedWorksheet" style="padding-left: 3rem;">
+                      <mat-icon *ngIf="ac.super || ac.items?.DFM006B_WORKSHEET_MODIFY" class="worksheet-icon"
+                        (click)="openWorksheetDetails(workflow, worksheet, $event)">
+                        label_important</mat-icon>
+                      <span style="padding-top: 2px; padding-left: 10px; width: 270px; border: transparent solid 1px;
+                          text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;
+                          -webkit-box-orient: vertical;">
+                        {{worksheet.name}}
+                      </span>
+                      <!-- Mat-menu - WORKSHEET -->
+                      <app-mat-menu-worksheet (parentWorksheetFun)="parentWorksheetFun()"></app-mat-menu-worksheet>
+                      <div *ngIf="worksheet.tasks != undefined" class="nav-list-item-chip">
+                        <div *ngIf="worksheet.refreshing" style="width: 40px; opacity: 0.2;">
+                          <mat-progress-bar mode="buffer"></mat-progress-bar>
+                        </div>
+                        <div *ngIf="!worksheet.refreshing">
+                          {{worksheet.tasks.length}} Tasks
+                        </div>
+                      </div>
+                    </mat-list-item>
+                    <div>
+                      <button mat-button style="color:rgba(14, 41, 84, 1); margin-top: 10px;" (click)="createWorksheet(workflow)"
+                        *ngIf="ac.super || ac.items?.DFM006A_WORKSHEET_CREATE">
+                        <mat-icon>add</mat-icon>
+                        <span>New Worksheet</span>
+                      </button>
+                      <button mat-icon-button style="margin-top: 5px; float: right;" (click)="deleteWorkflow(workflow)"
+                        *ngIf="ac.super || ac.items?.DFM002D_WORKFLOWS_DELETE">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </mat-nav-list>
+                </mat-panel-description>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div style="position: fixed; bottom: 5px; left: 10px; font-size: 12px;">
+            <!-- {{DFM_VERSION}} -->
+          </div>
+          <div class="buttondown">
+            <button mat-raised-button style="background-color: rgba(14, 41, 84, 1); color: white" (click)="createWorkflow()"
+              *ngIf="ac.super || ac.items?.DFM002B_WORKFLOWS_CREATE">
+              <mat-icon>add</mat-icon>
+              <span>New Workflow</span>
+            </button>
+          </div>
+        </div>
+      </mat-drawer>
+      <div class="flm-inner-container">
+        <div class="flm-tasks-chart">
+          <mat-toolbar class="flm-title noselect">
+            <div class="separator"></div>
+            <div [@fadeInOut] *ngIf="selectedWorksheet" class="flm-title-workflow">
+              {{selectedWorkflow?.name}}
+            </div>
+            <div [@fadeInOut] *ngIf="selectedWorksheet" class="separator"></div>
+            <div [@fadeInOut] *ngIf="selectedWorksheet" class="flm-title-worksheet">
+              {{selectedWorksheet?.name}}
+            </div>
+            <div class="spacer"></div>
+            <ng-container>
+              <div [@fadeInOut] class="control-buttons" *ngIf="false">
+                <button mat-button routerLink="/flow-manager/dashboard">
+                  <mat-icon>dashboard</mat-icon>
+                  <span style="padding-left: 10px;">Dashboard</span>
+                </button>
+                <button mat-button (click)="openSystemConfigs()">
+                  <mat-icon>device_hub</mat-icon>
+                  <span style="padding-left: 10px;">Systems</span>
+                </button>
+                <!-- FILE BATCHES UPLOAD -->
+                <!-- <button mat-button (click)="openSCFBatchStatusDialog()">
+                  <mat-icon>folder_open</mat-icon>
+                  <span style="padding-left: 10px;">File Batches</span>
+                </button> -->
+                <!-- IMPORT / EXPORT WIZARD  -->
+
+              </div>
+              <div [@fadeInOut] *ngIf="selectedWorksheet" class="control-buttons">
+                <!-- FILE SELECTION INPUT -->
+                <!-- <input class="center-align upload-button" type="file" accept=".json" #file style="display: none"
+                  (change)="selectFile($event)" /> -->
+                <!-- FILE SELECTION BUTTON -->
+                <!-- <button mat-button (click)="file.click()" *ngIf="fileArray.length==0 && !uploading"
+                  matTooltip="Import Worksheet">
+                  <mat-icon>backup</mat-icon>
+                </button> -->
+                <!-- CLEAR BUTTON -->
+                <!-- <button mat-button (click)="fileArray=[]" *ngIf="fileArray.length > 0 && !uploading">
+                  <mat-icon>clear</mat-icon>
+                  <span style="padding-left: 10px;">Clear Selection</span>
+                </button> -->
+                <!-- FILE UPLOAD BUTTON -->
+                <!-- <button mat-button (click)="uploadWorksheet(selectedWorkflow)" *ngIf="fileArray.length>0"
+                  [disabled]="uploading">
+                  <mat-icon>cloud_upload</mat-icon>
+                  <span style="padding-left: 10px;">{{uploading ? 'Uploading' : 'Upload'}}</span>
+                </button>
+                <button mat-button (click)="exportWorkSheet()" matTooltip="Export Worksheet">
+                  <mat-icon>cloud_download</mat-icon>
+                </button> -->
+                <button mat-icon-button (click)="openLogs(selectedWorksheet)" matTooltip="Open Task Logs">
+                  <mat-icon>list_alt</mat-icon>
+                </button>
+                <button mat-icon-button (click)="deleteWorksheet(selectedWorksheet)" matTooltip="Delete Worksheet" *ngIf="ac.super || ac.items?.DFM002D_WORKFLOWS_DELETE">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-button (click)="openWizard()" class="clos-submit-btn" style="margin-right: 1rem;"
+                  *ngIf="ac.super || ac.items.DFM005A_IMPORT_EXPORT">
+                  <mat-icon>swap_vert</mat-icon>
+                  <span style="padding-left: 10px;">Import/Export Wizard <sup>BETA</sup></span>
+                </button>
+              </div>
+              <!-- <div class="control-buttons" *ngIf="ac.super">
+                <button mat-flat-button style="color: white; background-color: #394eb4; text-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.3);"
+                  routerLink="../alert-config" matTooltip="Alert Configuration" [matTooltipPosition]="'left'">
+                  <mat-icon style="margin-right: 1rem;">keyboard_arrow_right</mat-icon>
+                  Go to Alert Configuration
+                </button>
+              </div> -->
+            </ng-container>
+            <!-- <span class="example-spacer"></span>
+            <button mat-flat-button style="color: white; background-color: rgb(76, 108, 206); font-weight: 600;"
+              routerLink="../alert-config" matTooltip="Alert Configuration" [matTooltipPosition]="'left'">
+              <mat-icon style="margin-right: 1rem;">keyboard_arrow_right</mat-icon>
+              Go to Alert Configuration
+            </button> -->
+          </mat-toolbar>
+          <div class="flm-worksheet-status" *ngIf="selectedWorksheet">
+            <mat-expansion-panel class="status" *ngIf="selectedWorksheet.status">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Queue Manager Service (Beta)
+                </mat-panel-title>
+                <mat-panel-description
+                  [style.color]="selectedWorksheet.loadingStatus ? 'dimgray' : (selectedWorksheet.status && selectedWorksheet.status.enabled ? 'green' : 'red')">
+                  {{selectedWorksheet.loadingStatus ? 'Loading..' : (selectedWorksheet.status &&
+                  selectedWorksheet.status.enabled ? 'Enabled' : 'Disabled')}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div *ngIf="selectedWorksheet.status">
+                <div style="margin-bottom: 10px;">
+                  <mat-progress-bar mode="determinate" [value]="selectedWorksheet.status.cacheHitRatio">
+                  </mat-progress-bar>
+                  <mat-label style="margin-top: 5px;">Cache Hits:
+                    {{selectedWorksheet.status.store.cacheHits}}/{{selectedWorksheet.status.totalHits}}</mat-label>
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <mat-progress-bar mode="determinate" [value]="selectedWorksheet.status.databaseHitRatio">
+                  </mat-progress-bar>
+                  <mat-label style="margin-top: 5px;">Database Hits:
+                    {{selectedWorksheet.status.store.databaseHits}}/{{selectedWorksheet.status.totalHits}}</mat-label>
+                </div>
+                <div>
+
+                </div>
+              </div>
+              <mat-action-row>
+                <span style="color:rgb(51, 51, 51); float: left;">Cache is
+                  {{selectedWorksheet.status.cacheHitRatio.toFixed(2)}}% effective.</span>
+                <button mat-button color="primary" (click)="refreshQMSStatus()">Refresh</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          </div>
+          <!-- FLOWCHART STARTS -->
+          <div class="flm-worksheet-flowchart pattern-bg" oncontextmenu="return false;">
+            <mat-card [@fadeInOut]
+              *ngIf="(selectedWorksheet && loadingTasks) || (selectedWorksheet && selectedWorksheet.refreshing)"
+              class="mid-graph-card mat-elevation-z3">
+              <div class="spinner">
+                <mat-spinner [diameter]="20"></mat-spinner>
+              </div>
+              <div class="text">
+                <span>Loading tasks.. Please wait.. </span>
+              </div>
+            </mat-card>
+            <mat-card [@fadeInOut] *ngIf="selectedWorksheet && !loadingTasks && nodes.length==0"
+              class="mid-graph-card mat-elevation-z3">
+              <div class="spinner">
+                <mat-icon>hourglass_empty</mat-icon>
+              </div>
+              <div class="text">
+                <span>No tasks found in this worksheet.</span>
+              </div>
+            </mat-card>
+            <mat-card [@fadeInOut] *ngIf="!selectedWorksheet" class="mid-graph-card mat-elevation-z3">
+              <div class="text">
+                <span>No worksheet selected.</span>
+              </div>
+            </mat-card>
+            <ng-container>
+            </ng-container>
+            <div [@fadeInOut] *ngIf="selectedWorksheet && !loadingTasks" class="create-task-button-container">
+              <ng-container *ngIf="ac.super || ac.items.DFM002F_WORKFLOWS_TASK">
+                <button mat-raised-button (click)="createTask(selectedWorksheet)">
+                  <mat-icon>add</mat-icon>
+                  <span>New Task</span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="ac.super || ac.items.DFM002E_WORKFLOWS_CONTROL">
+                <button mat-raised-button (click)="startWorksheet(selectedWorksheet)"
+                  *ngIf="selectedWorksheet.tasks.length > 0">
+                  <mat-icon style="color: green; margin-left: 0px; margin-right: 0px;">play_arrow</mat-icon>
+                  <span style="color: black;">Start All</span>
+                </button>
+                <button mat-raised-button (click)="stopWorksheet(selectedWorksheet)"
+                  *ngIf="selectedWorksheet.tasks.length > 0">
+                  <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">stop</mat-icon>
+                  <span style="color: black;">Stop All</span>
+                </button>
+              </ng-container>
+            </div>
+            <div [@fadeInOut] *ngIf="selectedWorksheet && !loadingTasks && nodes.length > 0" class="graph-controls">
+              <button mat-raised-button matTooltip="Show System Names" [disabled]="peekSystem" (click)="onPeekSystem()">
+                <mat-icon>device_hub</mat-icon>
+              </button>
+              <button mat-raised-button matTooltip="Clear All Highlighted Entry Tracks"
+                (click)="queueComp.requestForUntrack();clearTracks()">
+                <mat-icon>timeline</mat-icon>
+              </button>
+              <button mat-raised-button matTooltip="Center" (click)="centerGraph()">
+                <mat-icon>center_focus_weak</mat-icon>
+              </button>
+              <button mat-raised-button matTooltip="Zoom In" [disabled]="(zoomLevel+0.25)>maxZoomLevel"
+                (click)="zoomLevel=(zoomLevel+0.25)>maxZoomLevel?zoomLevel:(zoomLevel+0.25)">
+                <mat-icon>zoom_in</mat-icon>
+              </button>
+              <button mat-raised-button matTooltip="Reset Zoom & Center" [disabled]="zoomLevel==1.0"
+                (click)="zoomToFit(); centerGraph(); zoomLevel=1.0">
+                <mat-icon>fullscreen_exit</mat-icon>
+              </button>
+              <button mat-raised-button matTooltip="Zoom Out" [disabled]="(zoomLevel-0.25)<minZoomLevel"
+                (click)="zoomLevel=(zoomLevel-0.25)<minZoomLevel?zoomLevel:(zoomLevel-0.25)">
+                <mat-icon>zoom_out</mat-icon>
+              </button>
+            </div>
+            <div class="chart-container" *ngIf="ac.super || ac.items.DFM002G_WORKFLOWS_CONFIGURATION">
+              <ngx-graph *ngIf="selectedWorksheet && !loadingTasks && nodes.length > 0"
+                [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled"
+                [zoomSpeed]="zoomSpeed" [zoomLevel]="zoomLevel" [minZoomLevel]="minZoomLevel"
+                [maxZoomLevel]="maxZoomLevel" [autoZoom]="autoZoom" [autoCenter]="autoCenter" [panOnZoom]="panOnZoom"
+                [panOffsetX]="panOffsetX" [panOffsetY]="panOffsetY" [update$]="update$" [center$]="center$"
+                 [links]="links" [nodes]="nodes" [showMiniMap]="showMiniMap"
+                [miniMapPosition]="miniMapPosition" [miniMapMaxWidth]="miniMapMaxWidthPx"
+                [miniMapMaxHeight]="miniMapMaxHeightPx" [animate]="animate" [curve]="curve">
+                <ng-template #defsTemplate>
+                  <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4"
+                    orient="auto">
+                    <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                  </svg:marker>
+                </ng-template>
+                <ng-template #nodeTemplate let-node>
+                  <svg:g class="node" [class.input-task]="node.data.layer=='INPUT'"
+                    [class.processing-task]="node.data.layer=='PROCESSING'"
+                    [class.output-task]="node.data.layer=='OUTPUT'"
+                    (click)="onTaskSelected(node.data.idx, node.data.task)"
+                    (dblclick)="openTaskDetails(selectedWorksheet, node.data.task)"
+                    (contextmenu)="onContextMenu($event, node.data)"
+                    matTooltip="Note: Inputs for this task are received from another worksheet."
+                    [matTooltipDisabled]="node.data.prevTaskOfSameOrigin">
+                    <!-- TASK BACKGROUND 1 -->
+                    <svg:rect rx="5" ry="5" [attr.width]="node.dimension.width + 30" [attr.height]="node.data.height"
+                      class="shadow" />
+                    <!-- TASK FOOTER BACKGROUND -->
+                    <svg:rect rx="5" ry="5" y="35" [attr.width]="node.dimension.width + 30" [attr.height]="25"
+                      style="fill: rgba(255, 255, 255, 0.7)" />
+                    <!-- TASK BACKGROUND 2 -->
+                    <svg:rect rx="5" ry="5" [attr.width]="node.dimension.width + 30" [attr.height]="44"
+                      [style.fill]="peekSystem ? systemsMap[node.data.task.systemName]?.displayColor : ''" />
+                    <!-- TASK LABEL -->
+                    <svg:text alignment-baseline="central" [attr.x]="40" [attr.y]="22">
+                      <ng-container *ngIf="peekSystem">
+                        {{node.data.task.systemName}}
+                      </ng-container>
+                      <ng-container *ngIf="!peekSystem">
+                        {{node.label}}
+                      </ng-container>
+                    </svg:text>
+                    <!-- TASK UNPROCESSED ITEMS -->
+                    <svg:rect *ngIf="node.data.taskUnProcessed && node.data.taskUnProcessed > 0" rx="2" ry="2" x="32"
+                      y="0" [attr.width]="node.dimension.width-4" [attr.height]="12" style="fill: rgb(51, 51, 51)" />
+                    <svg:text *ngIf="node.data.taskUnProcessed && node.data.taskUnProcessed > 0"
+                      alignment-baseline="central" [attr.x]="40" [attr.y]="6"
+                      style="font-size: 10px; font-weight: bolder; fill: white;">
+                      {{node.data.taskUnProcessed}} IN QUEUE
+                    </svg:text>
+                    <!-- TASK ERRORS -->
+                    <svg:rect *ngIf="node.data.taskErrored && node.data.taskErrored > 0" rx="2" ry="2" x="32" y="0"
+                      [attr.width]="node.dimension.width-4" [attr.height]="12" style="fill: red" />
+                    <svg:text *ngIf="node.data.taskErrored && node.data.taskErrored > 0" alignment-baseline="central"
+                      [attr.x]="40" [attr.y]="6" style="font-size: 10px; font-weight: bolder; fill: white;">
+                      {{node.data.taskErrored}} ERRORS
+                    </svg:text>
+                    <!-- TASK FOOTER LABEL -->
+                    <svg:text alignment-baseline="central" text-anchor="middle" fill="rgba(35, 35, 35, 1)"
+                      [attr.x]="(node.dimension.width+30)/2" [attr.y]="52" style="font-size: 10px;">
+                      {{node.data.task.type}}
+                    </svg:text>
+                    <!-- TASK STATUS ICONS -->
+                    <svg:rect rx="3" ry="3" x="2" y="2" [attr.width]="28" [attr.height]="40"
+                      style="fill: rgba(0, 0, 0, 0.3);" />
+                    <!-- running icon -->
+                    <svg:g *ngIf="node.data.task.status?.status==='RUNNING'" class="svg-icon icon-tick" height="100%"
+                      width="100%" transform="translate(8 14)">
+                      <path data-name="layer1" fill="none" stroke="rgb(0,255,0)" stroke-width="2" d="M6 2l52 30L6 62V2z"
+                        stroke-linejoin="round" stroke-linecap="round" style="transform: scale(0.27);"></path>
+                    </svg:g>
+                    <!-- stopped icon -->
+                    <svg:g *ngIf="node.data.task.status?.status==='STOPPED'" class="svg-icon icon-cross" height="100%"
+                      width="100%" transform="translate(8 14)">
+                      <path
+                        d="M24 3c0-1.657-1.343-3-3-3h-18c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h18c1.657 0 3-1.343 3-3v-18z"
+                        style="transform: scale(0.65);" />
+                    </svg:g>
+                    <!-- loading icon -->
+                    <svg:g
+                      *ngIf="node.data.task.status?.status==='LOADING' || node.data.task.status?.status==='STARTING' || node.data.task.status?.status==='STOPPING'"
+                      class="svg-icon icon-reload" height="100%" width="100%" transform="translate(5 10)">
+                      <path data-name="layer2"
+                        d="M17.662 25.152l-2.755 2.349a17.984 17.984 0 0 1 30.135-8.232l4.242-4.243A23.998 23.998 0 0 0 8.981 26.403L7 24l-5 3 8.943 11.768 10.613-9.05z"
+                        fill="none" stroke="rgb(255,255,255,0.2)" stroke-miterlimit="10" stroke-width="2"
+                        stroke-linejoin="round" stroke-linecap="round" style="transform: scale(0.35);"></path>
+                      <path data-name="layer1"
+                        d="M62 37l-8.39-12.054-10.442 9.388 4.012 4.462 2.54-2.284a17.983 17.983 0 0 1-30.134 8.215l-4.24 4.245a24 24 0 0 0 40.261-11.191l1.76 2.389z"
+                        fill="none" stroke="rgb(255,255,255,0.2)" stroke-miterlimit="10" stroke-width="2"
+                        stroke-linejoin="round" stroke-linecap="round" style="transform: scale(0.35);"></path>
+                    </svg:g>
+                    <!-- SELECTION OUTLINE -->
+                    <svg:rect x="1" y="1" *ngIf="selectedTask==node.data.task" [@fadeInOut] rx="4" ry="4"
+                      [attr.width]="node.dimension.width + 28" [attr.height]="42"
+                      style="fill: rgba(255, 255, 255, 0.15); stroke-width: 3px; stroke:rgba(255, 255, 255, 0.4);" />
+                    <!-- EXTERNAL INPUT OUTLINE -->
+                    <svg:rect x="2" y="2" rx="4" ry="4" [style.stroke-width.px]="node.data.prevTaskOfSameOrigin ? 0: 2"
+                      [attr.width]="26" [attr.height]="40" class="node-external-input" style="fill: transparent;" />
+                    <!-- HIGHLIGHT OUTLINE -->
+                    <svg:rect x="1" y="1" rx="4" ry="4" [style.stroke-width.px]="node.data.highlight ? 5: 0"
+                      [attr.width]="node.dimension.width + 28" [attr.height]="42" class="node-highlight"
+                      style="fill: transparent;" />
+                  </svg:g>
+                </ng-template>
+                <ng-template #linkTemplate let-link>
+                  <svg:g class="edge" [class.edge-highlight]="link.data.highlight"
+                    (click)="openEntry(link.data.highlightEntryId)" [matTooltipDisabled]="!link.data.highlightEntryId"
+                    matTooltip="Open Entry {{link.data.highlightEntryId}}">
+                    <svg:path class="line">
+                    </svg:path>
+                    <svg:text class="edge-label" text-anchor="middle">
+                      <textPath class="text-path" [attr.href]="'#' + link.id"
+                        [style.dominant-baseline]="link.dominantBaseline" startOffset="55%">
+                        {{link.label}}{{link.data.highlightEntryId ? ' &bull; ' + link.data.highlightEntryId : ''}}
+                      </textPath>
+                    </svg:text>
+                  </svg:g>
+                </ng-template>
+              </ngx-graph>
+              <svg>
+                <defs>
+                  <filter id="myShadow" x="-20%" y="-20%" width="200%" height="200%" filterUnits="objectBoundingBox"
+                    primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+                    <feDropShadow stdDeviation="3 3" in="blur2" dx="3" dy="4" flood-color="#000000" flood-opacity="0.35"
+                      x="0%" y="0%" width="100%" height="100%" result="dropShadow" />
+                  </filter>
+                </defs>
+              </svg>
+            </div>
+            <mat-card [@fadeInOut] *ngIf="selectedWorksheet && selectedTask?.description"
+              style="position: absolute; bottom: 5px; left: 50%;
+                transform: translateX(-50%); font-size: 13px; max-height: 30px; opacity: 0.6; display: flex; overflow: hidden; align-items: center;" class="mat-elevation-z2 noselect">
+              <div class="text">
+                <span><b>{{selectedTask.name}}</b>: {{selectedTask.description}}</span>
+              </div>
+            </mat-card>
+          </div>
+          <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+            [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+          </div>
+          <mat-menu #contextMenu="matMenu">
+            <ng-template matMenuContent let-item="item">
+              <button mat-menu-item (click)="openTaskDetails(selectedWorksheet, item.task)"
+                style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;">
+                <mat-icon style="margin-left: 0px; margin-right: 0px;">settings</mat-icon>
+                <span>Show Task Details</span>
+              </button>
+              <button mat-menu-item (click)="cloneTaskDetails(selectedWorksheet, item.task)"
+                style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;">
+                <mat-icon style="margin-left: 0px; margin-right: 0px;">content_copy</mat-icon>
+                <span>Clone</span>
+              </button>
+              <ng-container *ngIf="ac.super || ac.items.DFM002E_WORKFLOWS_CONTROL">
+                <button *ngIf="item.task.status.status==='STOPPED'" mat-menu-item (click)="startTask(item.task)"
+                  style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;">
+                  <mat-icon style="color: green; margin-left: 0px; margin-right: 0px;">play_arrow</mat-icon>
+                  <span>Start Task</span>
+                </button>
+                <button *ngIf="item.task.status.status==='RUNNING'" mat-menu-item (click)="stopTask(item.task)"
+                  style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;">
+                  <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">stop</mat-icon>
+                  <span>Stop Task</span>
+                </button>
+              </ng-container>
+              <span *ngIf="item.task.status.status==='LOADING'">Loading..</span>
+              <button [disabled]="item.task.status.status!='STOPPED'" mat-menu-item
+                (click)="deleteTask(selectedWorksheet, item.task)" style="font-size: 14px; padding-left: 5px;"
+                oncontextmenu="return false;">
+                <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">delete</mat-icon>
+                <span>Remove Task</span>
+              </button>
+              <button *ngIf="item.taskErrored && item.taskErrored > 0" mat-menu-item
+                (click)="bulkResolveErrorsByTask(item.task.id, 'BULK MANUAL RESOLVE')"
+                style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;">
+                <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">warning</mat-icon>
+                <span>Resolve All Errors</span>
+              </button>
+              <ng-container  *ngIf="ac.super || ac.items.DFM003C_ENTRIES_RESEND_ERRORS">
+                <button *ngIf="item.taskErrored && item.taskErrored > 0 && item.task.prevTaskId !== null" mat-menu-item
+                  (click)="bulkResendErrorsByTask(item.task.id, 'BULK MANUAL RESEND')"
+                  style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;">
+                  <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">warning</mat-icon>
+                  <span>Resend All Errors</span>
+                </button>
+              </ng-container>
+              <div
+                style="border-top: silver solid 1px; margin-top: 5px; margin-bottom: 5px; font-style: italic; font-size: 12px; color: silver; padding-left: 5px;">
+                <span>DANGER ZONE:</span>
+              </div>
+              <button mat-menu-item (click)="purgeAllProcessedEntriesByTask(item.task.id)"
+                style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;"
+                *ngIf="ac.super || ac.items.DFM003E_ENTRIES_PURGE_PROCESSED">
+                <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">delete_outline</mat-icon>
+                <span style="color: red;">Purge All Processed Entries</span>
+              </button>
+              <button mat-menu-item (click)="purgeAllUnprocessedEntriesByTask(item.task.id)"
+                style="font-size: 14px; padding-left: 5px;" oncontextmenu="return false;"
+                *ngIf="ac.super || ac.items.DFM003F_ENTRIES_PURGE_UNPROCESSED">
+                <mat-icon style="color: red; margin-left: 0px; margin-right: 0px;">delete_forever</mat-icon>
+                <span style="color: red;">Purge All Unprocessed Entries</span>
+              </button>
+            </ng-template>
+          </mat-menu>
+          <!-- FLOWCHART ENDS -->
+        </div>
+        <div class="flm-worksheet-tasks">
+          <!-- TASK NAME TABS -->
+          <mat-tab-group animationDuration="200ms" #tasksTabGroup (selectedTabChange)="tasksTabChanged($event)"
+            [(selectedIndex)]="tabIndex" style="min-height: 100%;" class="mat-tab-fill-height">
+            <mat-tab *ngFor="let node of nodes; let index = index">
+              <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                <div class="noselect" [class.input-task-tab-label]="node.data.layer=='INPUT'"
+                  [class.processing-task-tab-label]="node.data.layer=='PROCESSING'"
+                  [class.output-task-tab-label]="node.data.layer=='OUTPUT'">
+                  {{(index+1) + '. ' + node.label}}
+                </div>
+              </ng-template>
+              <div style="height: 100%;" *ngIf="index===tabIndex">
+                <!--  ngIf for fixing angular bug: Nested tabs don't show inkbar on active tab. -->
+                <!-- I/O, CONFIGURATION & ERRORS TABS -->
+                <mat-tab-group animationDuration="200ms" #tasksSubTabGroup
+                  (selectedTabChange)="tasksSubTabChanged($event)" [(selectedIndex)]="tabIndex2"
+                  style="min-height: 100%;" class="mat-tab-fill-height">
+                  <!-- all entries -->
+                  <ng-container *ngIf="ac.super || ac.items.DFM003A_ENTRIES_VIEW">
+                    <mat-tab label="Output Queue">
+                      <div class="task-entry-queue-container" *ngIf="0===tabIndex2">
+                        <app-output-entries-queue [taskId]="node.data.task.id" [processed]="'N'" [errored]="''"
+                          (trackEntry)="trackEntry($event)" [queueInstance]="null"></app-output-entries-queue>
+                      </div>
+                    </mat-tab>
+                    <!-- processed entries -->
+                    <mat-tab label="Processed Entries">
+                      <div class="task-entry-queue-container" *ngIf="1===tabIndex2">
+                        <app-output-entries-queue [taskId]="node.data.task.id" [processed]="'Y'" [errored]="'N'"
+                          (trackEntry)="trackEntry($event)" [queueInstance]="null"></app-output-entries-queue>
+                      </div>
+                    </mat-tab>
+                    <!-- error entries -->
+                    <mat-tab label="Errored Entries">
+                      <div class="task-entry-queue-container" *ngIf="2===tabIndex2">
+                        <app-output-entries-queue [taskId]="node.data.task.id" [processed]="'N'" [errored]="'Y'"
+                          (trackEntry)="trackEntry($event)" [queueInstance]="null"></app-output-entries-queue>
+                      </div>
+                    </mat-tab>
+                    <!-- raw config json -->
+                    <mat-tab label="Config JSON">
+                      <div style="height:calc(100vh - 56vh); width: 100%; background-color: white;"
+                        class="configuration-container">
+                        <ngx-json-viewer [json]="selectedTaskConfig"></ngx-json-viewer>
+                      </div>
+                    </mat-tab>
+                    <!-- tools -->
+                    <mat-tab label="Tools">
+                      <div style=" width: 100%; height:calc(100vh - 56vh); background-color: white;"
+                        class="configuration-container">
+                        <div *ngIf="selectedTask.type!='FILE_WATCHER_LOCAL'"
+                          style="position: absolute; top: 10px; left: 0; width: 100%;
+                            text-align: center; color: silver; font-weight: bolder; font-size: 16px; font-style: italic;" class="noselect">
+                        </div>
+                        <app-file-watcher-actions
+                          *ngIf="(selectedTask.type=='FILE_WATCHER_LOCAL' || selectedTask.type=='FILE_WATCHER_MD_LOCAL') && selectedTaskConfig.paths"
+                          [filePath]="selectedTaskConfig.paths.watch"></app-file-watcher-actions>
+                        <app-file-writer-actions
+                          *ngIf="(selectedTask.type=='FILE_WRITER_LOCAL' || selectedTask.type=='FILE_WATCHER_MD_LOCAL') && selectedTaskConfig.paths"
+                          [taskId]="selectedTask.id" [fileName]="selectedTaskConfig.files.general.name">
+                        </app-file-writer-actions>
+                        <app-aggregator-actions *ngIf="selectedTask.type=='AGGREGATOR'" [taskId]="selectedTask.id">
+                        </app-aggregator-actions>
+                        <app-match-status-modal *ngIf="selectedTask.type=='MATCHER'" [taskId]="selectedTask.id">
+                        </app-match-status-modal>
+                      </div>
+                    </mat-tab>
+                  </ng-container>
+                </mat-tab-group>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+      <mat-card [@fadeInOut] *ngIf="errorMessage" [style.opacity]="errorNotificationMinimized?0.8:1"
+        class="error-notification-card mat-elevation-z4">
+        <div class="error-logs-header noselect">
+          <button mat-icon-button color="warn"
+            (click)="errorNotificationMinimized=true; errorMessage=''; errorMessageCount=0;">
+            <mat-icon>clear</mat-icon>
+          </button>
+          <button *ngIf="!errorNotificationMinimized" mat-icon-button color="warn"
+            (click)="errorNotificationMinimized=true;">
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <button *ngIf="errorNotificationMinimized" mat-icon-button color="warn"
+            (click)="errorNotificationMinimized=false;">
+            <mat-icon>expand_less</mat-icon>
+          </button>
+          <h6>Error Logs {{errorMessageCount>0?'('+errorMessageCount+')':''}}</h6>
+        </div>
+        <div class="error-logs-body" [style.margin-bottom.px]="errorNotificationMinimized?0:5"
+          [style.padding-top.px]="errorNotificationMinimized?0:10" [style.min-height.vh]="0"
+          [style.opacity]="errorNotificationMinimized?0:1" [style.max-height.vh]="errorNotificationMinimized?0:50"
+          #scrollableErrorLogs #messageContainer>
+          <p>
+            {{errorMessage}}
+          </p>
+        </div>
+      </mat-card>
+    </mat-drawer-container>
+  </div>
+<!-- </ng-container> -->
+<!-- <ng-container *ngIf="!ac.super && !ac.items.DFM002A_WORKFLOWS_VIEW">
+  <div class="no-access">
+    <app-no-access></app-no-access>
+  </div>
+</ng-container> -->

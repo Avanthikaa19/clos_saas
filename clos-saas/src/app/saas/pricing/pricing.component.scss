@@ -1,0 +1,103 @@
+.main-header{
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: blue;
+}
+.sub-header{
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: blue; 
+}
+.logo-img{
+    width:150px;
+    height:100px;
+}
+.box{
+    height:250px;
+    width:100%;
+    border-radius: 11px;
+    background-color: lightgrey;
+}
+.card-container {
+    height: 400px;
+    margin-left: 6%;
+}
+
+.card-box {
+    height: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.card-box:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.title span {
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
+
+.description {
+    margin-top: 3%;
+}
+
+.description span {
+    font-size: 15px;
+    color: black;
+}
+
+.price {
+    margin-top: 3%;
+}
+
+.price span {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.subscribe {
+    text-align: center;
+    margin-top: 3%;
+}
+.min-select {
+    width: 18rem;
+    padding: 10px;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem;
+    margin-top: 4%;
+}
+.version-info{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    bottom: 0;
+    right: 0;
+    background: #0e2954;
+    width: 100%;
+    color: silver;
+    font-style: italic;
+    padding: 4px 15px;
+    > .version-name{
+      font-size: 12px;
+      float: right;
+      > .version-link:hover{
+        border-bottom: 1px dotted gray;
+        cursor: pointer;
+      }
+    }
+    
+  }

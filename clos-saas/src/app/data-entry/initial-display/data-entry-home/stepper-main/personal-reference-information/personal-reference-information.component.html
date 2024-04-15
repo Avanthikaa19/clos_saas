@@ -1,0 +1,141 @@
+<div class="content-container">
+    <form #personalRefInfoForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 1 Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="listFieldName['appmPr1nm']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem; padding-right:3rem">
+                        <span class="field_name">Personal Ref 1 Position Title</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPr1Pos']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 1 Employer Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmP1Emp']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 1 Employer Add 1</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmP1Ema1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 1 Employer Add 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmP1Ema2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 1 Employer Phone</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPr1Tel']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 2 Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPr2Nm']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem; padding-right:3rem">
+                        <span class="field_name">Personal Ref 2 Position Title</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPr2Pos']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 2 Employer Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmP2Emp']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 2 Employer Add 1</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmP2Ema1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 2 Employer Add 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmP2Ema2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Personal Ref 2 Employer Phone</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPr2Tel']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,380 @@
+<div class="main-container">
+    <!-- <ng-container>
+        <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="selectTab($event)">
+            <mat-tab label="{{data}}" *ngFor="let data of duplicateId; let i = index;">
+                <ng-template mat-tab-label style="font-weight: 600;">
+                    <span style="font-weight: 600;">{{data}}</span>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </ng-container> -->
+    <div class="middle_Section">
+        <section class="container-fluid dup-section">
+            <div class="row mb-4 pt-4">
+                <div class="col-md-7">
+                    <div class="application-list">
+                        <ul>
+                            <li>APPLICATION ID: <span style="color:royalblue">{{appDetails?.ID}}</span></li>
+                            <!-- <li>Applicant Name: <span style="color:royalblue">{{appDetails?.APPLICANT_NAME}}</span></li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;">
+                <div class="multiTable_tabs">
+                    <!-- <div class="multirow-container-header">
+                                <div class="multirow-container"
+                                    *ngFor="let result of databaseDetail['NEGATIVE MATCHING']; let i = index">
+                                    <div class="matchedCategory">
+                                        <span class="matched-status">Matched Status:&nbsp;&nbsp;</span>
+                                        <span [style.color]="(result.matchedCategory === 'MATCHED') ? '#' + result.highMatchCCCode : '#' + result.lowMatchCCCode">
+                                            {{result.matchedCategory}}
+                                        </span>
+                                    </div>
+                                    <div class="matched-columns">
+                                        <p class="mb-3 mt-5">Compared Columns :
+                                            <ng-container *ngIf="result.matchedColumns != null && result.matchedColumns.length > 0">
+                                                <span class="matched-columns-sub" *ngFor="let matchedList of result.matchedColumns; let m=index">
+                                                    <ul class="matching-list">
+                                                        <li>
+                                                            <span [style.background-color]="'#' + matchedList.colorCode" class="TabField-Color"></span>
+                                                            <span style="position: relative; bottom: 4px;">
+                                                                {{matchedList.appFields.join(' - ')}}
+                                                                - {{matchedList.tableFields.join(' - ')}}
+                                                                - {{matchedList.percentage}}%
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngIf="result.matchedColumns == null || result.matchedColumns.length === 0">
+                                                <span style="color: #016CB9;">Not Found</span>
+                                            </ng-container>
+                                        </p>
+                                    </div>
+                                    <div style="width:98%;padding: 0 14px;">
+                                        <p class="mb-4 mt-3">{{result.tableName}}:</p>
+                                    </div>
+                                    
+                                    <div style="padding: 0 14px;">
+                                        <div class="result-table table-responsive">
+                                            <table style="border: 1px solid rgb(233, 233, 233); margin-bottom: 1rem;"
+                                                *ngIf="result.matchedRecordDetails?.length != 0">
+                                                <thead>
+                                                    <tr>
+                                                        <ng-container *ngFor="let tableField of result.matchedTableFields">
+                                                            <th>{{tableField}}</th>
+                                                        </ng-container>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <ng-container *ngFor="let tableData of result.matchedTableFields">
+                                                            <ng-container *ngFor="let matchedTableData of result.matchedRecordDetails;let k=index">
+                                                                <td [style.color]="'#' + highLighter[i].get(tableData)">
+                                                                    <ng-container
+                                                                        *ngIf="tableData === 'DOB' || tableData === 'DateOfBirth' || tableData === 'date_of_birth' || tableData === 'DATE_OF_BIRTH' || tableData === 'APPMDOB' || tableData ==='DATE' || tableData ==='Dated' || tableData ==='DATED' || tableData ==='Date_Listed' || tableData ==='date_repo' || tableData ==='RMS_BirthDate' || tableData ==='BIRTH' || tableData ==='Date_of_Birth' ||  tableData ==='card_blkdte'">
+                                                                        {{
+                                                                        formatDOB(matchedTableData[tableData])
+                                                                        }}
+                                                                    </ng-container>
+                                                                    <ng-container
+                                                                        *ngIf="tableData !== 'DOB' && tableData !=='DateOfBirth' && tableData !== 'date_of_birth' && tableData !=='DATE_OF_BIRTH' && tableData !=='APPMDOB' && tableData !=='DATE' && tableData !=='Dated' && tableData !=='DATED' && tableData !=='Date_Listed' && tableData !=='date_repo' && tableData !=='RMS_BirthDate' && tableData !=='BIRTH' && tableData !=='Date_of_Birth' && tableData !=='card_blkdte'">
+                                                                        {{
+                                                                        matchedTableData[tableData]
+                                                                        }}
+                                                                    </ng-container>
+                                                                </td>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                </div>
+                                </div> -->
+                    <ng-container>
+                        <mat-tab-group class="inner-tab-group">
+                            <mat-tab label="DUPLICATE CHECKING">
+                                <ng-container *ngIf="duplicateData?.length != 0">
+                                    <div style="width:98%;padding: 0 14px;color:red">
+                                        <p class="mb-4 mt-3" >
+                                            <!-- <span style="color:black">TABLE NAME:</span>
+                                            <span style="margin-left:0.5rem;" >{{duplicateTable?.toUpperCase()}}</span> -->
+                                            <span style="color:black">STATUS:
+                                                <span style="color:blue;margin-left:0.5rem;">{{negativeArray[0].applicationStatus}}</span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div style="width:98%;padding: 0 14px;color:#0e2954">
+                                        <p class="mb-4 mt-3"><span style="color:black">MATCHED COLUMNS:
+                                            </span><span style="color:green;">{{duplicateAppFields}},{{duplicateTableFields}}</span></p>
+                                    </div>
+                                    <div style="padding: 0 10px;">
+                                        <div class="table-responsive mt-5">
+                                            <ng-container *ngIf="databaseDetail">
+                                                <div class="header-banner">
+                                                    <div style="width:98%;margin:1rem 1rem">
+                                                        <p style="font-weight:bold;">INQUIRE FIELDS :</p>
+                                                    </div>
+                                                    <table style="margin:1rem;" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let csvField of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                                    <th>{{csvField}}</th>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let fieldData of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                                    <ng-container
+                                                                        *ngFor="let record of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredRecordDetails; let j=index">
+                                                                        <td>
+                                                                            {{record[fieldData]}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div style="width:98%;margin:1rem 1rem">
+                                                        <p style="font-weight:bold;">MATCHED FIELDS :</p>
+                                                    </div>
+                                                    <table style="margin:1rem;" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let csvField of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                                    <th>{{csvField}}</th>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let fieldData of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                                    <ng-container
+                                                                        *ngFor="let record of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedRecordDetails; let j=index">
+                                                                        <td>
+                                                                            {{record[fieldData]}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- <div style="width:98%;margin:1rem 0 0 1rem">
+                                                        <p style="font-weight:bold;">MATCHED COLUMNS :</p>
+                                                    </div>
+                                                    <table style="margin:2rem;" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let csvField of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                                    <th>{{csvField}}</th>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let fieldData of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                                    <ng-container
+                                                                        *ngFor="let record of databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.tableFields let j=index">
+                                                                        <td>
+                                                                            {{record}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table> -->
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </mat-tab>
+                            <mat-tab label="NEGATIVE CHECKING">
+                                <ng-container *ngIf="negativeData?.length !=0">
+                                    <div style="width:98%;padding: 0 14px;color:red">
+                                        <p class="mb-4 mt-3" >
+                                            <!-- <span style="color:black">TABLE NAME:</span>
+                                            <span style="margin-left:0.5rem;" >{{negativeTable?.toUpperCase()}}</span> -->
+                                            <span style="color:black">STATUS:
+                                                <span style="color:blue;margin-left:0.5rem;">{{negativeArray[0].applicationStatus}}</span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div style="width:98%;padding: 0 14px;color:#0e2954">
+                                        <p class="mb-4 mt-3"><span style="color:black">MATCHED COLUMNS:
+                                            </span><span style="color:green">{{negativeAppFields}},{{negativeTableFields}}</span></p>
+                                    </div>
+                                    <div style="padding: 0 10px;">
+                                        <div class="table-responsive mt-5">
+                                            <ng-container *ngIf="databaseDetail">
+                                                <div class="header-banner">
+                                                    <div style="width:98%;margin:1rem 1rem">
+                                                        <p style="font-weight:bold;">INQUIRE FIELDS :</p>
+                                                    </div>
+                                                    <table style="margin:1rem;" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let csvField of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                                    <th>{{csvField}}</th>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let fieldData of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                                    <ng-container
+                                                                        *ngFor="let record of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredRecordDetails; let j=index">
+                                                                        <td>
+                                                                            {{record[fieldData]}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div style="width:98%;margin:1rem 1rem">
+                                                        <p style="font-weight:bold;">MATCHED FIELDS :</p>
+                                                    </div>
+                                                    <table style="margin:1rem;" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let csvField of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                                    <th>{{csvField}}</th>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let fieldData of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                                    <ng-container
+                                                                        *ngFor="let record of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedRecordDetails; let j=index">
+                                                                        <td>
+                                                                            {{record[fieldData]}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- <div style="width:98%;margin:1rem 0 0 1rem">
+                                                        <p style="font-weight:bold;">MATCHED COLUMNS :</p>
+                                                    </div>
+                                                    <table style="margin:2rem;" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let csvField of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                                    <th>{{csvField}}</th>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let fieldData of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                                    <ng-container
+                                                                        *ngFor="let record of databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.tableFields let j=index">
+                                                                        <td>
+                                                                            {{record}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table> -->
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </ng-container>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="action__btn-container" *ngIf="!actionOpen">
+        <div class="btn-container">
+            <button mat-raised-button class="clear_btnn" mat-dialog-close matTooltip="Close" (click)="onCloseClick()">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+                <span>
+                    Close
+                </span>
+            </button>
+            <div class="action-buttons">
+                <button mat-raised-button class="rejectandrequest_btnn" mat-dialog-close (click)="onPending()"
+                    matTooltip="" style="float: right;">
+                    <span class="material-symbols-outlined">
+                        cancel
+                    </span>
+                    <span>
+                        Pending
+                    </span>
+                </button>
+                <button mat-raised-button class="reject_btnn" (click)="denyApproveClick(false)" matTooltip="Proceed"
+                    style="float: right;">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                    <span>
+                        Reject
+                    </span>
+                </button>
+                <button mat-raised-button class="apply_btnn" mat-dialog-close style="float: right;" matTooltip="Proceed"
+                    (click)="onProceed()">
+                    <span class="material-symbols-outlined">
+                        done_all
+                    </span>
+                    <span>
+                        Accept
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="action-remarks" *ngIf="actionOpen">
+        <div class="close-action-header">
+            <div class="close-action-content">
+                <textarea prohibitedChars style="width: 111%;resize: none;" placeholder="Remarks.." rows="2"
+                    [(ngModel)]="actionRemark"></textarea>
+            </div>
+        </div>
+        <div class="close-action-actions-container" *ngIf="actionMode==false || actionMode==true">
+            <div class="btn-container">
+                <button mat-raised-button class="clos-btn" matTooltip="Close" (click)="actionOpen=false">
+                    <mat-icon>close</mat-icon>Close
+                </button>
+            </div>
+            <div class="spacer"></div>
+            <button style="margin-top:1rem" mat-raised-button (click)="actionMode === true ? '':onReject()"
+                class="clos-submit-btn">
+                <mat-icon>{{actionMode === true ? 'done_all' : 'close'}}</mat-icon>
+                <span>{{actionMode === true ? 'Approve' : 'Reject'}}</span>
+            </button>
+        </div>
+    </div>
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="placeholder-container" [@fadeInOut] *ngIf="!loading && !duplicateData.length ||!negativeData.length ">
+        <span>No items found!</span>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height" style="overflow: hidden; font-size: 14px; position: relative;">
+    <div class="header">
+        Log Monitoring:
+        <span style="float: right; margin-right: 10px;">Note: Only text based files are supported.</span>
+    </div>
+    <mat-card class="main-tree-loading" [@fadeInOut] *ngIf="loadingTree">
+        <div style="display: flex;">
+            <mat-spinner [diameter]="20"></mat-spinner>
+            <span style="margin-left: 10px;">Loading..</span>
+        </div>
+    </mat-card>
+    <div class="editor-container">
+        <div class="tree-container" [class.minimize]="!browseExpanded">
+            <div class="tree-header">
+                <span class="treename" (click)="toggleWindowMode()">
+                    BROWSER
+                </span>
+                <div class="root-dir">
+                    <label>Root Dir:</label>
+                    <input type="text" [(ngModel)]="rootDir" style="flex: 1;">
+                    <button type="submit" (click)="refreshTree()">Go</button>
+                    <label style="margin-left: 20px; cursor: pointer;" (click)="toggleWindowMode()">Absolute Path:</label>
+                </div>
+                <span class="treepath" *ngIf="tree && tree.path" (click)="toggleWindowMode()">
+                    {{tree.path}}
+                </span>
+                <div class="treeback" (click)="toggleWindowMode()" matRipple>
+                    <span>{{browseExpanded ? '-' : '+'}}</span>
+                </div>
+            </div>
+            <mat-card class="tree-loading" [@fadeInOut] *ngIf="loadingTree">
+                <div style="display: flex;">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                    <span style="margin-left: 10px;">Loading..</span>
+                </div>
+            </mat-card>
+            <div [@fadeInOut] *ngIf="!loadingTree" class="tree-wrapper">
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="dir-tree">
+                    <!-- This is the tree node template for leaf nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle (click)="focusNode(node)" (dblclick)="activateNode(node)">
+                        <li class="mat-tree-node noselect" [class.focused-node]="focusedNode === node" [class.active-node]="activeNode === node">
+                            <!-- use a disabled button to provide padding for tree leaf -->
+                            <div style="display: flex; line-height: 30px;">
+                                <div style="min-width: 40px;width: auto; height: 24px; margin-left: 10px; margin-top: 3px; line-height: 24px; text-align: center; background-color: whitesmoke; border-radius: 3px;">
+                                    <mat-icon [@fadeInOut] *ngIf="node.isDir" style="color: dimgray;">folder</mat-icon>
+                                    <span [@fadeInOut] *ngIf="!node.isDir" style="font-size: 11px; font-weight: 900;" [style.color]="getFormatColor(node.format)">{{node.format.toUpperCase()}}</span>
+                                </div>
+                                <span style="margin-left: 10px; font-size: 13px;" [style.font-weight]="activeNode === node ? 'bold' : 'normal'">
+                                    {{node.name}}
+                                </span>
+                                <span [@fadeInOut] *ngIf="node.isDir && node.children != undefined && node.children.length == 0" style="margin-left: 5px; font-size: 13px; color: silver;">(empty)</span>
+                                <div [@fadeInOut] *ngIf="node.loadingChildren" style="padding-left: 5px; padding-right: 5px; border-radius: 3px; background-color: whitesmoke; height: 24px; margin-left: 5px; margin-top: 3px; line-height: 24px;">
+                                    <span style="margin-left: 5px; font-size: 13px; color: silver;">Loading..</span>
+                                </div>
+                            </div>
+                        </li>
+                    </mat-tree-node>
+                    <!-- This is the tree node template for expandable nodes -->
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                        <li>
+                            <div class="mat-tree-node" style="font-size: 13px;">
+                                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" style="margin-left: 10px; margin-right: 10px;">
+                                    <mat-icon class="mat-icon-rtl-mirror">
+                                        {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
+                                    </mat-icon>
+                                </button> {{node.name}}
+                            </div>
+                            <ul [@slideVertical]="treeControl.isExpanded(node) ? 'show' : null">
+                                <ng-container matTreeNodeOutlet></ng-container>
+                            </ul>
+                        </li>
+                    </mat-nested-tree-node>
+                </mat-tree>
+            </div>
+        </div>
+        <div class="file-container" [class.minimize]="browseExpanded">
+            <div class="file-header" (click)="toggleWindowMode()">
+                <span class="filename">
+                    EDITOR
+                </span>
+                <span class="filepath" [@fadeInOut] *ngIf="file.file">
+                    {{file.file.path}}
+                </span>
+                <div class="fileminimize" (click)="toggleWindowMode()" matRipple>
+                    <span>{{!browseExpanded ? '-' : '+'}}</span>
+                </div>
+            </div>
+            <div class="file-placeholder" [@fadeInOut] *ngIf="!file.file && !loadingFile">
+                Select or create a file.
+            </div>
+            <div class="my-code-editor-wrapper file-content" [@fadeInOut] *ngIf="file.file" style="width: 100%;" [style.height.px]="browseExpanded ? 0 : (component_height - 108)">
+                <!-- <ngx-monaco-editor class="my-code-editor" [options]="{
+                        theme: 'vs', 
+                        language: editorLanguage, 
+                        suggestOnTriggerCharacters: false,
+                        roundedSelection: true,
+                        scrollBeyondLastLine: false,
+                        autoIndent: 'full'
+                    }" [(ngModel)]="file.content"></ngx-monaco-editor> -->
+                {{file.content}}
+            </div>
+            <!-- <div [@fadeInOut] [hidden]="!file.file" class="file-content" [style.height.px]="browseExpanded ? 0 : (component_height - 118)">
+                <ace-editor [(ngModel)]="file.content" [mode]="format" [theme]="'eclipse'" [options]="aceOptions"
+                    [autoUpdateContent]="true" id="editor" class="ace-editor-style">
+                </ace-editor>
+            </div> -->
+            <div [@fadeInOut] *ngIf="file.file && !browseExpanded" class="file-actions-container">
+                <!-- <button mat-stroked-button color="primary" aria-label="Save contents to file." (click)="beautifyCode()" style="margin-right: 10px;">
+                    <span>Format</span>
+                </button> -->
+                <mat-checkbox style="margin-right: 20px;" [(ngModel)]="unixEOL" color="primary">
+                    <div style="line-height: 15px; padding-top: 5px;">
+                        <b>Unix EOL</b><br>
+                        <small>Use \n for line breaks.</small>
+                    </div>
+                </mat-checkbox>
+                <button mat-raised-button color="primary" aria-label="Save contents to file." (click)="saveFile()">
+                    <mat-icon>save</mat-icon>
+                    <span style="padding-left: 10px">Save File</span>
+                </button>
+            </div>
+            <mat-card [@fadeInOut] *ngIf="loadingFile" class="file-loading">
+                <div style="display: flex;">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                    <span style="margin-left: 10px;">Opening file..</span>
+                </div>
+            </mat-card>
+            <mat-card [@fadeInOut] *ngIf="savingFile" class="file-loading">
+                <div style="display: flex;">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                    <span style="margin-left: 10px;">Saving file..</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

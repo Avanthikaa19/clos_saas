@@ -1,0 +1,48 @@
+<div class="main-container">
+    <div class="header-container">
+        Edit Condition
+    </div>
+    <div class="body-container">
+        <div class="condition">
+            <br>
+            <span style="width: 15rem;margin-right: 1rem;color:gray;">Condition :</span>
+            <ng-container *ngIf="node.action!=null">
+                <span style="width: 15rem;margin-right: 1rem;">{{name + " : "}}</span>
+                <input class="min-input" style="width: 25rem;margin-right: 0.5rem;" [(ngModel)]="value">
+            </ng-container>
+            <ng-container *ngIf="node.action==null && node.datatype=='string'">
+                <span style="width: 15rem;margin-right: 1rem;">{{name}}</span>
+                <mat-select class="min-select" style="min-width: 10rem; max-width: 15rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="operator">
+                    <mat-option *ngFor="let symbol of symbols" [value]="symbol.value">
+                        <span style="text-transform: capitalize;">
+                        {{symbol.name}}
+                    </span>
+                    </mat-option>
+                </mat-select>
+                <input class="min-input" style="width: 15rem;margin-right: 0.5rem;" [(ngModel)]="value">
+            </ng-container>
+            <ng-container *ngIf="node.action==null && node.datatype=='integer'">
+                <span style="width: 15rem;margin-right: 1rem;">{{name+ " : "}}</span>
+                <span style="width: 15rem;margin-right: 1rem;">FROM</span>
+                <input class="min-input" style="width: 10rem;margin-right: 0.5rem;" [(ngModel)]="from" type="text">
+                <span style="width: 15rem;margin-right: 1rem;">TO</span>
+                <input class="min-input" style="width: 10rem;margin-right: 0.5rem;" [(ngModel)]="to" type="text">
+            </ng-container>
+            <br><br>
+        </div>
+
+    </div>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onCloseClick()" style="color: red;">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button mat-raised-button (click)="onCreateClick()" style="background-color: black; color: white;">
+        <mat-icon>done</mat-icon>
+        <span>Apply</span>
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

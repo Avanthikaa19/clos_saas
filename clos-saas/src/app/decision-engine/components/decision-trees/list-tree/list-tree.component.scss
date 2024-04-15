@@ -1,0 +1,123 @@
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+.main-container {
+    cursor: auto;
+    height: 83vh;
+    >.header-container {
+        height: 8rem;
+        background-color: white;
+        border-bottom: 1px solid lightgray;
+        >.img-container {
+            width: 10rem;
+            height: 100%;
+            img {
+                margin-top: 10px;
+                margin-left: 15px;
+                max-width: 85%;
+                max-height: 65%;
+            }
+        }
+        >.describe-container {
+            height: 100%;
+            div {
+                width: 100%;
+            }
+            >.title-container {
+                height: 35%;
+                margin-top: 1.5rem;
+            }
+            >.sub-title-container {
+                border-top: 0px solid lightgray;
+            }
+        }
+    }
+    >.filter-container {
+        height: 5rem;
+        border-bottom: 1px solid lightgray;
+        >.loading-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(0.5rem);
+            padding: 1rem 2rem;
+            -webkit-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+            span {
+                margin-left: 1rem;
+            }
+        }
+    }
+    >.content-container {
+        height: calc(100% - 14rem);
+        background-color: whitesmoke;
+        overflow: auto;
+        div {
+            height: 100%;
+        }
+        >.card-container {
+            height: 6.7rem;
+            background-color: white;
+            margin: 1rem 1rem 0rem 1rem;
+            border-radius: 1rem;
+            border: 0.1rem rgb(190, 186, 186) solid;
+            padding: 0.6rem;
+            &:hover {
+                cursor: pointer;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                border-left: 3px solid rgb(122, 122, 241);
+            }
+            >.inner-card-container {
+                border-radius: 0.3rem;
+                background-color: whitesmoke;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                >.left-card-align {
+                    flex: 0 0 auto;
+                }
+                >.center-card-align {
+                    flex: 1 1 auto;
+                }
+                >.right-card-align {
+                    flex: 0 0 auto;
+                }
+            }
+        }
+    }
+}
+
+.delete-button {
+    width: 10%;
+    font-size: 12px;
+    line-height: 18px;
+    height: auto;
+    margin-top: 3rem;
+    margin-left: 2rem;
+}
+
+// .delete-button:hover{
+//   background-color: white;
+// }
+.delete-button-icon {
+    margin-right: 0px;
+    color: red;
+}
+
+// .edit-button{
+//   width: 10%; font-size: 12px; line-height: 18px; height: auto; margin-top: 3rem;
+// }
+.edit-button-icon {
+    margin-right: 0px;
+    color: blue;
+}
+
+.class-btn {
+    margin: 1.5rem;
+    border-radius: 1px !important;
+}

@@ -1,0 +1,92 @@
+<div class="popup-container">
+    <div class="summary-container">
+        <mat-icon>visibility</mat-icon>
+        PREVIEW
+    </div>
+    <div class="row mb-2 pt-2">
+        <div class="col-md-10">
+            <div class="application-list">
+                <ul>
+                    <li>
+                        <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                        <span style="color: royalblue;">{{application?.id}}</span>
+                    </li>
+                    <li>
+                        <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                        <span style="color: royalblue;">{{application?.legalNameOfTheCompany}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table style="width:100%">
+                    <tr>
+                        <td>Loan Type</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.typesOfLoan" readonly></td>
+                        <td>Loan Approval Amount</td>
+                        <td>:</td>
+                        <td><input type="number" [(ngModel)]="application.loanApprovalAmount" ></td>
+                    </tr>
+                    <tr>
+                        <td>Interest Rate</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.effectiveRate" readonly></td>
+                        <td>Monthly Installment Amount</td>
+                        <td>:</td>
+                        <td><input type="number" [(ngModel)]="application.downPaymentAmount" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>No of Instalment</td>
+                        <td>:</td>
+                        <td><input readonly type="number" [(ngModel)]="application.instalments"></td>
+                        <td>Frequency</td>
+                        <td>:</td>
+                        <td><input readonly type="text" [(ngModel)]="application.frequency"></td>
+                    </tr>
+                    <tr>
+                        <td>Value Date</td>
+                        <td>:</td>
+                        <td><input type="date" [(ngModel)]="application.valueDate" readonly></td>
+                        <td>Maturity Date</td>
+                        <td>:</td>
+                        <td><input type="date" [(ngModel)]="application.maturityDate" readonly></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="bottom-row">
+            <button mat-raised-button class="clos-btn" (click)="onClose()" matTooltip="Close">
+                <mat-icon>close</mat-icon>
+                Close
+            </button>
+            <ng-container *ngIf="loanStatus =='LOAN_APPROVAL_QUEUE'">
+                <div class="buttons-container">
+                    <ng-container>
+                        <button mat-raised-button class="clos-btn" matTooltip="Reject" (click)="onRejectClick()">
+                            <mat-icon>clear</mat-icon>
+                            Reject
+                        </button>
+                    </ng-container>
+                    <ng-container>
+                        <button mat-raised-button class="clos-submit-btn" style="margin-right: 1rem;" matTooltip="Save" (click)="onAcceptClick()">
+                            <mat-icon>done_all</mat-icon>
+                            Accept
+                        </button>
+                    </ng-container>
+                    <ng-container>
+                        <button mat-raised-button class="clos-submit-btn" style="margin-right: 3rem;" matTooltip="Save" (click)="onCreatBtnClick()">
+                            <mat-icon>add</mat-icon>
+                            Create Account
+                        </button>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

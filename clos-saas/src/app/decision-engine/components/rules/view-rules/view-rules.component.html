@@ -1,0 +1,187 @@
+<div class="main-container" *ngIf="((ac.super || ac.items?.DR001D_DECISION_RULES_MODIFY || ac.items?.DR001C_DECISION_RULES_CREATE) && !noAccess)">
+    <div class="tool-bar-container flex-row-parent">
+        <span class="flex-unstetch" style="margin-left: 1rem;">
+            <button mat-flat-button onclick="history.back()" style="background:#0e2954;color:white">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>
+                    Go back to Previous
+                </span>
+        </button>
+        </span>
+        <span class="flex-stetch" style="margin-right: 1rem;">
+            <ng-container *ngIf="(ac.super || ac.items?.DR001D_DECISION_RULES_MODIFY || ac.items?.DR001C_DECISION_RULES_CREATE)">
+            <button mat-flat-button  class="rule-btn" [disabled]="disableSave || !rule.name" [class.save-disable]="disableSave==true" (click)="onSaveClick()">
+                <ng-container *ngIf="ac.items?.DR001C_DECISION_RULES_CREATE || ac.super">
+                <div *ngIf="!this.ruleEngineService.saveUpdate">
+                    <mat-icon>save</mat-icon><span>{{disableSave ? 'Saving..' : 'Save'}}</span>
+    </div>
+    </ng-container>
+    <ng-container *ngIf="ac.items?.DR001D_DECISION_RULES_MODIFY || ac.super">
+        <div *ngIf="this.ruleEngineService.saveUpdate">
+            <mat-icon>update</mat-icon><span>{{disableSave ? 'Updating..' : 'Update'}}</span>
+        </div>
+    </ng-container>
+    </button>
+    </ng-container>
+    </span>
+</div>
+<div class="definition-container">
+    <div class="category-header" style="color: #343030;">
+        Rule Definition
+    </div>
+    <div class="variable-defnetion-section d-flex mt-4">
+        <div class="variable-definition-field">
+            <span class="name" style="color:black;font-weight:500"> Rule Name <span style="color:red;margin:0.5rem;">*</span>:&nbsp;</span>
+            <input class="rule-input" [(ngModel)]="rule.name" (change)="detectChange()">
+        </div>
+        <!-- <div class="node-detail">
+                <div class="label">
+                    <span>Effective From</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <input class="min-input" autocomplete="off" type="date" [(ngModel)]="rule.effect_from">
+                </div>
+                <div class="label" style="padding-left: 2rem;">
+                    <span>Effective To</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <input class="min-input" type="date" [(ngModel)]="rule.effect_to">
+                </div>
+            </div> -->
+        <div class="variable-definition-field">
+            <span class="name" style="position: relative;color:black;font-weight:500">Description :&nbsp;</span>
+            <input class="rule-input" type="text" style="height:4rem;width: 50%;" [(ngModel)]="rule.description" (change)="detectChange()">
+        </div>
+        <!-- Do not remove it -->
+        <!-- <div class="node-detail">
+                <div class="label">
+                    <span>Code Editor</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value" style="width: 77rem;">
+                    <button mat-button style="width: 10%; font-size: 12px; line-height: 18px; height: auto;">
+                        <mat-icon style="margin-right: 0px;">code</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="node-detail">
+                <div class="label">
+                    <span>Reason Code</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <mat-select class="min-select" [(ngModel)]="rule.reason_code" (change)="detectChange()">
+                        <div *ngFor="let reason of reasonCodeList">
+                            <mat-option [matTooltip]=reason.description matTooltipPosition="left" #tooltip="matTooltip" [value]="reason.name">
+                                {{reason.name}}
+                            </mat-option>
+                        </div>
+
+                    </mat-select>
+                </div>
+            </div> -->
+    </div>
+</div>
+
+<div class="button-rignt mt-3">
+    <button mat-flat-button (click)="openRuleBuilder()" style="float:right;" class="rule-btn">
+            <mat-icon>{{inputData.length!=0 ? 'edit' : 'add'}}</mat-icon>
+            <span>
+                {{inputData.length!=0 ? 'Edit Rule' : 'Create'}}
+            </span>
+        </button>
+</div><br><br><br>
+
+<div class="d-flex mt-3" style="height: 65%;">
+    <mat-card class="matCard ml-3">
+        <mat-card-header class="cardHeader" style="margin: -17px -17px 0;">
+            <div class="header-text" style="font-size: 18px;font-weight: bold;">Conditions</div>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="action-container ml-2">
+                <div class="action-body" style="max-height: 44rem;overflow-y: auto;overflow-x: hidden;">
+                    <div class="card-container" *ngIf="inputData.length!=0">
+                        <mat-list role="list">
+                            <div *ngFor="let input of inputData; let i = index">
+                                <mat-list-item class="matList" role="listitem" style="font-size: 1.4rem; height:60px; width:97.5%; margin: 10px; border-radius:5px;">
+                                    <span style="font-size: 1.6rem;padding-right: 10px;">
+                                            {{input.name |titlecase}}
+                                        </span>
+                                    <!-- <span style="font-size: 1.6rem;padding-right: 10px;" *ngIf="input.operator == '..'">
+                                    {{input.fromOperand}}
+                                    </span> -->
+                                    <span style="font-size: 1.6rem;padding-right: 10px;">
+                                            {{input.operator}}
+                                        </span>
+                                    <!-- <span style="font-size: 1.6rem;padding-right: 10px;" *ngIf="input.operator == '..'">
+                                     {{input.toOperand}}
+                                    </span> -->
+                                    <span style="font-size: 1.6rem;padding-right: 10px;">
+                                            {{input.operand}}
+                                        </span>
+                                </mat-list-item>
+                                <ng-container *ngIf="(i+1)!=inputData.length">
+                                    <div class="d-flex">
+                                        <mat-slide-toggle style="margin-left: 90%; margin-top:10px; margin-bottom: 5px;" [(ngModel)]="inputData[i+1].logical_operator">
+                                        </mat-slide-toggle>
+                                        <span style="padding:10px; font-size: 1.2rem; font-weight: bolder;">
+                                                {{inputData[i+1].logical_operator ? 'AND' : 'OR'}}
+                                            </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="matCard ml-3">
+        <mat-card-header class="cardHeader" style="margin: -17px -17px 0">
+            <div class="header-text" style="font-size: 18px;font-weight: bold;">Actions</div>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="action-container ml-2">
+                <div class="action-body" style="max-height: 48rem;overflow-y: auto;overflow-x: hidden;">
+                    <div class="card-container">
+                        <mat-list>
+                            <mat-list-item class="matList" *ngFor="let output of outputData" role="listitem" style="font-size: 1.4rem; height:60px; width:97.5%; margin: 10px; border-radius:5px;">
+                                <div style="font-size: 1.6rem;">
+                                    {{output.name | titlecase}}
+                                    <span style="font-size: 1.6rem; padding:10px;">:</span>
+                                    <span style="font-size: 1.6rem; padding:10px;" *ngIf="output.choosen=='value'">
+                                            {{output.operand}}
+                                        </span>
+                                    <span style="font-size: 1.6rem; padding:10px;" *ngIf="output.choosen=='function'">
+                                            {{output.config.name}}
+                                        </span>
+                                </div>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+</div>
+<div class="left__end-container">
+    <span style="color: red;font-weight: bold;">
+            {{errMsg()}}
+        </span>
+</div>
+<div class="no-access" *ngIf="(!ac.super && !ac.items?.DR001D_DECISION_RULES_MODIFY && !ac.items?.DR001C_DECISION_RULES_CREATE) || noAccess">
+    <app-no-access></app-no-access>
+</div>
+<notifier-container></notifier-container>

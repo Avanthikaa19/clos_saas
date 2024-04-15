@@ -1,0 +1,43 @@
+
+<div class="popup-container">
+    <div class="header-container">
+        <div class="title-container">
+            <span style="font-size:1.8rem;font-weight: bold;">
+                Add Documents
+            </span>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table>
+                    <tr>
+                        <td>Document Type</td>
+                        <td>:</td>
+                        <td><input type="text" class="min-select" [(ngModel)]="newData.documentType">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Document Description</td>
+                        <td>:</td>
+                        <td><input type="text" class="min-select" [(ngModel)]="newData.documentDescription">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="close-action-actions-container">
+        <div class="btn-container">
+            <button style="margin-top:1rem;" (click)="onSaveData()"  mat-raised-button mat-dialog-close class="clos-submit-btn">
+                <mat-icon>save</mat-icon>
+                <span>Save</span>
+            </button>
+        </div>
+        <div class="spacer"></div>
+        <button mat-raised-button style="margin-top:1rem;float: left;" class="clos-btn" matTooltip="Close"
+            mat-dialog-close>
+            <mat-icon>close</mat-icon>Close
+        </button>
+    </div>
+</div>

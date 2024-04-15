@@ -1,0 +1,36 @@
+::ng-deep .input-field .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgb(251 251 251 / 70%);
+}
+
+
+.example-chip-list{
+    width: 70%;
+}
+.matChipselect{
+padding-top: 30px;
+}
+*input {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    background-color: none;
+}
+*input:focus {
+    outline: none;
+}
+ :host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 0px 0px 0px 5px;
+}
+.button-container {
+    flex: 0 0 auto;
+    height:7rem;
+    padding: 1rem;
+    // margin-top: 1rem solid whitesmoke;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-end;
+    >.spacer {
+        flex: 1 1 auto;
+    }
+}

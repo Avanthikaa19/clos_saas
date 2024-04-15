@@ -1,0 +1,103 @@
+@import url(../../../../../../common-styles/form-style.scss);
+
+.page__main-container {
+    height: 93.5%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    > .header-container {
+        height: 3.5rem;
+        span {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+    }
+    > .main-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        background-color: whitesmoke;
+        overflow: auto;
+        > .search-container {
+            height: 3rem;
+            padding: 1rem;
+            position: relative;
+            > .min-input {
+                background-color: white;
+                height: 2.5rem;
+                padding-left: 3rem;
+            }
+            > .icon-search {
+                position: absolute;
+                left: 1.3rem;
+                top: 32%;
+                padding-top: 10px;
+                color: rgb(80, 80, 80);
+                transform: translateY(-50%);
+            }
+            > .icon-cancel {
+                right: 10px;
+                position: absolute;
+                top: 50%;
+                color: rgb(80, 80, 80);
+                transform: translateY(-50%);
+                font-size: 18px;
+                margin-top: 3px;
+                cursor: pointer;
+                position: absolute;
+            }
+            .icon-cancel:hover {
+                height: 21px;
+                width: 21px;
+                background-color: #e4e0e0;
+                border-radius: 50%;
+                padding-bottom: 18px;
+                padding-left: 1px;
+                padding-right: 13px;
+                padding-top: 1px;
+                top: 12px;
+                right: 15px;
+            }
+        }
+        > .content-container {
+            >.list__role-container{
+                height: 3.5rem;
+                background-color: white;
+                margin: 1rem;
+                border-radius: 0.8rem;
+                display: grid;
+                grid-template-columns: auto auto 1fr;
+                >.check__box-container{
+                    padding-top: 1rem;
+                    width: 3rem;
+                    margin-left: 1rem;
+                    text-align: center;
+                }
+                >.role__icon-container{
+                    padding-top: 0.5rem;
+                    width: 3rem;
+                    color: lightgray;
+                    text-align: center;
+                }
+                >.role__name-container{
+                    margin-left: 1rem;
+                    padding-top: 1rem;
+                }
+                &:hover{
+                    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                }
+            }
+        }
+    }
+    > .paginated-container {
+        height: 56px;
+        background-color: whitesmoke;
+        position: relative;
+    }
+}
+
+
+.button-container{
+    display:flex;
+    justify-content:space-between;
+}

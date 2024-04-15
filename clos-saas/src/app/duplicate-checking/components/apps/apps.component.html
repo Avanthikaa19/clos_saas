@@ -1,0 +1,147 @@
+<section class="p-5">
+        <div class="toolbox-container mb-3" style="display: flex;">
+            <input class="ml-4 inputsearch" placeholder="Search fields.."  [(ngModel)]="searchValue" (input)="filterData()">
+            <mat-icon matTooltip="Clear search fields" (click)="clearSearchFilter()"
+                style="margin-left: 1rem;font-size:2rem;margin-top: 0.5rem;color: rgb(162, 36, 36);cursor: pointer;">cancel</mat-icon>
+        <div class="spacer"></div>
+        <div class="ml-auto">
+        <button mat-button style="margin-right: 1rem;background-color: darkmagenta" class="tl-role-btn" 
+            matTooltip="Display all Fields" (click)="openAllFieldDialog()">
+            <mat-icon style="margin-right: 0;">menu</mat-icon>
+            <span style="margin-left: 10px;">Display all Fields</span>
+        </button>
+        <button mat-button style="margin-right: 1rem;background-color: blue;" class="tl-role-btn" 
+            matTooltip="Apply Filters" (click)="openFilterDialog()">
+            <mat-icon style="margin-right: 0;">filter_list</mat-icon>
+            <span style="margin-left: 10px;">Apply all Filters</span>
+        </button>
+        <button mat-button class="tl-role-btn"  style="margin-right: 1rem;background-color:red;" [hidden]="tableDisplay == false" 
+        matTooltip="Clear All Fields" (click)="tableDisplay = false;values = [];mergedData = [];getAllApps()">
+            <mat-icon style="margin-right: 0;">clear</mat-icon>
+            <span style="margin-left: 10px;">Clear all Fields</span>
+        </button>
+       <!-- Export -->
+        <button mat-button class="tl-role-btn"  style="margin-right: 1rem;background-color:dodgerblue;"
+            matTooltip="Export" (click)="openExportDialog()">
+            <mat-icon style="margin-right: 0;">get_app</mat-icon>
+            <span style="margin-left: 10px;">Export</span>
+        </button>
+    
+    </div>
+    </div>
+    <div class="zui-wrapper content-container" style="height: 650px;overflow-x: hidden;overflow-y: auto;" [hidden]="tableDisplay == true">
+        <div class="zui-scroller">
+            <table class="zui-table">
+                <tr style="color:#6b6666;background-color: aliceblue;">
+                    <th *ngFor="let header of modifiedKeys">{{ header.toLocaleUpperCase()}}</th>
+                    <th class="zui-sticky-col" style="background-color: aliceblue;" [hidden]="duplicateData.length==0">VIEW DETAILS</th>
+                    <th class="zui-sticky-col1" style="background-color: aliceblue;" [hidden]="duplicateData.length==0">DOCUMENT PREVIEW</th>
+                    <th class="zui-sticky-col2" style="background-color: aliceblue;" [hidden]="duplicateData.length==0">DUPLICATE IDENTIFIED</th>
+                    <th class="zui-sticky-col3" style="background-color: aliceblue;" [hidden]="duplicateData.length==0">DUPLICATE PREVIEW</th>
+                </tr>
+                <tr *ngFor="let data of duplicateData">
+                    <td *ngFor="let key of allKeys">{{ data[key] }}</td>
+                    <td  class="zui-sticky-col">
+                        <button style="border:none;margin-left: 40px;margin-top: 10px;" [matTooltip]="'View Details'" (click)="viewDetails(data['fsId'])">
+                            <mat-icon>more_revert</mat-icon>
+                        </button>
+                    </td>
+                    <td  class="zui-sticky-col1">
+                        <button mat-button class="tl-btn py-0 mr-3" style="background: chocolate;top: 5px;" [matTooltip]="'Document Preview'" (click)="getDocumentDetails(data['fsId'])">
+                            <span class="material-symbols-outlined" style="margin-right: 10px;">
+                               visibility
+                            </span>Preview
+                        </button>
+                    </td>
+                    <td   class="zui-sticky-col2"  style="text-align: center;"> 
+                            <span *ngIf="data.isDuplicate == true" style="top: 15px;position: absolute;">Y</span>
+                            <span *ngIf="data.isDuplicate == false" style="top: 15px;position: absolute;">N</span>
+                    </td>
+
+                    <td class="zui-sticky-col3">
+                        <button mat-button  class="tl-btn py-0 mr-3 preview-btn" [matTooltip]="'Duplicate Preview'" style="top: 5px;"
+                         (click)="duplicatePreview(data['fsId'])" [disabled]="data.isDuplicate == false">
+                            <span class="material-symbols-outlined"style="margin-right: 10px;">visibility</span>Preview
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <ng-container *ngIf="!loadingApplications && duplicateData.length==0">
+                <p class="no-content" >No items found!</p>
+            </ng-container>
+            <div *ngIf="loadingApplications" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+        </div>
+    </div>
+    <!-- To display all fields -->
+    <div class="zui-wrapper content-container" style="height: 650px;" *ngIf="tableDisplay == true" onload="condition()">
+        <div class="zui-scroller" style="overflow: auto;">
+            <table class="zui-table  zui-table1">
+                <tr style="color:#6b6666;background-color: aliceblue;">
+                    
+                    <th *ngFor="let item of HeaderData">
+                    <!-- {{ item.name === 'sex' ? 'SEX' : (item.name).toLocaleUpperCase() }} -->
+                    {{ item.name === 'sex' ? 'SEX' :
+                    (item.name === 'maritalStatus' ? 'MARITAL STATUS' :
+                    (item.name === 'educational' ? 'EDUCATION' : item.name.toUpperCase())) }}
+                    </th>
+                    <th class="zui-sticky-col" style="background-color: aliceblue;">VIEW DETAILS</th>
+                    <th class="zui-sticky-col1" style="background-color: aliceblue;">DOCUMENT PREVIEW</th>
+                    <th class="zui-sticky-col2" style="background-color: aliceblue;" [hidden]="duplicateData.length==0">DUPLICATE IDENTIFIED</th>
+                    <th class="zui-sticky-col3" style="background-color: aliceblue;">DUPLICATE PREVIEW</th>
+                </tr>
+                <tr *ngFor="let item of valuesData;">
+                    <td *ngFor="let data of item;let j = index">
+                        <!-- {{ HeaderData[j].name === 'sex' ? (data === '0' ? 'male' : (data === '1' ? 'female' : data)) : data }} -->
+                        {{ HeaderData[j].name === 'sex' ? (data === '0' ? 'male' : (data === '1' ? 'female' : data)) :
+                        
+                        (HeaderData[j].name === 'maritalStatus' ?
+                        (data === '0' ? 'Single' : (data === '1' ? 'Married' : (data === '2' ? 'Divorced' : 'Widow' ))) :data
+                      ) }}
+                    </td>
+
+                    <td  class="zui-sticky-col">
+                        <button style="border:none;margin-left: 40px;margin-top: 10px;" [matTooltip]="'View Details'" (click)="viewDetails(item[0])">
+                            <mat-icon>more_revert</mat-icon>
+                        </button>
+                    </td>
+                    <td  class="zui-sticky-col1">
+                        <button mat-button class="tl-btn py-0 mr-3" style="background: chocolate;top: 5px;" [matTooltip]="'Document Preview'" (click)="previewDocs(item)">
+                            <span class="material-symbols-outlined"style="margin-right: 10px;">
+                                visibility
+                            </span>Preview
+                        </button>
+                    </td>
+                    <td   class="zui-sticky-col2"  style="text-align: center;" *ngFor="let identify of duplicateIdentify"> <span style="position: absolute;top: 15px;">{{identify}}</span></td>
+
+                    <td class="zui-sticky-col3">
+                        <button mat-button class="tl-btn py-0 mr-3" style="background: #4ca6b5;top: 5px;" [matTooltip]="'Duplicate Preview'" [routerLink]="'/duplicate-checking/duplicate-checking/duplicate'">
+                            <span class="material-symbols-outlined"style="margin-right: 10px;">
+                                visibility
+                            </span>Preview
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <ng-container *ngIf="!loadingApplications && duplicateData.length==0">
+                <p class="no-content" >No items found!</p>
+            </ng-container>
+            <div *ngIf="loadingApplications" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+        </div>
+    </div>
+    <!-- Pagination -->
+    <div class="paginator-container" *ngIf="tableDisplay == false;">
+        <mat-paginator [length]="duplicateCount" [pageSize]="duplicateModel.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="getPagination($event)">
+        </mat-paginator>
+    </div>
+    <!-- Pagination for Display Fields -->
+    <div class="paginator-container" *ngIf="tableDisplay == true;">
+        <mat-paginator [length]="duplicateCount" [pageSize]="tablePageSize" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="getPagination2($event)">
+        </mat-paginator>
+    </div>
+</section>

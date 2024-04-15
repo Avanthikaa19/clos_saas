@@ -1,0 +1,141 @@
+<div class="main-container">
+    <mat-toolbar class="tool-bar">
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon style="font-size: x-large;padding-bottom:1rem ;">menu</mat-icon>
+        </button>
+        <span>Decision Engine</span>
+        <span class="separator-div">
+            <div class="separator"></div>
+        </span>
+        <span>
+            Test
+        </span>
+        <span class="separator-div">
+          <div class="separator"></div>
+        </span>
+        <span>
+           Variable Library
+        </span>
+        <span class="spacing"></span>
+        <button mat-flat-button class="btn-toolbar" (click)="goBack()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            Go Back
+        </button>
+    </mat-toolbar>
+
+    <mat-drawer-container class="drawer-container">
+        <mat-drawer #drawer class="drawer-sidenav" mode="side" opened="true">
+            <div class="drawer-sidenav-title">
+                <span class="drawer-sidenav-title-text"></span>
+            </div>
+            <div class="search ">
+                <mat-form-field class="input" appearance="fill">
+                    <mat-label>Search File...</mat-label>
+                    <input matInput type="text" autocomplete="off">
+                    <button matSuffix mat-icon-button aria-label="Clear">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <mat-nav-list class="drawer-sidenav-list">
+                <div *ngFor="let lib of variablelib" [class.drawer-sidenav-feature-selected]="lib.id == selectedLibId" (click)="selectLibrary(lib.id, lib);getOneLib();">
+                    <a class="drawer-sidenav-feature noselect" mat-list-item>
+                        <mat-icon style="color: royalblue;">insert_drive_file</mat-icon>
+                        <span style="padding-left: 10px; color: gray;">{{lib.name}}</span>
+                    </a>
+                </div>
+            </mat-nav-list>
+        </mat-drawer>
+        <div class="drawer-sidenav-content" [@fadeInOutRouter]>
+
+            <div class="content-container">
+                <div class="content-header flex-row-parent">
+
+                    <div class="flex-unstetch" style="padding-left: 1rem;">
+
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 1rem;">
+
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 1rem;">
+                        <ng-container *ngIf="show && preview">
+                            <input hidden type="file" #uploadcsv accept=".csv" (input)="handleFileInput1($event)" multiple />
+                            <button mat-raised-button (click)="uploadcsv.click()" [disabled]="uploading" id="btn">
+                                <mat-icon style="color: royalblue;">cloud_upload</mat-icon>
+                                <span style="color: royalblue;">
+                                    {{uploading ? 'File Uploading..' : 'File Upload'}}
+                                </span>
+                            </button>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="show && output">
+                            <button mat-stroked-button style="color: black;" (click)="copyTokenToClipboard('tableID')">
+                                <mat-icon>content_copy</mat-icon>
+                                <span>
+                                    Copy to clipboard
+                                </span>
+                            </button>
+                        </ng-container> -->
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 2rem;">
+                        <ng-container *ngIf="show && preview">
+                            <button mat-raised-button (click)="exec();" [disabled]="executing">
+                                <mat-icon style="color: limegreen;">play_arrow</mat-icon>
+                                <span style="color: limegreen;">
+                                    {{executing ? 'Running...' : 'Run'}}
+                                </span>
+                            </button>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="show && output">
+                            <button mat-stroked-button style="color: crimson;" (click)="getExportFile()">
+                                <mat-icon style="color: crimson;">get_app</mat-icon>
+                                <span style="color: crimson;">
+                                    Export
+                                </span>
+                            </button>
+                        </ng-container> -->
+                    </div>
+                </div>
+                <mat-card class="select-card" *ngIf="!show">
+                    <mat-icon>info</mat-icon>Click to Preview Variable Library
+                </mat-card>
+                <ng-container style="overflow: auto;" *ngIf="preview">
+                    <div class="content-body-flow">
+                        <div class="card-container" *ngFor="let variable of selectedlibList">
+                            <div class="inner-card-container" matRipple>
+                                <div class="left-card-align ">
+                                    <div style="margin-top: 1rem; margin-left: 1rem; ">
+                                        <span style="font-size: 1.6rem;  text-transform: capitalize; font-weight: 500;">
+                                            {{variable.name}}
+                                        </span><br>
+                                        <p></p>
+                                        <span style="font-size: 1.3rem; color: gray;">
+                                            {{variable.description}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="center-card-align">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="output">
+                    <div class="content-body-table">
+
+
+                        <ag-grid-angular style="width:100%; height: 100%;" class="ag-theme-alpine" [rowData]="rowData" [sideBar]="sideBar" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true" [defaultColDef]="defaultColDef">
+                        </ag-grid-angular>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="bottom-container">
+
+            </div>
+        </div>
+    </mat-drawer-container>
+</div>
+<notifier-container></notifier-container>
+
+
+<!-- {{getTypeOf(tableRes[header])}} -->

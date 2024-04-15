@@ -1,0 +1,87 @@
+<section >
+<div class="row">
+    <div class="col-5" style="background-color: aliceblue;
+    padding: 20px;
+    border-radius: 10px;
+    height: 475px;
+">
+<p class="mb-1" style="font-weight: 600;">CREDIT SCORE CARD</p>
+<div class="at-separator-thick mb-3"></div>
+        <form class="pt-4">
+            <mat-hint style="margin: 6px;" align="start"><strong>Inital Score</strong>
+            </mat-hint>
+            <mat-form-field appearance="fill" style="font-size: 8px;"
+                class="mt-2 d-block no-underline input-field select-field">
+                <input matInput value="100">
+            </mat-form-field>
+            <mat-hint style="margin: 6px;" align="start"><strong>Name</strong> </mat-hint>
+            <mat-form-field appearance="fill" style="font-size: 8px;"
+                class="mt-2 d-block no-underline input-field select-field">
+                <input matInput value="">
+            </mat-form-field>
+            <mat-hint style="margin: 6px;" align="start"><strong>Description</strong> </mat-hint>
+            <mat-form-field appearance="fill" style="font-size: 8px;"
+                class="mt-2 d-block no-underline input-field select-field">
+                <textarea matInput value="" style="height: 150px;"></textarea>
+            </mat-form-field>
+            </form>
+    </div>
+    <div class="col-7">
+        <table class="credit-score-table">
+            <tr>
+                <th>Name</th>
+                <th>Bins</th>
+                <th>Label</th>
+                <th>Weight</th>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td style="padding-top: 10px;">  
+                    <mat-form-field appearance="fill" class="select-field" >
+                        <mat-select>
+                            <mat-option value="option1">0-25</mat-option>
+                            <mat-option value="option2">26-35</mat-option>
+                            <mat-option value="option3">More than 35</mat-option>
+                            <mat-option value="option3">Others</mat-option>
+                          </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Income</td>
+                <td>
+                    <mat-form-field appearance="fill" class="select-field">
+                        <mat-select>
+                            <mat-option value="option1"> < 5000 </mat-option>
+                            <mat-option value="option2">5001 - 10000</mat-option>
+                            <mat-option value="option3">More than 10000</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Martial Status</td>
+                <td>
+                    <mat-form-field appearance="fill" class="select-field">
+                        <mat-select>
+                            <mat-option value="option1">Single</mat-option>
+                            <mat-option value="option2">Married</mat-option>
+                            <mat-option value="option3">Separated/Divorced</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</section>
+<button mat-button class="save-btn" style="margin-top: 420px;margin-left: 520px;" (click)="store()"><span class="material-symbols-outlined" style="margin-right: 10px;color: blue;">
+ save</span>Save</button>
+ <button mat-button class="save-btn" (click)="close()"><span class="material-symbols-outlined" style="margin-right: 10px;color: red;">
+    cancel</span>Cancel</button>

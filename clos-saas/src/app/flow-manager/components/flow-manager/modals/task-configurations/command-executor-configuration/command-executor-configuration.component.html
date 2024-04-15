@@ -1,0 +1,146 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        COMMANDS:
+    </div>
+    <table *ngIf="config.commands" style="width: 100%; margin-left: 0px;" >
+        <tbody>
+            <tr>
+                <td>
+                    <div *ngFor="let element of config.commands; let i = index"
+                        style="position: relative; margin-bottom: 10px;">
+                        <!-- <input [(ngModel)]="config.commands[i]" class="min-input"> -->
+                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                            (click)="config.commands.splice(i, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <table style="margin-right: 30px;">
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                    <td>
+                                        <span class="min-label">Order</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <div style="position: relative;">
+                                            <input [(ngModel)]="config.commands[i].order" class="min-input" type="number" min="0">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Mode</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.commands[i].mode" class="min-input" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Exec</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <!-- <mat-select [(ngModel)]="config.commands[i].rule.aggregate_output" class="min-select" style="width: 100%;">
+                                            <mat-option *ngFor="let aggregate of getAggregateOutputs()" [value]="aggregate">{{aggregate}}</mat-option>
+                                        </mat-select> -->
+                                        <input [(ngModel)]="config.commands[i].exec" class="min-input" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!-- <td></td>
+                                    <td>
+                                        <span class="min-label">Time Limit (sec)</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <div style="position: relative;">
+                                            <input [(ngModel)]="config.commands[i].rule.time_limit_sec" class="min-input" type="number" min="0">
+                                            <div style="color: orangered; position: absolute; right: 20px; top: 4px; font-style: italic; opacity: 0.5;"
+                                                class="noselect" matTooltip="Global time limit is lesser than this rule's time limit. Global time limit will override this value."
+                                                *ngIf="config.commands[i].rule.time_limit_sec != null && config.commands[i].rule.time_limit_sec > 
+                                                config.time_limit_sec">
+                                                IGNORED
+                                            </div>
+                                        </div>
+                                    </td> -->
+                                </tr>
+                                <!-- <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Quantity Limit</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.commands[i].rule.bucket_limit" class="min-input" type="number" min="0">
+                                    </td>
+                                </tr> -->
+                               
+                            </tbody>
+                        </table>
+                        <!-- <div *ngIf="config.commands.length > 1" style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div> -->
+                    </div>
+                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                        <span class="add-items-text">Click the + icon to add items.</span>
+                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.commands.push({ mode: '',exec:'',order: 0});">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table>
+        <tbody>
+           
+            <tr>
+                <td>
+                    <span class="min-label">Max Threads</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling Ms</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+           
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+
+
+</div>

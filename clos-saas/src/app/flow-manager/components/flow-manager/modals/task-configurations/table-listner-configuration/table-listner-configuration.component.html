@@ -1,0 +1,122 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        CONNECTION:
+    </div>
+    <table *ngIf="config.connection">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Password</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.password" class="min-input">
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <span class="min-label">Driver</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.driver" class="min-input">
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <span class="min-label">User</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.user" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">URL</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.url" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        QUERY:
+    </div>
+    <table *ngIf="config.query">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Query</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.query" class="min-input">
+                </td>
+            </tr>
+			
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FIELD NAME:
+    </div>
+    <table *ngIf="config.tableName">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Table Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.tableName" class="min-input">
+                </td>
+            </tr>
+			
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        ADVANCED
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling Ms</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Max Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px; padding-top: 100px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

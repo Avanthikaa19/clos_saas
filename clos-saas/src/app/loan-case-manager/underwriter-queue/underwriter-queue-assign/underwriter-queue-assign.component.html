@@ -1,0 +1,20 @@
+<div class="tl-main-container" style="height: 70%;">
+    <span style="margin-right: 1.5rem;width:10rem">Assign To :</span>
+    <mat-select class="min-select" placeholder="Assigned To" style="margin-left: 1rem; width: 50%;" [(ngModel)]="inprogress.assignedTo">
+        <mat-option *ngFor="let list of assignValue" [value]="list">{{list}}</mat-option>
+    </mat-select>
+</div>
+<mat-dialog-actions align="end">
+    <div class="close__container">
+        <button class="tl-btn" style="margin-right: 1rem;" mat-dialog-close style="background:red;color:white;">
+            <mat-icon>close</mat-icon>
+            <span>Close</span>
+        </button>
+        <div class="spacer"></div>
+        <button class="tl-btn-submit" mat-dialog-close (click)="applyInprogress();">
+            <mat-icon>done_all</mat-icon>
+            <span>Apply</span>
+        </button>
+       
+    </div>
+</mat-dialog-actions>

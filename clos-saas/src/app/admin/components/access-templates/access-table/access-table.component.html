@@ -1,0 +1,11 @@
+<div class="column-container">
+    <mat-icon class="mr-3 ml-4 m-3 circle_icon">security</mat-icon>
+    <span class="ml-4 user-contain m-3">Access Templates</span>
+</div>
+<div class="main-container">
+    <app-generic-data-table [columns]="accesstemplatecolums" [filterButton]="true" [pageData]="pageData"
+        [newTemplatebutton]="true" (onClick)="onItemClicked($event)" [newTemplate]="true" [exportButton]="true"
+        [clearButton]="true" [loading]="loadingItems" [tableData]="accesstemplatedata"
+        (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)"
+        (onExportChange)="accessTemplateListExport($event)"></app-generic-data-table>
+</div>

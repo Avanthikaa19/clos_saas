@@ -1,0 +1,190 @@
+<div [style.max-height.px]="component_height - 20" class="dev-tools-container">
+  <mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+      <button mat-stroked-button class="noFocus" (click)="goBack()" style="color: white; background-color: black;">
+        <mat-icon>arrow_back_ios</mat-icon>
+        <span style="padding-left: 10px;">Back</span>
+      </button>
+      <button mat-icon-button class="noFocus" (click)="drawer.toggle()" style="color: white;">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a>Generate Reports</a>
+      <div class="separator"></div>
+      <a [@fadeInOut] *ngIf="selectedFolder">{{selectedFolder}}</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer class="drawer-sidenav" mode="side" opened="true">
+      <div class="drawer-sidenav-title">
+        <span class="drawer-sidenav-title-text">REPORT FOLDERS</span>
+      </div>
+      <mat-form-field style="font-size: 14px;width: 89%;margin: 0px 16px;">
+        <mat-label>Search Report Folder</mat-label>
+        <input matInput type="search" [(ngModel)]="folderSearch" (ngModelChange)="filterChanged($event)"
+          (keyup.enter)="getFolders()" autocomplete="off" spellcheck="false">
+      </mat-form-field>
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="matTree noselect">
+
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding
+          [class]=" node.path == selectedFolder? 'mat-tree-node-selected': ''" (click)="selectNode(node)">
+
+          <button mat-icon-button disabled></button>
+          {{node.name}}
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" (click)="treeControl.toggle(node); selectNode()"
+          matTreeNodePadding [class]="treeControl.isExpanded(node)? 'activeExpand noselect' :'noselect'">
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.name}}
+        </mat-tree-node>
+      </mat-tree>
+    </mat-drawer>
+    <div class="drawer-sidenav-content">
+      <div class="reports-list-container">
+        <div class="feature-header">
+          <mat-icon class="icon" [style.color]="selectedReport ? 'dimgray' : 'royalblue'">assignment</mat-icon>
+          <div class="title">
+            <div class="main">Reports</div>
+            <div class="sub">You can download or preview the reports listed below.</div>
+          </div>
+          <div class="search">
+            <input type="text" class="min-input" [(ngModel)]="nameSearch" placeholder="Search Report Name"
+              (keyup.enter)="refreshItems()">
+            <mat-checkbox color="primary">Show Only Favourites</mat-checkbox>
+            <mat-icon>search</mat-icon>
+          </div>
+        </div>
+        <div class="feature-content">
+          <div class="report-cards-list" (click)="clearSelection($event)">
+            <ng-container *ngFor="let report of reports">
+              <div class="report-card noselect" [class.report-card-selected]="selectedReport?.id === report.id"
+                (click)="selectReport(report, $event)">
+                <div class="report-card-details">
+                  <div class="report-card-details-name">{{report.name}}</div>
+                  <div class="report-card-details-desc" *ngIf="report.description">{{report.description}}</div>
+                </div>
+                <div class="report-card-generate">
+                  <div class="default-output-name">{{report.outputFileName}}.{{report.outputFormat}}</div>
+                  <div class="supported-formats" *ngIf="report.supportedFormats?.length">
+                    <ng-container *ngFor="let frmt of report.supportedFormats">
+                      <div class="supported-format">
+                        {{frmt}}
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="selected-report-bg" [@fadeInOut] *ngIf="selectedReport" (click)="clearSelection($event)"></div>
+          <div class="selected-report-container" [style.bottom]="selectedReport ? '20px' : '-100%'">
+            <div class="feature-header">
+              <mat-icon class="icon">assignment</mat-icon>
+              <div class="title">
+                <div class="main" [@fadeInOut] *ngIf="selectedReport">Report: {{selectedReport.name}}</div>
+                <div class="sub" [@fadeInOut] *ngIf="selectedReport">{{selectedReport.description}}</div>
+              </div>
+            </div>
+            <div class="output-settings">
+              <div class="icon-header">
+                <mat-icon>settings</mat-icon>
+                <div class="header">Generation Settings</div>
+              </div>
+              <div class="output-form">
+                <div class="output-form-field">
+                  <span>Output File Name:</span>
+                  <input type="text" class="min-input" [@fadeInOut] *ngIf="selectedReport"
+                    [(ngModel)]="selectedReport.outputFileName">
+                </div>
+                <div class="output-form-field">
+                  <span>Output File Format:</span>
+                  <mat-select name="format" id="format" class="min-input min-select" [@fadeInOut] *ngIf="selectedReport"
+                    [(ngModel)]="selectedFormat">
+                    <mat-option *ngFor="let format of formats" [value]="format">Default ({{format}})
+                    </mat-option>
+                    <mat-option *ngFor="let frmt of selectedReport.supportedFormats" [value]="frmt">{{frmt}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+                <div class="output-form-field">
+                  <mat-checkbox [@fadeInOut] *ngIf="selectedReport" [(ngModel)]="selectedReport.generateOnServer"
+                    color="primary">Generate On Server</mat-checkbox>
+                </div>
+                <div class="output-form-field">
+                  <span [@fadeInOut] *ngIf="selectedReport && selectedReport.generateOnServer">Server Path:</span>
+                  <input type="text" class="min-input" [@fadeInOut]
+                    *ngIf="selectedReport && selectedReport.generateOnServer" [(ngModel)]="selectedReport.outputFolder">
+                </div>
+              </div>
+              <div class="icon-header">
+                <mat-icon>input</mat-icon>
+                <div class="header">Run Parameters</div>
+              </div>
+
+              <ng-container *ngIf="selectedReport">
+                <ng-container *ngIf="!selectedReport.parameters">
+                  <div class="parameters">
+                    There are no parameters configured for this report.
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="selectedReport.parameters">
+                  <div class="flex-row-parent" style="margin-top: 1rem;">
+                    <div class="flex-grow" style="margin-left: 2rem">
+                      Date From:
+                      <input type="date" placeholder="Date From" [(ngModel)]="dateFrom">
+                      <input type="time" placeholder="Time From" step="2" [(ngModel)]="timeFrom" style="margin-left: 1rem;">
+                    </div>
+                    <div class="flex-shrink" style="margin-left: 2rem">
+                      Date Till:
+                      <input type="date" placeholder="Date Till" [(ngModel)]="dateTill">
+                      <input type="time" placeholder="Time Till" step="2" [(ngModel)]="timeTill" style="margin-left: 1rem;">
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <div class="icon-header">
+                <mat-icon>get_app</mat-icon>
+                <div class="header">Quick Download</div>
+              </div>
+              <div class="download-section">
+                <span>Suggested Format:</span>
+                <button mat-raised-button class="default-get-btn" *ngIf="selectedReport?.defaultFormat"
+                  matTooltip="Recommended format for this report." (click)="generateSelectedReport(selectedFormat)">
+                  <mat-icon>get_app</mat-icon>
+                  <span>{{selectedFormat.toUpperCase()}}</span>
+                </button>
+                <!-- <span *ngIf="selectedReport?.supportedFormats.length > 0">Other Formats:</span>
+                    <ng-container *ngIf="selectedReport">
+                      <ng-container *ngFor="let frmt of selectedReport.supportedFormats">
+                        <button mat-raised-button [class.pdf-get-btn]="frmt === 'pdf'" [class.xls-get-btn]="frmt === 'xls' || frmt === 'xlsx'"
+                          [class.csv-get-btn]="frmt === 'csv' || frmt === 'txt'" matTooltip="Download this report in {{frmt}} format."
+                          (click)="generateSelectedReport(frmt)">
+                          <mat-icon>get_app</mat-icon>
+                          <span>{{frmt.toUpperCase()}}</span>
+                        </button>
+                      </ng-container>
+                    </ng-container> -->
+              </div>
+            </div>
+            <button mat-stroked-button class="item-left" (click)="clearSelection($event)"
+              style="float:right;margin-bottom: 2rem; margin-right: 2rem;">
+              <mat-icon style="color:red">close</mat-icon>
+              <span style="padding-left: 10px;color:red; ">Close</span>
+            </button>
+            <div class="generating-overlay" [@fadeInOut] *ngIf="generatingReport">
+              <div class="spinner-container">
+                <mat-progress-spinner mode="indeterminate" strokeWidth="2" diameter="30" color="primary">
+                </mat-progress-spinner>
+                <span>Report generation is in progress.. Please wait..</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </mat-drawer-container>
+</div>

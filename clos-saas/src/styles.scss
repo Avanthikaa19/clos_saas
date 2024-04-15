@@ -137,3 +137,841 @@ tr:hover {
 position: sticky;
 top:0px;
 }
+//CLOS
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+// @use "theme" as theme;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@import "gridstack/dist/gridstack.min.css";
+@import "gridstack/dist/gridstack-extra.min.css";
+@import url("https://code.highcharts.com/css/highcharts.css");
+// @import "font-awesome/css/font-awesome.min.css";
+// @include mat.core();
+@import url('https://fonts.googleapis.com/css?family=Bangers|Cinzel:400,700,900|Lato:100,300,400,700,900|Lobster|Lora:400,700|Mansalva|Muli:200,300,400,600,700,800,900|Open+Sans:300,400,600,700,800|Oswald:200,300,400,500,600,700|Roboto:100,300,400,500,700,900&display=swap');
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+// $los-gui-primary: mat.define-palette(theme.$primary-palette, 400, 500, 600);
+// $los-gui-accent: mat.define-palette(theme.$accent-palette, 700, 500, 900);
+
+// The warn palette is optional (defaults to red).
+// $los-gui-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+// $los-gui-theme: mat.define-light-theme((color: (primary: $los-gui-primary,
+//         accent: $los-gui-accent,
+//         warn: $los-gui-warn,
+//       ),
+//     ));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+// @include mat.all-component-themes($los-gui-theme);
+
+/* You can add global styles to this file, and also import other style files */
+@import "material-icons/iconfont/material-icons.css";
+/* Ag-grid import */
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+/*Grid Stack*/
+@import "gridstack/dist/gridstack.min.css";
+/*Notifier*/
+@import "angular-notifier/styles.css";
+/*Material Symbol Icon*/
+@import 'material-symbols';
+// @use 'theme' as theme;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.4rem;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: white;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: rgb(168, 154, 154);
+  border: solid white 2px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+  transition: all linear 100ms;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(161, 161, 161);
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.pending {
+  color: blue !important;
+}
+
+.approved {
+  color: green !important;
+}
+
+.ignored {
+  color: red !important;
+}
+
+.no-pad-dialog .mat-dialog-container {
+  padding: 0px !important;
+}
+
+.pad-dialog .mat-dialog-container {
+  padding: 10px !important;
+}
+
+.no-pad-dialog-full-width {
+  max-width: 100vw !important;
+
+  .mat-dialog-container {
+    padding: 0px !important;
+  }
+}
+
+//NOTIFICATION THEMES
+.notifier__notification--material {
+  .notifier__notification {
+    &-button {
+      margin-top: -5px;
+    }
+  }
+}
+
+.notifier__notification--success {
+  background-color: rgb(0, 160, 0);
+}
+
+.notifier__notification--warning {
+  background-color: rgb(255, 123, 0);
+}
+
+.notifier__notification--error {
+  background-color: red;
+}
+
+.notifier__notification--info {
+  background-color: royalblue;
+}
+
+input,
+textarea,
+select {
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  border: solid rgb(230, 230, 230) 0.1rem;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1) inset;
+  transition: all linear 70ms;
+  outline: solid transparent 0.2rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+select:active {
+  background-color: white;
+  box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.05) inset;
+}
+
+button.tl-btn,
+button.tl-btn-submit,
+button.tl-btn-delete {
+  padding: 0.7rem 2rem;
+  border-radius: 0.4rem;
+  border: none;
+  color: white;
+  font-weight: bold;
+  background-color: #2c2c2c;
+  opacity: 1;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #2c2c2c 12px), repeating-linear-gradient(#3c3c3c55, #3c3c3c);
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.5);
+  outline: solid rgba(255, 255, 255, 0.3) 0.3rem;
+  cursor: pointer;
+  transition: all linear 100ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.75);
+
+  >mat-icon {
+    font-size: 1.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: 1rem;
+  }
+}
+
+button.tl-btn:hover {
+  background-color: #494949;
+  opacity: 1;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #494949 12px), repeating-linear-gradient(#6a6a6a55, #6a6a6a);
+  outline: solid gray 0.3rem;
+}
+
+button.tl-btn:active {
+  background-color: #2c2c2c;
+  opacity: 1;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #2c2c2c 12px), repeating-linear-gradient(#3c3c3c55, #3c3c3c);
+  outline: solid gray 0.3rem;
+}
+
+button.tl-btn:disabled {
+  cursor: default;
+  background-color: #9c9c9c;
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 0.4;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #9c9c9c 12px), repeating-linear-gradient(#6a6a6a55, #6a6a6a);
+  outline: solid transparent 0.3rem;
+  box-shadow: none;
+}
+
+button.tl-btn-submit {
+  background: rgba(14, 41, 84, 1);
+  opacity: 1;
+  // background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #007f86 12px ), repeating-linear-gradient( #00a3ab55, #00a3ab );
+}
+
+button.tl-btn-delete {
+  background-color: #f44336;
+  opacity: 1;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #f44336 12px), repeating-linear-gradient(#ce352a, #da3e33);
+}
+
+button.tl-btn-submit:hover {
+  background:  rgba(14, 41, 84, 1);
+  opacity: 1;
+  // background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #00b9c2 12px ), repeating-linear-gradient( #00d5dc55, #00d5dc );
+  outline: solid rgb(255, 255, 255) 0.3rem;
+}
+
+button.tl-btn-delete:hover {
+  background-color: #eb5b51;
+  opacity: 1;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, rgb(224, 81, 70) 12px), repeating-linear-gradient(#dd321b55, #c2450b);
+  outline: solid rgb(207, 71, 8) 0.3rem;
+}
+
+button.tl-btn-submit:active {
+  background: rgba(14, 41, 84, 1);
+  opacity: 1;
+  // background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #007f86 12px ), repeating-linear-gradient( #00a3ab55, #00a3ab );
+  outline: solid rgb(255, 255, 255) 0.3rem;
+}
+
+button.tl-btn-submit:disabled {
+  cursor: default;
+  background:  rgba(14, 41, 84, 1);
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 0.4;
+  // background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #007f86 12px ), repeating-linear-gradient( #00a3ab55, #00a3ab );
+  outline: solid transparent 0.3rem;
+  box-shadow: none;
+}
+
+.clos-btn{
+    margin: 1rem;
+    border-radius: 0.5rem;
+    float: right;
+    background-color: #000000;
+    color: white;
+    mat-icon{
+      font-size: 2rem;
+      margin-right:0.5rem
+  }
+  span{
+      font-size: 1.5rem;
+      margin-left:0.5rem;
+  }
+}
+.clos-submit-btn{
+  margin: 1rem;
+  border-radius: 0.5rem;
+  float: right;
+  background-color: #0e2954;
+  color: white;
+  mat-icon{
+    font-size: 2.3rem;
+    margin-right:0.5rem;
+}
+span{
+    font-size: 1.5rem;
+    margin-left:0.5rem;
+}
+}
+button.clos-submit-btn:disabled {
+  cursor: default;
+  background:  rgba(14, 41, 84, 1);
+  color: rgba(148, 148, 148, 0.6);
+  opacity: 0.4;
+  // background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #007f86 12px ), repeating-linear-gradient( #00a3ab55, #00a3ab );
+  outline: solid transparent 0.3rem;
+  box-shadow: none;
+}
+
+
+input:focus,
+textarea:focus,
+button:focus {
+  outline: solid rgba(70, 70, 70, 0.5) 0.2rem;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.no-pad-dialog-full-width {
+  max-width: 100vw !important;
+
+  .mat-dialog-container {
+    padding: 0px !important;
+  }
+}
+
+//NOTIFICATION THEMES
+.notifier__notification--success {
+  color: white;
+  background-color: green;
+}
+
+.notifier__notification--warning {
+  background-color: rgb(255, 123, 0);
+}
+
+.notifier__notification--error {
+  background-color: red;
+}
+
+.notifier__notification--info {
+  background-color: royalblue;
+}
+
+
+.min-select {
+  background-color: whitesmoke;
+  padding-left: 2px;
+  min-height: 24px;
+  line-height: 24px;
+  border-radius: 3px;
+  border: solid transparent 1px;
+  transition: all linear 100ms;
+}
+
+.min-select:hover {
+  border: solid rgb(218, 218, 218) 1px;
+}
+
+//TOOLTIP
+.multi-line-tooltip {
+  white-space: pre-line;
+  font-family: monospace;
+}
+
+//ALL HEADERS
+.tl-main-container .header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #ffffff;
+  opacity: 0.8;
+
+  // background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #ffffff 10px ),
+  //   repeating-linear-gradient(60deg, #f1f1f1, rgba(238, 238, 238, 0.0), rgba(238, 238, 238, 0.0));
+  // box-shadow: 0 -0.2rem 0.3rem rgba(0, 0, 0, 0.15) inset;
+  >div.icon-container {
+    flex: 0 0 auto;
+    margin-right: 2rem;
+
+    mat-icon {
+      font-size: 4.8rem;
+      width: 4.8rem;
+      height: 4.8rem;
+    }
+  }
+
+  >div.title-container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+
+    >.component-title {
+      flex: 1 1 auto;
+      border-bottom: solid gainsboro 0.1rem;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      >span {
+        font-size: 1.6rem;
+        font-weight: bolder;
+      }
+    }
+
+    >.component-subtitle {
+      flex: 1 1 auto;
+
+      span {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.loading__line {
+
+  /* =Animate the stuff
+------------------------ */
+  .load-1 .line:nth-last-child(1) {
+    animation: loadingA 1.5s 1s infinite;
+  }
+
+  .load-1 .line:nth-last-child(2) {
+    animation: loadingA 1.5s 0.5s infinite;
+  }
+
+  .load-1 .line:nth-last-child(3) {
+    animation: loadingA 1.5s 0s infinite;
+  }
+
+  .line {
+    display: inline-block;
+    width: 10px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: #4b9cdb;
+    margin: 0.2rem;
+  }
+
+  @keyframes loadingA {
+    0% {
+      height: 15px;
+    }
+
+    50% {
+      height: 35px;
+    }
+
+    100% {
+      height: 15px;
+    }
+  }
+
+  p {
+    font-size: 1.6rem;
+    margin-left: 1.2rem;
+    font-weight: 500;
+  }
+}
+ .logPopup{
+  .mat-dialog-container {
+            border-radius: 25px;
+            overflow: hidden;
+        }
+ }
+
+ button.apply_filter {
+  background-color: #3445b4;
+  color: white;
+}
+
+button.black_button {
+  background-color: black;
+  color: white;
+}
+
+button.red_button {
+  background-color: orangered;
+  color: white;
+}
+.no-content {
+  color: silver;
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+  padding: 30px;
+  margin-top: 80px;
+  position: fixed;
+  left: 45%;
+}
+//snackbar
+.success-snackbar{
+  background-color: green;
+  color: white;
+}
+.error-snackbar{
+  background-color: red;
+  color: white;
+}
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+  font-size: 40px;
+  color: black;
+}
+
+//NOTIFICATION THEMES
+.notifier__notification--material {
+  .notifier__notification {
+      &-button {
+          margin-top: -5px;
+      }
+  }
+}
+.notifier__notification--success {
+background-color: rgb(0, 160, 0);
+}
+.notifier__notification--warning {
+background-color: rgb(255, 123, 0);
+}
+.notifier__notification--error {
+background-color: red;
+}
+.notifier__notification--info {
+background-color: royalblue;
+}
+
+//download popup
+.download-readiness-indicator {
+  font-size: 14px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 85px;
+  right: 35px;
+  height: 180px;
+  margin-top: 35px;
+  background-color: white;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  transition: all ease 250ms;
+
+  >.det {
+    width: 200px;
+
+    >.heading {
+      font-weight: 500;
+      padding-bottom: 5px;
+      border-bottom: solid gainsboro 1px;
+    }
+
+  }
+}
+//loading-card
+.load-card{
+  left: 47%;
+  position: absolute;
+  padding: 6px 20px;
+  background-color: beige;
+  font-size: 13px;
+  box-shadow: 1px 2px 3px 0px #beb8b8;
+}
+//filter-btn
+.filter-btn{
+  left: 31%;
+  position: absolute;
+  margin-top: 10px;
+}
+//clear-btn
+.clr-btn{
+  // left: 37.5%;
+  position: absolute;
+  margin-top: 10px;
+}
+
+.box-icon-hov{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9px;
+  width: 18px !important;
+  height: 18px;
+}
+.box-icon-hov:hover{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(216, 215, 215);
+  border-radius: 9px;
+  width: 18px !important;
+  height: 18px;
+}
+.box-icon-move{
+  margin-left: -45px;
+  margin-top: -20px;
+  font-size: 13px;
+}
+.gs-item{
+  border: 1px solid rgb(236 236 236);
+  border-radius: 6px;
+  background-color: white;
+}
+.gs{
+  padding: 4px 20px 20px 20px;
+  overflow: auto;
+}
+@media (max-width: 520px) {
+  .gs{      
+    padding: 4px 20px 20px 20px;
+    }
+  }
+  @media (max-width: 550px) {
+    .gs{      
+      padding: 5px 20px 20px 20px;
+      }
+      .header{
+        height:inherit !important;
+      }
+    }
+  @media (max-width: 430px) {
+    .gs{      
+      padding:5px 20px 20px 20px;
+      }
+    }
+  @media (max-width: 350px) {
+    .gs{      
+      padding: 5px 20px 20px 20px;
+    }
+    }
+.mat-paginator {
+  background: transparent;
+}
+
+::ng-deep .mdc-dialog .mdc-dialog__content {
+  padding: 20px 24px 20px 24px;
+}
+.custom-toggle-group mat-button-toggle {
+  height: 35px; /* Adjust the height value as needed */
+}
+.custom-toggle-group mat-button-toggle .mat-button-toggle-label-content {
+  line-height: 34px;
+}
+::ng-deep .highcharts-title{
+  fill: none;
+}
+.highcharts-vintage {
+  /* Colors for data series and points */
+  --highcharts-color-0: #d87c7c;
+  --highcharts-color-1: #919e8b;
+  --highcharts-color-2: #d7ab82;
+  --highcharts-color-3: #6e7074;
+  --highcharts-color-4: #61a0a8;
+  --highcharts-color-5: #efa18d;
+  --highcharts-color-6: #787464;
+  --highcharts-color-7: #cc7e63;
+  --highcharts-color-8: #964328;
+  --highcharts-color-9: #646262;
+
+  /* UI colors */
+  --highcharts-background-color: rgba(254, 248, 239, 1);
+  --highcharts-neutral-color-80 :#333333;
+}
+.highcharts-dark {
+/* Colors for data series and points */
+--highcharts-color-0: #dd6b66;
+--highcharts-color-1: #759aa0;
+--highcharts-color-2: #e69d87;
+--highcharts-color-3: #8dc1a9;
+--highcharts-color-4: #ea7e53;
+--highcharts-color-5: #eedd78;
+--highcharts-color-6: #73a373;
+--highcharts-color-7: #73b9bc;
+--highcharts-color-8: #7289ab;
+--highcharts-color-9: #91ca8c;
+--highcharts-color-10: #f49f42;
+
+/* UI colors */
+--highcharts-background-color: rgba(51,51,51,1);
+--highcharts-neutral-color-80 :#eeeeee;
+}
+.highcharts-westeros {
+/* Colors for data series and points */
+--highcharts-color-0: #516b91;
+--highcharts-color-1: #59c4e6;
+--highcharts-color-2: #edafda;
+--highcharts-color-3: #93b7e3;
+--highcharts-color-4: #a5e7f0;
+--highcharts-color-5: #cbb0e3;
+--highcharts-color-6: #9b71c0;
+--highcharts-color-7: #6563cc;
+--highcharts-color-8: #9d99af;
+--highcharts-color-9: #577583;
+
+/* UI colors */
+--highcharts-background-color: rgba(0,0,0,0);
+--highcharts-neutral-color-80 :#516b91;
+}
+.highcharts-infographic {
+/* Colors for data series and points */
+--highcharts-color-0: #c1232b;
+--highcharts-color-1: #27727b;
+--highcharts-color-2: #fcce10;
+--highcharts-color-3: #e87c25;
+--highcharts-color-4: #b5c334;
+--highcharts-color-5: #fe8463;
+--highcharts-color-6: #9bca63;
+--highcharts-color-7: #fad860;
+--highcharts-color-8: #f3a43b;
+--highcharts-color-9: #60c0dd;
+--highcharts-color-10: #d7504b;
+--highcharts-color-11: #c6e579;
+--highcharts-color-12: #f4e001;
+--highcharts-color-13: #f0805a;
+--highcharts-color-14: #26c0c0;
+
+/* UI colors */
+--highcharts-background-color: rgba(0,0,0,0);
+--highcharts-neutral-color-80 :#27727b;
+}
+.highcharts-roma {
+/* Colors for data series and points */
+--highcharts-color-0: #e01f54;
+--highcharts-color-1: #001852;
+--highcharts-color-2: #f5e8c8;
+--highcharts-color-3: #b8d2c7;
+--highcharts-color-4: #c6b38e;
+--highcharts-color-5: #a4d8c2;
+--highcharts-color-6: #f3d999;
+--highcharts-color-7: #d3758f;
+--highcharts-color-8: #dcc392;
+--highcharts-color-9: #2e4783;
+--highcharts-color-10: #82b6e9;
+--highcharts-color-11: #ff6347;
+--highcharts-color-12: #a092f1;
+--highcharts-color-13: #0a915d;
+--highcharts-color-14: #eaf889;
+--highcharts-color-15: #6699FF;
+--highcharts-color-16: #ff6666;
+--highcharts-color-17: #3cb371;
+--highcharts-color-18: #d5b158;
+--highcharts-color-19: #38b6b6;
+
+/* UI colors */
+--highcharts-background-color: rgba(0,0,0,0);
+--highcharts-neutral-color-80 :#333333;
+}
+.highcharts-halloween {
+/* Colors for data series and points */
+--highcharts-color-0: #ff715e;
+--highcharts-color-1: #ffaf51;
+--highcharts-color-2: #ffee51;
+--highcharts-color-3: #8c6ac4;
+--highcharts-color-4: #715c87;
+--highcharts-color-5: #85E21F;
+--highcharts-color-6: #000000;
+--highcharts-color-7: #59351C;
+--highcharts-color-8: #F33060;
+--highcharts-color-9: #692f58;
+
+/* UI colors */
+--highcharts-background-color: rgba(64,64,64,0.5);
+--highcharts-neutral-color-80 :#ffaf51;
+}
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+border-left:none;
+border-right: none;
+border-bottom-left-radius: 0px !important;
+border-bottom-right-radius: 0px !important;
+border-top: none;
+}
+::ng-deep .search-input-field1 .mat-mdc-form-field-subscript-wrapper{
+  height: 0px;
+  border-radius:40px;
+}
+::ng-deep .search-input-field1 .mat-mdc-text-field-wrapper .mdc-text-field{
+  padding: 1px 2px 1px 2px;
+}
+::ng-deep .search-input-field1 .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+::ng-deep.search-input-field1 .mat-mdc-text-field-wrapper  {
+  border-radius: 40px;
+  }
+::ng-deep .search-input-field1 .mat-mdc-form-field-infix{
+  height: 40px;
+}
+.search-input-field1 {
+  width: 100%;
+  height: 40px;
+  margin-top: 5px;border:5px solid #8080955c;background-color: whitesmoke;border-radius: 40px;
+}
+::ng-deep .search-input-field1 .mat-mdc-input-element{
+margin-top: 20px;
+}
+//EXPORT-POPUP-IN-BI-TOOLS
+ //download popup
+ .download-readiness-indicator {
+  font-size: 14px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 85px;
+  right: 35px;
+  height: 180px;
+  margin-top: 35px;
+  background-color: white;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  transition: all ease 250ms;
+
+  >.det {
+    width: 200px;
+
+    >.heading {
+      font-weight: 500;
+      padding-bottom: 5px;
+      border-bottom: solid gainsboro 1px;
+    }
+
+  }
+}

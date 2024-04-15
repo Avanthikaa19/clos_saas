@@ -1,0 +1,86 @@
+.component-container {
+  width: 1400px;
+  height: 80vh;
+  padding: 10px;
+  font-size: 14px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  > div {
+    width: 100%;
+  }
+  .header {
+    flex: 0 0 auto;
+    padding-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: italic;
+    height: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    border-bottom: gainsboro solid 1px;
+    position: relative;
+    > .right-align {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  > .tab-group-container {
+    flex: 1 1 auto;
+    > .my-tab-group {
+      height: 100%;
+      .tab-content-container {
+        height: calc(80vh - 170px);
+        border: solid gainsboro 1px;
+        .content-card {
+          margin: 10px;
+          border-radius: 5px;
+          padding: 10px;
+          background-color: white;
+        }
+        /* .import-content-ontainer {
+            } */
+      }
+    }
+  }
+  > .actions-container {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding-top: 10px;
+    > .spacer {
+      flex: 1 1 auto;
+    }
+    > button {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+button {
+  span {
+    /*to add a gap between icon and text in buttons */
+    padding-left: 10px;
+  }
+}
+.header-container {
+  flex: 0 0 auto;
+  background-color: white;
+  height: 4rem;
+  border-bottom: 1px solid gainsboro;
+
+  span {
+      color: rgba(14, 41, 84, 1);
+      text-shadow: 2px 2px rgb(223, 223, 223);
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 2rem;
+  }
+}
+

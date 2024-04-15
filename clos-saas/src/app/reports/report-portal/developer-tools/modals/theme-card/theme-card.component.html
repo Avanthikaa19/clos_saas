@@ -1,0 +1,164 @@
+<div class="theme-card" matRipple>
+    <div class="theme-card-header noselect">
+        <a>{{theme.name}}</a>
+    </div>
+    <div class="theme-card-content">
+        <!-- TITLE -->
+        <div class="theme-title theme-element"
+        [style.border-top-color]="theme.specification.titleCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.titleCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.titleCell.borders.left.color"
+        [style.border-right-color]="theme.specification.titleCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.titleCell.borders.top.thickness > 5 ? 5 : theme.specification.titleCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.titleCell.borders.bottom.thickness > 5 ? 5 : theme.specification.titleCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.titleCell.borders.left.thickness > 5 ? 5 : theme.specification.titleCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.titleCell.borders.right.thickness > 5 ? 5 : theme.specification.titleCell.borders.right.thickness"
+        [style.background-color]="theme.specification.titleCell.backgroundColor"
+        [style.text-align]="theme.specification.titleCell.textAlign">
+            <div class="theme-title-data center-align"
+            [style.border-top-color]="theme.specification.titleCell.fontColor"></div>
+        </div>
+        <!-- SUBTITLE -->
+        <div class="theme-subtitle theme-element"
+        [style.border-top-color]="theme.specification.subTitleCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.subTitleCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.subTitleCell.borders.left.color"
+        [style.border-right-color]="theme.specification.subTitleCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.subTitleCell.borders.top.thickness > 5 ? 5 : theme.specification.subTitleCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.subTitleCell.borders.bottom.thickness > 5 ? 5 : theme.specification.subTitleCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.subTitleCell.borders.left.thickness > 5 ? 5 : theme.specification.subTitleCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.subTitleCell.borders.right.thickness > 5 ? 5 : theme.specification.subTitleCell.borders.right.thickness"
+        [style.background-color]="theme.specification.subTitleCell.backgroundColor"
+        [style.text-align]="theme.specification.subTitleCell.textAlign">
+            <div class="theme-subtitle-data center-align"
+            [style.border-top-color]="theme.specification.subTitleCell.fontColor"></div>
+        </div>
+        <!-- HEADER ITEMS -->
+        <div class="theme-header-item theme-element" style="float: right;"
+        [style.border-top-color]="theme.specification.headerCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.headerCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.headerCell.borders.left.color"
+        [style.border-right-color]="theme.specification.headerCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.headerCell.borders.top.thickness > 5 ? 5 : theme.specification.headerCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.headerCell.borders.bottom.thickness > 5 ? 5 : theme.specification.headerCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.headerCell.borders.left.thickness > 5 ? 5 : theme.specification.headerCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.headerCell.borders.right.thickness > 5 ? 5 : theme.specification.headerCell.borders.right.thickness"
+        [style.background-color]="theme.specification.headerCell.backgroundColor"
+        [style.text-align]="theme.specification.headerCell.textAlign">
+            <div class="theme-header-data center-align"
+            [style.border-top-color]="theme.specification.headerCell.fontColor"></div>
+        </div>
+        <div class="theme-header-item theme-element"
+        [style.border-top-color]="theme.specification.headerCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.headerCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.headerCell.borders.left.color"
+        [style.border-right-color]="theme.specification.headerCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.headerCell.borders.top.thickness > 5 ? 5 : theme.specification.headerCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.headerCell.borders.bottom.thickness > 5 ? 5 : theme.specification.headerCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.headerCell.borders.left.thickness > 5 ? 5 : theme.specification.headerCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.headerCell.borders.right.thickness > 5 ? 5 : theme.specification.headerCell.borders.right.thickness"
+        [style.background-color]="theme.specification.headerCell.backgroundColor"
+        [style.text-align]="theme.specification.headerCell.textAlign">
+            <div class="theme-header-data center-align"
+            [style.border-top-color]="theme.specification.headerCell.fontColor"></div>
+        </div>
+        <div class="theme-header-item theme-element" style="float: right;"
+        [style.border-top-color]="theme.specification.headerCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.headerCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.headerCell.borders.left.color"
+        [style.border-right-color]="theme.specification.headerCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.headerCell.borders.top.thickness > 5 ? 5 : theme.specification.headerCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.headerCell.borders.bottom.thickness > 5 ? 5 : theme.specification.headerCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.headerCell.borders.left.thickness > 5 ? 5 : theme.specification.headerCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.headerCell.borders.right.thickness > 5 ? 5 : theme.specification.headerCell.borders.right.thickness"
+        [style.background-color]="theme.specification.headerCell.backgroundColor"
+        [style.text-align]="theme.specification.headerCell.textAlign">
+            <div class="theme-header-data center-align"
+            [style.border-top-color]="theme.specification.headerCell.fontColor"></div>
+        </div>
+        <div class="theme-header-item theme-element"
+        [style.border-top-color]="theme.specification.headerCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.headerCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.headerCell.borders.left.color"
+        [style.border-right-color]="theme.specification.headerCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.headerCell.borders.top.thickness > 5 ? 5 : theme.specification.headerCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.headerCell.borders.bottom.thickness > 5 ? 5 : theme.specification.headerCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.headerCell.borders.left.thickness > 5 ? 5 : theme.specification.headerCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.headerCell.borders.right.thickness > 5 ? 5 : theme.specification.headerCell.borders.right.thickness"
+        [style.background-color]="theme.specification.headerCell.backgroundColor"
+        [style.text-align]="theme.specification.headerCell.textAlign">
+            <div class="theme-header-data center-align"
+            [style.border-top-color]="theme.specification.headerCell.fontColor"></div>
+        </div>
+        <!-- REPORT DATA -->
+        <div class="theme-data">
+            <table>
+                <tr>
+                    <th *ngFor="let c of [1, 2, 3]" class="field-header">
+                        <div class="field-header-item theme-element"
+                        [style.border-top-color]="theme.specification.fieldHeaderCell.borders.top.color"
+                        [style.border-bottom-color]="theme.specification.fieldHeaderCell.borders.bottom.color"
+                        [style.border-left-color]="theme.specification.fieldHeaderCell.borders.left.color"
+                        [style.border-right-color]="theme.specification.fieldHeaderCell.borders.right.color"
+                        [style.border-top-width.px]="theme.specification.fieldHeaderCell.borders.top.thickness > 5 ? 5 : theme.specification.fieldHeaderCell.borders.top.thickness"
+                        [style.border-bottom-width.px]="theme.specification.fieldHeaderCell.borders.bottom.thickness > 5 ? 5 : theme.specification.fieldHeaderCell.borders.bottom.thickness"
+                        [style.border-left-width.px]="theme.specification.fieldHeaderCell.borders.left.thickness > 5 ? 5 : theme.specification.fieldHeaderCell.borders.left.thickness"
+                        [style.border-right-width.px]="theme.specification.fieldHeaderCell.borders.right.thickness > 5 ? 5 : theme.specification.fieldHeaderCell.borders.right.thickness"
+                        [style.background-color]="theme.specification.fieldHeaderCell.backgroundColor"
+                        [style.text-align]="theme.specification.fieldHeaderCell.textAlign">
+                            <div class="field-header-data center-align"
+                            [style.border-top-color]="theme.specification.fieldHeaderCell.fontColor"></div>
+                        </div>
+                    </th>
+                </tr>
+                <tr *ngFor="let r of [1, 2, 3]">
+                    <td *ngFor="let c of [1, 2, 3]" class="field-data">
+                        <div class="field-data-item theme-element"
+                        [style.border-top-color]="theme.specification.fieldDataCell.borders.top.color"
+                        [style.border-bottom-color]="theme.specification.fieldDataCell.borders.bottom.color"
+                        [style.border-left-color]="theme.specification.fieldDataCell.borders.left.color"
+                        [style.border-right-color]="theme.specification.fieldDataCell.borders.right.color"
+                        [style.border-top-width.px]="theme.specification.fieldDataCell.borders.top.thickness > 5 ? 5 : theme.specification.fieldDataCell.borders.top.thickness"
+                        [style.border-bottom-width.px]="theme.specification.fieldDataCell.borders.bottom.thickness > 5 ? 5 : theme.specification.fieldDataCell.borders.bottom.thickness"
+                        [style.border-left-width.px]="theme.specification.fieldDataCell.borders.left.thickness > 5 ? 5 : theme.specification.fieldDataCell.borders.left.thickness"
+                        [style.border-right-width.px]="theme.specification.fieldDataCell.borders.right.thickness > 5 ? 5 : theme.specification.fieldDataCell.borders.right.thickness"
+                        [style.background-color]="theme.specification.fieldDataCell.backgroundColor"
+                        [style.text-align]="theme.specification.fieldDataCell.textAlign">
+                            <div class="field-data-data center-align"
+                            [style.border-top-color]="theme.specification.fieldDataCell.fontColor"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- FOOTER ITEMS -->
+        <div class="theme-footer-item theme-element" style="float: right;"
+        [style.border-top-color]="theme.specification.footerCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.footerCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.footerCell.borders.left.color"
+        [style.border-right-color]="theme.specification.footerCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.footerCell.borders.top.thickness > 5 ? 5 : theme.specification.footerCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.footerCell.borders.bottom.thickness > 5 ? 5 : theme.specification.footerCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.footerCell.borders.left.thickness > 5 ? 5 : theme.specification.footerCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.footerCell.borders.right.thickness > 5 ? 5 : theme.specification.footerCell.borders.right.thickness"
+        [style.background-color]="theme.specification.footerCell.backgroundColor"
+        [style.text-align]="theme.specification.footerCell.textAlign">
+            <div class="theme-footer-data center-align"
+            [style.border-top-color]="theme.specification.footerCell.fontColor"></div>
+        </div>
+        <div class="theme-footer-item theme-element"
+        [style.border-top-color]="theme.specification.footerCell.borders.top.color"
+        [style.border-bottom-color]="theme.specification.footerCell.borders.bottom.color"
+        [style.border-left-color]="theme.specification.footerCell.borders.left.color"
+        [style.border-right-color]="theme.specification.footerCell.borders.right.color"
+        [style.border-top-width.px]="theme.specification.footerCell.borders.top.thickness > 5 ? 5 : theme.specification.footerCell.borders.top.thickness"
+        [style.border-bottom-width.px]="theme.specification.footerCell.borders.bottom.thickness > 5 ? 5 : theme.specification.footerCell.borders.bottom.thickness"
+        [style.border-left-width.px]="theme.specification.footerCell.borders.left.thickness > 5 ? 5 : theme.specification.footerCell.borders.left.thickness"
+        [style.border-right-width.px]="theme.specification.footerCell.borders.right.thickness > 5 ? 5 : theme.specification.footerCell.borders.right.thickness"
+        [style.background-color]="theme.specification.footerCell.backgroundColor"
+        [style.text-align]="theme.specification.footerCell.textAlign">
+            <div class="theme-footer-data center-align"
+            [style.border-top-color]="theme.specification.footerCell.fontColor"></div>
+        </div>
+    </div>
+</div>

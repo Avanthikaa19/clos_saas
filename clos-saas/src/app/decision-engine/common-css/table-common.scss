@@ -1,0 +1,84 @@
+@import url(../common-css/common.scss);
+* {
+    font-size: 1.5rem;
+}
+
+.table {
+    width: 98%;
+    border-collapse: collapse;
+    margin: 10px 10px 10px 10px;
+    font-size: 1.4rem;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    table-layout: fixed;
+}
+
+.table thead tr {
+    background-color: #777777;
+    color: #ffffff;
+    text-align: center;
+    text-transform: capitalize;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table th,
+.table td {
+    padding: 8px 15px;
+    border: 1px solid white;
+    width: 10rem;
+    /*max-width: 20rem;*/
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: whitesmoke;
+}
+
+.table tbody tr:last-of-type {
+    border-bottom: 1px solid #505050;
+}
+
+.table tbody tr.active-row {
+    font-weight: bold;
+    color: #505050;
+}
+
+
+/*Pagination*/
+
+.center {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a.active {
+    background-color: #394eb4;
+    color: white;
+    border: 1px solid #394eb4;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}

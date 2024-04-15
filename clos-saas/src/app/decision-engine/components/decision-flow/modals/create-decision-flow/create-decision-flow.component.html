@@ -1,0 +1,58 @@
+<div class="main-container">
+    <div class="header-container" style="height: auto;">
+        Create New Flow
+    </div>
+    <form class="body-container" #inputForm="ngForm">
+        <div class="node-data">
+            <div class="node-detail">
+                <div class="label">
+                    <span style="position: absolute;margin-top: -23px;">Name </span>
+                </div>
+                <div class="colen">
+                    <span style="position: absolute;margin-top: -23px;">:</span>
+                </div>
+                <div class="value">
+                    <input class="min-input" required name="flowname" #flowname="ngModel" [(ngModel)]="decisionFlow.name">
+                    <small class="err-msg">{{errMsg()}}</small>
+                </div>
+            </div>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Description</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <textarea class="min-input" rows="6" cols="50" name="description" [(ngModel)]="decisionFlow.description"></textarea>
+                </div>
+            </div>
+            <!-- <div class="node-detail">
+                <div class="label">
+                    <span>Scenario</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <mat-select class="min-select" [(ngModel)]="decisionFlow.scenario" name="scenario">
+                        <mat-option *ngFor="let scenario of scenarios" [value]=scenario.id>{{scenario.name}}</mat-option>
+                    </mat-select>
+                </div>
+            </div> -->
+        </div>
+    </form>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-flat-button (click)="onCloseClick()" style="color: white;background-color: rgb(43, 42, 42)">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button class="create" mat-flat-button [disabled]="!decisionFlow.name" (click)="createFlowConfig()">
+        <mat-icon>add</mat-icon>
+        <span>Create Flow</span>
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

@@ -1,0 +1,109 @@
+<div class="layout-card" [class.layout-card-hoverable]="hoverEffect">
+    <div class="layout-card-header noselect" *ngIf="showHeader">
+        <a>{{layout.name}}</a>
+        <div style="font-size:14px">{{layout.description}}</div>
+    </div>
+    <div class="layout-card-content-wrapper">
+        <div class="layout-card-content">
+            <!-- TITLE -->
+            <div *ngFor="let tBand of layout.specification.titleBand;let i = index" [class]="i > 0? 'layout-subtitle theme-element' : 'layout-title layout-element'"
+            [style.border-top-color]="tBand.contextElement.cellFormat.borders.top.color"
+            [style.border-bottom-color]="tBand.contextElement.cellFormat.borders.bottom.color"
+            [style.border-left-color]="tBand.contextElement.cellFormat.borders.left.color"
+            [style.border-right-color]="tBand.contextElement.cellFormat.borders.right.color"
+            [style.border-top-width.px]="tBand.contextElement.cellFormat.borders.top.thickness > 5 ? 5 : tBand.contextElement.cellFormat.borders.top.thickness"
+            [style.border-bottom-width.px]="tBand.contextElement.cellFormat.borders.bottom.thickness > 5 ? 5 : tBand.contextElement.cellFormat.borders.bottom.thickness"
+            [style.border-left-width.px]="tBand.contextElement.cellFormat.borders.left.thickness > 5 ? 5 : tBand.contextElement.cellFormat.borders.left.thickness"
+            [style.border-right-width.px]="tBand.contextElement.cellFormat.borders.right.thickness > 5 ? 5 : tBand.contextElement.cellFormat.borders.right.thickness"
+            [style.background-color]="tBand.contextElement.cellFormat.backgroundColor"
+            [style.text-align]="tBand.contextElement.cellFormat.textAlign">
+                <div [class]="i > 0? 'layout-subtitle-data center-align' : 'layout-title-data center-align'"
+                [style.border-top-color]="tBand.contextElement.cellFormat.fontColor"></div>
+            </div>
+    
+            <!-- HEADER ITEMS -->
+            <div *ngFor="let hBand of layout.specification.headerBands;" style="display: flex;">
+                <div *ngFor="let element of hBand.elements; let i = index" >
+                    <div class="layout-header-item layout-element"
+                    [style.left.px]="element.align== 'RIGHT' ? 320: '' "
+                    [style.border-top-color]="element.cellFormat.borders.top.color"
+                    [style.border-bottom-color]="element.cellFormat.borders.bottom.color"
+                    [style.border-left-color]="element.cellFormat.borders.left.color"
+                    [style.border-right-color]="element.cellFormat.borders.right.color"
+                    [style.border-top-width.px]="element.cellFormat.borders.top.thickness > 5 ? 5 : element.cellFormat.borders.top.thickness"
+                    [style.border-bottom-width.px]="element.cellFormat.borders.bottom.thickness > 5 ? 5 : element.cellFormat.borders.bottom.thickness"
+                    [style.border-left-width.px]="element.cellFormat.borders.left.thickness > 5 ? 5 : element.cellFormat.borders.left.thickness"
+                    [style.border-right-width.px]="element.cellFormat.borders.right.thickness > 5 ? 5 : element.cellFormat.borders.right.thickness"
+                    [style.background-color]="element.cellFormat.backgroundColor"
+                    [style.text-align]="element.cellFormat.textAlign">
+                        <div class="layout-header-data center-align"
+                        [style.border-top-color]="element.cellFormat.fontColor"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="layout-data">
+                <table *ngFor="let eBand of layout.specification.extractionBands;">
+                    <!-- REPORT DATA -->
+                    <tr  style="top: 20px;position: relative;">
+                        <td *ngFor="let element of eBand.elements; let i = index"  class="field-header">
+                            <div *ngIf="i < 6 " class="field-header-item layout-element"
+                            [style.border-top-color]="element.fieldHeaderCell.cellFormat.borders.top.color"
+                            [style.border-bottom-color]="element.fieldHeaderCell.cellFormat.borders.bottom.color"
+                            [style.border-left-color]="element.fieldHeaderCell.cellFormat.borders.left.color"
+                            [style.border-right-color]="element.fieldHeaderCell.cellFormat.borders.right.color"
+                            [style.border-top-width.px]="element.fieldHeaderCell.cellFormat.borders.top.thickness > 5 ? 5 : element.fieldHeaderCell.cellFormat.borders.top.thickness"
+                            [style.border-bottom-width.px]="element.fieldHeaderCell.cellFormat.borders.bottom.thickness > 5 ? 5 : element.fieldHeaderCell.cellFormat.borders.bottom.thickness"
+                            [style.border-left-width.px]="element.fieldHeaderCell.cellFormat.borders.left.thickness > 5 ? 5 : element.fieldHeaderCell.cellFormat.borders.left.thickness"
+                            [style.border-right-width.px]="element.fieldHeaderCell.cellFormat.borders.right.thickness > 5 ? 5 : element.fieldHeaderCell.cellFormat.borders.right.thickness"
+                            [style.background-color]="element.fieldHeaderCell.cellFormat.backgroundColor"
+                            [style.text-align]="element.fieldHeaderCell.cellFormat.textAlign">
+                                <div class="field-header-data center-align"
+                                [style.border-top-color]="element.fieldHeaderCell.cellFormat.fontColor"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="top: 20px;position: relative;">
+                        <td *ngFor="let element of eBand.elements; let i = index" class="field-data">
+                            <div *ngIf="i < 6 " class="field-data-item layout-element"
+                            [style.border-top-color]="element.fieldDataCell.cellFormat.borders.top.color"
+                            [style.border-bottom-color]="element.fieldDataCell.cellFormat.borders.bottom.color"
+                            [style.border-left-color]="element.fieldDataCell.cellFormat.borders.left.color"
+                            [style.border-right-color]="element.fieldDataCell.cellFormat.borders.right.color"
+                            [style.border-top-width.px]="element.fieldDataCell.cellFormat.borders.top.thickness > 5 ? 5 : element.fieldDataCell.cellFormat.borders.top.thickness"
+                            [style.border-bottom-width.px]="element.fieldDataCell.cellFormat.borders.bottom.thickness > 5 ? 5 : element.fieldDataCell.cellFormat.borders.bottom.thickness"
+                            [style.border-left-width.px]="element.fieldDataCell.cellFormat.borders.left.thickness > 5 ? 5 : element.fieldDataCell.cellFormat.borders.left.thickness"
+                            [style.border-right-width.px]="element.fieldDataCell.cellFormat.borders.right.thickness > 5 ? 5 : element.fieldDataCell.cellFormat.borders.right.thickness"
+                            [style.background-color]="element.fieldDataCell.cellFormat.backgroundColor"
+                            [style.text-align]="element.fieldDataCell.cellFormat.textAlign">
+                                <div class="field-data-data center-align"
+                                [style.border-top-color]="element.fieldDataCell.cellFormat.fontColor"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    
+            <!-- FOOTER ITEMS -->
+            <div *ngFor="let fBand of layout.specification.footerBands;" style="display: flex;top: 40px;position: relative;">
+                <div *ngFor="let element of fBand.elements">
+                    <div class="layout-footer-item layout-element"
+                    [style.left.px]="element.align== 'RIGHT' ? 320: '' "
+                    [style.border-top-color]="element.cellFormat.borders.top.color"
+                    [style.border-bottom-color]="element.cellFormat.borders.bottom.color"
+                    [style.border-left-color]="element.cellFormat.borders.left.color"
+                    [style.border-right-color]="element.cellFormat.borders.right.color"
+                    [style.border-top-width.px]="element.cellFormat.borders.top.thickness > 5 ? 5 : element.cellFormat.borders.top.thickness"
+                    [style.border-bottom-width.px]="element.cellFormat.borders.bottom.thickness > 5 ? 5 : element.cellFormat.borders.bottom.thickness"
+                    [style.border-left-width.px]="element.cellFormat.borders.left.thickness > 5 ? 5 : element.cellFormat.borders.left.thickness"
+                    [style.border-right-width.px]="element.cellFormat.borders.right.thickness > 5 ? 5 : element.cellFormat.borders.right.thickness"
+                    [style.background-color]="element.cellFormat.backgroundColor"
+                    [style.text-align]="element.cellFormat.textAlign">
+                        <div class="layout-footer-data center-align"
+                        [style.border-top-color]="element.cellFormat.fontColor"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

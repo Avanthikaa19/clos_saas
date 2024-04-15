@@ -1,0 +1,64 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height" class="dev-tools-container">
+    <mat-toolbar class="toolbar">
+        <mat-toolbar-row>
+            <button mat-stroked-button class="noFocus" (click)="goBack()" style="color: white; background-color: black;">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span style="padding-left: 10px;">Back</span>
+            </button>
+            <button mat-icon-button class="noFocus" (click)="drawer.toggle()"  style="color: white;">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <a>Developer Tools</a>
+            <div class="separator"></div>
+            <a>{{title|titlecase}}</a>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-drawer-container class="drawer-container">
+        <mat-drawer #drawer class="drawer-sidenav" mode="side" opened="true">
+            <div class="drawer-sidenav-title">
+                <span class="drawer-sidenav-title-text">Navigate</span>
+            </div>
+            <mat-nav-list class="drawer-sidenav-list">
+                <div routerLink="reports">
+                    <a class="drawer-sidenav-feature noselect" routerLinkActive="drawer-sidenav-feature-selected" mat-list-item>
+                        <mat-icon>view_carousel</mat-icon>
+                        <span style="padding-left: 10px;">Reports</span>
+                    </a>
+                </div>
+                <div routerLink="extraction-queries">
+                    <a class="drawer-sidenav-feature noselect" routerLinkActive="drawer-sidenav-feature-selected" mat-list-item>
+                        <mat-icon>hourglass_full</mat-icon>
+                        <span style="padding-left: 10px;">Extraction Queries</span>
+                    </a>
+                </div>
+                <div routerLink="computation-queries">
+                    <a class="drawer-sidenav-feature noselect" routerLinkActive="drawer-sidenav-feature-selected" mat-list-item>
+                        <mat-icon>hourglass_empty</mat-icon>
+                        <span style="padding-left: 10px;">Computation Queries</span>
+                    </a>
+                </div>
+                <div routerLink="layouts">
+                    <a class="drawer-sidenav-feature noselect" routerLinkActive="drawer-sidenav-feature-selected" mat-list-item>
+                        <mat-icon> layers</mat-icon>
+                        <span style="padding-left: 10px;">Layouts</span>
+                    </a>
+                </div>
+                <div routerLink="themes">
+                    <a class="drawer-sidenav-feature noselect" routerLinkActive="drawer-sidenav-feature-selected" mat-list-item>
+                        <mat-icon>format_paint</mat-icon>
+                        <span style="padding-left: 10px;">Themes</span>
+                    </a>
+                </div>
+                <!-- <div routerLink="package">
+                    <a class="drawer-sidenav-feature noselect" routerLinkActive="drawer-sidenav-feature-selected" mat-list-item>
+                        <mat-icon>import_export</mat-icon>
+                        <span style="padding-left: 10px;">Import & Export</span>
+                    </a>
+                </div> -->
+            </mat-nav-list>
+        </mat-drawer>
+        <div class="drawer-sidenav-content" [@fadeInOutRouter]="o.isActivated ? o.activatedRoute : ''">
+            <router-outlet #o="outlet"></router-outlet>
+        </div>
+    </mat-drawer-container>
+</div>

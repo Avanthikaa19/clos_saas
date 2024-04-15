@@ -1,0 +1,269 @@
+@import url(../common.scss);
+@import url(../commonstyles.scss);
+$font-size: 26px;
+$line-height: 1.4;
+$lines-to-show: 3;
+
+.dup-main-container {
+    height: 100%;
+    // background-color: aliceblue;
+    // display: grid;
+    // grid-template-rows: 1fr 8fr;
+    display: flex;
+    flex-direction: column;
+
+    >.header-container {
+        background-color: white;
+        border-bottom: 1px solid gainsboro;
+        box-shadow: inset 0 0 10px #d5d5d4ba;
+        margin-bottom: 1rem;
+
+        >.title-container {
+            width: 25rem;
+            color: rgba(14, 41, 84, 1);
+            text-shadow: 2px 2px rgb(223, 223, 223);
+            margin: 2rem;
+            font-size: 2.5rem;
+
+        }
+
+        >.sub-title-container {
+            height: 5rem;
+            padding: 0.5rem 0rem 0rem 1rem;
+            font-size: 12px;
+            font-weight: 400;
+            color: gray;
+        }
+    }
+
+    >.body-container {
+        // overflow: auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 65rem;
+        max-height: 65rem;
+
+        >.title-container {
+            flex: 0 0 auto;
+            padding: 1rem 0rem 1rem 1rem;
+            border-top: 1px solid rgb(236, 236, 236);
+            background-color: white;
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            margin: 1rem;
+        }
+
+        .search-item-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-field {
+            width: 60rem;
+            /* Take up all available width */
+            padding-right: 2rem;
+            /* Provide space for the mat-icon */
+        }
+
+        .icon {
+            position: absolute;
+            right: 10px;
+            /* Adjust the right spacing as needed */
+            cursor: pointer;
+            color: red;
+        }
+
+        .spacer {
+            flex: 1;
+            /* Create a spacer to push buttons to the right */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            /* Adjust the gap between buttons as needed */
+        }
+
+        >.card-content-container {
+            overflow: auto;
+            flex: 1 1 auto;
+            border: 1px solid rgb(236, 236, 236);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            margin-top: 1rem;
+
+            >.card-container {
+                flex: 0 0 auto;
+                background-color: whitesmoke;
+                height: 15rem;
+                width: 35rem;
+                margin: 2rem;
+                border-radius: 0.5rem;
+                display: flex;
+                flex-direction: column;
+
+                >.top-card-container {
+                    flex: 0 0 auto;
+                    height: 4rem;
+                    // border-bottom: 1px solid whitesmoke;
+                    display: flex;
+                    flex-direction: row;
+
+                    // flex-wrap: wrap;
+                    >.header {
+                        flex: 1 1 auto;
+                        margin: 1rem 0rem 0rem 1rem;
+                        font-weight: bold;
+                        color: royalblue;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        max-width: 280px;
+                        word-wrap: break-word;
+                        font-size: 13px;
+                    }
+
+                    >.edit-delete {
+                        flex: 0 0 auto;
+                        justify-content: flex-end;
+                        align-items: flex-end;
+                    }
+
+                    >.delete {
+                        >button:disabled {
+                            cursor: not-allowed;
+                        }
+                    }
+                }
+
+                >.content-card-container {
+                    flex: 1 1 auto;
+                    margin: 1rem 1rem 0rem 1rem;
+                    font-size: 12px;
+                    color: gray;
+                    display: -webkit-box;
+                    max-width: 400px;
+                    -webkit-line-clamp: $lines-to-show;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-weight: bold;
+                }
+
+                >.bottom-card-container {
+                    flex: 0 0 auto;
+                    height: 4rem;
+                    margin: 1rem 0rem 0rem 1rem;
+                    display: flex;
+                    flex-direction: row;
+
+                    >.status-container {
+                        flex: 1 1 auto;
+                    }
+
+                    >.toggle-container {
+                        flex: 0 0 auto;
+                        margin-right: 2rem;
+                    }
+                }
+            }
+
+            >.card-container:hover {
+                box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+            }
+        }
+    }
+}
+
+.loading-spinner {
+    display: flex;
+    padding: 15px;
+    position: absolute;
+    top: 50%;
+    left: 48%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+
+    >span {
+        padding-top: 2px;
+        margin-left: 15px;
+    }
+}
+
+.no-content {
+    margin-top: 25rem;
+    left: 50%;
+    text-align: center;
+    font-size: 21px;
+    color: rgb(85, 85, 85);
+    font-weight: bolder;
+    letter-spacing: 1px
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #00880E;
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgb(220, 255, 220);
+    padding: 7px;
+}
+
+.search-cancel {
+    position: absolute;
+    right: 5px;
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgb(214, 34, 34);
+}
+
+.import-export {
+    margin-right: 20px;
+}
+
+.paginator-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    >.left-container {
+        flex: 0 0 auto;
+    }
+
+    >.middle-container {
+        flex: 0 0 auto;
+    }
+
+    >.right-container {
+        margin-top: 1rem;
+        flex: 0 0 auto;
+    }
+
+    .min-select {
+        flex: 1 1 auto;
+        padding: 0.3rem 0 0.2rem 2.5rem;
+        border: none;
+        border-radius: 0.3rem;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+.pagination-controls ::ng-deep .ngx-pagination .current {
+    background: white;
+    color: black;
+    font-weight: bold;
+    font-size: larger;
+}

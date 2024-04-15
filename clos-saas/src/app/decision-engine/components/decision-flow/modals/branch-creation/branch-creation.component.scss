@@ -1,0 +1,36 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 92%;
+    border-bottom: 1px solid lightgray;
+    border-radius: 0px;
+    .header-container {
+        height: 3rem;
+        border-bottom: 1px solid gainsboro;
+        font-size: 1.6rem;
+        font-weight: 500;
+        font-style: italic;
+        justify-content: center;
+        padding-left: 1rem;
+    }
+    .content-container {
+        // height: 95%;
+        padding: 1rem 1rem 1rem 1rem;
+    }
+    .param-container {
+        padding: 1rem 0rem 0rem 0rem;
+        background-color: whitesmoke;
+        height: 44vh;
+        overflow-y: auto;
+        border-radius: 5px;
+        // border: 1px solid silver;
+    }
+}
+
+.min-input {
+    background-color: white;
+}
+
+.min-description {
+    height: 20%;
+}

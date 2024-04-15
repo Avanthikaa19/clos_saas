@@ -1,0 +1,54 @@
+<div style="font-size: 14px;" *ngIf="workflow">
+    <div style="height: 40px; line-height: 40px; font-size: 16px; font-weight: 500; font-style: italic; margin-bottom: 20px;">
+        {{workflow.id == null ? 'CREATE':'UPDATE'}} WORKFLOW {{workflow.id == null ? '' : 'DETAILS'}}
+        <span *ngIf="workflow.id" style="float: right; color: silver; font-style: italic;">ID: {{workflow.id}}</span>
+    </div>
+    <mat-grid-list cols="1" rowHeight="50px" [gutterSize]="'5px'">
+        <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>NAME</mat-label>
+                <input matInput placeholder="Workflow Name" [(ngModel)]="workflow.name" #name="ngModel" 
+                autocomplete="off" spellcheck="false" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>DESCRIPTION</mat-label>
+                <input matInput placeholder="Workflow Description" [(ngModel)]="workflow.description" autocomplete="off">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>TAG</mat-label>
+                <input matInput placeholder="Category Tag" [(ngModel)]="workflow.tag" autocomplete="off">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <div style="padding-top: 20px;">
+        <button *ngIf="workflow.id == null" mat-raised-button style="float: right; color: white; margin-left: 10px;" 
+        (click)="createWorkflow()" [disabled]="workflow.name.length == 0" [style.background-color]="workflow.name.length == 0 ? 'silver': 'rgba(14, 41, 84, 1)'">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">Create</span>
+        </button>
+        <button *ngIf="workflow.id != null" mat-raised-button style="float: right; color: white; margin-left: 10px;" 
+        (click)="updateWorkflow()" [disabled]="workflow.name.length == 0" [style.background-color]="workflow.name.length == 0 ? 'silver': 'rgba(14, 41, 84, 1)'">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">Save</span>
+        </button>
+        <button mat-stroked-button class="clos-btn" style="float: right;" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <div style="min-height: 20px; text-align: justify;">
+            <span *ngIf="workflow.name.length == 0" style="color:red">
+                Workflow name is a mandatory field.
+            </span>
+        </div>
+        <div *ngIf="errMessage" style="min-height: 20px; text-align: justify;">
+            <span style="color: red;">
+                Error: {{errMessage}}
+            </span>
+        </div>
+    </div>
+       
+</div>

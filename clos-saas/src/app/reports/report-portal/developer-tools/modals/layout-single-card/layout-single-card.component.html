@@ -1,0 +1,82 @@
+<div class="layout-card">
+    <div id="grid-canvas-parent" class="grid-container">
+        <div id="grid-canvas-col-label" class="grid-canvas-col-label noselect" [style.width.px]="canvasWidthPx"
+            [style.height.px]="rowHeightPx">
+        </div>
+        <div id="grid-canvas" class="grid-canvas light-bg noselect" [style.width.px]="canvasWidthPx"
+            [style.height.px]="canvasHeightPx">
+            <ng-container *ngFor="let tBand of layout.specification.titleBand">
+                <div id="title-band" class="grid-element" [style]="tBand.style" [@fadeInOut]>
+                    <!-- ACTUAL ELEMENT -->
+                    <div class="grid-element-band-item-wrapper" [style.top.px]="(tBand.margins.top * rowHeightPx) - 1"
+                        [style.left.px]="(tBand.margins.left * columnWidthPx) - 1"
+                        [style.width.px]="(tBand.width * columnWidthPx) + 1"
+                        [style.height.px]="(tBand.height * rowHeightPx) + 1">
+                        <div class="grid-element-band-item" [style]="tBand.contextElement.style">
+                            <span></span>
+                            <a>{{tBand.contextElement.cellData.value}}</a>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- HEADER BANDS -->
+            <ng-container *ngFor="let hBand of layout.specification.headerBands">
+                <div id="header-band" class="grid-element" [style]="hBand.style" [@fadeInOut]>
+                    <!-- ACTUAL ELEMENT -->
+                    <div class="grid-element-band-item-wrapper" [style.top.px]="(hBand.margins.top * rowHeightPx) - 1"
+                        [style.left.px]="(hBand.margins.left * columnWidthPx) - 1"
+                        [style.width.px]="(hBand.width * columnWidthPx) + 1" [style.height.px]="(rowHeightPx) + 1"
+                        cdkDropList cdkDropListOrientation="horizontal">
+                        <ng-container *ngFor="let hbandElement of hBand.elements;let i=index;">
+                            <div class="grid-element-band-item" [style]="hbandElement.style">
+                                <span></span>
+                                <a>{{hbandElement.cellData.value}}</a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- EXTRACTION BANDS -->
+            <ng-container *ngFor="let eBand of layout.specification.extractionBands">
+                <div id="extraction-band" class="grid-element" [style]="eBand.style" [@fadeInOut]>
+                    <!-- ACTUAL ELEMENT -->
+                    <div class="grid-element-band-item-wrapper" [style.top.px]="(eBand.margins.top * rowHeightPx) - 1"
+                        [style.left.px]="(eBand.margins.left * columnWidthPx) - 1"
+                        [style.width.px]="(eBand.width * columnWidthPx) + 1"
+                        [style.height.px]="(eBand.height * rowHeightPx) + 1">
+                        <div *ngFor="let eBandElement of eBand.elements;let i=index;">
+                            <div class="grid-element-band-item" [style]="eBandElement.fieldHeaderCell.style">
+                                <span></span>
+                                <a>{{eBandElement.fieldHeaderCell.cellData.value}}</a>
+                            </div>
+                            <div class="grid-element-band-item" [style]="eBandElement.fieldDataCell.style">
+                                <span></span>
+                                <a>{{eBandElement.fieldDataCell.cellData.value}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- FOOTER BANDS -->
+            <ng-container *ngFor="let fBand of layout.specification.footerBands">
+                <div id="footer-band" class="grid-element" [style]="fBand.style" [@fadeInOut]>
+                    <!-- ACTUAL ELEMENT -->
+                    <div class="grid-element-band-item-wrapper" [style.top.px]="(fBand.margins.top * rowHeightPx) - 1"
+                        [style.left.px]="(fBand.margins.left * columnWidthPx) - 1"
+                        [style.width.px]="(fBand.width * columnWidthPx) + 1" [style.height.px]="(rowHeightPx) + 1">
+                        <ng-container *ngFor="let fBandElement of fBand.elements;let i=index;">
+                            <div class="grid-element-band-item" [style]="fBandElement.style">
+                                <span></span>
+                                <a>{{fBandElement.cellData.value}}</a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="layout-card-header noselect">
+        <a>{{layout.name}}</a>
+        <div style="font-size:14px">{{layout.description}}</div>
+    </div>
+</div>

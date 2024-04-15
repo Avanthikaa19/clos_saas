@@ -1,0 +1,126 @@
+<div style="overflow:hidden !important">
+    <mat-tab-group style="overflow: hidden;">
+        <mat-tab *ngIf="!splitDisplay" style="overflow: hidden !important;">
+            <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <mat-icon style="font-size: 20px;"> done_all</mat-icon><span>Choose Action Parameter</span>
+                </div>
+            </ng-template>
+            <div class="main-container" style="overflow:hidden">
+
+                <div class="body-container">
+
+                    <div class="tree-container">
+                        <p style="padding-left: 1rem;" class="category-sub-header"><u>All Types</u></p>
+                        <mat-tree [dataSource]="matSource" [treeControl]="treeControl">
+                            <mat-nested-tree-node *matTreeNodeDef="let node" (click)="selectedNode(node)">
+                                <li>
+                                    <div class="mat-tree-node list-container" [class.selected-node]="node.name == selectedNodeName">
+                                        <mat-icon>keyboard_arrow_right</mat-icon> {{node.name}} - {{node.type}}
+                                    </div>
+                                </li>
+                            </mat-nested-tree-node>
+                            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                                <li class="example-tree-container ">
+                                    <div class="mat-tree-node list-container">
+                                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                                        <mat-icon>
+                                            {{treeControl.isExpanded(node) ? 'indeterminate_check_box' : 'add_box'}}
+                                        </mat-icon>
+                                    </button> {{node.name}}
+                                    </div>
+                                    <ul class="example-tree-nested-node">
+                                        <div *ngIf="!treeControl.isExpanded(node)">
+                                            <ng-container matTreeNodeOutlet></ng-container>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </mat-nested-tree-node>
+                        </mat-tree>
+                    </div>
+                </div>
+                <mat-spinner *ngIf="matTreeData.length==0" style="margin:25rem;margin-left: 35rem;" diameter="35"></mat-spinner>
+
+                <mat-dialog-actions style="margin-top: -4rem;" align="end">
+                    <button mat-stroked-button mat-dialog-close style="color: red;" (click)="onCloseClick()">
+                <mat-icon>close</mat-icon>Close
+            </button>
+                    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="applyAction()" cdkFocusInitial>
+                <mat-icon>navigate_next</mat-icon>Next
+            </button>
+                </mat-dialog-actions>
+
+            </div>
+
+
+        </mat-tab>
+
+        <mat-tab *ngIf="splitDisplay" style="height:50rem;">
+            <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <mat-icon style="font-size: 20px;"> done_all</mat-icon><span>Apply Action</span>
+                </div>
+            </ng-template>
+
+
+            <div class="main-container1">
+                <div class="header-container1">
+                    Choose Action Function
+                </div>
+
+                <!-- <div class="header-container">
+    <span class="header">
+        Functions :
+    </span>
+</div> -->
+                <div class="content-container">
+                    <div class="search-container">
+                        <div>
+                            <mat-icon class="icon-search">search</mat-icon>
+                            <input class="min-input" placeholder="Search Functions. Press Enter to search.">
+                        </div>
+                    </div>
+                    <div class="body-container" *ngIf="functionsList.length > 0 && !loading">
+                        <div class="card-container" *ngFor="let function of functionsList" (click)="selectfunction(function)" [class.selected-card]="function.id==selectedFunction">
+                            <div class="card-body-container">
+                                <div class="card-image-container">
+                                    <img src="assets/Icons/fx (1).png">
+                                </div>
+                                <div class="card-content-container">
+                                    <div class="card_body-content">
+                                        {{function.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="no-record-found" *ngIf="functionsList.length == 0 && !loading">
+                        No Function found
+                    </div>
+                    <mat-spinner *ngIf="loading" style="margin: 20rem;margin-left:55rem;" diameter="40"></mat-spinner>
+
+                </div>
+                <mat-dialog-actions align="end">
+                    <button mat-stroked-button mat-dialog-close (click)="oncancelClick()">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+                    <button mat-raised-button class="selectButton" [disabled]="!selectedFunction" (click)="onCreateClick()">
+        <mat-icon>done</mat-icon>
+        <span>Select Function</span>
+    </button>
+                </mat-dialog-actions>
+
+
+            </div>
+
+
+            <notifier-container></notifier-container>
+
+
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>

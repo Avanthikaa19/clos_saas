@@ -1,0 +1,104 @@
+<div class="main-container">
+    <div class="header-container">
+        <ng-container>
+            <button mat-stroked-button (click)="addField()">
+                <mat-icon>add</mat-icon>
+                <span>
+                    Add New Field
+                </span>
+            </button>
+        </ng-container>
+    </div>
+    <table class="table-container">
+        <thead>
+            <tr>
+                <!-- <th>id</th> -->
+                <th>field_name</th>
+                <th>field_type</th>
+                <th>description</th>
+                <th>tag</th>
+                <th>in_use</th>
+                <th>source</th>
+                <th>others</th>
+                <th>Save</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let child of item; let i = index" (dblclick)="onDoubleClick(child)">
+                <!-- <td>
+                    <ng-container>
+                        {{i}}
+                    </ng-container>
+                </td> -->
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.name}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.name">
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.type}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.type">
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.description}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.description">
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.tag}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.tag">
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.in_use}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.in_use">
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.source}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.source">
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!child.editableMode">
+                        {{child.others}}
+                    </ng-container>
+                    <ng-container *ngIf="child.editableMode">
+                        <input class="min-input" [(ngModel)]="child.others">
+                    </ng-container>
+                </td>
+                <td style="width: 3rem;">
+                    <button mat-button style="width: 100%; font-size: 12px; line-height: 18px; height: auto;" (click)="onSaveClick(child)">
+                        <mat-icon style="margin-right: 0rem; color: royalblue;">save</mat-icon>
+                    </button>
+                </td>
+                <td style="width: 3rem;">
+                    <button mat-button color="warn" style="width: 100%; font-size: 12px; line-height: 18px; height: auto; " (click)="deleteObject(child)">
+                        <mat-icon style="margin-right: 0rem;">delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<notifier-container></notifier-container>

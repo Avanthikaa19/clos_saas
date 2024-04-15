@@ -1,0 +1,4 @@
+<div class="main-container">
+    <app-generic-data-table [columns]="applicationColumns" [filterButton]="true" [pageData]="pageData" [displayAllButton]="true" [exportButton]="true" [tableData]="applicationLogData" [loading]="loadingItems" (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)"
+        (onClick)="detailClick($event)" (onExportChange)="getDuplicateExportList($event)" [clearButton]="true" (onPageChange)="getShareDetailsData($event)" [filterInput]="true"></app-generic-data-table>
+</div>

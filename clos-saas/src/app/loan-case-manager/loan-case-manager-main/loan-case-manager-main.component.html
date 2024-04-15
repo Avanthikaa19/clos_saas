@@ -1,0 +1,36 @@
+<div class="main-container">
+    <div class="side-nav-container">
+        <div class="navigation">
+            Navigation
+        </div>
+        <!-- <mat-list>
+            <mat-list-item  (click)="onRouterNavigate('verifier-queue')" matRipple> Veriication Queue </mat-list-item>
+            <mat-list-item  (click)="onRouterNavigate('underwriter-queue')" matRipple> Underwriter Queue
+            </mat-list-item>
+        </mat-list> -->
+        <div class="nav-list">
+            <div class="nav-item" [routerLink]="'/loan-case-manager/loan-case-manager-main/verifier-queue'" (click)="onRouterNavigate('verifier-queue')" [class.nav-item-active]="selectedPanel == 'verifier-queue'" matRipple>
+                <div class="icon-container">
+                    <mat-icon>verified_user</mat-icon>
+                </div>
+                <div class="word-container">
+                    Verification Queue
+                </div>
+            </div>
+            <div class="nav-item" [routerLink]="'/loan-case-manager/loan-case-manager-main/underwriter-queue'"  (click)="onRouterNavigate('underwriter-queue')" [class.nav-item-active]="selectedPanel == 'underwriter-queue'"  matRipple>
+                <div class="icon-container">
+                    <mat-icon>stars</mat-icon>
+                </div>
+                <div class="word-container">
+                    Underwriter Queue
+                </div>
+            </div>
+            <div>
+                <app-shortcut-icon></app-shortcut-icon>
+            </div>
+        </div>
+    </div>
+    <div class="main-nav-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

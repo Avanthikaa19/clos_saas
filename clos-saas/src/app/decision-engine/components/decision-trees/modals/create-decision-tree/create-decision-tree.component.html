@@ -1,0 +1,44 @@
+<div class="main-container">
+    <div class="header-container" style="height: auto;">
+        Create Decision Tree
+    </div>
+    <form class="body-container" #inputForm="ngForm">
+        <div class="node-data">
+            <div class="node-detail">
+                <div class="label" style="margin-bottom: 24px;">
+                    <span>Name </span>
+                </div>
+                <div class="colen" style="margin-bottom: 24px;">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <input class="min-input" required name="treename" #treename="ngModel" [(ngModel)]="treeDetails.name">
+                    <small class="err-msg">{{errMsg()}}</small>
+                </div>
+            </div>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Description</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <textarea class="min-input" rows="6" cols="50" name="description" [(ngModel)]="treeDetails.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close style="color: red;background-color: rgb(255, 255, 255)">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button class="create" mat-raised-button [disabled]="!treeDetails.name" (click)="createTreeList()">
+        <mat-icon>add</mat-icon>
+        <span>Create Tree</span>
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

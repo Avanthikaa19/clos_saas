@@ -1,0 +1,16 @@
+
+<mat-tab-group [selectedIndex]="activeTabIndex" (selectedTabChange)="appVerificationTabChange($event)">
+    <mat-tab *ngFor="let tab of matTabHeader">
+        <ng-template mat-tab-label style="font-weight:bold;">
+        <mat-icon>{{tab.icon}} </mat-icon> <span class="tabsName"> {{tab.name}} </span>
+    </ng-template>
+    </mat-tab>
+</mat-tab-group>
+<div class="main-container">
+    <app-generic-data-table [columns]="applicationColumns" [filterButton]="true" [pageData]="pageData"
+    [displayAllButton]="true" [exportButton]="true" [tableData]="applicationLogData" [loading]="loadingItems"
+    (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)" (onClick)="detailClick($event)"
+    (onExportChange)="getApplicationExportList($event)" [clearButton]="true"
+    (onPageChange)="getShareDetailsData($event)" [filterInput]="true">
+    </app-generic-data-table>
+</div>

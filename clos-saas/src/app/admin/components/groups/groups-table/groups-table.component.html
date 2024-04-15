@@ -1,0 +1,9 @@
+<div class="column-container">
+    <mat-icon class="mr-3 ml-4 m-3 circle_icon">settings_suggest</mat-icon>
+    <span class="ml-4 user-contain m-3">Groups ({{getCurrentUser()}})</span>
+</div>
+<div class="main-container">
+    <app-generic-data-table [columns]="groupscolumns" [filterButton]="true" [exportButton]="true" [clearButton]="true" (onClick)="detailClick($event)" (onCreateNewUserClick)="onAddNewGroupClick($event)" [newGroups]="true"
+    [filterInput]="false" [tableData]="groupscolumnsData" [pageData]="pageData" (onExportChange)="groupsListDataExport($event)" (onPageChange)="getGroupsListingeData($event)" 
+   [loading]="loadingItems" (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)"></app-generic-data-table>
+</div>

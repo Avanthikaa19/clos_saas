@@ -1,0 +1,177 @@
+<!-- <div class="main-container">
+    <div class="header-container">
+    </div>
+    <div class="content-container">
+        <div class="table-content-container">
+            <table>
+                <tr>
+                    <td>RoleTemplate Name</td>
+                    <td>:</td>
+                    <td><input type="text" class="min-input" [(ngModel)]="groupRoleTemplate.name"></td>
+                    <td>
+                        <div *ngIf="!groupRoleTemplate.name">
+                            <span style="color:red;font-weight: bold;">RoleTemplate Name is required field.</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>:</td>
+                    <td><textarea class="min-input" rows="5" cols="50" style="background-color: F4F4F4" [(ngModel)]="groupRoleTemplate.description"></textarea></td>
+                    <td>
+                        <div *ngIf="groupRoleTemplate.name && !groupRoleTemplate.description">
+                            <span style="color:red;font-weight: bold;">Description is required field.</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Roles</td>
+                    <td>:</td>
+                    <button style="margin-left: 1rem;background:rgb(239 239 239);" mat-button color="primary" (click)="manageRolesClickBtn()"><mat-icon>add</mat-icon>
+                    
+                    </button>
+                    <span style="font-size:1.3rem;font-style: italic;font-weight: bold;text-transform: capitalize;margin-left: 3rem;">
+                        {{changeTemplateNamesText ? templateNamesFull :
+                            templateNamesShort}}
+                     </span>
+                </tr>
+            </table>
+            <div class="access__header-container parent__row-flex">
+                <div class="header flex-grow">
+                    Access Template:-
+                </div>
+                <div class="access__btn flex-shrink">
+                    <button color="primary" mat-raised-button (click)="getTemplatesDetail()">
+                        
+                        <mat-icon>security</mat-icon>
+                        <mat-icon style="margin-right: 1rem;">add</mat-icon>
+                        <span>Access Template</span>
+                    </button>
+                </div>
+            </div>
+            <div class="access-container">
+                <div class="grid-class" *ngFor="let data of roleTemplate ">
+                    <div class="grid-data"> <span class="grid-span">{{data.name}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="end" class="button-container">
+    <button mat-raised-button mat-dialog-clo<td>
+                                        <div class="value">
+                                            <input class="min-input" [(ngModel)]="groupDetail.description"
+                                                oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="500">
+                                        </div>
+                                    </td>se color="warn">
+        <mat-icon>close</mat-icon>
+        <span style="padding-left: 10px;">Close</span>
+    </button>
+    <button class="save_btn" mat-raised-button color="primary" (click)="createRoleTemplate()" [disabled]="disable()">
+        <mat-icon>done</mat-icon>
+        <span style="padding-left: 10px;">Apply</span>
+    </button>
+</mat-dialog-actions>
+<notifier-container></notifier-container> -->
+
+<div class="main-container">
+    <div class="header-container">
+        <b>Role Template:-</b>
+    </div>
+    <div class="content-container">
+        <div class="role__template-container">
+            <table>
+                <tr>
+                    <td class="required">RoleTemplate Name</td>
+                    <td>:</td>
+                    <td><input type="text" class="min-input" [(ngModel)]="groupRoleTemplate.name"
+                            oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255"></td>
+                    <td>
+                        <div *ngIf="!groupRoleTemplate.name">
+                            <span style="color:red;font-weight: bold;">RoleTemplate Name is required field.</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="required">Description</td>
+                    <td>:</td>
+                    <td><textarea class="min-input" rows="5" cols="50" style="background-color: F4F4F4; resize: none;"
+                            [(ngModel)]="groupRoleTemplate.description"
+                            oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="500"></textarea></td>
+                    <td>
+                        <div *ngIf="groupRoleTemplate.name && !groupRoleTemplate.description">
+                            <span style="color:red;font-weight: bold;">Description is required field.</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="role__selection-container">
+            <div class="role__selection__hdr">
+                <div class="hdr">
+                    <b>Add Roles:-</b>
+                </div>
+                <div class="btn">
+                    <button class="tl-btn" (click)="onAddRoleClick()">
+                        <mat-icon>add</mat-icon>
+                        <span style="padding-left: 10px;">Add Roles</span>
+                    </button>
+                </div>
+            </div>
+            <div class="role__selection__cnt">
+                <div class="role__card" *ngFor="let role of groupRoleTemplate.role">
+                    <div class="icon-container">
+                        <mat-icon>how_to_reg</mat-icon>
+                    </div>
+                    <div class="role__name">
+                        {{role.name}}
+                    </div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <!-- <b>(+2 others)</b>  -->
+                </div>
+            </div>
+        </div>
+        <div class="access__template-container">
+            <div class="access__selection__hdr">
+                <div class="hdr">
+                    <b>Add Access Template:-</b>
+                </div>
+                <div class="btn">
+                    <button class="tl-btn" (click)="getTemplatesDetail()">
+                        <mat-icon>add</mat-icon>
+                        <span style="padding-left: 10px;">Add Access Template</span>
+                    </button>
+                </div>
+            </div>
+            <div class="access__selection__cnt">
+                <div class="access__card-container" matTooltip="Right click to remove access template"
+                    *ngFor="let data of roleTemplate; let i=index;" (contextmenu)="removeAccessTemplate(i)">
+                    <div class="icon-container">
+                        <mat-icon style="font-size: 7rem;">security</mat-icon>
+                    </div>
+                    <div class="access__name-container">
+                        <div class="header">
+                            <b>
+                                {{data.name}}
+                            </b>
+                        </div>
+                        <div class="description">
+                            {{data.description}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="end" class="button-container">
+    <button class="tl-btn" style="margin-right: 1rem;" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+        <span style="padding-left: 10px;">Close</span>
+    </button>
+    <button class="tl-btn-submit" (click)="onRoleTemplateCreate()" [disabled]="disable()">
+        <mat-icon>done</mat-icon>
+        <span style="padding-left: 10px;">Apply</span>
+    </button>
+</mat-dialog-actions>

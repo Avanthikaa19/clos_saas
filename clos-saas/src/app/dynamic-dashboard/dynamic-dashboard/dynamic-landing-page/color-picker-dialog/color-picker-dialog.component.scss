@@ -1,0 +1,33 @@
+.title{
+    padding-bottom: 0px;
+}
+.color-input{
+    width:60px;
+}
+.custom-dialog-content {
+    margin-top: 5px;
+    padding-bottom: 0px;
+}
+::ng-deep .color-input .mat-mdc-text-field-wrapper{
+    padding: 0 6px;
+}
+::ng-deep .color-input .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+::ng-deep .color-input .mat-mdc-form-field-infix{
+    top:3px;
+    min-height:20px;
+}
+::ng-deep .color-input .mat-mdc-form-field{
+    border-bottom:none;
+}
+::ng-deep .color-input .mat-mdc-form-field-subscript-wrapper{
+    height: 0px;
+}
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 28px;
+  }
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0em 0;
+  }

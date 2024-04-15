@@ -1,0 +1,297 @@
+<div class="main-container">
+    <div class="header-container">
+        <span class="category-sub-header">
+            Edit Table Cell Values:
+        </span>
+    </div>
+    <div class="body-container" *ngIf="var_type == 'actionVariable' ">
+        <div class="type-container">
+            <div class="name">
+                <span>Cell Type :</span>
+            </div>
+            <div class="value">
+                <!-- <mat-select class="min-select" style="min-width: 20rem; max-width: 30rem;" [(ngModel)]="cell_type">
+                    <mat-option *ngFor="let value of cell_types" [value]=value.value (click)="detectChange()">{{value.name}}</mat-option>
+                </mat-select> -->
+                <input class="min-input" style="min-width: 10rem; max-width: 30rem;" [(ngModel)]="cell_type">
+            </div>
+        </div>
+        <div class="inner-container">
+            <div *ngIf="cell_type == 'Custom'">
+                <div class="sub-header">
+                    Custom Cell({{cell_name}})
+                </div>
+            </div>
+            <div *ngIf="cell_type == 'Standard' || cell_type == 'StdOptype'">
+                <div class="sub-header">
+                    Standard Cell({{cell_name}})
+
+                </div>
+            </div>
+            <div class="action-container">
+                <span class="column-name">{{name}}</span>
+                <span class="column-name" style="margin-left:1rem;margin-right:1rem">:</span>
+                <ng-container *ngIf="cell_type == 'Custom'">
+                    <input class="min-input" style="min-width: 20rem; max-width: 30rem;" [(ngModel)]="custom_operand" (change)="detectChange()">
+                </ng-container>
+                <ng-container *ngIf="cell_type == 'Standard' || cell_type == 'StdOptype'">
+                    <mat-select class="min-select" *ngIf="type == 'string'" style="min-width: 20rem; max-width: 30rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="standard_operand" [disabled]="this.operator=='any'">
+                        <mat-option *ngFor="let standard of standards" [value]="standard.id" (click)="detectChange()">
+                            <span style="text-transform: capitalize;">
+                                {{standard.name}} {{cell_type=='StdOptype' ?standard.type:standard.text_value}}
+                            </span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-select class="min-select" *ngIf="type == 'integer'||type == 'slashedinteger'" style="min-width: 20rem; max-width: 30rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="standard_operand" [disabled]="this.operator=='any'">
+                        <mat-option *ngFor="let standard of standards" [value]="standard.id" (click)="detectChange()">
+                            <span style="text-transform: capitalize;">
+                                {{standard.name}} {{cell_type=='StdOptype' ?standard.type:standard.numeric_value}}
+                            </span>
+                        </mat-option>
+                    </mat-select>
+                </ng-container>
+            </div>
+        </div>
+
+    </div>
+    <div class="body-container" *ngIf="var_type == 'conditionalVariable' ">
+        <div class="type-container">
+            <div class="name">
+                <span>Cell Type :</span>
+            </div>
+            <div class="value">
+                <input class="min-input" style="min-width: 10rem; max-width: 30rem;" [(ngModel)]="cell_type">
+            </div>
+        </div>
+        <div class="sub-container">
+            <div *ngIf="cell_type == 'Custom'">
+                <div class="sub-header">
+                    Custom Cell({{cell_name}})
+                </div>
+            </div>
+            <div *ngIf="cell_type == 'Standard' || cell_type == 'StdOptype'">
+                <div class="sub-header">
+                    Standard Cell({{cell_name}})
+                </div>
+            </div>
+            <ng-container *ngIf="type == 'string'">
+                <div class="inner-container">
+                    <tr>
+                        <td>
+                            <div class="column-name">
+                                {{name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="operator">
+                                <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="operator" (ngModelChange)="operatorAnyFieldChange()">
+                                    <mat-option *ngFor="let symbol of string_symbols" [value]="symbol.value" (click)="detectChange()">
+                                        <span style="text-transform: capitalize;">
+                                            {{symbol.name}}
+                                        </span>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="operand">
+                                <ng-container *ngIf="cell_type == 'Custom'">
+                                    <input class="min-input" style="min-width: 10rem; max-width: 30rem;" [disabled]="this.operator=='any'" [(ngModel)]="custom_operand" (change)="detectChange()" />
+                                </ng-container>
+                                <ng-container *ngIf="cell_type == 'Standard' || cell_type == 'StdOptype'">
+                                    <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [disabled]="this.operator=='any'" [(ngModel)]="standard_operand">
+                                        <mat-option *ngFor="let standard of standards" [value]="standard.id" (click)="detectChange()">
+                                            <span style="text-transform: capitalize;">
+                                                {{standard.name + " - "}} {{cell_type=='StdOptype'
+                                                ?standard.type:standard.text_value}}
+                                            </span>
+                                        </mat-option>
+                                    </mat-select>
+                                </ng-container>
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="type == 'integer'||type == 'float'||type == 'slashedinteger'||type == 'varchar'||type == 'int'||type=='bigint'||type=='longtext'||type=='char'">
+                <tr>
+                    <td>
+                        <div class="column-name">
+                            {{name}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="operator">
+                            <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="operator" (ngModelChange)="operatorAnyFieldChange()">
+                                <mat-option *ngFor="let symbol of int_symbols" [value]="symbol.value" (click)="detectChange()">
+                                    <span style="text-transform: capitalize;">
+                                        {{symbol.name}}
+                                    </span>
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </td>
+
+                    <td *ngIf="operator!='..'">
+                        <div class="operand">
+                            <ng-container *ngIf="cell_type == 'Custom'">
+                                <input class="min-input" type="text" [(ngModel)]="custom_operand" [disabled]="this.operator=='any'" />
+                            </ng-container>
+                            <ng-container *ngIf="cell_type == 'Standard' ||cell_type == 'StdOptype'">
+                                <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [disabled]="this.operator=='any'" [(ngModel)]="standard_operand" (change)="detectChange()">
+                                    <mat-option *ngFor="let standard of standards" [value]="standard.id" (click)="detectChange()">
+                                        <span style="text-transform: capitalize;">
+                                            {{standard.name + " - "}} {{cell_type=='StdOptype'
+                                            ?standard.type:standard.numeric_value}}
+                                        </span>
+                                    </mat-option>
+                                </mat-select>
+                            </ng-container>
+                        </div>
+                    </td>
+                    <ng-container *ngIf="operator=='..'">
+                        <td>
+                            <span>From:</span>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="cell_type == 'Custom'">
+                                <div class="operand">
+                                    <input class="min-input" type="number" style="width:10rem" placeholder="from" *ngIf="type == 'integer'||type == 'slashedinteger'" [(ngModel)]="editCellValueIntOne" (change)="detectChange()" />
+                                    <input class="min-input" style="width:10rem" placeholder="from" *ngIf="type == 'float'" [(ngModel)]="editCellValueIntOne" (change)="detectChange()" />
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="cell_type == 'Standard'||cell_type == 'StdOptype'">
+                                <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="standard_operand">
+                                    <mat-option *ngFor="let standard of standards" [value]="standard.id" (click)="detectChange()">
+                                        <span style="text-transform: capitalize;">
+                                            {{standard.name + " - "}} {{cell_type=='StdOptype'
+                                            ?standard.type:standard.numeric_value}}
+                                        </span>
+                                    </mat-option>
+                                </mat-select>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <span>To:</span>
+                        </td>
+                        <td>
+                            <div class="operand">
+                                <ng-container *ngIf="cell_type == 'Custom'">
+                                    <input class="min-input" type="number" style="width:10rem" placeholder="to" *ngIf="type == 'integer'||type == 'slashedinteger'" [(ngModel)]="editCellValueIntTwo" (change)="detectChange()" />
+                                    <input class="min-input" style="width:10rem" placeholder="to" *ngIf="type == 'float'" [(ngModel)]="editCellValueIntTwo" (change)="detectChange()" />
+                                </ng-container>
+                                <ng-container *ngIf="cell_type == 'Standard' || cell_type == 'StdOptype'">
+                                    <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="standard_operand">
+                                        <mat-option *ngFor="let standard of standards" [value]="standard.id" (click)="detectChange()">
+                                            <span style="text-transform: capitalize;">
+                                                {{standard.name}} {{cell_type=='StdOptype'
+                                                ?standard.type:standard.numeric_value}}
+                                            </span>
+                                        </mat-option>
+                                    </mat-select>
+                                </ng-container>
+                            </div>
+                        </td>
+                    </ng-container>
+            </ng-container>
+            <ng-container *ngIf="type == 'dateTime'||type=='date'||type=='time'">
+                <div class="inner-container">
+                    <tr>
+                        <td>
+                            <div class="column-name">
+                                {{name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="operator">
+
+                                <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="operator" (ngModelChange)="operatorAnyFieldChange()">
+                                    <mat-option *ngFor="let symbol of bool_symbols" [value]="symbol.value" (click)="detectChange()">
+                                        <span style="text-transform: capitalize;">
+                                            {{symbol.name}}
+                                        </span>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="operand">
+                                <td>
+                                    <span>From:</span>
+                                </td>
+                                <td>
+                                    <div class="operand">
+                                        <input class="min-input" style="width:10rem" placeholder="from" [(ngModel)]="start_date" (change)="detectChange()" placeholder="Start date" (click)="picker.open()" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>To:</span>
+                                </td>
+                                <td>
+                                    <div class="operand">
+
+                                        <input class="min-input" placeholder="End date" [(ngModel)]="end_date" (change)="detectChange()" style="width:10rem" (click)="picker.open()" />
+                                    </div>
+                                </td>
+                                <mat-form-field appearance="fill" style="visibility: hidden;">
+                                    <mat-label>Enter a date range</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker">
+                                        <input matStartDate [value]="start" placeholder="Start date" #dateRangeStart />
+                                        <input matEndDate [value]="end" placeholder="End date" #dateRangeEnd (dateChange)="onChange(dateRangeStart,dateRangeEnd);" />
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker [calendarHeaderComponent]="ExampleHeaderComponent" class="datepicker"></mat-date-range-picker>
+                                </mat-form-field>
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="type == 'boolean'">
+                <div class="inner-container">
+                    <tr>
+                        <td>
+                            <div class="column-name">
+                                {{name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="operator">
+                                <mat-select class="min-select" style="min-width: 10rem; max-width: 22rem; text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="operator" (ngModelChange)="operatorAnyFieldChange()">
+                                    <mat-option *ngFor="let symbol of bool_symbols" [value]="symbol.value" (click)="detectChange()">
+                                        <span style="text-transform: capitalize;">
+                                        {{symbol.name}}
+                                    </span>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="operand">
+                                <mat-select class="min-select" style="text-transform: capitalize;background-color: whitesmoke;margin-right: 0.5rem;" [(ngModel)]="custom_operand">
+                                    <mat-option value="True" (click)="detectChange()">True</mat-option>
+                                    <mat-option value="False" (click)="detectChange()">False</mat-option>
+                                </mat-select>
+
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
+
+</div>
+
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button style="color: red;" (click)="onCloseClick()">
+        <mat-icon>close</mat-icon>Close
+    </button>
+    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="onSave()" cdkFocusInitial>
+        <mat-icon>save</mat-icon>Save
+    </button>
+</mat-dialog-actions>

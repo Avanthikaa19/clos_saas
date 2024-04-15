@@ -1,0 +1,587 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height" 
+    [style.pointer-events]="addPanelLoading == true? 'none':''" [style.opacity]="addPanelLoading == true? '0.5': ''">
+    <div [style.pointer-events]="saveLoading == true? 'none':''" [style.opacity]="saveLoading == true? '0.5': ''">
+        <div class="header" style="height: 65px;">
+            <div style="display: flex;align-items: center;justify-content: space-between;padding: 8.2px 20px;
+        border-bottom: 1px solid #bab1b1;background-color: rgb(35 51 70 / 82%);" [style.background-color]="headerBckcolor" [style.color]="headerFontcolor">
+                <div class="layout-name-wrapper float-left">
+                    <span *ngIf="!editingName"
+                        class="dashboard-theme-light" [style.color]="headerFontcolor">{{customLayout.dashboardName}}</span>
+                    <input *ngIf="editingName" [(ngModel)]="customLayout.dashboardName"
+                        class="min-input-theme-light">
+                    <button mat-icon-button class="edit-btn" (click)="editingName = !editingName" style="top: -2px;border:none">
+                        <mat-icon *ngIf="!editingName" style="font-size:20px;">
+                            edit</mat-icon>
+                        <mat-icon *ngIf="editingName"
+                           >
+                            done</mat-icon>
+                    </button>
+                </div>
+                    <!-- <button *ngIf="customLayout?.id" mat-stroked-button (click)="onAddRow()"
+                        class="add-new-theme-light float-right"></button> -->
+                        <div class="row">
+                     <button *ngIf="customLayout?.id" mat-flat-button (click)="drawer.toggle()"
+                        class="clos-submit-btn responsive-button"
+                        style="height: 43px;margin-left: 10px;">
+                        <mat-icon style="margin-right: 5px;" class="icon">brush</mat-icon>
+                        <!-- <div *ngIf="addPanelLoading" class="spinner-border text-danger mr-2" style="width: 1.2rem; height: 1.2rem;"></div> -->
+                        <span class="text">Themes</span>
+                    </button>
+                    <button *ngIf="customLayout?.id" mat-flat-button (click)="onAddRow()"
+                        class="clos-submit-btn responsive-button"
+                        style="height: 43px;margin-left: 10px;">
+                        <mat-icon style="margin-right: 5px;" class="icon">add_circle_outline</mat-icon>
+                        <!-- <div *ngIf="addPanelLoading" class="spinner-border text-danger mr-2" style="width: 1.2rem; height: 1.2rem;"></div> -->
+                        <span class="text">Add Panel</span>
+                    </button>
+                        <button *ngIf="customLayout?.id" mat-flat-button (click)="dashboardMapping()"
+                        class="clos-submit-btn responsive-button"
+                        style="height: 43px;margin-left: 10px;">
+                        <mat-icon style="margin-right: 5px;" class="icon">map</mat-icon>
+                        <span class="text">Dashboard Mapping</span>
+                        </button>
+                    <button [disabled]="customLayout.widget.length<=0" mat-flat-button class="clos-submit-btn responsive-button"
+                        style="height: 42px;margin-left: 10px;" (click)="Saving();">
+                        <mat-icon style="margin-right: 5px;" class="icon">save</mat-icon>
+                        <span class="text">{{customLayout.id==null ? 'Save' : 'Update'}} </span>
+                    </button>
+                    <button mat-flat-button (click)="removeTheme();goBack()" *ngIf="!customLayout.id"
+                        class="clos-submit-btn responsive-button"
+                        style="height: 42px;margin-left: 10px;">
+                        <mat-icon style="margin-right: 5px;" class="icon">arrow_back_ios</mat-icon>
+                        <span class="text">Back</span>
+                    </button>
+                    <button mat-flat-button (click)="removeTheme()" routerLink="/dynamic/dynamic/landingPage" *ngIf="customLayout.id"
+                        class="clos-submit-btn responsive-button"
+                        style="height: 42px;margin-left: 10px;">
+                        <mat-icon style="margin-right: 5px;" class="icon">arrow_back_ios</mat-icon>
+                        <span class="text">Back</span>
+                    </button>
+                    </div>
+        </div>
+        <mat-drawer-container class="example-container">
+            <mat-drawer #drawer3 [mode]="'side'" position="start" style="width:400px;" class="drawer">
+                <div style="height:45px;text-align: center;cursor: pointer;">
+                    <span style="margin-top: 10px;">Pie chart</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div style="height:45px;text-align: center;cursor: pointer;">
+                    <span style="margin-top: 10px;">Donut chart</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div style="height:45px;text-align: center;cursor: pointer;">
+                    <span style="margin-top: 10px;">Line chart</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div style="height:45px;text-align: center;cursor: pointer;">
+                    <span style="margin-top: 10px;">Bar chart</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div style="height:45px;text-align: center;cursor: pointer;">
+                    <span style="margin-top: 10px;"> Card</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div style="height:45px;text-align: center;cursor: pointer;">
+                    <span style="margin-top: 10px;">Gauge</span>
+                </div>
+                <mat-divider></mat-divider>
+            </mat-drawer>
+            <mat-drawer-content>
+                <mat-drawer-container class="example-container">
+                    <mat-drawer #drawer2 [mode]="'side'" position="end" style="width:450px;" class="drawer">
+                        <div style="padding: 15px;">
+                            <span style="font-weight: 500;">Customize Dashboard Themes</span>
+                            <mat-icon style="font-size: 15px;margin-right: 5px;float: right;" (click)="closeDrawer1()"
+                                class="icon-hov2">close</mat-icon>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <table style="margin-left: 10px;">
+                            <tr>
+                        <td style="text-align: left;">Theme :</td>
+                        <td class="wider-td">
+                                <div *ngFor="let color of modifiedColors; let i = index">
+                                    <input type="color" [(ngModel)]="modifiedColors[i]" (ngModelChange)="changeChartColor()" style="padding: 5px;"/>
+                                </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"> Text Color :</td>
+                        <td class="wider-td"><input type="color" [(ngModel)]="textColor" (ngModelChange)="changeChartColor()" style="padding: 5px;"/></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Background Color :</td>
+                        <td class="wider-td">
+                                    <input type="color" [(ngModel)]="backgroundColor"
+                                        (ngModelChange)="changeChartColor();" style="padding: 5px;">
+                        </td>
+                        </tr>
+                    </table>
+            </mat-drawer>
+            <mat-drawer-content>
+            <mat-drawer-container class="example-container">
+            <mat-drawer #drawer [mode]="'over'" position="end" style="width:600px;" class="drawer">
+                <div style="padding: 15px;">
+                    <span style="font-weight: 500;">Dashboard Themes</span>
+                      <mat-icon style="font-size: 15px;margin-right: 5px;float: right;" (click)="closeDrawer()" class="icon-hov2">close</mat-icon>
+                </div> 
+                  <mat-divider></mat-divider>       
+                  <div style="padding: 15px;">
+                    <div style="height:40px">Landing card color :
+                        <input type="color" [(ngModel)]="userColor" style="padding: 5px;"
+                        (ngModelChange)="changeColor(customLayout.id);">
+                    </div>
+                    <div style="height:40px">
+                    <button mat-flat-button class="clos-submit-btn" style="float: right;" (click)="drawer2.toggle()">Customize</button>   
+                    </div>
+                    <div style="padding-bottom: 15px;">
+                        <span style="font-weight: bold;">Layouts</span>
+                    </div>                 
+                      <div class="image-row">
+                        <div class="image-item" (click)="toggleCheckmark(0)">
+                          <img src="assets/CARDTHEME1.png">
+                          <p>Vintage <mat-icon style="font-size: 16px;height: 17px;width:17px;margin-left: 18px;" class="check-icon" *ngIf="isSelected[0]">check</mat-icon>
+                          </p>
+                        </div>
+                        <div class="image-item" (click)="toggleCheckmark(1)">
+                          <img src="assets/CARDTHEME2.png">
+                          <p>Dark <mat-icon style="font-size: 16px;height: 17px;width:17px;margin-left: 18px;" class="check-icon" *ngIf="isSelected[1]">check</mat-icon>
+                          </p>
+                        </div>
+                        <div class="image-item" (click)="toggleCheckmark(2)">
+                          <img src="assets/CARDTHEME3.png">
+                          <p>Westeros <mat-icon style="font-size: 16px;height: 17px;width:17px;margin-left: 18px;" class="check-icon" *ngIf="isSelected[2]">check</mat-icon>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="image-row">
+                        <div class="image-item" (click)="toggleCheckmark(3)">
+                          <img src="assets/CARDTHEME4.png">
+                          <p>Infographic <mat-icon style="font-size: 16px;height: 17px;width:17px;margin-left: 18px;" class="check-icon" *ngIf="isSelected[3]">check</mat-icon>
+                          </p>
+                        </div>
+                        <div class="image-item" (click)="toggleCheckmark(4)">
+                          <img src="assets/CARDTHEME5.png">
+                          <p>Roma <mat-icon style="font-size: 16px;height: 17px;width:17px;margin-left: 18px;" class="check-icon" *ngIf="isSelected[4]">check</mat-icon>
+                          </p>
+                        </div>
+                        <div class="image-item" (click)="toggleCheckmark(5)">
+                          <img src="assets/CARDTHEME6.png">
+                          <p>Halloween <mat-icon style="font-size: 16px;height: 17px;width:17px;margin-left: 18px;" class="check-icon" *ngIf="isSelected[5]">check</mat-icon>
+                          </p>
+                        </div>
+                      </div>
+                  </div> 
+            </mat-drawer>
+            <mat-drawer-content>
+        <div class="gs"  [style.height.px]="component_height-95"  [style.background-color]="getuserColor(customLayout.id)" style="overflow: auto;" >
+            <div class="grid-stack row" (change)="onLayoutChange($event, customLayout.layout)">
+                <div class="grid-stack-item grid-margin " *ngFor="let n of customLayout.layout; let i = index"
+                    [attr.gs-h]="n.h" [attr.gs-w]="n.w" [attr.gs-x]="n.x" [attr.gs-y]="n.y">
+                    <div class="grid-stack-item-content gs-item" style="margin: -5px" (mouseenter)="hoverCapture(n.id); setHoverState(i, true)"
+                    (mouseleave)="setHoverState(i, false);this.menuOpen=false;menuOpen1=false;">
+                        <div class="card card-theme-light"
+                            style="height: 100%; border-radius: 0px;overflow: hidden;" [ngStyle]="customLayout?.widget[i]?.type!='cardChart' && getBackgroundStyle()">
+                            <div> 
+                            <div class="panel-name-theme-light"*ngIf="customLayout?.widget[i]?.type!='cardChart' && customLayout?.widget[i]?.type!='card'" [style.color]="gettextColor(customLayout.id)" >
+                                    <!-- {{n.panelName}} -->
+                                    <div style="height:40px"></div>
+                                    <span class="load-more-container" *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]" [hidden]="customLayout?.widget[i]?.actualData?.data?.length == 0">
+                                        <span [hidden]="isLoading[i]" [hidden]="customLayout?.widget[i].actualData?.data?.length==0" *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i] && hoverStates[i]">
+                                            <span *ngIf="customLayout?.widget[i]?.actualData?.data?.length>10"><mat-icon class="load-more-icon" *ngIf="customLayout?.widget[i]?.type!=='table' && customLayout?.widget[i]?.type!=='card' && customLayout?.widget[i]?.type!=='gaugeChart' && customLayout?.widget[i]?.type!=='cardChart'" style="font-size: 20px; font-weight: bolder;" matTooltip="Previous page"
+                                            (click)="loadPrevPage=true;loadMoreGraph(i)">
+                                            keyboard_arrow_left</mat-icon></span>
+                                            <span [hidden]="customLayout?.widget[i]?.actualData?.data?.length == 0"><mat-icon [hidden]="fieldValueCount[i]==0" class="load-more-icon" *ngIf="customLayout?.widget[i]?.type!=='table' && customLayout?.widget[i]?.type!=='card' && customLayout?.widget[i]?.type!=='gaugeChart' && customLayout?.widget[i]?.type!=='cardChart'" style="font-size: 20px; font-weight: bolder;" matTooltip="Load next page"
+                                            (click)="loadMore=true;loadMoreGraph(i)">
+                                            keyboard_arrow_right</mat-icon></span>
+                                        </span>                                      
+                                        <span class="spinner-container">
+                                          <span *ngIf="customLayout?.widget[i]?.type=='card'||customLayout?.widget[i]?.type=='cardChart'||customLayout?.widget[i]?.type=='gaugeChart'"> <span  *ngIf="isLoading[i]" style="position: absolute;left: 47%;top: 8px;font-style: italic;color: silver;"  >Loading...</span></span>
+                                        </span>
+                                    </span>
+                                    <span class="float-right" style="cursor: pointer;padding-top: 3px;" *ngIf="hoverStates[i]">
+                                        <mat-icon *ngIf="customLayout?.widget?.length > 0 && customLayout?.widget[i]" style="padding-right:30px;font-size: 18px; font-weight: bolder;" matTooltip="Apply filters"
+                                        (click)="applyFilter(n,i)">filter_list</mat-icon>
+                                        <mat-icon *ngIf="applyFiltered[i]==true" style="font-size: 18px; font-weight: bolder; padding-right: 30px;"
+                                            matTooltip="clear filters" (click)="clearFilter(i);applyFiltered[i]=false;filterVal[i]=[];filterVal2[i]=[]">clear</mat-icon>
+                                        <mat-icon *ngIf="customLayout?.widget?.length >= 0 && customLayout?.widget[i]" [hidden]="customLayout?.widget[i]?.actualData?.data?.length == 0"
+                                            style="padding-right:30px;font-size: 18px; font-weight: bolder;"
+                                            [matTooltip]="'Export'" (click)="menuOpening()">
+                                            get_app
+                                        </mat-icon>
+                                        <div *ngIf="menuOpen"style="border:1px solid lightgrey;border-radius:4px;background-color:white;color: black;font-family: sans-serif;font-size:14px;width:85px;z-index:20;position: absolute;top:40px;margin-left:30px;">
+                                            <button mat-button (click)="downloadLayout('xlsx',i);menuOpen=false;popup=true" style="width:inherit"><i
+                                                class="fas fa-file-excel"
+                                                style="color: green;font-size:14px"></i><span>
+                                                XLSX</span></button>
+                                        <mat-divider></mat-divider>
+                                        <button mat-button (click)="downloadLayout('csv',i);menuOpen=false;popup=true" style="width:inherit"><i
+                                                class="fas fa-file-csv"
+                                                style="color:blue;font-size:14px"></i><span>
+                                                CSV</span></button>
+                                    </div>
+                                        <mat-icon style="font-size: 18px; font-weight: bolder; padding-right: 30px;"
+                                            *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]" [hidden]="customLayout?.widget[i]?.actualData?.data?.length == 0"
+                                            matTooltip="Maximize" (click)="maximizeWidget(i)">fullscreen</mat-icon>
+                                                <!-- <mat-icon *ngIf="customLayout?.widget?.length > 0 && customLayout.widget[i] && customLayout?.widget[i]?.type!=='table' && customLayout?.widget[i]?.type!=='cardChart' && customLayout?.widget[i]?.type!=='gaugeChart' && this.threeDim[i]==false"
+                                                    style="padding-right:30px;font-size: 18px; font-weight: bolder;"
+                                                    [matTooltip]="'Show in 3d'" (click)="preview3dOptions(i,this.customLayout.widget[i]?.type)">
+                                                    3d_rotation
+                                                </mat-icon>
+                                                <mat-icon style="font-size: 18px; font-weight: bolder; padding-right: 30px;"  matTooltip="Default chart" *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i] && this.threeDim[i]==true" (click)="previewOptions(i)">refresh</mat-icon> -->
+                                        <span style="margin-top:5.3px">
+                                        <mat-icon style="font-size: 18px; font-weight: bolder; padding-right: 30px;cursor:pointer"
+                                            *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]"
+                                            matTooltip="Edit" (click)="openSettings(n,i)">edit</mat-icon>
+                                        <mat-icon *ngIf="customLayout.id" style="font-size: 18px; font-weight: bolder;cursor:pointer" matTooltip="Delete"
+                                            (click)="$event.stopPropagation();this.deleteConfrim = true;deleteid=n.id;console(i)">
+                                            delete</mat-icon>
+                                        <mat-icon *ngIf="(saveId == n.id && saveTrue) && customLayout.id" style="font-size: 18px; font-weight: bolder;cursor:pointer;margin-left: 10px;color: #fa9d1e" matTooltip="Save the layout position"
+                                        (click)="$event.stopPropagation();positionSave(i)">
+                                        save</mat-icon>
+                                        </span>
+                                        </span>
+                                </div>
+                                </div>
+                            <div *ngIf="n.widgetChooser" class="backdropBackground-theme-light noselect"
+                            style="position: fixed; top: 0; left: 0; height: 100%; width: 100%;"></div>
+                        <div>
+                            <mat-card
+                                style="position: absolute; top:50%; left: 50%;transform: translate(-50%, -50%); z-index: 19;background-color: #0e2954;"
+                                *ngIf="n.widgetChooser">
+                                <div style="text-align: end;color:white;padding-bottom: 40px;" (click)="n.widgetChooser=false"><mat-icon class="icon-hov2" style="font-size: 18px;cursor: pointer;float:right;">close</mat-icon></div>
+                                <mat-card-content>
+                                    <div style="text-align: center;">
+                                        <span class="deleteBox">
+                                            <p class="hdr" style="font-size: 13px !important;text-transform: none !important;
+                                            display: flex;
+                                            font-weight: 600;
+                                            padding: 10px;border-radius: 9px;cursor: pointer;color:white;" (click)="addWidgets(n,i);n.widgetChooser=false">
+                                                    <mat-icon style="margin-right: 20px;padding-right: 25px;">add_to_photos</mat-icon>
+                                                Add a New Widget</p>
+                                            <p class="hdr" style="font-size: 13px !important;text-transform: none !important;
+                                             display: flex;
+                                             font-weight: 600;
+                                             padding: 10px;border-radius: 9px;cursor: pointer;color:white;" (click)="addExistingWidgets(i);n.widgetChooser=false">
+                                                    <mat-icon style="margin-right: 20px;padding-right: 25px;">description</mat-icon>
+                                                Existing Widget</p>
+                                        </span>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                            <div class="row" style="height:100%;"
+                                [hidden]="customLayout.widget?.length > 0 && customLayout.widget[i]">
+                                <mat-icon matTooltip="Click to choose widget" class="theme-card-create-icon" (click)="widgetChooserFun(n)">add</mat-icon>
+                            </div>
+                            <div class="row" style="height:100%"
+                                *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]">
+                                <div style="width: 100%;"
+                                    *ngIf="customLayout.widget[i].type != 'card' && customLayout.widget[i].type != 'table' && customLayout.widget[i].type!=='cardChart'">
+                                    <div *ngIf="applyFiltered[i]==true" style="display: flex;overflow-x: auto;padding: 2px 2px 20px 25px;margin-top: -30px;width: 50%;">
+                                        <span style="color: rgb(114, 114, 114);font-style:italic;white-space: nowrap;">Filter:</span>
+                                    <span *ngFor="let val of filterVal[i]">
+                                        <span  [style.background-color]="customLayout.widget[i].graphSettings.cardColor ?customLayout.widget[i].graphSettings.cardColor :'#c1f2f2'"
+                                        style="margin: 5px;
+                                        border-radius: 13px;
+                                        padding: 6px;
+                                        font-size: 12px;white-space: nowrap;">{{val.operandField}} {{val.operator}} {{val.value}}</span>
+                                    </span>
+                                    </div>
+                                    <div  *ngIf="threeDim[i]===true" class="chart-container">
+                                    <highcharts-chart
+                                    [Highcharts] = "highcharts" 
+                                    [options] = "optionsthreeDim[i]" 
+                                    ></highcharts-chart>
+                                    <!-- <highcharts-chart
+                                    [Highcharts]="highcharts"
+                                    [options]="optionsthreeDim[i]"
+                                    [ngClass]="{
+                                      'highcharts-vintage': selectedTheme === 'vintage',
+                                      'highcharts-dark': selectedTheme === 'dark',
+                                      'highcharts-infographic': selectedTheme === 'infographic',
+                                      'highcharts-roma': selectedTheme === 'roma',
+                                      'highcharts-westeros': selectedTheme === 'westeros',
+                                      'highcharts-halloween': selectedTheme === 'halloween'
+                                    }"
+                                  ></highcharts-chart> -->
+                                    </div>
+                                    <div
+                                        style="height: 95%;width:100%;padding: 0 20px;">
+                                        <div  [id]="i" *ngIf="!isLoading[i]" echarts [options]="option[i]" class="demo-chart"
+                                        style="height: 95%;width:100%;padding: 0 20px;"></div>
+                                    </div><!--padding: 0 20px; -->
+                                       <span> <span  *ngIf="isLoading[i]" style="position: absolute;left: 47%;top: 8px;font-style: italic;color: silver;"  >Loading...</span></span>
+                                        <div style="position: absolute;left: 47%;top: 27%;font-style: italic;color: silver;" *ngIf="customLayout.widget[i]?.actualData?.data?.length==0">No entries found.</div>
+                                </div>
+                                <div style="width: 100%;" *ngIf="customLayout.widget[i].type == 'card'||customLayout.widget[i].type=='cardChart'">
+                                    <div *ngIf="applyFiltered[i]==true" style="display: flex;overflow-x: auto;padding: 2px 2px 20px 25px;margin-top: -30px;width: 50%;">
+                                        <span style="color: rgb(114, 114, 114);font-style:italic;white-space: nowrap;">Filter:</span>
+                                    <span *ngFor="let val of filterVal[i]">
+                                        <span [style.background-color]="customLayout.widget[i].graphSettings.cardColor ?customLayout.widget[i].graphSettings.cardColor :'#c1f2f2'"
+                                        style="
+                                        margin: 5px;
+                                        border-radius: 13px;
+                                        padding: 6px;
+                                        font-size: 12px;white-space: nowrap;">{{val.operandField}} {{val.operator}} {{val.value}}</span>
+                                    </span>
+                                    </div>
+                                    <span> <span  *ngIf="isLoading[i]" style="position: absolute;left: 47%;top: 8px;font-style: italic;color: silver;"  >Loading...</span></span>
+                                    <div class="card label" *ngIf="!isLoading[i]"
+                                        [style.background-color]="customLayout.widget[i].graphSettings.cardColor ?customLayout.widget[i].graphSettings.cardColor :cardcolor"
+                                        [style.border-top-color]="customLayout.widget[i].graphSettings.borderTopColor ? customLayout.widget[i].graphSettings.borderTopColor:cardtop  "
+                                        [style.border-top-width.px]="customLayout.widget[i].graphSettings.topThickness"
+                                        [style.border-bottom-color]="customLayout.widget[i].graphSettings.borderBottomColor? customLayout.widget[i].graphSettings.borderBottomColor : cardbottom"
+                                        [style.border-bottom-width.px]="customLayout.widget[i].graphSettings.bottomThickness"
+                                        [style.border-left-color]="customLayout.widget[i].graphSettings.borderLeftColor ? customLayout.widget[i].graphSettings.borderLeftColor : cardleft"
+                                        [style.border-left-width.px]="customLayout.widget[i].graphSettings.leftThickness"
+                                        [style.border-right-color]="customLayout.widget[i].graphSettings.borderRightColor ? customLayout.widget[i].graphSettings.borderRightColor : cardright"
+                                        [style.border-right-width.px]="customLayout.widget[i].graphSettings.rightThickness" style="margin-left: 15px;margin-right: 15px;">
+                                        <div class="panel-name-theme-light1" *ngIf="customLayout?.widget[i]?.type=='cardChart' || customLayout?.widget[i]?.type=='card'" style="width:100%;margin-top:-20px;padding-right:26px;position:absolute;top:28px" [style.color]="textColor" >
+                                            <!-- {{n.panelName}} -->
+                                            <div style="height:40px"></div>
+                                            <span class="load-more-container1" *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]">
+                                                <span [hidden]="isLoading[i]" [hidden]="customLayout?.widget[i].actualData?.data?.length==0" *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i] && hoverStates[i]">
+                                                    <span *ngIf="customLayout?.widget[i]?.actualData?.data?.length>10"><mat-icon class="load-more-icon" *ngIf="customLayout?.widget[i]?.type!=='table' && customLayout?.widget[i]?.type!=='card' && customLayout?.widget[i]?.type!=='gaugeChart' && customLayout?.widget[i]?.type!=='cardChart'" style="font-size: 20px; font-weight: bolder;" matTooltip="Previous page"
+                                                    (click)="loadPrevPage=true;loadMoreGraph(i)">
+                                                    keyboard_arrow_left</mat-icon></span>
+                                                    <span *ngIf="customLayout?.widget[i]?.actualData?.data?.length!==0"><mat-icon class="load-more-icon" *ngIf="customLayout?.widget[i]?.type!=='table' && customLayout?.widget[i]?.type!=='card' && customLayout?.widget[i]?.type!=='gaugeChart' && customLayout?.widget[i]?.type!=='cardChart'" style="font-size: 20px; font-weight: bolder;" matTooltip="Load next page"
+                                                    (click)="loadMore=true;loadMoreGraph(i)">
+                                                    keyboard_arrow_right</mat-icon></span>
+                                                </span>                                      
+                                                <span class="spinner-container">
+                                                  <span *ngIf="customLayout?.widget[i]?.type=='card'||customLayout?.widget[i]?.type=='cardChart'||customLayout?.widget[i]?.type=='gaugeChart'"> <span  *ngIf="isLoading[i]" style="position: absolute;left: 40%;top: 8px;font-style: italic;color: silver;"  >Loading...</span></span>
+                                                </span>
+                                            </span>
+                                            <span class="float-right" style="cursor: pointer;" *ngIf="hoverStates[i]">
+                                                <mat-icon *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]" style="padding-right:30px;font-size: 18px; font-weight: bolder;" matTooltip="Apply filters"
+                                                (click)="applyFilter(n,i)">filter_list</mat-icon>
+                                                <mat-icon *ngIf="applyFiltered[i]==true" style="font-size: 18px; font-weight: bolder; padding-right: 30px;"
+                                                    matTooltip="clear filters" (click)="clearFilter(i);applyFiltered[i]=false;filterVal[i]=[];filterVal2[i]=[]">clear</mat-icon>
+                                                    <mat-icon *ngIf="customLayout.widget?.length >= 0 && customLayout.widget[i]"
+                                                        style="padding-right:30px;font-size: 18px; font-weight: bolder;" [hidden]="customLayout?.widget[i]?.actualData?.data?.length == 0"
+                                                        [matTooltip]="'Export'" (click)="menuOpening()">
+                                                        get_app
+                                                    </mat-icon>
+                                                <div *ngIf="menuOpen" style="border:1px solid lightgrey;border-radius:4px;background-color:white;color: black;font-family: sans-serif;font-size:14px;width:85px;z-index:20;position: absolute;top:30px;right:60px">
+                                                    <button mat-button (click)="downloadLayout('xlsx',i);menuOpen=false;"><i
+                                                            class="fas fa-file-excel"
+                                                            style="color: green;font-size:14px"></i><span>
+                                                            XLSX</span></button>
+                                                    <mat-divider></mat-divider>
+                                                    <button mat-button (click)="downloadLayout('csv',i);menuOpen=false;"><i
+                                                            class="fas fa-file-csv"
+                                                            style="color:blue;font-size:14px"></i><span>
+                                                            CSV</span></button>
+                                                </div>
+                                                <mat-icon style="font-size: 18px; font-weight: bolder; padding-right: 30px;"
+                                                    *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]" [hidden]="customLayout?.widget[i]?.actualData?.data?.length == 0"
+                                                    matTooltip="Maximize" (click)="maximizeWidget(i)">fullscreen</mat-icon>
+                                                    <span style="margin-top:5.3px">
+                                                        <mat-icon style="font-size: 18px; font-weight: bolder; padding-right: 30px;cursor:pointer"
+                                                            *ngIf="customLayout.widget?.length > 0 && customLayout.widget[i]"
+                                                            matTooltip="Edit" (click)="openSettings(n,i)">edit</mat-icon>
+                                                        <mat-icon *ngIf="customLayout.id" style="font-size: 18px; font-weight: bolder;cursor:pointer" matTooltip="Delete"
+                                                            (click)="$event.stopPropagation();this.deleteConfrim = true;deleteid=n.id;console(i)">
+                                                            delete</mat-icon>
+                                                        <mat-icon *ngIf="(saveId == n.id && saveTrue) && customLayout.id" style="font-size: 18px; font-weight: bolder;cursor:pointer;margin-left: 10px;color: #fa9d1e" matTooltip="Save the layout position"
+                                                        (click)="$event.stopPropagation();positionSave(i)">
+                                                        save</mat-icon>
+                                                        </span>
+                                                </span>
+                                                </div>
+                                        <span style="font-size: 16px;"
+                                            [style.color]="customLayout.widget[i].graphSettings.cardTextColor ? customLayout.widget[i].graphSettings.cardTextColor:cardtxt" [hidden]="customLayout?.widget[i]?.actualData?.data?.length==0">{{this.customLayout.widget[i].graphSettings.labelName}}</span>
+                                        <span 
+                                            [style.color]="customLayout.widget[i].graphSettings.cardTextColor ? customLayout.widget[i].graphSettings.cardTextColor:cardtxt">{{this.customLayout.widget[i].actualData?.value}}</span>
+                                    </div>
+                                    <div style="position: absolute;font-style: italic;color: silver;" *ngIf="customLayout?.widget[i]?.actualData?.value?.length==0">No entries found.</div>
+                                </div>
+
+                                <div style="width: 100%;position: relative;height: 100%;" *ngIf="customLayout.widget[i].type == 'table'">
+                                    <div *ngIf="applyFiltered[i]==true" style="display: flex;overflow-x: auto;padding: 2px 2px 20px 25px;margin-top: -30px;width: 50%;">
+                                        <span style="color: rgb(114, 114, 114);font-style:italic;white-space: nowrap;">Filter:</span>
+                                    <span *ngFor="let val of filterVal[i]">
+                                        <span *ngIf="val.operandField!==''">
+                                        <span [style.background-color]="customLayout.widget[i].graphSettings.cardColor ?customLayout.widget[i].graphSettings.cardColor :'#c1f2f2'"
+                                         style="
+                                        margin: 5px;
+                                        border-radius: 13px;
+                                        padding: 6px;
+                                        font-size: 12px;white-space: nowrap;">{{val.operandField}} {{val.operator}} {{val.value}}</span>
+                                    </span>
+                                    </span>
+                                    <span *ngIf="filterVal2[i]">
+                                    <span *ngFor="let val of filterVal2[i]">
+                                        <span *ngIf="val.operandField!==''">
+                                        <span [style.background-color]="customLayout.widget[i].graphSettings.cardColor ?customLayout.widget[i].graphSettings.cardColor :'#c1f2f2'"
+                                        style="
+                                        margin: 5px;
+                                        border-radius: 13px;
+                                        padding: 6px;
+                                        font-size: 12px;white-space: nowrap;">T2-{{val.operandField}} {{val.operator}} {{val.value}}</span>
+                                    </span>
+                                    </span>
+                                    </span>
+                                    </div>
+                                    <div *ngIf="!tabLoadIndex[i]">
+                                        <span style="font-size: 20px;display: flex;margin-left:40px;
+                                        font-weight: bold;" [style.justify-content]="customLayout.widget[i].graphSettings.titleAlign">{{customLayout.widget[i].graphSettings.tableName}}</span>
+                                        <div class="table-container" style="overflow: auto;
+                                        position: absolute;
+                                        right: 36px;
+                                        left: 36px;
+                                        margin-top: 6px; 
+                                        height: calc(100% - 120px);">
+                                            <table id="table" style="width:100%;">
+                                                <thead>
+                                                    <tr [style.background-color]="customLayout.widget[i].graphSettings.headerBg?customLayout.widget[i].graphSettings.headerBg:darkBkcolor">
+                                                        <th
+                                                        [style.color]="customLayout.widget[i].graphSettings.headerColor"
+                                                        [style.border]="customLayout.widget[i].graphSettings.headerBorder + 'px solid' + customLayout.widget[i].graphSettings.headerBorderColor"
+                                                        *ngFor="let list of tableArrayIndex[i]"><span
+                                                                *ngIf="list !== '_id' && list!=='FILE_NAME'">{{list?.replaceAll('_',' ')}}</span></th>
+                                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr [style.background-color]="customLayout.widget[i].graphSettings.bodyBg ? customLayout.widget[i].graphSettings.bodyBg:lightBkcolor" *ngFor="let list of tableDataIndex[i]">
+                                                        <td 
+                                                        [style.color]="customLayout.widget[i].graphSettings.bodyColor"
+                                                        [style.text-align]="customLayout.widget[i].graphSettings.textAlign"
+                                                        [style.border]="customLayout.widget[i].graphSettings.bodyBorder + 'px solid' + customLayout.widget[i].graphSettings.bodyBorderColor" 
+                                                        *ngFor="let val of tableArrayIndex[i]">
+                                                            <span *ngIf="val !== '_id' && val!=='FILE_NAME'">{{list[val]}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="position: absolute;left: 47%;top: 1%;font-style: italic;color: silver;" *ngIf="tabLoadIndex[i]">Loading...</div>
+                                        <div style="position: absolute;left: 45%;top: 30%;font-style: italic;color: silver;" *ngIf="tableDataIndex[i].length == 0">No entries found.</div>
+                                        <div class="paginator-container" style="position:absolute;bottom:2%;right:45%" *ngIf="!tabLoadIndex[i]">
+                                            <div class="middle-container">
+                                                <button class="page-links" style="height:30px" (click)="page=page-1;showQueryData(queryText, i)" [disabled]="page===0"><mat-icon style="display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;margin-top:-12px" [style.color]="textColor">&laquo;</mat-icon></button>
+                                            </div>
+                                            <div class="left-container" *ngFor="let pageNum of getPageNumbers(i)">
+                                                <button class="page-links" [class.active]="pageNum === page+1" (click)="page = pageNum - 1; showQueryData(queryText, i)" [style.color]="textColor">{{ pageNum }}</button>
+                                            </div>
+                                            <div class="middle-container">
+                                                <button class="page-links" style="height:30px" (click)="nextPage(i); showQueryData(queryText, i)" [disabled]="isLastPage(i)||totalCountIndex[i]<10"><mat-icon style="display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;margin-top:-12px" [style.color]="textColor">&raquo;</mat-icon></button>
+                                            </div>
+                                        </div>    
+                                        <div class="right-container" style="position:absolute;right:5%;bottom:5%" *ngIf="!tabLoadIndex[i]" [style.color]="textColor">
+                                            Total Items: <span style="font-weight: bold">{{this.totalCountIndex[i]}}</span>
+                                        </div>                                   
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+</mat-drawer-content>
+</mat-drawer-container>
+</mat-drawer-content>
+</mat-drawer-container>
+<div class="download-readiness-indicator" *ngIf="popup == true" [style.opacity]="currentDownloadJob ? 1: 0" style="z-index: 222222;">
+    <div class="det">
+        <div class="heading">
+            Preparing download..
+        </div>
+        <div>
+            <div style="margin-top: 10px;" *ngIf="currentJob">
+                {{ currentJob?.progress == 100 ? 'Finalizing..' : (currentJob?.progressStage ?
+                ( currentJob?.progressStage === 'FETCH_ITEMS' ? 'Querying..' : 'Writing file..' )
+                : 'Requesting..')}}</div>
+            <div style="margin-top: 10px;display: flex;gap:20px" *ngIf="currentJob">
+                <mat-progress-spinner color="primary" [mode]="currentJob ? 'indeterminate': 'determinate'"
+                    [value]="currentJob ? 0 : 100" diameter="30" strokeWidth="2">
+                </mat-progress-spinner>
+                {{currentJob.progressStage === 'FETCH_ITEMS' ? '' : currentJob.progress +
+                '%'}}
+            </div>
+            <div style="margin-top: 10px;" *ngIf="currentJob">
+                Items:
+                <span>{{currentJob?.itemsProcessed}}</span>/<span>{{currentJob?.itemsTotal}}</span>
+            </div>
+            <div style="float: right;margin-top: 5px;">
+                <button mat-button class="btn-primary-admin ml-3"
+                    style="background-color: #db3a12;color:#fff; line-height: 25px;font-size: 11px; width: 12%;"
+                    (click)="popup = false;deleteExport(currentJob?.id);cancelExport()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- DELETE CONFIRMATION BOX -->
+        <div *ngIf="deleteConfrim" class="backdropBackground-theme-light noselect"
+            style="position: fixed; top: 0; left: 0; height: 100%; width: 100%;"></div>
+        <div
+            class="delete-dialog-theme-light dialog-theme-light">
+            <mat-card class="bg"
+                style="position: absolute; width: 14%; top:40%; left: 50%;transform: translate(-50%, -50%); z-index: 19;"
+                *ngIf="deleteConfrim">
+                <mat-card-content>
+                    <div style="text-align: center;">
+                        <span class="deleteBox">
+                            <p style="font-size: 13px !important;text-transform: none !important;"
+                                [style.color]="'#000000'">
+                                Are you sure you want to delete ?</p>
+                            <button mat-button class="btn-primary-admin ml-3" (click)="deleteConfrim=false"
+                                style="background-color: #f9a2a2db; line-height: 25px;font-size: 11px; width: 10.6%;">Cancel</button>
+                            <button class="btn-primary-admin ml-3" mat-button (click)="deletePanel()"
+                                style="line-height: 25px;font-size: 11px; width: 10.6%;background-color: black;color: white;margin-left: 10px;">
+                                <div *ngIf="saving" class="spinner-border text-light spinner-border-md"
+                                    style="width: 1rem;height: 1rem;"></div>
+                                Delete
+                            </button>
+                        </span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div *ngIf="nameUpdate" class="backdropBackground-theme-light noselect"
+            style="position: fixed; top: 0; left: 0; height: 100%; width: 100%;"></div>
+        <div
+            class="delete-dialog-theme-light dialog-theme-light">
+            <mat-card class="bg"
+                style="position: absolute; width: 20%; top:40%; left: 50%;transform: translate(-50%, -50%); z-index: 19;"
+                *ngIf="nameUpdate">
+                <mat-card-content>
+                    <div style="text-align: center;">
+                        <span class="deleteBox">
+                            <p style="font-size: 13px !important;text-transform: none !important;"
+                                [style.color]="'#000000'">
+                                Please give appropriate Template Name</p>
+                            <button mat-button class="btn-primary-admin ml-3" (click)="nameUpdate=false"
+                                style="background-color: black; line-height: 25px;font-size: 11px; width: 10.6%;color: white;">Ok</button>
+                        </span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<!-- LOADER -->
+<div *ngIf="addPanelLoading" class="load-wrapp" style="position:absolute;top: 40%;left: 50%;">
+    <div class="load-3">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+
+<!-- LOADER -->
+<div *ngIf="saveLoading" class="load-wrapp" style="position:absolute;top: 40%;left: 50%;">
+    <div class="load-3">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 80%;
+    >.header-container {
+        height: 3rem;
+        background-color: whitesmoke;
+    }
+    >.body-container {
+        height: calc(100% - 3rem);
+        >.inner-container {
+            >.action-container {
+                padding: 1rem;
+            }
+        }
+        >.type-container {
+            padding: 1rem;
+            display: flex;
+            >.name {
+                flex: 0 0 auto;
+                padding-right: 1rem;
+                padding-top: 0.25rem;
+            }
+            >.value {
+                flex: 1;
+            }
+        }
+        >.sub-container {
+            height: 10rem;
+            margin-top: 1rem;
+            >.inner-container {
+                padding-top: 1rem;
+            }
+        }
+    }
+}
+
+.sub-header {
+    height: 3rem;
+    background-color: whitesmoke;
+    color: silver;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-style: italic;
+    padding-left: 1rem;
+    line-height: 3rem;
+    vertical-align: middle;
+}
+
+tr {
+    padding: 5rem;
+}
+
+td {
+    padding: 1rem;
+}
+
+.column-name {
+    color: silver;
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.operand {}
+
+.operator {}

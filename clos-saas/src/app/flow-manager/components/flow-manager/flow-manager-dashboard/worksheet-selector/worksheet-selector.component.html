@@ -1,0 +1,50 @@
+<div class="selector-container">
+    <div class="title-container">
+        <span>Select Worksheets</span>
+    </div>
+    <div class="workflows-container">
+        <div class="workflow-search">
+            <mat-icon>search</mat-icon>
+            <input class="min-input" [(ngModel)]="search" (ngModelChange)="filterList()" placeholder="Search by workflow or worksheet name.">
+        </div>
+        <div class="workflows-items-list">
+            <ng-container *ngFor="let workflow of filteredWorkflows; let i = index">
+                <div class="workflow-item-container">
+                    <div class="workflow-item" >
+                        <mat-checkbox [(ngModel)]="workflow.selected" (change)="onWorkflowSelectionChange(workflow, $event)"
+                        [indeterminate]="workflow.someSelected" color="primary">{{workflow.name}}</mat-checkbox>
+                        <span class="bullet" *ngIf="workflow.description">&bull;</span>
+                        <span class="description" *ngIf="workflow.description">{{workflow.description}}</span>
+                    </div>
+                    <div class="worksheets-item-list">
+                        <ng-container *ngFor="let worksheet of workflow.worksheets; let j = index">
+                            <div class="worksheet-item">
+                                <div class="tree-indicator"></div>
+                                <div class="tree-indicator-bottom"></div>
+                                <mat-checkbox [(ngModel)]="worksheet.selected" (change)="onWorksheetSelectionChange(workflow, worksheet, $event)"
+                                color="primary">{{worksheet.name}}</mat-checkbox>
+                                <span class="bullet" *ngIf="worksheet.description">&bull;</span>
+                                <span class="description" *ngIf="worksheet.description">{{worksheet.description}}</span>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="actions-container">
+        <button mat-stroked-button color="warn" (click)="discard()">
+            <mat-icon>close</mat-icon>
+            <span>Clear</span>
+        </button>
+        <div class="spacer"></div>
+        <button mat-raised-button color="primary" (click)="apply()">
+            <mat-icon>save</mat-icon>
+            <span>Apply</span>
+        </button>
+        <button mat-raised-button color="primary" (click)="ok()">
+            <mat-icon>done</mat-icon>
+            <span>OK</span>
+        </button>
+    </div>
+</div>

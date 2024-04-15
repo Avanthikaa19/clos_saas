@@ -1,0 +1,211 @@
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+* {
+    font-size: 1.5rem;
+}
+
+.main-container {
+    height: 100vh;
+    background-color: white;
+    >.header-container {
+        height: 4rem;
+        // background-color: yellow;
+        border-bottom: 1px solid gainsboro;
+        div {
+            margin-top: 1rem;
+            margin-left: 1.5rem;
+            font-size: 15px;
+        }
+    }
+    >.content-container {
+        height: calc(100vh - 14rem);
+        div {
+            height: 100%;
+        }
+        >.side-nav {
+            width: 30rem;
+            border-right: 1px solid gainsboro;
+            mat-list-item {
+                background-color: white;
+                width: 99%;
+                &:hover {
+                    background-color: rgb(245, 245, 245);
+                    border-right: 3px solid #394eb4;
+                }
+            }
+            .selected-model {
+                background-color: rgb(245, 245, 245);
+                border-radius: 5px;
+                border-right: 2px solid #394eb4;
+            }
+        }
+        >.main-nav {
+            width: calc(100% - 30rem);
+            >.list-nav {
+                width: 40%;
+                border-right: 1px solid gainsboro;
+                background-color: whitesmoke;
+                height: 99%;
+                // overflow-y: auto;
+                >.search-container {
+                    height: 3rem;
+                    padding: 1rem;
+                    background-color: white;
+                    position: relative;
+                    .icon-search {
+                        position: absolute;
+                        left: 2.5%;
+                        top: 50%;
+                        color: rgb(80, 80, 80);
+                        transform: translateY(-50%);
+                    }
+                }
+                >.card {
+                    overflow-y: auto;
+                    >.card-container {
+                        height: 8rem;
+                        background-color: white;
+                        margin: 1rem;
+                        border-radius: 0.5rem;
+                        &:hover {
+                            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                            border: 2px solid lightblue;
+                        }
+                    }
+                    >.selected-card {
+                        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                        border: 1px solid royalblue;
+                    }
+                }
+            }
+            >.list-main-nav {
+                width: calc(100% - 40%);
+                >.nav-details {
+                    height: 58%;
+                    background-color: whitesmoke;
+                    margin: 1rem;
+                    padding: 1rem;
+                    >.main-nav-data {
+                        background-color: white;
+                        border-radius: 1rem;
+                        >.header-data {
+                            height: 4rem;
+                            border-bottom: 1px solid gainsboro;
+                            padding: 1.5rem 0rem 0rem 2rem;
+                            span {
+                                font-size: 1.8rem;
+                                font-weight: 500;
+                                text-transform: capitalize;
+                            }
+                        }
+                        >.content-data {
+                            padding: 2rem;
+                        }
+                    }
+                    >.no-select {
+                        padding: 1.1rem;
+                        height: 4rem;
+                        background-color: white;
+                        border-radius: 1rem;
+                    }
+                }
+                >.default-btn {
+                    height: 10%;
+                }
+            }
+        }
+    }
+}
+
+.separator-div {
+    height: 100%;
+    width: 60px;
+    overflow: hidden;
+    .separator {
+        z-index: -1;
+        margin-left: -30px;
+        height: 60px;
+        width: 60px;
+        border-style: solid;
+        border-width: 2px 0 0 0;
+        border-radius: 0 1px 0 0;
+        border-top-color: #394eb4;
+        -webkit-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 1);
+        -moz-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 1);
+        box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 1);
+        transform: rotate(45deg);
+    }
+}
+
+.toolbar {
+    text-align: center;
+    span {
+        font-size: 14px;
+    }
+}
+
+//   .tool-bar {
+//       display: flex;
+//       display: row;
+//       box-sizing: border-box;
+//       width: 100%;
+//       background-color: rgb(36, 36, 36);
+//       color: whitesmoke;
+//       > span {
+//         font-size: 1.7rem;
+//         font-family: "ABeeZee", sans-serif;
+//         font-family: "Open Sans", sans-serif;
+//         font-family: "Roboto Slab", serif;
+//         font-style: italic;
+//         color: lightgray;
+//       }
+//     }
+.separator-div {
+    height: 100%;
+    width: 6rem;
+    overflow: hidden;
+    .separator {
+        z-index: 1;
+        margin-left: -3rem;
+        height: 4rem;
+        width: 5rem;
+        border-style: solid;
+        border-width: 0.2rem 0 0 0;
+        border-radius: 0 0.1rem 0 0;
+        border-top-color: rgba(255, 255, 255, 0.3);
+        -webkit-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+        transform: rotate(45deg);
+    }
+}
+
+.tool-bar {
+    display: flex;
+    display: row;
+    width: 100%;
+    font-size: medium;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    height: 5rem;
+    background-color: aliceblue;
+    span {
+        padding-left: 5rem;
+    }
+}
+
+.btn-toolbar {
+    color: white;
+    background-color: rgb(76, 108, 206);
+    padding-right: 2.5rem;
+    mat-icon {
+        transform: scale(1.3);
+        margin-top: 0.6rem;
+        font-weight: lighter;
+    }
+}
+
+.spacing {
+    width: 50%
+}

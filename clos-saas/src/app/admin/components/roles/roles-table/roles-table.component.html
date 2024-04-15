@@ -1,0 +1,9 @@
+<div class="column-container">
+    <mat-icon class="mr-3 ml-4 m-3 circle_icon">manage_accounts</mat-icon>
+    <span class="ml-4 user-contain m-3">Roles ({{getCurrentUser()}})</span>
+</div>
+<div class="main-container">
+    <app-generic-data-table [columns]="rolescolumns" [filterButton]="true" [exportButton]="true" [clearButton]="true" [newRoles]="true" (onCreateNewUserClick)="onAddRoleClick()"
+    [filterInput]="false" [tableData]="rolescolumnsData" [pageData]="pageData" (onExportChange)="rolesListDataExport($event)" (onClick)="detailClick($event)" (onPageChange)="getRolesListingeData($event)" 
+   [loading]="loadingItems" (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)"></app-generic-data-table>    
+</div>

@@ -1,0 +1,23 @@
+<!-- <button mat-raised-button style="float:right;top: 10px;background: royalblue;color: #fff;cursor: pointer;" (click)="openBureau()">Bureau screen</button> -->
+<mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChangeEvent($event)">
+    <mat-tab *ngFor="let mainTab of mainTabs; let mainTabIndex = index">
+        <ng-template mat-tab-label style="font-weight:bold;">
+            <mat-icon>{{mainTab.icon}} </mat-icon> <span class="tabsName"> {{mainTab.name}} </span>
+        </ng-template>
+        <ng-template matTabContent>
+            <mat-tab-group #subTabGroup (selectedTabChange)="onSubTabChangeEvent($event, mainTabIndex)">
+                <mat-tab *ngFor="let subTab of subTabs[mainTabIndex]; let subTabIndex = index" label="{{subTab.name}}">
+                    <ng-template mat-tab-label style="font-weight:bold;">
+                        <mat-icon>{{subTab.icon}} </mat-icon> <span class="tabsName"> {{subTab.name}} </span>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
+
+<div class="main-container">
+    <app-generic-data-table [columns]="internalscoringcolums" [filterButton]="true" [pageData]="pageData" [displayAllButton]="true" [exportButton]="true" [tableData]="internalscoringdata" (onFilterChange)="onApplyFilter($event)" [clearButton]="true" (onChange)="columnChange($event)"
+        [loading]="loadingItems" (onExportChange)="internalScoringListExport($event)" (onClick)="detailClick($event)" (onSelectAllDuplicatPreview)="multiCheckDuplicatePreview($event)" (onSelectAllCheckbox)="multiCheckData($event)" (onSelectAllSelfAssign)="multiCheckSelfAssign($event)"
+        [filterInput]="true" (onPageChange)="getInternalScoringata($event)"></app-generic-data-table>
+</div>

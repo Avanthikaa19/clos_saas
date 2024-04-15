@@ -1,0 +1,98 @@
+@import url(../../../../../common-css/common.scss);
+@import url(../../../../../common-css/commonstyles.scss);
+@import url(../../../../decision-tables/modals/table-value/branch-tree-design.scss);
+.main-input-container {
+    height: 65vh;
+    width: 98%;
+    background-color: whitesmoke;
+    >.header-container {
+        height: 5rem;
+        background-color: white;
+        border-bottom: 1px solid gainsboro;
+    }
+    >.date-container {
+        float: right;
+    }
+    >.content-container {
+        height: calc(99% - 5rem);
+        border-bottom: 1px solid gainsboro;
+        div {
+            height: 100%;
+        }
+        >.left-align {
+            background-color: white;
+            width: 50%;
+            overflow: auto;
+        }
+        >.right-align {
+            background-color: ghostwhite;
+            width: 50%;
+            overflow: auto;
+        }
+    }
+}
+
+.main-output-container {
+    height: 65vh;
+    width: 98%;
+    background-color: whitesmoke;
+    >.header-container {
+        height: 5rem;
+        background-color: white;
+        border-bottom: 1px solid gainsboro;
+    }
+    >.date-container {
+        float: right;
+    }
+    >.content-container {
+        height: calc(99% - 5rem);
+        border-bottom: 1px solid gainsboro;
+        div {
+            height: 100%;
+        }
+        >.left-align {
+            background-color: white;
+            width: 50%;
+            overflow: auto;
+        }
+        >.right-align {
+            background-color: ghostwhite;
+            width: 50%;
+            overflow: auto;
+        }
+    }
+}
+
+.node-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 500px;
+    margin-top: 60px;
+    margin-top: 15px;
+    .label {
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 100px;
+        text-align: left;
+        font-style: italic;
+        color: rgb(134, 132, 132);
+    }
+    .colen {
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 30px;
+        color: rgb(95, 97, 97);
+        text-align: center;
+    }
+    .value {
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 200px;
+        color: rgb(86, 88, 88);
+        input {
+            width: 100%;
+            color: rgb(86, 88, 88);
+        }
+    }
+}

@@ -1,0 +1,902 @@
+<div class="main-container" *ngIf="((ac.super || ac.items?.VAR008C_VARIABLES_CREATE || ac.items?.VAR008D_VARIABLES_EDIT) && !noAccess)">
+    <mat-toolbar class="tool-bar">
+        <span>
+            <button mat-flat-button (click)="goBack()" style="background-color: #0e2954;color: white;">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>
+                    Go back to Variables
+                </span>
+        </button>
+        </span>
+        <div class="spacing">
+        </div>
+        <span>
+            <button mat-flat-button [disabled]="disableSave ||!overallVariables.name || !overallVariables.type" [class.save-disable]="disableSave==true" 
+                (click)="onSaveBtnClick()" class="var-btn">
+                <div *ngIf="!variableService.saveUpdate"><mat-icon
+                        style="position: relative;bottom:3px">save</mat-icon><span>{{disableSave ? 'Saving..' :'Save'}}</span></div>
+<div *ngIf="variableService.saveUpdate">
+    <mat-icon>update</mat-icon><span>{{disableSave ? 'Updating..' : 'Update'}}</span>
+</div>
+</button>
+</span>
+</mat-toolbar>
+<div class="sub-header">
+    <span class="sub-header-name">Variable Definition:</span>
+</div>
+<div class="definition-container">
+    <div class="variable-defnetion-section">
+        <div class="variable-definition-field">
+            <span class="name" style="color:black;font-weight:500">Name :&nbsp;</span>
+            <input class="min-input" style="height:4rem;width: 50%;" type="text" [(ngModel)]="overallVariables.name">
+        </div>
+        <div class="variable-definition-field">
+            <span class="name" style="color:black;font-weight:500">Type :&nbsp;</span>
+            <input class="min-input" type="text" style="height:4rem;width: 50%;" [(ngModel)]="overallVariables.type">
+        </div>
+        <div class="variable-definition-field">
+            <span class="name" style="position: relative;color:black;font-weight:500">Description :&nbsp;</span>
+            <input class="min-input" type="text" style="height:4rem;width: 50%;" [(ngModel)]="overallVariables.description">
+        </div>
+    </div>
+</div>
+<div class="sub-header" style="height:30px">
+    <span class="sub-header-name">Variable Configuration:
+            <mat-slide-toggle *ngIf="ac.super || ac.items?.VAR008G_VARIABLES_CONFIGURE" [disabled]="toggleVarData"
+                style="float:right; margin-right: 2rem;height: 32px;" [(ngModel)]="toggleData">{{toggleData===true
+                ?"Configure":"Editor"}} </mat-slide-toggle>
+            <!-- <mat-slide-toggle style="float:right; position: relative; left: 21rem;height: 32px;" [(ngModel)]="toggleVarData">Variable</mat-slide-toggle> -->
+            <!-- <mat-checkbox [disabled]="toggleData" class="variableBoolean" style="float:right; position: relative; left: 21rem;height: 32px;" [(ngModel)]="toggleVarData">Variable</mat-checkbox> -->
+        </span>
+</div>
+<div style="margin: 1rem;">
+    <ng-container *ngIf="ac.super || ac.items?.VAR008F_VARIABLES_ADD_VARIABLE_CONFIG">
+        <button mat-flat-button (click)="addCardData()" style="background-color: #0e2954;color: white;">
+                <mat-icon>add</mat-icon>
+                <span>Add</span>
+            </button>
+    </ng-container>
+</div>
+<div class="configuration-container">
+    <div *ngIf="!toggleData && !toggleVarData ">
+        <div class="d-inline pl-4">
+            <!-- <span style="font-size:14px;color:rgb(151, 146, 146);padding:2px">File Name</span>
+            <span style="padding:5px;color:rgb(151, 146, 146)">:</span>
+            <input class="input-class" type="text" [(ngModel)]="pythonCode.fileName"> -->
+        </div>
+        <div style="float:right;padding-bottom:10px">
+            <span style="font-size:14px;color:rgb(151, 146, 146);padding:2px;">Theme</span>
+            <span style="padding:5px;color:rgb(151, 146, 146)">:</span>
+            <mat-select style="background-color: whitesmoke;padding-left: 2px;min-height: 24px;width:30rem;line-height: 24px;border-radius: 3px;border: solid transparent 1px;
+        transition: all linear 100ms;" [(ngModel)]="editorOptions.theme" (ngModelChange)="onThemeChange(editorOptions.theme)" class="min-select">
+                <mat-option *ngFor="let theme of editorTheme" [value]="theme">
+                    {{theme}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <ngx-monaco-editor style="height: 55rem;padding-top:2rem" [options]="editorOptions" [(ngModel)]="pythonCode.code"></ngx-monaco-editor>
+    </div>
+    <div class="main-container1" *ngIf="toggleData">
+        <div class="content-container1">
+            <div class="card-container1 p-4 mt-5" *ngFor="let dataValue of commonDataVariable; let i=index">
+                <div class="variables-fields-section">
+                    <div class="variables-field">
+                        <td>
+                            <div class="card-inner-container flex-stetch p-4">
+                                <span>Choose Data Source :</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="card-inner-container flex-stetch">
+                                <mat-select placeholder="Choose Data Source" class="select-class" [(ngModel)]="dataValue.dataSource" (ngModelChange)="getDataSource($event)">
+                                    <mat-option value="Database">Database</mat-option>
+                                    <mat-option value="Decision Table" (click)="getDecisionTableDrop(commonDataVariable)">Decision Table</mat-option>
+                                    <mat-option value="Variables" (click)="getDecisionTableDrop(commonDataVariable)">Variables</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </div>
+                    <div class="variables-field">
+                        <td>
+                            <div class="card-inner-container flex-stetch p-4">
+                                <span>Choose Logic &nbsp;:</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="card-inner-container flex-stetch">
+                                <mat-select placeholder="Choose Logic" class="select-class" [(ngModel)]="dataValue.logicType" (ngModelChange)="getLogicType($event,i)">
+                                    <mat-option *ngFor="let logicList of logicToChose" value="{{logicList}}">{{logicList}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </div>
+                    <div class="variables-field">
+                        <td>
+                            <div class="card-inner-container flex-stetch p-4">
+                                <span>Output Field &nbsp;:</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="card-inner-container flex-stetch">
+                                <input type="text" placeholder="Output Field" [(ngModel)]="dataValue.outputField">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="remove-field" style="margin-left:3rem">
+                                <mat-icon (click)="commonDataVariable.splice(i,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                    remove</mat-icon>
+                            </div>
+                        </td>
+                    </div>
+                </div>
+                <!-- Logictype sum -->
+                <div *ngIf="dataValue.logicType =='Sum'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="addTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let sumFields of dataValue.sumVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="sumFields.tableName" (ngModelChange)="tableDropDwn(j,$event,sumFields.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="sumFields.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.sumVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="addTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let sumFields of dataValue.sumVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="sumFields.databaseName" (ngModelChange)="emptyTableDropDown(j, $event,sumFields)">
+                                            <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="sumFields.tableName" (ngModelChange)="actionField(j,$event,sumFields)">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,sumFields)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of sumFields.filteredTableOptions || sumFields.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="sumFields.fieldName" multiple>
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,sumFields,sumFields.fieldName)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of sumFields.filteredFields || sumFields.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.sumVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype divide -->
+                <div *ngIf="dataValue.logicType =='Divide'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="divTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div *ngFor="let divideFeild of dataValue.divVariableData; let j=index">
+                                    <div class="field-container">
+                                        <div class="tableChoose">
+                                            <input type="text" placeholder="Choose Logic" class="select-class" [(ngModel)]="divideFeild.mode_a">
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="divideFeild.tableName_a" (ngModelChange)="tableDropDwn(j,$event,divideFeild.tableName_a,'numerator')">
+                                                <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="divideFeild.fieldName_a" multiple>
+                                                <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+
+                                    </div>
+                                    <div class="field-container">
+                                        <div class="tableChoose">
+                                            <input type="text" placeholder="Choose Logic" class="select-class" [(ngModel)]="divideFeild.mode_b">
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="divideFeild.tableName_b" (ngModelChange)="tableDropDwn(j,$event,divideFeild.tableName_b,'denominator')">
+                                                <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="divideFeild.fieldName_b" multiple>
+                                                <mat-option *ngFor="let emptyColumnList of tableField1[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+
+                                        <div class="tableChoose" *ngIf="j!=0">
+                                            <div class="remove-field">
+                                                <mat-icon (click)="dataValue.divVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                    remove</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="divTotalField(i)"style="background-color: #0e2954;color: white;" ><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div *ngFor="let divideFeild of dataValue.divVariableData; let j=index">
+                                    <div class="field-container">
+                                        <div class="tableChoose">
+                                            <input type="text" placeholder="Choose Logic" class="select-class" [(ngModel)]="divideFeild.mode_a">
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="divideFeild.databaseName_a" (ngModelChange)="emptyTableDropDown(j, $event,divideFeild)">
+                                                <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="divideFeild.tableName_a" (ngModelChange)="actionField(j,$event,divideFeild)">
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                    <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,divideFeild)">
+                                                </div>
+                                                <mat-option *ngFor="let emptyVariableList of divideFeild.filteredTableOptions || divideFeild.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="divideFeild.fieldName_a" multiple>
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                    <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,divideFeild,divideFeild.fieldName_a)">
+                                                </div>
+                                                <mat-option *ngFor="let emptyVariableList of divideFeild.filteredFields || divideFeild.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                                </mat-option>
+                                                <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                    <div class="field-container">
+                                        <div class="tableChoose">
+                                            <input type="text" placeholder="Choose Logic" class="select-class" [(ngModel)]="divideFeild.mode_b ">
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="divideFeild.databaseName_b" (ngModelChange)="emptyTableDropDown1(j, $event,divideFeild)">
+                                                <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="divideFeild.tableName_b" (ngModelChange)="actionField1(j,$event,divideFeild)">
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                    <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="denominatorSearch" (input)="denominatorSearchOption(j,divideFeild)">
+                                                </div>
+                                                <mat-option *ngFor="let emptyVariableList of divideFeild.filteredTableOptions_b || divideFeild.tablevalues_b" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tableChoose">
+                                            <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="divideFeild.fieldName_b" multiple>
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                    <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,divideFeild,divideFeild.fieldName_b)">
+                                                </div>
+                                                <mat-option *ngFor="let emptyVariableList of divideFeild.filteredFields_b || divideFeild.fieldValues_b" [value]="emptyVariableList">{{emptyVariableList}}
+                                                </mat-option>
+                                                <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+
+                                        <div class="tableChoose" *ngIf="j!=0">
+                                            <div class="remove-field">
+                                                <mat-icon (click)="dataValue.divVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                    remove</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype Multiple -->
+                <div *ngIf="dataValue.logicType =='Multiply'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="mulTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let multipleFields of dataValue.mulVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="multipleFields.tableName" (ngModelChange)="tableDropDwn(j,$event,multipleFields.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="multipleFields.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.mulVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="mulTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let multipleFields of dataValue.mulVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="multipleFields.databaseName" (ngModelChange)="emptyTableDropDown(j, $event,multipleFields)">
+                                            <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="multipleFields.tableName" (ngModelChange)="actionField(j,$event,multipleFields)">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,multipleFields)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of multipleFields.filteredTableOptions || multipleFields.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="multipleFields.fieldName" multiple>
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,multipleFields,multipleFields.fieldName)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of multipleFields.filteredFields || multipleFields.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.mulVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype Date Difference -->
+                <div *ngIf="dataValue.logicType =='Date Difference'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="dateDiffTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let dateDiff of dataValue.dateVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="dateDiff.tableName" (ngModelChange)="tableDropDwn(j,$event,dateDiff.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="dateDiff.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Date" class="min-select" [(ngModel)]="dateDiff.ResultType">
+                                            <mat-option *ngFor="let dateList of dateChose" [value]="dateList">{{dateList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.dateVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="dateDiffTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let dateDiff of dataValue.dateVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="dateDiff.databaseName" (ngModelChange)="emptyTableDropDown(j, $event,dateDiff)">
+                                            <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="dateDiff.tableName" (ngModelChange)="actionField(j,$event,dateDiff)">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,dateDiff)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of dateDiff.filteredTableOptions || dateDiff.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="dateDiff.fieldName" multiple>
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,dateDiff,dateDiff.fieldName)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of dateDiff.filteredFields || dateDiff.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Date" class="min-select" [(ngModel)]="dateDiff.ResultType">
+                                            <mat-option *ngFor="let dateList of dateChose" [value]="dateList">{{dateList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.dateVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype N/A Logic -->
+                <div *ngIf="dataValue.logicType =='N/A Logic'">
+                    <!-- Decision Table -->
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="naLogicTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let emptyLogicList of dataValue.naLogicData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="emptyLogicList.tableName" (ngModelChange)="tableDropDwn(j,$event,emptyLogicList.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table Field" class="min-select" [(ngModel)]="emptyLogicList.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyVariableList of tableField[j]?.columns" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <input type="text" [(ngModel)]="emptyLogicList.naCondition" placeholder="NA">
+                                    </div>
+                                    <div class="tableChoose">
+                                        <input type="text" [(ngModel)]="emptyLogicList.naValue" placeholder="Value">
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.naLogicData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- LogicType Group By -->
+                <div *ngIf="dataValue.logicType =='Group By'">
+                    <div class="main-container1">
+                        <div class="content-container">
+                            <!-- Main Container  -->
+                            <ng-container *ngFor="let configJson of configData; let i=index;">
+                                <div class="header-container details-header">
+                                    <span style="padding-left: 1rem;">
+                                            Result Column {{i + 1}} :-
+                                        </span>
+                                </div>
+                                <div class="card-container flex-row-parent">
+                                    <div class="card-inner-container flex-stetch">
+                                        <span>
+                                                Var Name
+                                            </span>
+                                    </div>
+                                    <div class="flex-stetch">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <ng-container>
+                                        <ng-container>
+                                            <div class="flex-unstetch" style="margin-left: 1rem; margin-right: 1rem;">
+                                                <input prohibitedChars class="min-input" [(ngModel)]="configJson.name">
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <div class="card-container flex-row-parent">
+                                    <div class="card-inner-container flex-stetch">
+                                        <span>
+                                                Choose tablename
+                                            </span>
+                                    </div>
+                                    <div class="flex-stetch">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <ng-container>
+                                        <ng-container>
+                                            <div class="flex-unstetch" style="margin-left: 1rem; margin-right: 1rem;">
+                                                <mat-select class="min-select" [(ngModel)]="configData[i].tableName" #multiSelect1>
+                                                    <mat-option *ngFor="let data of params" [value]="data.name" (onSelectionChange)="onValueSelected($event, data,i)">
+                                                        {{data.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                                <ng-container *ngFor="let config of configJson.configMethod">
+                                    <div class="card-container flex-row-parent">
+                                        <div class="card-inner-container flex-stetch">
+                                            <span>
+                                                    {{config.name}}
+                                                </span>
+                                        </div>
+                                        <div class="flex-stetch">
+                                            &nbsp; &nbsp;
+                                        </div>
+                                        <ng-container *ngIf="config">
+                                            <ng-container *ngIf="config.output">
+                                                <div class="flex-unstetch" style="margin-left: 1rem;">
+                                                    <mat-select class="min-select" [(ngModel)]="config.input" style="text-transform: capitalize;" #multiSelect1>
+                                                        <ng-container *ngIf="config.name != 'calc'">
+                                                            <mat-option>
+                                                                <ngx-mat-select-search placeholderLabel="Find column..." ngModel (ngModelChange)="filterColumns($event)" noEntriesFoundLabel='No columns match search criteria.'>
+                                                                </ngx-mat-select-search>
+                                                            </mat-option>
+                                                            <mat-option *ngFor="let columns of filteredColumns" [value]="columns.name">
+                                                                {{columns.name}}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="config.name == 'calc'">
+                                                            <mat-option *ngFor="let columns of calcArray" [value]="columns" style="text-transform: capitalize;">
+                                                                {{columns}}
+                                                            </mat-option>
+                                                        </ng-container>
+                                                    </mat-select>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <!-- Filter By  -->
+                                        <ng-container *ngIf="config.name == 'rowFilter'">
+                                            <div class="flex-stetch" style="margin-left: 1rem; min-width: 10rem; margin-right: 1rem;">
+                                                <mat-select class="min-select" [(ngModel)]="config.filterSymbol" style="text-transform: capitalize;" #multiSelect1>
+                                                    <ng-container>
+                                                        <mat-option>
+                                                            <ngx-mat-select-search placeholderLabel="Find column..." ngModel (ngModelChange)="filterColumns($event)" noEntriesFoundLabel='No columns match search criteria.'>
+                                                            </ngx-mat-select-search>
+                                                        </mat-option>
+                                                        <mat-option [value]="">
+                                                            None
+                                                        </mat-option>
+                                                        <mat-option *ngFor="let columns of filterSymbols" [value]="columns">
+                                                            {{columns}}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </div>
+                                            <div class="flex-stetch" style="margin-left: 1rem; min-width: 20rem; margin-right: 1rem;">
+                                                <input prohibitedChars class="min-input" [(ngModel)]="config.filterValue">
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="config.name == 'calc'">
+                                            <div class="flex-stetch" style="margin-left: 1rem; min-width: 20rem; margin-right: 1rem;">
+                                                <mat-select class="min-select" [(ngModel)]="config.calcValue" style="text-transform: capitalize;" #multiSelect1>
+                                                    <ng-container>
+                                                        <mat-option [value]="">
+                                                            None
+                                                        </mat-option>
+                                                        <mat-option *ngFor="let columns of calcValues" [value]="columns" style="text-transform: capitalize;">
+                                                            {{columns}}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-select>
+                                            </div>
+                                        </ng-container>
+                                        <div class="flex-stetch">
+                                            <button style="margin-left: 1rem; background-color: whitesmoke; border: 0px;" matTooltip="Add" [matTooltipPosition]="'above'">
+                                                    <mat-icon style="margin-right: 0rem; color: red; cursor: pointer;"
+                                                        (click)="config.output.push(getPushData(config.input ,config.filterSymbol , config.filterValue, config.calcValue)); 
+                                                config.input=''; config.filterSymbol=''; config.filterValue=''; config.calcValue=''">
+                                                        add</mat-icon>
+                                                </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-container flex-property-parent">
+                                        <div class="card-inner-container flex-stetch" *ngFor="let output of config.output; let i = index" style="margin-left: 1rem; text-transform: capitalize;">
+                                            <span>
+                                                    {{output}}
+                                                </span>
+                                            <mat-icon style="float: right; color: red; font-size: 1.4rem; margin-right: 0rem; cursor: pointer;" (click)="config.output.splice(i,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <div class="flex-row-parent" style="margin-top: 1rem;">
+                                <div class="flex-stetch">
+                                </div>
+                                <div class="flex-stetch">
+                                    <button mat-flat-button style="background-color: #0e2954;color: white;" (click)="groupTotalField(i);this.configData.push({tableName:'',name: '',configMethod:[{name: 'groupBy',input: '', output: []},
+                                {name: 'columnFilter',input: '',output: []},
+                                {name: 'rowFilter',input: '',output: []},
+                                {name: 'calc',input: '',output: []}]})">
+                                            <mat-icon>add</mat-icon>
+                                            <span>
+                                                Add
+                                            </span>
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype Max Date Difference -->
+                <div *ngIf="dataValue.logicType =='Max Date Difference'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="maxDateTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let maxDate of dataValue.maxdateVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="maxDate.tableName" (ngModelChange)="tableDropDwn(j,$event,maxDate.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="maxDate.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.maxdateVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="maxDateTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let maxDate of dataValue.maxdateVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="maxDate.databaseName" (ngModelChange)="emptyTableDropDown(j, $event,maxDate)">
+                                            <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="maxDate.tableName" (ngModelChange)="actionField(j,$event,maxDate)">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,maxDate)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of maxDate.filteredTableOptions || maxDate.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="maxDate.fieldName" multiple>
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,maxDate,maxDate.fieldName)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of maxDate.filteredFields || maxDate.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.maxdateVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype Split -->
+                <div *ngIf="dataValue.logicType =='Split'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="splitTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let splitFields of dataValue.splitVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="splitFields.tableName" (ngModelChange)="tableDropDwn(j,$event,splitFields.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="splitFields.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <input type="number" [(ngModel)]="splitFields.range" placeholder="Type Range">
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.splitVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="splitTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let splitFields of dataValue.splitVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="splitFields.databaseName" (ngModelChange)="emptyTableDropDown(j, $event,splitFields)">
+                                            <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="splitFields.tableName" (ngModelChange)="actionField(j,$event,splitFields)">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,splitFields)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of splitFields.filteredTableOptions || splitFields.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="splitFields.fieldName" multiple>
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,splitFields,splitFields.fieldName)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of splitFields.filteredFields || splitFields.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <input type="number" [(ngModel)]="splitFields.range" placeholder="Type Range">
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.splitVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logictype Concat -->
+                <div *ngIf="dataValue.logicType =='Concat'">
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Decision Table' || dataValue.dataSource == 'Variables'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="concatTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let concat of dataValue.concatVariableData; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="select-class" [(ngModel)]="concat.tableName" (ngModelChange)="tableDropDwn(j,$event,concat.tableName,'')">
+                                            <mat-option *ngFor="let tableList of decisionTableDropdown" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="select-class" [(ngModel)]="concat.fieldName" multiple>
+                                            <mat-option *ngFor="let emptyColumnList of tableField[j]?.columns" [value]="emptyColumnList">{{emptyColumnList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.concatVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-container1" *ngIf="dataValue.dataSource =='Database'">
+                        <div class="content-container">
+                            <div class="Addmore-container">
+                                <div class="addmoreField">
+                                    <button mat-flat-button (click)="concatTotalField(i)" style="background-color: #0e2954;color: white;"><mat-icon>add</mat-icon><span>Addmore</span></button>
+                                </div>
+                                <div class="field-container" *ngFor="let concat of dataValue.concatVariableData;; let j=index">
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Database" class="min-select" [(ngModel)]="concat.databaseName" (ngModelChange)="emptyTableDropDown(j, $event,concat)">
+                                            <mat-option *ngFor="let tableList of responseArray" [value]="tableList">{{tableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Table" class="min-select" [(ngModel)]="concat.tableName" (ngModelChange)="actionField(j,$event,concat)">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="searchKey" (input)="tableOptions(j,concat)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of concat.filteredTableOptions || concat.tablevalues" [value]="emptyVariableList">{{emptyVariableList}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose">
+                                        <mat-select placeholder="Choose Column" class="min-select" [(ngModel)]="concat.fieldName" multiple>
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                <input placeholder="Search.." class="tableFieldSearch" [(ngModel)]="tableSearch" (input)="filterFieldOptions(j,concat,concat.fieldName)">
+                                            </div>
+                                            <mat-option *ngFor="let emptyVariableList of concat.filteredFields || concat.fieldValues" [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let emptyVariableList of filteredFieldOptions1" [hidden] [value]="emptyVariableList">{{emptyVariableList}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                    <div class="tableChoose" *ngIf="j!=0">
+                                        <div class="remove-field">
+                                            <mat-icon (click)="dataValue.concatVariableData.splice(j,1)" matTooltip="Remove" [matTooltipPosition]="'above'">
+                                                remove</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <notifier-container></notifier-container>
+</div>
+</div>
+<div class="no-access" *ngIf="(!ac.super &&  !ac.items?.VAR008C_VARIABLES_CREATE && !ac.items?.VAR008D_VARIABLES_EDIT) || noAccess">
+    <app-no-access></app-no-access>
+</div>

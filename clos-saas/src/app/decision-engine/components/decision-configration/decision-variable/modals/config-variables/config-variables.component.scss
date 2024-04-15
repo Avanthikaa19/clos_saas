@@ -1,0 +1,53 @@
+@import url(../../../../../common-css/common.scss);
+@import url(../../../../../common-css/commonstyles.scss);
+.main-container {
+    overflow: hidden;
+    height: 100%;
+}
+
+.sub-main {
+    height: 50rem;
+    .header-container {
+        height: 40px;
+        border-bottom: 1px solid lightgray;
+        padding: 10px 0px 0px 10px;
+        .header {
+            font-style: italic;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+}
+
+.node-data {
+    width: 30%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    .node-detail {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        margin-left: 20px;
+        .label {
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 100px;
+            text-align: left;
+        }
+        .colen {
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 50px;
+            text-align: center;
+        }
+        .value {
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 300px;
+            input {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+$width: 185px;
+
+:host {
+  position: absolute;
+  width: $width;
+  left: -$width; 
+  height:50%;
+  // to render it on the right side, use "right: -$width" instead
+}
+ 
+
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+}
+

@@ -1,0 +1,162 @@
+table {
+    width: 0 !important;
+    // border-collapse: separate;
+}
+
+td {
+    border: none;
+    text-align: left;
+    padding: 6px 8px;
+    font-size: 13px;
+    border-right: 1px solid #ccccccc4;
+    white-space: nowrap;
+}
+
+th {
+    border: none;
+    background: #4e589b;
+    text-align: left;
+    padding: 8px;
+    font-size: 13px;
+    color: #fff;
+}
+
+tr {
+    // background-color: #f4f4f4;
+}
+
+p {
+    font-weight: bold;
+}
+
+ ::ng-deep .mat-drawer-content {
+    overflow: hidden;
+}
+
+.databaseRow {
+    background-color: white;
+    border: 2px solid rgb(233, 233, 233);
+    overflow-y: auto;
+    // height: 34vh;
+    box-shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.14);
+    padding-bottom: 17px;
+    >.overall-box-header {
+        display: flex;
+        flex-direction: row;
+        padding: 13px 0;
+        background: #e8eaebad;
+    }
+}
+
+.matched-columns {
+    width: 98%;
+    background-color: white;
+    padding: 0 14px;
+}
+
+.matched-columns-sub {
+    color: #016CB9;
+}
+
+.progress-div {
+    font-size: 1.25rem;
+    font-weight: 900;
+    height: 2rem;
+    border: 1px solid #665c5ccc;
+}
+
+.progress_bar_01 {
+    background-color: #176e2a;
+}
+
+.back-btn {
+    background: #394eb4;
+    color: #fff;
+}
+
+.goBack {
+    position: relative;
+    float: right;
+    bottom: 2px;
+    right: 10px;
+}
+
+.TabField-Color {
+    padding: 6px;
+    width: 35px;
+    height: 1px;
+}
+
+.matching-list {
+    list-style-type: none;
+    display: inline-flex;
+    position: relative;
+    top: 5px;
+    >li {
+        float: left;
+        display: inline-flex;
+    }
+}
+
+.not-found {
+    border: 1px solid #ccc;
+    width: 300px;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    background: #f9f9f9a6;
+}
+
+.application-list {
+    >ul {
+        list-style-type: none;
+        margin-left: 6px;
+        >li {
+            float: left;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+    }
+}
+
+.matched-table {
+    display: flex;
+    flex-direction: row;
+    >.inquired-column {
+        flex: 1 1 50%;
+        padding: 0 14px;
+    }
+    >.matched-columns {
+        flex: 1 1 50%;
+    }
+}
+
+.matchedCategory {
+    padding: 0 14px;
+    position: relative;
+    top: 20px;
+}
+
+.matched-status {
+    font-weight: 600;
+}
+
+.multiTable_tabs {
+     ::ng-deep .mat-tab-body {
+        border: 1px solid #ccc;
+        border-width: 0px 1px 1px 1px;
+        padding: 0px 0px 33px 0px;
+    }
+     ::ng-deep .mat-tab-header {
+        border: 1px solid #ccc;
+        border-width: 1px 1px 1px 1px;
+    }
+     ::ng-deep .mat-tab-label-active {
+        opacity: 1!important;
+        color: royalblue;
+    }
+     ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+        background: royalblue !important;
+    }
+}

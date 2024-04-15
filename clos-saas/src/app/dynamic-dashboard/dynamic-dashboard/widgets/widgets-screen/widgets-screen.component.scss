@@ -1,0 +1,296 @@
+.graph-light{
+    cursor: pointer;
+    padding: 5px;
+    > .box{
+        padding: 15px;
+        &:hover{
+            border-radius: 10px;
+            background-color: #dfdfdf9f;
+        }
+        > .label{
+            text-align: center;
+            font-size: 26px;
+            font-weight: 900;
+        }
+    }
+}
+
+.row-height{
+    min-height: 404px;
+}
+
+.active-widget{
+    border: 3px solid rgb(155, 155, 155);
+    border-radius: 10px;
+    box-shadow: -1px -1px 10px -1px rgba(90 90 90 / 83%);
+    -webkit-box-shadow: -1px -1px 10px -1px rgba(90 90 90 / 83%);
+    -moz-box-shadow: -1px -1px 10px -1px rgba(90 90 90 / 83%);
+}
+
+.graph-dark{
+    cursor: pointer;
+    padding: 5px;
+    > .box{
+        padding: 15px; 
+        &:hover{
+            border-radius: 10px;
+            background-color: #75737341;
+        }
+        > .label{
+            text-align: center;
+            font-size: 26px;
+            font-weight: 900;
+        }
+    }
+}
+
+.line {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 15px;
+    margin-left: 10px;
+    background-color: #f32d32;
+}
+
+.line-theme-light {
+    background-color: #f32d32;
+}
+
+.line-theme-dark {
+    background-color: #4b9cdb;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: #888 !important; 
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #555 !important; 
+    }
+  
+    ::-webkit-scrollbar-thumb:horizontal{
+    background: silver; 
+    border-radius: 10px;
+    }
+
+    .label{
+        text-align: center;
+        font-size: 26px;
+        font-weight: 900;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+::ng-deep{
+    .filter-field-exi .mat-form-field-flex {
+        padding: 0 4px 0px 13px;
+        margin-top: -0.25em;
+        position: relative;
+        font-size: 12px;
+        outline: none;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: inset 0px 1px 2px 2px #bfbbbb;
+    }
+}
+.icon-hov{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: gray;
+    border-radius: 14px;
+    width: 28px !important;
+    height: 28px;
+  }
+  .icon-hov:hover{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(207, 204, 204);
+    border-radius: 14px;
+    width: 28px !important;
+    height: 28px;
+  }
+  
+  .box-icon-hov{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: gray;
+    border-radius: 9px;
+    width: 18px !important;
+    height: 18px;
+  }
+  .box-icon-hov:hover{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(216, 215, 215);
+    border-radius: 9px;
+    width: 18px !important;
+    height: 18px;
+  }
+  .box-icon-move{
+    margin-left: -45px;
+    margin-top: -20px;
+    font-size: 13px;
+  }
+  .icon-hov2{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: gray;
+    border-radius: 16px;
+    width: 28px !important;
+    height: 28px;
+  }
+  .icon-hov2:hover{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(207, 204, 204);
+    border-radius: 16px;
+    width:28px !important;
+    height: 28px;
+  }
+  .input-field {
+    width: 40%;
+    margin-right: 20px;
+  }
+  
+  mat-select {
+    width: 100%;
+  }
+  .total-items {
+    position: absolute;
+    top: 0;
+    right: -300px;
+    background-color: transparent;
+    padding: 5px;
+  }
+  .paginator-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 1rem;
+    >.left-container {
+        flex: 0 0 auto;
+    }
+    >.middle-container {
+        flex: 0 0 auto;
+    }
+    >.right-container {
+        margin-top: 1rem;
+        flex: 0 0 auto;
+    }
+  }
+  .page-links {
+    position: relative;
+      display: block;
+      padding: .5rem .75rem;
+      margin-left: -1px;
+      line-height: 1.25;
+      // color: #007bff;
+      background-color: transparent;
+      border: 0px solid #dee2e6;
+    }
+    .page-links.active{
+        font-weight: bold;
+      }
+  
+  
+    .table-container {
+      flex: 1 1 auto;
+      // border: 1px solid gainsboro;
+      border-radius: 0.5rem;
+      overflow: auto;
+      height: 0;
+      position: relative;
+      table-layout: fixed;
+      margin:0.5rem;
+      #table {
+          border-collapse: collapse;
+          width: 100%;
+          min-width: max-content;
+         
+          td>div.content {
+              white-space: nowrap;
+              overflow: hidden;
+              padding-left: 1rem;
+              // padding: 0.5rem 1rem 0.5rem 1rem;
+          }
+          th>div.content {
+              padding-top: 0.4rem;
+              white-space: nowrap;
+              overflow: hidden;
+          }
+          th>div.content_check {
+              padding-top: 0.4rem;
+              white-space: nowrap;
+              overflow: hidden;
+              padding-left: 0.6rem;
+          }
+      }
+      #table td {
+          border-top: 4px solid #ffffff;
+          line-height: 35px;
+      }
+      #table tbody tr:hover td {
+          background-color: #ddd
+      }
+      #table tr {
+          background-color: #f8f8f8;
+    
+      }
+      #table tr:hover {
+          background-color: #ddd;
+      }
+      #table tbody {
+          overflow-y: auto;
+          height: auto
+      }
+      th {
+          position: sticky;
+          top: 0;
+      }
+      #table th {
+          text-align: middle;
+          background-color: #0e2954;
+          color: white;
+          z-index: 15;
+          padding: 3px 30px 3px 0px;
+          // min-width: 21rem;
+          max-height: 2rem;
+           ::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+              border-color: white !important;
+              background-color: #adadad !important;
+          }
+           ::ng-deep mat-checkbox .mat-checkbox-checkmark-path {
+              stroke: blue !important;
+          }
+           ::ng-deep .mat-checkbox .mat-checkbox-frame {
+              border-color: white !important;
+          }
+           ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+              background-color: white !important;
+              border-color: white !important;
+          }
+      }
+    }

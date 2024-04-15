@@ -1,0 +1,47 @@
+<div class="main-container">
+    <div class="header-container" style="height: auto;">
+        Create Decision Table
+    </div>
+    <form class="body-container" #inputForm="ngForm">
+        <div class="node-data">
+            <div class="node-detail">
+                <div class="label">
+                    <span>Name </span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <input class="min-input" required name="flowname" #flowname="ngModel" [(ngModel)]="tableDetails.name">
+                </div>
+            </div>
+            <div>
+                <small class="err-msg">{{errMsg()}}</small>
+            </div>
+            <div class="node-detail">
+                <div class="label">
+                    <span>Description</span>
+                </div>
+                <div class="colen">
+                    <span>:</span>
+                </div>
+                <div class="value">
+                    <textarea class="min-input" rows="6" cols="50" name="description" [(ngModel)]="tableDetails.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close style="color: white;background-color: rgb(43, 42, 42)">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button class="create" mat-flat-button [disabled]="!tableDetails.name" (click)="createTableList()">
+        <mat-icon>done_all</mat-icon>
+        <span>Create Table</span>
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

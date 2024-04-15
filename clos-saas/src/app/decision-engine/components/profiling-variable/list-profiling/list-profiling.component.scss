@@ -1,0 +1,166 @@
+@import url(../../../common-css/table-common.scss);
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+// @import url(../../../common-css/common.scss);
+.main-container {
+    cursor: auto;
+    height: 83vh;
+    >.header-container {
+        height: 8rem;
+        background-color: white;
+        border-bottom: 1px solid lightgray;
+        >.img-container {
+            width: 10rem;
+            height: 100%;
+            img {
+                margin-top: 10px;
+                margin-left: 15px;
+                max-width: 85%;
+                max-height: 65%;
+            }
+        }
+        >.describe-container {
+            height: 100%;
+            div {
+                width: 100%;
+            }
+            >.title-container {
+                height: 35%;
+                margin-top: 1.5rem;
+            }
+            >.sub-title-container {
+                border-top: 0px solid lightgray;
+            }
+        }
+    }
+    >.filter-container {
+        height: 5rem;
+        border-bottom: 1px solid lightgray;
+    }
+    >.content-container {
+        height: calc(100% - 14rem);
+        background-color: whitesmoke;
+        overflow: auto;
+        div {
+            height: 100%;
+        }
+        >.card-container {
+            height: 6.7rem;
+            background-color: white;
+            margin: 1rem 1rem 0rem 1rem;
+            border-radius: 1rem;
+            border: 0.1rem rgb(190, 186, 186) solid;
+            padding: 0.6rem;
+            &:hover {
+                cursor: pointer;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                border-left: 3px solid rgb(122, 122, 241);
+            }
+            >.inner-card-container {
+                border-radius: 0.3rem;
+                background-color: whitesmoke;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                >.left-card-align {
+                    flex: 0 0 auto;
+                }
+                >.center-card-align {
+                    flex: 1 1 auto;
+                }
+                >.right-card-align {
+                    flex: 0 0 auto;
+                }
+            }
+        }
+    }
+}
+
+.delete-button {
+    width: 10%;
+    font-size: 12px;
+    line-height: 18px;
+    height: auto;
+    margin-top: 3rem;
+    margin-left: 2rem;
+}
+
+// .delete-button:hover{
+//   background-color: white;
+// }
+.delete-button-icon {
+    margin-right: 0px;
+    color: red;
+}
+
+// .edit-button{
+//   width: 10%; font-size: 12px; line-height: 18px; height: auto; margin-top: 3rem;
+// }
+.edit-button-icon {
+    margin-right: 0px;
+    color: blue;
+}
+
+.mat-stroked-button {
+    margin: 1.5rem;
+    border-radius: 1px !important;
+    // font-size: 1.5rem;
+}
+
+//TOP TOOLBAR
+.toolbar {
+    text-align: center;
+    span {
+        font-size: 14px;
+    }
+}
+
+.separator-div {
+    height: 100%;
+    width: 6rem;
+    overflow: hidden;
+    .separator {
+        z-index: 1;
+        margin-left: -3rem;
+        height: 4rem;
+        width: 5rem;
+        border-style: solid;
+        border-width: 0.2rem 0 0 0;
+        border-radius: 0 0.1rem 0 0;
+        border-top-color: rgba(255, 255, 255, 0.3);
+        -webkit-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+        transform: rotate(45deg);
+    }
+}
+
+.tool-bar {
+    display: flex;
+    display: row;
+    width: 100%;
+    font-size: medium;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    height: 5rem;
+    background-color: royalblue;
+    span {
+        padding-left: 5rem;
+    }
+}
+
+.btn-toolbar {
+    color: white;
+    background-color: rgb(76, 108, 206);
+    padding-right: 2.5rem;
+    mat-icon {
+        transform: scale(1.3);
+        margin-top: 0.6rem;
+        font-weight: lighter;
+    }
+}
+
+.spacing {
+    flex: 1 1 auto;
+}

@@ -1,0 +1,69 @@
+<mat-toolbar class="tool-bar">
+    <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+    <span class="separator-div">
+      <div class="separator"></div>
+  </span>
+    <span>
+      Test Module
+  </span>
+    <span class="spacing"></span>
+    <button mat-flat-button class="btn-toolbar" (click)="goBack()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      Go Back
+  </button>
+</mat-toolbar>
+<div [class.main-container-light]="!themeSelection" [class.main-container-dark]="themeSelection" [style.height.px]="screenHeight - 55">
+    <div class="header-container">
+
+        <div class="header-box-container">
+            {{'Test Module'|titlecase}}
+        </div>
+    </div>
+    <div class="sub-box-container">
+
+    </div>
+    <div class="content-container">
+        <div class="card-container" matRipple *ngFor="let module of testModule">
+            <div class="content-card-container" routerLink="{{module.routerLink}}" (click)="selectedModule(module.routerLink)">
+                <div class="card-header-container">
+                    <h2>{{module.name}}</h2>
+                </div>
+                <div class="card-body-container">
+                    <p>{{module.description}}</p>
+                </div>
+                <div class="card-icon-container" *ngIf="module.icon == 'table-module'">
+                    <img src="assets/Icons/table.png">
+                </div>
+                <div class="card-icon-container" *ngIf="module.icon == 'tree-module'">
+                    <img src="assets/Icons/decision_tree_01.png">
+                </div>
+                <div class="card-icon-container" *ngIf="module.icon == 'flow-module'">
+                    <img src="assets/Icons/decision-making.png">
+                </div>
+                <div class="card-icon-container" *ngIf="module.icon == 'variable-module'">
+                    <img src="assets/Icons/variable1.png">
+                </div>
+                <div class="card-icon-container" *ngIf="module.icon == 'variablelib-module'">
+                    <img src="assets/Icons/variable1.png">
+                </div>
+            </div>
+            <!-- <i class="material-icons">engineering</i> -->
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- <ul>
+            <li><a routerLink="/home/p/explorer" #tooltip="matTooltip"
+                matTooltip="Explore" [matTooltipPosition]="'below'"><i class="material-icons">language</i></a></li>
+            <li><a href="#" #tooltip="matTooltip"
+                matTooltip="Configuration" [matTooltipPosition]="'below'"><i class="material-icons">engineering</i></a></li>
+            <li><a href="#" #tooltip="matTooltip"
+                matTooltip="Compare" [matTooltipPosition]="'below'"><i class="material-icons">compare</i></a></li>
+            <li><a href="#" #tooltip="matTooltip"
+                matTooltip="Test" [matTooltipPosition]="'below'"><i class="material-icons">bug_report</i></a></li>
+            <li><a href="#" #tooltip="matTooltip"
+                matTooltip="Verify" [matTooltipPosition]="'below'"><i class="material-icons">verified_user</i></a></li>
+        </ul> -->

@@ -1,0 +1,122 @@
+<div class="component-container">
+    <div class="header-container">
+        <span> IMPORT / EXPORT WIZARD</span>
+    </div>
+    <div class="tab-group-container">
+        <mat-tab-group class="my-tab-group">
+            <mat-tab label="Export">
+                <mat-drawer-container class="tab-content-container">
+                    <mat-drawer mode="side" opened style="width: 30%;">
+                        <div>
+                            <div class="header">
+                                <span style="padding-left: 10px;">All Rules</span>
+                            </div>
+                        </div>
+                        <mat-card *ngIf="loadingItems" style="margin: 5px; padding: 20px; align-items: center;">
+                            <mat-spinner [diameter]="20" style="float: left;"></mat-spinner>
+                            <span style="float: left; padding-left: 20px; font-size: 14px;">Loading Rules.. Please
+                                wait..</span>
+                            <br style="clear: both;">
+                        </mat-card>
+                        <div *ngIf="!loadingItems"
+                            style="position: relative; height: calc(100% - 50px); overflow-y: auto;">
+                            <mat-checkbox color="primary" style="margin: 10px;font-size: 15px;"
+                                (change)="selectAll($event)" [checked]="checked||newArray.length!=0"
+                                [(ngModel)]="checked" [indeterminate]="checked||newArray.length!=0">
+                                <span style="margin-left: 10px;" *ngIf="checked||newArray.length!=0">Clear All</span>
+                                <span style="margin-left: 10px;" *ngIf="!checked&&newArray.length==0">Select All</span>
+                            </mat-checkbox>
+                            <div *ngFor="let rule of rules; let index = index"
+                                style="padding: 0; margin: 0; border-radius: 0;" class="mat-elevation-z2">
+                                <div style="padding: 10px 10px 10px 30px; cursor: pointer;">
+                                    <mat-checkbox color="primary" (click)="$event.stopPropagation();"
+                                        [checked]="checked||isRulesSelected(rule.name)"
+                                        (change)="setAll($event,rule.id)"></mat-checkbox>
+                                    <span matTooltip="{{rule.name}}"
+                                        style="padding-left: 10px;font-size: 14px;position: absolute;width: 86%;overflow: hidden;text-overflow: ellipsis;">
+                                        {{rule.name}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-drawer>
+                    <mat-drawer-content >
+                        <div class="header" style=" margin-left: 1rem;">
+                            Export Selected Ruless
+                        </div>
+                        <div class="content-card" style=" margin-left: 1rem;">
+                            <div style="font-size: 15px; padding: 10px;">
+                                <i *ngIf="newArray.length" style="color: gray;">
+                                    Rules Selected: <a style="color: black;">{{newArray.length}}</a>
+                                </i>
+                                <i *ngIf="!newArray.length" style="color: gray;">
+                                    Select at least one Rule.
+                                </i>
+                            </div>
+                            <div style="color: black; font-size: 15px; padding: 20px;" *ngIf="newArray.length">
+                                <i style="padding-right: 20px;">
+                                    Click to proceed:
+                                </i>
+                                <button mat-stroked-button color="primary" class="exp-icon" (click)='exportRules()'
+                                    style="background-color: #ebebeb;">
+                                    <mat-icon>cloud_download</mat-icon>
+                                    <span style="padding-left: 10px;">Export As JSON</span>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-drawer-content>
+                </mat-drawer-container>
+            </mat-tab>
+            <mat-tab label="Import">
+                <div class="tab-content-container">
+                    <div class="header">
+                        Import Rules
+                    </div>
+                    <div class="content-card">
+                        <div style="height: 50px;" class="right-align1">
+                            <!-- FILE SELECTION INPUT -->
+                            <input class="center-align upload-button" type="file" accept=".json" #file
+                                style="display: none" (change)="selectFile($event)" />
+                            <!-- FILE SELECTION BUTTON -->
+                            <div *ngIf="fileArray.length==0 && !uploading"
+                                style="color: silver; font-size: 15px; padding: 10px; display: flex; align-items: center; justify-content: flex-start;">
+                                <i style="padding-right: 5px;">
+                                    Click to select JSON file:
+                                </i>
+                                <button mat-stroked-button color="primary" (click)="file.click()">
+                                    <mat-icon> backup</mat-icon>
+                                    <span style="padding-left: 10px;">Select A JSON File</span>
+                                </button>
+                            </div>
+                            <!-- FILE UPLOAD BUTTON -->
+                            <div *ngIf="fileArray.length>0"
+                                style="color: silver; font-size: 15px; padding: 20px; display: flex; align-items: center; justify-content: flex-start;">
+                                <i style="padding-right: 10px;">
+                                    Click to import the selected JSON file:
+                                </i>
+                                <button mat-stroked-button color="primary" style="margin-right: 10px;"
+                                    (click)="upload()" [disabled]="uploading">
+                                    <mat-icon>cloud_upload</mat-icon>
+                                    <span style="padding-left: 10px;">{{uploading ? 'Importing' : 'Confirm
+                                        Import'}}</span>
+                                </button>
+                                <!-- CLEAR BUTTON -->
+                                <button mat-stroked-button color="warn" (click)="fileArray=[]"
+                                    *ngIf="fileArray.length>0 && !uploading">
+                                    <mat-icon>clear</mat-icon>
+                                    <span style="padding-left: 10px;">Clear Selection</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div>
+        <button class="clos-btn" style="top: 10px" mat-raised-button (click)="close()">
+            <mat-icon>close</mat-icon>
+            <span>Close</span>
+        </button>
+    </div>
+</div>

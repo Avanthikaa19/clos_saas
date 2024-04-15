@@ -1,0 +1,142 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        INPUTS
+    </div>
+    <div class="inputs-section-container">
+        <p></p>
+        <table class="inputs-table">
+            <thead style="text-align: center;">
+                <tr>
+                    <th class="sno-column">#</th>
+                    <th class="selection-column">Workflow</th>
+                    <th class="selection-column">Worksheet</th>
+                    <th class="selection-column">Task</th>
+                    <th class="instance-column">Instance</th>
+                    <th class="instance-column">Output</th>
+                    <th class="remove-column"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let inp of config.inputs; let index = index; trackBy: trackByIndex;">
+                    <tr>
+                        <td class="sno-column">{{index+1}}</td>
+                        <td class="selection-column">
+                            <div class="selection-container">
+                                <mat-select [(ngModel)]="config.inputs[index].workflowName" [disabled]="loadingWorkflows" (selectionChange)="onWorkflowSelected(index, $event)" class="min-select" style="width: 100%;">
+                                    <mat-option *ngFor="let workflow of workflows" [value]="workflow">{{workflow}}</mat-option>
+                                </mat-select>
+                                <mat-icon *ngIf="inputChooserData[index].currentWorkflowValueInvalid" color="warn" matTooltip="This value '{{config.inputs[index].workflowName ? config.inputs[index].workflowName : 'empty'}}' is invalid.">info</mat-icon>
+                            </div>
+                        </td>
+                        <td class="selection-column">
+                            <div class="selection-container">
+                                <mat-select [(ngModel)]="config.inputs[index].worksheetName" [disabled]="inputChooserData[index].loadingWorksheets" (selectionChange)="onWorksheetSelected(index, $event)" class="min-select" style="width: 100%;">
+                                    <mat-option *ngFor="let worksheet of inputChooserData[index].worksheets" [value]="worksheet">
+                                        {{worksheet}}</mat-option>
+                                </mat-select>
+                                <mat-icon *ngIf="inputChooserData[index].currentWorksheetValueInvalid" color="warn" matTooltip="This value '{{config.inputs[index].worksheetName ? config.inputs[index].worksheetName : 'empty'}}' is invalid.">info</mat-icon>
+                            </div>
+                        </td>
+                        <td class="selection-column">
+                            <div class="selection-container">
+                                <mat-select [(ngModel)]="config.inputs[index].taskName" [disabled]="inputChooserData[index].loadingTasks" (selectionChange)="onTaskSelected(index, $event)" class="min-select" style="width: 100%;">
+                                    <mat-option *ngFor="let task of inputChooserData[index].tasks" [value]="task">{{task}}</mat-option>
+                                </mat-select>
+                                <mat-icon *ngIf="inputChooserData[index].currentTaskValueInvalid" color="warn" matTooltip="This value '{{config.inputs[index].taskName ? config.inputs[index].taskName : 'empty'}}' is invalid.">info</mat-icon>
+                            </div>
+                        </td>
+                        <td class="instance-column">
+                            <div>
+                                <input [(ngModel)]="config.inputs[index].taskInstance" class="min-input">
+                            </div>
+                        </td>
+                        <td class="instance-column">
+                            <div>
+                                <input [(ngModel)]="config.inputs[index].outputOnInstance" class="min-input" style="font-weight: bold; color: crimson;">
+                            </div>
+                        </td>
+                        <td class="remove-column">
+                            <div>
+                                <button mat-icon-button color="warn" (click)="removeInput(index)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <div style="padding: 5px 0 20px 0;">
+            <button mat-raised-button color="primary" (click)="addInput()">
+          <mat-icon>add</mat-icon>
+          <span>Add Input</span>
+        </button>
+        </div>
+    </div>
+    <div class="category-header">
+        OUTPUTS
+    </div>
+    <div class="outputs-section-container">
+        <ng-container *ngFor="let out of config.outputs; let index = index; trackBy: trackByIndex;">
+            <table>
+                <tbody>
+                    <tr style="font-weight: bold; color: crimson;">
+                        <td>
+                            <span class="min-label">Output</span>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input [(ngModel)]="config.outputs[index].instance" class="min-input" style="color: crimson;">
+                        </td>
+                        <td>
+                            <button mat-button color="warn" (click)="config.outputs.splice(index, 1)">
+                  <mat-icon>remove</mat-icon>
+                  <span style="padding-left: 5px;">Remove</span>
+                </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="padding: 0 0 5px 20px; border-bottom: solid gainsboro 2px; margin-bottom: 10px;">
+                <app-field-mapper-fragment [(config)]="out.fieldMapping"></app-field-mapper-fragment>
+            </div>
+        </ng-container>
+        <div style="padding: 5px 0 20px 0;">
+            <button mat-raised-button color="primary" (click)="addOutput()">
+          <mat-icon>add</mat-icon>
+          <span>Add Output</span>
+        </button>
+        </div>
+    </div>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Resolution Timer (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.resolutionTimerMs" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Stop On Any Single Queue Error</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="stopOnAnyQueueError" [(ngModel)]="config.task.stopOnAnyQueueError" style="margin-top: 7px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <mat-icon>bug_report</mat-icon>
+        <span style="padding-left: 10px;">Print Config To Console</span>
+      </button>
+    </div>
+</div>

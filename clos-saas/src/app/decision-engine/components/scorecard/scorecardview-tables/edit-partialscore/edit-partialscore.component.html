@@ -1,0 +1,13 @@
+<mat-hint align="start">
+    <strong>partial Score</strong>
+    <span><mat-icon style="float:right;cursor:pointer;color:red" [matTooltip]="'close'" mat-dialog-close>close</mat-icon></span>
+</mat-hint>
+<div class="at-separator-thick"></div>
+<!-- Enter Partial Score -->
+<mat-form-field appearance="fill" style="font-size: 12px;" class="mt-2 d-block no-underline input-field">
+    <input matInput type="number" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" [(ngModel)]="partialScore" placeholder="Enter Partial Score" autocomplete="off" />
+</mat-form-field>
+<!-- Partial Score Update -->
+<button mat-stroked-button style="background:#3445b4;color:white;border-radius: 1.5rem;margin-left:80px;" mat-dialog-close [matTooltip]="'Update Partial Score'" (click)="updatePartialScore();">
+ <mat-icon>save</mat-icon><span style="margin-left:10px;">Update</span>
+</button>

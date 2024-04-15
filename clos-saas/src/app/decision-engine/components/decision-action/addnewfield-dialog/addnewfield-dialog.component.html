@@ -1,0 +1,103 @@
+<div class="main-container">
+    <div class="module-header-container" *ngIf="false">
+        <span class="go__back-container">
+            <button mat-stroked-button
+                style="font-weight: 600;background-color: rgb(248, 248, 248);box-shadow: 3px 3px rgb(238, 236, 236);margin-right: 1rem;">
+                <mat-icon>arrow_circle_left</mat-icon>
+                Go back
+            </button>
+        </span>
+    </div>
+    <div class="tab-container">
+        <div class="main-tabs-container">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="tab-icon">how_to_reg</mat-icon>
+                        <span style="font-weight: 600;">
+                            Add New Field
+                        </span>
+                    </ng-template>
+                    <div class="form-content-container">
+                        <div class="table-content-container d-flex">
+                            <div class="role-detail-container">
+                                <table>
+                                    <tr>
+                                        <td class="required">Field Name</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="objectModelField.field_name" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Field Type</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="objectModelField.field_type" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>:</td>
+                                        <td><textarea class="min-input" rows="1" cols="30" [(ngModel)]="objectModelField.description" style="background-color: F4F4F4; resize: none;" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="500"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tag</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="objectModelField.tag" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="role-detail-container">
+                                <table>
+                                    <tr>
+                                        <td>In_Use</td>
+                                        <td>:</td>
+                                        <td><input type="text" [(ngModel)]="objectModelField.in_use" class="min-input" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Source</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="objectModelField.source" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Others</td>
+                                        <td>:</td>
+                                        <td><textarea class="min-input" rows="1" cols="30" [(ngModel)]="objectModelField.others" style="background-color: F4F4F4; resize: none;" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="500"></textarea></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="cdu__btn__container">
+                        <div class="delete__btn-container">
+                            <ng-container>
+                                <button mat-raised-button matDialogClose="onCloseClick()">
+                                <mat-icon style="margin-right: 1rem;">cancel</mat-icon>
+                                <span>
+                                    Close
+                                </span>
+                            </button>
+                            </ng-container>
+                        </div>
+                        <div class="create__btn-container">
+                            <button mat-raised-button class="save_btn" (click)="objectModelField.id ? updateField(objectModelField.id) : addField()">
+                                <mat-icon style="margin-right: 1rem;">{{ objectModelField.id ? 'edit' : 'add' }}</mat-icon>
+                                <span>{{ objectModelField.id ? 'Update Field' : 'Save' }}</span>
+                             </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab class="input" *ngIf="false">
+                    <ng-template mat-tab-label>
+                        <mat-icon style="padding: 1rem;" class="example-tab-icon">admin_panel_settings</mat-icon>
+                        <span style="font-weight: 600;">Assigned Users</span>
+                    </ng-template>
+
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+    <notifier-container></notifier-container>

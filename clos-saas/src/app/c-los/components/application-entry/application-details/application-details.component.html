@@ -1,0 +1,205 @@
+<div class="main-container">
+    <div class="content-container">
+        <div class="table-container" style="overflow: auto;">
+            <table>
+                <tr>
+                    <td>Applicant Name <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" class="min-select" [(ngModel)]="applicationDetails.applicantName" (ngModelChange)="saveApplicationData()" appPreventSpace >
+                    </td>
+                    <td>Entity Name <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" class="min-select" [(ngModel)]="applicationDetails.entityName" (ngModelChange)="saveApplicationData()" appPreventSpace>
+                    </td>
+                    <td>Designation <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td> 
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.designation" (ngModelChange)="saveApplicationData()" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Company Id <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.companyId" (ngModelChange)="saveApplicationData()" (keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                    <td>% Share
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.share" (ngModelChange)="saveApplicationData()" (keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                    <td>Passport Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.passportNumber" (ngModelChange)="saveApplicationData()"(keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Office Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea " [(ngModel)]="applicationDetails.officeAddress" (ngModelChange)="saveApplicationData()" appPreventSpace></textarea>
+                    </td>
+                    <td>Home Address
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea " [(ngModel)]="applicationDetails.homeAddress" (ngModelChange)="saveApplicationData()" appPreventSpace></textarea>
+                    </td>
+                    <td>Contact Number
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="number" class="min-select" 
+                        [(ngModel)]="applicationDetails.contactNumber"
+                        (ngModelChange)="saveApplicationData()" (keydown)="preventLetterE($event)" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mail Id
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="email" class="min-select" [(ngModel)]="applicationDetails.mailId" (ngModelChange)="saveApplicationData()"
+                        #mail_id="ngModel" matInput [ngModelOptions]="{ standalone: true }"
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" appPreventSpace>
+                    <div *ngIf="mail_id.errors?.['pattern']" class="error-message">
+                     Invalid email format.
+                    </div>
+                    </td>
+                    <td>Date of birth<span style="color:red;">*</span></td>
+                    <td>:</td>
+                    <td>
+                        <input type="date" class="min-select" [max]="currentDate" [(ngModel)]="applicationDetails.dob" (ngModelChange)="calculateAge();saveApplicationData()">
+                    </td>
+                    <td>Age
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select"  
+                        [(ngModel)]="applicationDetails.age"
+                        (ngModelChange)="saveApplicationData()" readonly (keydown)="preventLetterE($event)" appCommaSeparatedInput>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nationality
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.nationality" (ngModelChange)="saveApplicationData()" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" appPreventSpace>
+                    </td>
+                    <td>Nation Id
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.nationalId" (ngModelChange)="saveApplicationData()" appPreventSpace>
+                    </td>
+                    <!-- <td>Present Date
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="date" class="min-select" [(ngModel)]="applicationDetails.presentDate" (ngModelChange)="saveApplicationData()">
+                    </td> -->
+                </tr>
+                <tr>
+                    <td>Applicant Signature</td>
+                    <td>:</td>
+                    <td class="d-flex"><span>
+                        <input prohibitedChars  type="file" #uploadFile3
+                          accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                          (change)="onFilesSelected($event, 'applicantSignature')" style="display: none;"/>
+                        <mat-icon (click)="uploadFile3.click();" class="inverted-icon mt-3 mr-5">attach_file</mat-icon>
+                      </span>
+                      <div class="scrollable-content">
+                        <label class="file-input-label">
+                          <div class="selected-files">
+                            <div *ngFor="let fileName of applicationDetails.applicantSignature; let i = index">
+                              <u  (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                              <button mat-icon-button>
+                                <mat-icon (click)="removeAttachment('applicantSignature',i)" class="remove-icon">clear</mat-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfFieldName" style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField" [value]="udfFieldName">{{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputField()" matTooltip="Add Fields" style="background-color:#0e2954;color: white;">
+                                    <mat-icon>add</mat-icon></button></td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldNames;let i=index">
+                            <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{ fieldName }}</td>
+                            <td>:</td>
+                            <td>
+                                <ng-container [ngSwitch]="getFieldType(fieldName)">
+                                    <input *ngSwitchCase="'ALPHA_NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="text" class="udf-input">
+                                    <input *ngSwitchCase="'DATE'" [max]="currentDate" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="date" class="udf-input">
+                                    <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                    <input *ngSwitchCase="'DATE_TIME'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="datetime-local" class="udf-input">
+                                    <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                </ng-container>
+                            </td>
+                            <td>
+                                <button style="border-radius: 44%;background-color: aliceblue;border: none;" matTooltip="Remove">
+                                    <mat-icon (click)="removeInput(i)" style="color: red;">remove</mat-icon>
+                                </button>
+                            </td>
+                        </div>
+                        </tr>
+                    </table>
+               </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="loading-container" *ngIf="loading">
+      <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+      <span>Loading... Please wait...</span>
+  </div>
+            <div class="left__end-container">
+                <span style="color: red;font-weight: bold;margin:2rem;">
+                    {{errMsg()}}
+                </span>
+                <button style="margin:1rem;" [disabled]="!disable()" class="clos-submit-btn"  mat-raised-button (click)="nextstep()">
+                    <mat-icon>forward</mat-icon>
+                    <span>Next</span>
+                </button>
+                <button mat-raised-button style="margin:1rem;" class="clos-submit-btn" (click)="previoustab()">
+                    <mat-icon style="transform: rotate(180deg)">forward</mat-icon>
+                    <span>Previous</span>
+                </button>
+            </div>
+    </div>
+</div>

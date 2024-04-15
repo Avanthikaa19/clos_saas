@@ -1,0 +1,44 @@
+<div class="registration-container">
+    <div class="tabs">
+        <div class="tab selected">
+            <mat-icon class="tab-icon">how_to_reg</mat-icon><span style="font-weight: bold;">Roles</span>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="new-user">New Role</div>
+        <div class="divider"></div>
+        <div class="created-date">Created on 24-08-2023</div>
+    </div>
+    <div class="registration-form">
+        <div class="form-field ml-5">
+            <label for="firstname">Name <span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="text" id="firstname" required>
+        </div>
+        <div class="form-field ml-5">
+            <label for="lastname">Description<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="text" id="lastname" required>
+        </div>
+        <div class="form-field ml-5" style="display: flex;">
+            <label for="initials">Default Access<br> Template<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <div id="initials" style="max-width: fit-content;display: flex; " class="ml-5">
+                <div style="line-height: 3rem;" class="user__role-container  parent__row-flex flex-grow ml-3">
+                    <div class="flex-shrink ml-1">
+                        <mat-icon style="font-size: 2rem; text-align: center;margin-top: 0.1rem;">security</mat-icon>
+                    </div>
+                    <div style="line-height: 2.5rem; text-align: left;text-transform: capitalize;" class="flex-grow">
+                        <span>{{changeRoleNamesText ? roleNamesFull :
+                            roleNamesShort}}</span>
+                    </div>
+                </div>
+                <div class="rat__edit-container flex-grow ml-5" style="cursor: pointer;color: gray;">
+                    <span><u (click)="openAccessTemplateDialog()">Add Template</u></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="save-button">
+        <button><mat-icon>save</mat-icon>Save Role</button>
+    </div>

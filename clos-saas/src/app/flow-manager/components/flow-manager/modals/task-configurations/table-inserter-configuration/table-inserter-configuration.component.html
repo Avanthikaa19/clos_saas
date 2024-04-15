@@ -1,0 +1,152 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        SELECT TABLE:
+    </div>
+    <table *ngIf="config">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Table Type</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="selectedTable" class="min-select" (ngModelChange)="clearFields(); updateSelectedTableDetails();">
+                        <mat-option *ngFor="let tab of tables" [value]="tab">{{tab.type}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Table Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="selectedTable.name" [disabled]="selectedTable.type!='Custom'" (keyup)="updateSelectedTableDetails()" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <button mat-raised-button color="primary" (click)="refreshTableFields()" style="margin: 5px;">
+                        Fetch Fields
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FIELD - ENTRY MAP:
+    </div>
+    <table *ngIf="config.data" style="width: 100%;">
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <div *ngFor="let element of config.data.fieldMapping; let i = index" style="position: relative; margin-bottom: 10px;">
+                        <table style="width: calc(100% - 50px);">
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                    <td>
+                                        <span class="min-label">Field Name</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.data.fieldMapping[i].tableField" readonly class="min-input" style="width: 50%; color:gray;">
+                                        <span class="min-label" style="width: 15%; overflow: hidden;">Data Type : </span> <input [(ngModel)]="config.data.fieldMapping[i].dataType" readonly 
+                                        class="min-input" style="width: 30%; color:gray;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Entry Field</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <div style="position: relative;">
+                                            <input [(ngModel)]="config.data.fieldMapping[i].entryField" [disabled]="config.data.fieldMapping[i].autoincrement" class="min-input">
+                                            <div style="color: red; position: absolute; right: 5px; top: 4px; font-style: italic; opacity: 0.5;"
+                                                class="noselect" matTooltip="This field does not allow empty / null values."
+                                                *ngIf="!config.data.fieldMapping[i].nullable && config.data.fieldMapping[i].entryField.trim().length == 0 && !config.data.fieldMapping[i].autoincrement">
+                                                REQUIRED
+                                            </div>
+                                            <div style="color: gray; position: absolute; right: 5px; top: 4px; font-style: italic; opacity: 0.5;"
+                                                class="noselect" matTooltip="This field is auto-handled by the backend. No mapping is required."
+                                                *ngIf="config.data.fieldMapping[i].autoincrement">
+                                                AUTO-HANDLED
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="config.data.fieldMapping[i].dataType == 'DATE'">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input [(ngModel)]="config.data.fieldMapping[i].writeFormat" placeholder="Date format (If reading from a string field)." class="min-input" 
+                                        style="width: 100%;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="config.data.fieldMapping.length > 1"
+                            style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Entries Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Delete Older BatchIds</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="config.deleteOlderBatchId" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

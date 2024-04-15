@@ -1,0 +1,177 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height" >
+    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+            <div class="head-container">
+            <div class="head-abs" [ngStyle]="getBackgroundStyle()" >
+                <input type="file" accept="image/*" (change)="handleImageChange($event)" style="display: none">
+                <button mat-icon-button [matMenuTriggerFor]="menu" style="position: absolute;top:5%;right: 0;margin-top: 0.5%;" *ngIf="!createBtn">
+                <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                <button   mat-menu-item (click)="openImageUpload()">
+                <mat-icon>add_photo_alternate</mat-icon>
+                Add header image
+                </button>
+                <button mat-menu-item (click)="openColorPickerDialog()">
+                <mat-icon> format_color_fill</mat-icon>
+                <span>Add header background color</span>
+                </button>
+                <button mat-menu-item (click)="openTextEditorDialog()">
+                <mat-icon> title</mat-icon>
+                 Edit Title
+                </button>
+                <button mat-menu-item (click)="openFontStyleDialog()">
+                    <mat-icon>brush</mat-icon>
+                    Edit title color
+                </button>
+                <button mat-menu-item (click)="openbodybgColorPickerDialog()">
+                    <mat-icon> format_color_fill</mat-icon>
+                    <span>Add body background color</span>
+                </button>
+                </mat-menu>
+                <div class="float-left">
+                   <div>
+                      <p class="title" style="padding: 0px; margin: 0px;font-size: 27px;
+                      font-weight: 700;
+                      align-items: center;
+                      justify-content: center;display: flex;" 
+                        [style.color]="fontColor">
+                        {{dynamicTitle}}
+                        </p>
+                         <div class="content" style="font-size: 17px;font-weight: 600;padding-top: 10px;" [style.color]="fontColor">You can develop your own dashboard, edit existing ones / You can map and download your dashboards here.</div>
+                   </div>
+                </div>
+                <div style="display: flex;position: absolute;
+                right: 10px;
+                bottom: -8px;height:87px" class="search">               
+   
+                   <div class="inner-search-container">
+                    <mat-icon class="icon-search">search</mat-icon>
+                    <input class="min-input" [(ngModel)]="keyword" (keydown)="pageNumber=0;onKeyup()" type="text" style=" width: 94%; padding-left: 4rem; height: 35px;margin-top: 25px;" placeholder="Search by template">
+                    <mat-icon [hidden]="keyword==''" style="color: red;margin-left: -3.5rem;position: absolute;top:33px;cursor: pointer;font-size: 1.85rem;" (click)="pageNumber=0;keyword='';onKeyup()">close</mat-icon>
+                </div>
+                   <!-- <mat-form-field class="search-input-field1" style="margin-right: 20px;margin-top: 22.5px;position: relative;left:25px;display:inline-flex;flex-direction: column;width:227%;border: 1px solid #888 !important;"
+                   >
+                   <mat-label>
+                       Search by Template</mat-label>
+                   <mat-icon matPrefix style="margin-right: 10px; color: rgb(11, 63, 65);margin-bottom: -7px;font-size:18px">search</mat-icon>
+                   <input [(ngModel)]="keyword" (keydown)="pagination.pageIndex=0;pageNumber=0;onKeyup()" type="text" matInput
+                       [style.color]="'black'"
+                       style="height: 16px;" />
+                       <mat-icon *ngIf="keyword" matSuffix class="box-icon-hov box-icon-move"
+                       style="margin-left: -25px;margin-top: 1px;font-size: 13px;color: black;"
+                       (click)="pagination.pageIndex=0;pageNumber=0;keyword='';onKeyup()">close
+                       </mat-icon>
+                   </mat-form-field> -->
+                  
+                   <button mat-flat-button routerLink="/dynamic/dynamic/custom-dashboard"
+                   class="clos-submit-btn" style="height: 35px;width: 100%;
+                           margin-right: 20px;position: relative;left:10px;top:25px;">
+                           <mat-icon style="margin-right: 5px;" class="icon">add</mat-icon>
+                           <span style="position: relative;margin-right: 5px;" class="text">Create</span>
+                   </button>
+                   </div>
+                </div>
+                </div>
+            </div>
+         <div>
+          
+<div style="overflow: auto;" [style.background-color]="bodybackgroundColor">
+    <div>
+        <div class="container-fluid" style="margin-top:20px ;" *ngIf="allTemplate?.length!==0" [hidden]="loading==true">
+        <div class="row" [style.height.px]="component_height-215" style="overflow: auto;">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 custom-col"  *ngFor ="let template of allTemplate">
+                <div class="card mb-4">
+
+                <!-- <div class="col-lg-12 col-md-12"> -->
+
+                        <div (click)="goToTemplate(template.id)" matTooltip="Click to view template">
+                            <p style="font-size: 16px;font-weight: 700;margin:5px;display: flex;justify-content: space-between;" class="col-lg-12 col-md-12"
+                                [style.color]="' rgba(0, 0, 0, 0.87)'">
+                                <span
+                                #nameDisplay
+                                class="name-display"
+                                (mouseenter)="checkTooltip(template.dashboardName)"
+                                [matTooltip]="shouldShowTooltip ? template.dashboardName : ''"
+                                (mouseleave)="resetTooltip()"  style="margin-right: auto;"
+                              >
+                                {{ template.dashboardName}}
+                              </span>     
+                               <span *ngIf = "template.userName == getUserName || userRole =='SUPER'" style="float: right;" matTooltip="Click here to map"><button mat-icon-button style="margin-top: -10px;"><mat-icon style="color: green;font-size: 20px;"
+                                    (click)="dashboardMapping(template);$event.stopPropagation();" >launch</mat-icon></button></span>
+                                <span *ngIf = "template?.userName == getUserName || userRole =='SUPER'" style="float: right;" matTooltip="Click here to edit"><button (click)="goToTemplate(template?.id);$event.stopPropagation();" mat-icon-button style="margin-top: -10px;"><mat-icon style="color: blue;font-size: 20px;"
+                                 >edit</mat-icon></button></span>
+                                <span *ngIf = "template.userName == getUserName || userRole =='SUPER'" style="float: right;" matTooltip="Click here to delete"><button (click)="$event.stopPropagation();this.deleteTemplateConfirm = true;deleteId = template?.id " mat-icon-button style="margin-top: -10px;"><mat-icon style="color: red;font-size: 20px;"
+                                 >delete</mat-icon></button></span>
+                            </p>
+                            <div style="overflow: hidden;width:100%" [style.background-color]="getUserColor(template.id)">
+                            <div class="dash-hov">
+                                <div *ngFor ="let type of template?.widget" >
+                            <app-template-widgets [widget]="type.type"></app-template-widgets>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <div class="font-italic" style="bottom: 0;right: 2px;font-size: 13px;padding: 7px;position: relative;float: right;" [style.color]="' rgba(0, 0, 0, 0.87)'">Created By: {{template.userName}}</div>
+                        </div>
+                    </div>
+                <!-- </div> -->
+                </div>
+        </div>
+        </div>
+        <div class="loading-container" *ngIf="loading" style="position: absolute;top:54%;left:48%;font-style:italic">
+            <mat-progress-spinner style="right:32px;top:20px" color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading... Please wait...</span>
+        </div>
+        <!-- PAGE CONTROLS -->
+        <div class="paginator-container" style="position:absolute;right:47%;bottom:3%;color:black" [hidden]="allTemplate?.length==0" *ngIf="!loading">
+            <div class="middle-container">
+                <button class="page-links" style="height:30px" (click)="pageNumber=pageNumber-1;getTemplate()" [disabled]="pageNumber===0"><mat-icon style="display: flex;
+                    align-items: center;
+                    justify-content: center;margin-top:-12px">&laquo;</mat-icon></button>
+            </div>
+            <div class="left-container" *ngFor="let pageNum of getPageNumbers()">
+                <button class="page-links" [class.active]="pageNum === pageNumber+1" (click)="pageNumber = pageNum - 1; getTemplate()">{{ pageNum }}</button>
+            </div>
+            <div class="middle-container">
+                <button class="page-links" style="height:30px" (click)="nextPage(); getTemplate()" [disabled]="isLastPage()||totalCount<10"><mat-icon style="display: flex;
+                    align-items: center;
+                    justify-content: center;margin-top:-12px">&raquo;</mat-icon></button>
+            </div>
+        </div>    
+        <div class="right-container" style="position:absolute;right:5%;bottom:5%"  *ngIf="!loading && allTemplate?.length!==0">
+            Total Items: <span style="font-weight: bold">{{totalCount}}</span>
+        </div>  
+    </div>
+    <div *ngIf="deleteTemplateConfirm" class="backdropBackground-theme-light noselect"
+     style="position: fixed; top: 0; left: 0; height: 100%; width: 100%;"></div>
+  <div class="delete-dialog-theme-light dialog-theme-light">
+     <mat-card class="bg"
+        style="position: absolute; width: 14%; top:40%; left: 50%;transform: translate(-50%, -50%); z-index: 19;"
+        *ngIf="deleteTemplateConfirm">
+        <mat-card-content>
+           <div style="text-align: center;">
+              <span class="deleteBox">
+                 <p class="hdr" style="font-size: 13px !important;text-transform: none !important;"
+                    [style.color]="'#000000'">
+                    Are you sure you want to delete ?</p>
+                 <button mat-button class="btn-primary-admin ml-3" (click)="deleteTemplateConfirm=false"
+                    style="background-color: #f9a2a2db; line-height: 25px;font-size: 11px; width: 10.6%;">Cancel</button>
+                 <button class="btn-primary-admin ml-3" mat-button (click)="deleteTemplate()"
+                    style="line-height: 25px;font-size: 11px; width: 10.6%;background-color: black;color: white;margin-left: 10px;">
+                       <div *ngIf="deleteTemplates" class="spinner-container">
+                        <div class="spinner-border text-light spinner-border-md"  style="width: 1rem;height: 1rem;">
+                        </div>
+                      </div>
+                     Delete                 
+                </button>
+              </span>
+           </div>
+        </mat-card-content>
+     </mat-card>
+  </div>
+</div>
+</div>
+<div class="placeholder-container" style="position: absolute;top:50%;left:48%;font-style:italic;color:black" *ngIf="!loading && allTemplate?.length==0">
+    <span>No dashboards found!</span>
+</div>
+</div>

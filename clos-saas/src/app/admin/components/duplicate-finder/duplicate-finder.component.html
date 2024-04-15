@@ -1,0 +1,30 @@
+<section>
+    <div class="pt-4 pl-4">
+        <mat-hint  align="start"><strong>Duplicate Finder</strong>
+        </mat-hint>
+        <div class="at-separator-thick"></div>
+        <!-- <div class="mt-4" style="width: 0px;margin: 10px;margin-left: 19px;">
+            <ng-container>
+                <mat-checkbox [(ngModel)]="select" (change)="temp($event)">Select All</mat-checkbox>
+            </ng-container>
+        </div> -->
+        <div style="width: 0px;margin: 10px;">
+            <ng-container *ngFor= "let element of fields">
+                <mat-checkbox style="margin-left: 10px;text-transform: capitalize;" [(ngModel)]="selected[element]" (ngModelChange)="tableSelect($event,element)">
+                    {{element.replace('secTDINo','SEC/DTI Registration No').replace('surName','LastName')}}
+                </mat-checkbox>
+            </ng-container>
+        </div>
+    </div>
+    <div class="mt-4 mb-4 mr-4 d-flex">
+        <button mat-button class="next-btn ml-auto" style="background:red;color:white;margin-right: 60px;" mat-dialog-close> 
+            <span class="material-symbols-outlined">
+                close
+            </span>Cancel</button>
+        <button mat-button class="next-btn ml-auto" style="background:#3445b4;color:white" mat-dialog-close (click)="putFields();">
+            <span class="material-symbols-outlined">
+                done_all
+            </span>Apply
+        </button>
+    </div>
+</section>

@@ -1,0 +1,82 @@
+<div class="no-access" *ngIf="!ac.super && !(ac.items?.LOAN_ORIGINATION_DASHBOARD_VIEW && ac.items?.LOAN_ORIGINATION_DASHBOARD)">
+  <app-no-access></app-no-access>
+</div> 
+
+<section class="p-4" *ngIf="ac.super || (ac.items?.LOAN_ORIGINATION_DASHBOARD_VIEW && ac.items?.LOAN_ORIGINATION_DASHBOARD)">
+<div class="row">
+  <div class="mb-4 col-sm-12 col-lg-12">
+    <div style="margin-right: auto;margin-left: 10px;">
+      <p class="mb-1" style="font-weight: 600;">DASHBOARD</p>
+      <div class="at-separator-thick"></div>
+    </div>
+    <div class="float-right" style="padding-top: 10px;">
+      <!-- Date Filters -->
+      <mat-form-field [hidden]="!openCustomDate" appearance="fill" (click)="picker.open()" class="mr-2" style="float: right;font-size: 10px;">
+         <mat-label>Enter a date range</mat-label>
+         <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" [(ngModel)]="startDate" readonly>
+            <input matEndDate placeholder="End date" [(ngModel)]="endDate"
+               (ngModelChange)="onKeyup();" readonly>
+         </mat-date-range-input>
+         <mat-icon *ngIf="startDate!=null" matDatepickerToggleIcon class="clearDate" style="cursor: pointer;"
+            (click)="clearDate($event)">clear</mat-icon>
+         <mat-date-range-picker  #picker>
+         </mat-date-range-picker>
+      </mat-form-field>
+      <!-- button group for date selection -->
+      <mat-button-toggle-group *ngIf="openToggle==true" [(value)]="dateValue" style="margin-right: 25px;height: 40px"
+         (change)="FilterDate($event)">
+         <mat-button-toggle value="T" matTooltip="Today" matTooltipClass="homeTooltip" class="btn-line"
+            matTooltipPosition="above">T</mat-button-toggle>
+         <mat-button-toggle value="YES" matTooltip="Yesterday" matTooltipClass="homeTooltip"
+            matTooltipPosition="above">Y</mat-button-toggle>
+         <mat-button-toggle value="1W" matTooltip="This Week" matTooltipClass="homeTooltip"
+            matTooltipPosition="above">1W</mat-button-toggle>
+         <mat-button-toggle value="1M" matTooltip="This Month" matTooltipClass="homeTooltip" class="btn-line"
+            matTooltipPosition="above">1M</mat-button-toggle>
+         <mat-button-toggle value="1Y" matTooltip="This Year" matTooltipClass="homeTooltip" class="btn-line"
+            matTooltipPosition="above">1Y</mat-button-toggle>
+         <mat-button-toggle value="All" matTooltip="All" matTooltipClass="homeTooltip" class="btn-line"
+            matTooltipPosition="above">All</mat-button-toggle>
+         <mat-button-toggle value="Y" matTooltip="Custom Date" matTooltipClass="homeTooltip" class="btn-line"
+            matTooltipPosition="above" (click)="openCustomDate=true;picker.open();">
+            <mat-icon style="font-size:17px">today</mat-icon>
+         </mat-button-toggle>
+      </mat-button-toggle-group>
+   </div>
+  </div>
+  <div class="mb-4 col-sm-6 col-lg-2 col-half-offset" *ngFor="let item of cardContent">
+    <div class="card h-100 rounded" [style.background]="item.bg">
+      <div class="card-body">
+        <div class="card-content">
+        <p class="numbers">{{item.count}}</p><span>{{item.name}}</span></div>
+        <span class="material-symbols-outlined card-icon">
+          {{item.icon}}
+          </span>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+  </div>
+  <div class="mb-4 col-sm-12 col-lg-6">
+    <div class="card h-100 rounded p-4">
+      <p class="mb-1 text-secondary" style="font-weight: 600;">APPLICATION STAGE</p>
+      <div class="at-separator-thick"></div>
+      <div echarts [options]="barOption" class="demo-chart"></div>
+  </div>
+  </div>
+  <div class="mb-4 col-sm-12 col-lg-6">
+      <div class="card h-100 rounded p-4">
+        <p class="mb-1 text-secondary" style="font-weight: 600;">SME LOAN PRODUCTS</p>
+        <div class="at-separator-thick"></div>
+        <div *ngIf="loanProducts.length != 0" echarts [options]="pieOption" class="demo-chart"></div>
+        <div *ngIf="loanProducts.length == 0">
+          <p style="color: grey;padding-top: 160px;text-align: center;font-weight: bold;letter-spacing: 2px;font-size: 17px">
+            <mat-icon style="margin-left:-30px;position:absolute;color:red">warning</mat-icon>
+            No Data Found
+          </p>
+        </div>
+    </div>
+  </div>
+</div>
+</section>

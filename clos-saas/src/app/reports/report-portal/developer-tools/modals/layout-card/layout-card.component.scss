@@ -1,0 +1,152 @@
+.layout-card {
+    width: 475px;
+    height: 200px;
+    cursor: pointer;
+    background-color: white;
+    transition: all linear 100ms;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: column;
+    > .layout-card-header {
+        flex: 0 0 auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 30px;
+        height: 65px;
+        padding-top: 5px;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+        box-sizing: border-box;
+        border-bottom: solid whitesmoke 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        position: relative;
+        background-color: white;
+    }
+    > .layout-card-header:hover {
+        overflow: visible;
+        white-space: normal;
+        display: block;
+        height: auto;
+        min-height: 65px;
+    }
+    > .layout-card-content-wrapper {
+        flex: 1 1 auto;
+        overflow: hidden;
+        > .layout-card-content {
+            height: 100%;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 10px 5px 5px 5px;
+            margin-top: 10px;
+            > .layout-title {
+                height: 20px;
+                margin: auto;
+                width: 100%;
+                background-color: whitesmoke;
+                border: solid transparent 1px;
+                > .layout-title-data {
+                    width: 70%;
+                    border-top: solid black 2px;
+                }
+            }
+            > .layout-subtitle {
+                height: 20px;
+                margin: auto;
+                margin-top: 5px;
+                width: 60%;
+                background-color: whitesmoke;
+                border: solid transparent 1px;
+                > .layout-subtitle-data {
+                    width: 70%;
+                    border-top: solid gray 2px;
+                }
+            }
+            > div .layout-header-item {
+                height: 20px;
+                width: 30px;
+                margin-top: 5px;
+                background-color: whitesmoke;
+                border: solid transparent 1px;
+                > .layout-header-data {
+                    width: 50%;
+                    border-top: dashed black 2px;
+                }
+            }
+            > .layout-data {
+                > table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    .field-header {
+                        padding: 3px 1px 3px 1px;
+                        .field-header-item {
+                            height: 20px;
+                            background-color: whitesmoke;
+                            border: solid transparent 1px;
+                            > .field-header-data {
+                                width: calc(100% - 10px);
+                                border-top: solid #4169e1 2px;
+                            }
+                        }
+                    }
+                    .field-data {
+                        padding: 3px 1px 3px 1px;
+                        .field-data-item {
+                            height: 20px;
+                            background-color: whitesmoke;
+                            border: solid transparent 1px;
+                            > .field-data-data {
+                                width: calc(100% - 20px);
+                                border-top: solid black 2px;
+                            }
+                        }
+                    }
+                }
+            }
+            > div .layout-footer-item {
+                height: 20px;
+                width: 30px;
+                margin-top: 20px;
+                background-color: whitesmoke;
+                border: solid transparent 1px;
+                > .layout-footer-data {
+                    width: 50%;
+                    border-top: dashed black 2px;
+                }
+            }
+        }
+    }
+}
+
+.layout-element {
+    border-radius: 4px;
+    padding: 5px;
+    position: relative;
+}
+
+.center-align {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.layout-card-hoverable {
+    .layout-card-content-wrapper:hover .layout-card-content {
+        transition: transform linear 2s;
+        transform: translateY(-100%);
+        position: relative;
+    }
+    .layout-card-content-wrapper:not(:hover) .layout-card-content {
+        transition: transform linear 0.5s;
+        transform: translateY(0);
+        position: relative;
+    }
+}

@@ -1,0 +1,163 @@
+<p>assign-condition works!</p>
+<div class="whole-body">
+    <div class="main">
+        <div class="whole">
+            <div>
+                <mat-card class="first-card">
+                    <div class="main-container">
+                        <div class="header-container">
+                            <span class="category-sub-header">
+                                Choose data Fields:
+                            </span>
+                        </div>
+                        <div class="body-container">
+                            <div class="select-container">
+                                <div class="node-data">
+                                </div>
+                            </div>
+                            <div class="tree-container">
+                                <p class="category-sub-header"><u>All Types</u></p>
+                                <mat-tree style="margin-left:0px;" [dataSource]="dataSource" [treeControl]="treeControl">
+                                    <mat-nested-tree-node *matTreeNodeDef="let node" (click)="selectedNode(node.name,node.type)">
+                                        <li>
+                                            <div class="mat-tree-node list-container" [class.selected-node]="node.name == selectedNodeName">
+                                                <mat-icon>keyboard_arrow_right</mat-icon> {{node.name}} -{{node.type}}
+                                            </div>
+                                        </li>
+                                    </mat-nested-tree-node>
+                                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                                        <li class="example-tree-container ">
+                                            <div class="mat-tree-node list-container">
+                                                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                                                    <mat-icon>
+                                                        {{treeControl.isExpanded(node) ? 'indeterminate_check_box' :
+                                                        'add_box'}}
+                                                    </mat-icon>
+                                                </button> {{node.name}}
+                                            </div>
+                                            <ul class="example-tree-nested-node">
+                                                <div style="margin-top:2px;" *ngIf="treeControl.isExpanded(node)">
+                                                    <ng-container matTreeNodeOutlet></ng-container>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </mat-nested-tree-node>
+                                </mat-tree>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="center-box">
+                <button mat-stroked-button style="color: white;margin-top: 200px;background-color: rgb(199, 158, 199);" (click)="selectCondition()">
+                    <mat-icon>task_alt</mat-icon>Select
+                </button>
+            </div>
+            <div>
+                <mat-card class="first-card">
+                    <div style="margin-top:55px">
+                        <div *ngIf="integerEnable">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Enter {{selectedNodeData.nodeName}}</mat-label>
+                                <input id="new" matInput type="number" [(ngModel)]="conditionData">
+                            </mat-form-field>
+                            <button mat-raised-button style="margin: 5px;color: white;background-color: rgb(199, 158, 199);" (click)="integerCondition()">
+                                <mat-icon>add</mat-icon>ADD
+                            </button>
+
+                            <div>
+                                <div *ngIf="conditionenable"> Choose Condition:</div>
+                                <mat-radio-group [(ngModel)]="resultSelect">
+                                    <mat-radio-button class="radio-button" *ngFor="let type of integerTypes" [value]="type">
+                                        <span> {{type}}</span>
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <div *ngIf="resultSelect" class="head-1">Selected Condition is:
+                                    <mat-label class="selectlabel">{{resultSelect}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="booleanEnable">
+                            <div *ngIf="conditionenable"> Choose Condition:</div>
+                            <mat-radio-group [(ngModel)]="resultSelect">
+                                <mat-radio-button class="radio-button" *ngFor="let type1 of booleanTypes" [value]="type1">
+                                    <span> {{type1}}</span>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <div *ngIf="resultSelect" class="head-1">Selected Condition is:
+                                <mat-label class="selectlabel">{{resultSelect}}</mat-label>
+                            </div>
+                        </div>
+                        <div *ngIf="stringEnable">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Enter {{selectedNodeData.nodeName}}</mat-label>
+                                <input id="new" matInput [(ngModel)]="conditionData">
+                            </mat-form-field>
+                            <button mat-raised-button style="margin: 5px;color: white;background-color: rgb(199, 158, 199);" (click)="stringCondition()">
+                                <mat-icon>add</mat-icon>ADD
+                            </button>
+                            <div>
+                                <div *ngIf="conditionenable"> Choose Condition:</div>
+                                <mat-radio-group [(ngModel)]="resultSelect">
+                                    <mat-radio-button class="radio-button" *ngFor="let stringType of stringTypes" [value]="stringType">
+                                        <span> {{stringType}}</span>
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <div *ngIf="resultSelect" class="head-1">Selected Condition is:
+                                    <mat-label class="selectlabel">{{resultSelect}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="dateEnable">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Enter {{selectedNodeData.nodeName}}</mat-label>
+                                <input id="new" matInput [(ngModel)]="conditionData" (click)="picker.open()">
+                            </mat-form-field>
+                            <button mat-raised-button style="margin: 5px;color: white;background-color: rgb(199, 158, 199);" (click)="dateCondition()">
+                                <mat-icon>add</mat-icon>ADD
+                            </button>
+                            <div>
+                                <!-- <div class="radio-header"> Select Condition:</div>
+                                <mat-radio-group aria-labelledby="example-radio-group-label" class="radio-group"
+                                    [(ngModel)]="resultSelect">
+                                    <mat-radio-button class="radio-button" *ngFor="let dateType of dateTypes"
+                                        [value]="dateType">
+                                        <span class="radio-head"> {{dateType}}</span>
+                                    </mat-radio-button>
+                                </mat-radio-group> -->
+
+                                <mat-form-field appearance="fill" style="visibility: hidden;">
+                                    <!-- <mat-label>Enter a date range</mat-label> -->
+                                    <mat-date-range-input [rangePicker]="picker">
+                                        <input matStartDate [value]="start" placeholder="Start date" #dateRangeStart/>
+                                        <input matEndDate [value]="end" placeholder="End date" #dateRangeEnd (dateChange)="onChange(dateRangeStart,dateRangeEnd);" />
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker [calendarHeaderComponent]="ExampleHeaderComponent" class="datepicker"></mat-date-range-picker>
+                                </mat-form-field>
+                                <div *ngIf="conditionenable"> Choose Condition:</div>
+                                <mat-radio-group [(ngModel)]="resultSelect">
+                                    <mat-radio-button class="radio-button" *ngFor="let dateType of dateTypes" [value]="dateType">
+                                        <span> {{dateType}}</span>
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <div *ngIf="resultSelect" class="head-1">Selected Condition is:
+                                    <mat-label class="selectlabel">{{resultSelect}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-stroked-button mat-dialog-close style="color: red;">
+                <mat-icon>close</mat-icon>Close
+            </button>
+            <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="onCreateClick()" cdkFocusInitial>
+                <mat-icon>add</mat-icon>Apply
+            </button>
+        </mat-dialog-actions>
+    </div>
+</div>

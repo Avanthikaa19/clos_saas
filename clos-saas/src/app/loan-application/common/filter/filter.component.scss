@@ -1,0 +1,79 @@
+.main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    .header-container {
+        flex: 0 0 auto;
+        height: 5rem;
+        padding: 1rem;
+        font-weight: 600;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+    }
+
+    .middle-container {
+        background-color: whitesmoke;
+        height: 100%;
+        overflow: auto;
+        .filter-container {
+            margin-top: 1.5rem;
+            .label {
+                margin-left: 1rem;
+                text-transform: capitalize;
+
+                :first-child {
+                    margin-top: 1rem;
+                }
+            }
+
+            .search-input {
+                display: flex;
+                min-width: 4rem;
+                padding: 1.5rem;
+
+                [placeholder] {
+                    text-overflow: ellipsis;
+                }
+            }
+            .example-chip-list {
+                width: 100%;
+            }
+        }
+    }
+
+    .button-container {
+        height: 6rem;
+        padding: 1rem;
+
+        .apply_filter {
+            background-color: #3445B4;
+            color: white;
+            float: right;
+        }
+
+        .clear_filter {
+            background-color: orangered;
+            color: white;
+            float: right;
+        }
+    }
+}
+*input {
+    box-shadow: none;
+    border: none;
+    background: transparent ;
+}
+
+*input:focus {
+    outline: none;
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 0px 0px 0px 5px;
+}
+
+

@@ -1,0 +1,335 @@
+<div class="main-container">
+    <div class="button-container">
+        <div class="column_search-container">
+            <input style="width: 50%" placeholder="Search by column name..." [(ngModel)]="fieldSearchText"
+                (ngModelChange)="applyFieldSearchFilter()">
+            <mat-icon matTooltip="Clear search fields" (click)="fieldSearchText='';applyFieldSearchFilter()"
+                style="margin-left: 1rem;font-size:2rem;margin-top: 0.5rem;color: rgb(162, 36, 36);cursor: pointer;">
+                cancel</mat-icon>
+        </div>
+        <div class="button-container">
+            <ng-container>
+                <button mat-raised-button class="apply_filter" matTooltip="Apply Filter" *ngIf="filterButton"
+                    (click)="openFilter()">
+                    <span class="material-symbols-outlined">
+                        filter_list
+                    </span>
+                    <span style="margin-left: 1rem;">
+                        Apply Filter
+                    </span>
+                </button>
+            </ng-container>
+
+            <ng-container>
+                <button mat-raised-button class="clear_filter" matTooltip="Clear Filters" *ngIf="clearButton" (click)="clearClick()">
+                    <span class="material-symbols-outlined">
+                        clear_all
+                    </span>
+                    <span style="margin-left: 1rem;">
+                        Clear Filter
+                    </span>
+                </button>
+
+            </ng-container>
+
+            <ng-container>
+                <button mat-raised-button class="display_all" matTooltip="To display all fields"
+                    *ngIf="displayAllButton" (click)="displayAllClick()">
+                    <span class="material-symbols-outlined">
+                        menu
+                    </span>
+                    <span style="margin-left: 1rem;">
+                        Display All Fields
+                    </span>
+                </button>
+            </ng-container>
+
+            <ng-container>
+                <button mat-raised-button class="copy_clip" matTooltip="CopyToClipboard"
+                    (click)="copyTokenToClipboard('table')">
+                    <span class="material-symbols-outlined">
+                        content_copy
+                    </span>
+                    <span style="margin-left: 1rem;">
+                        Copy to Clipboard
+                    </span>
+                </button>
+            </ng-container>
+
+            <ng-container>
+                <button mat-raised-button class="export" *ngIf="exportButton" matTooltip="Export"
+                    (click)="exportClick()">
+                    <span class="material-symbols-outlined">
+                        download
+                    </span>
+                    <span style="margin-left: 1rem;">
+                        Export
+                    </span>
+                </button>
+            </ng-container>
+
+
+        </div>
+    </div>
+    <div class="filter-chips-container" *ngFor="let column of filterColumns">
+        <div *ngIf="column.searchText.length>0">
+            <mat-chip-list>
+                <div style="margin-left:1rem; margin-bottom:1rem">
+                    <span>
+                        <span *ngIf="column.dateFormat">
+                            <ng-container *ngIf="column.fromDate">
+                                {{column.displayName |titlecase}} From :
+                                <mat-chip [value]="column.fromDate" [selectable]="true" [removable]="true"
+                                    (removed)="onClearFilterClick(column,column.fromDate,'fromDate')">
+                                    {{column.fromDate | date:'dd MMM y'}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </ng-container>
+                            <ng-container *ngIf="column.toDate">
+                                {{column.displayName |titlecase}} To :
+                                <mat-chip [value]="column.toDate" [selectable]="true" [removable]="true"
+                                    (removed)="onClearFilterClick(column,column.toDate,'toDate')">
+                                    {{column.toDate | date:'dd MMM y'}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </ng-container>
+                        </span>
+                        <span *ngIf="!column.dateFormat">
+                            <span style="margin-left:1rem" *ngIf="column?.searchText?.length>0">{{column.displayName
+                                | titlecase}} :</span>
+
+                            <span *ngFor="let filter of column.searchText">
+                                <mat-chip *ngIf="filter === 0 || filter != ''" [value]="filter" [selectable]="true"
+                                    [removable]="true" (removed)="onClearFilterClick(column,filter,'searchText')">
+                                    {{filter}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </span>
+                            <span *ngIf="column.timeFrom">
+                                {{column.displayName|titlecase}} From:
+                                <mat-chip [value]="column.timeFrom" [selectable]="true" [removable]="true"
+                                    (removed)="onClearFilterClick(column,column.timeFrom,'timeFrom')">
+                                    {{column.timeFrom}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </span>
+                            <span *ngIf="column.timeTill">
+                                {{column.displayName | titlecase}} To:
+                                <mat-chip [value]="column.timeTill" [selectable]="true" [removable]="true"
+                                    (removed)="onClearFilterClick(column,column.timeTill,'timeTill')">
+                                    {{column.timeTill}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </span>
+                            <span *ngIf="column.rangeFrom || column.rangeFrom === 0">
+                                {{column.displayName|titlecase}} From:
+                                <mat-chip [value]="column.rangeFrom" [selectable]="true" [removable]="true"
+                                    (removed)="onClearFilterClick(column,column.rangeFrom,'rangeFrom')">
+                                    {{column.rangeFrom}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </span>
+                            <span *ngIf="column.rangeTo || column.rangeTo === 0">
+                                {{column.displayName | titlecase}} To:
+                                <mat-chip [value]="column.rangeTo" [selectable]="true" [removable]="true"
+                                    (removed)="onClearFilterClick(column,column.rangeTo,'rangeTo')">
+                                    {{column.rangeTo}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+            </mat-chip-list>
+        </div>
+    </div>
+    <ng-container *ngIf="displayAllButton">
+        <div class="table-container">
+            <table id="table" >
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let column of filteredColumns">
+                                <th *ngIf="column.columnDisable"
+                                [ngClass]="{'duplicate_sticky':column.displayName.startsWith('Duplicate Preview'), 'preview_sticky':column.displayName.startsWith('Document Preview'), 'view_sticky':column.displayName.startsWith('View Details')}">
+                                <ng-container>
+                                    <div class="lock-icon " style="float: left" [class.locked]="column.lockColumn"
+                                        (click)="column.lockColumn = !column.lockColumn" matRipple>
+                                        <mat-icon style="  transform: scale(0.6)">lock</mat-icon>
+                                    </div>
+                                    <div class="content " style="float: left">
+                                        <span>{{column.displayName | uppercase}}</span>
+                                    </div>
+                                    <div class="sort-icon" [class.sort-asc]="column.sortAsc"
+                                        [class.sort-desc]="column.sortAsc === false" (click)="sortClicked(column)"
+                                        matRipple>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === null">
+                                            swap_vert</mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc">arrow_upward
+                                        </mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === false">
+                                            arrow_downward</mat-icon>
+                                    </div>
+                                </ng-container>
+                            </th>                           
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of tableData; let i = index;">
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <td *ngIf="column.columnDisable"
+                                [ngClass]="{'duplicate_column_sticky':column.displayName.startsWith('Duplicate Preview'), 'even': i % 2 !== 0 && column.displayName.startsWith('Document Preview') || column.displayName.startsWith('Duplicate Preview') || column.displayName.startsWith('View Details'), 'odd': i % 2 == 0 || column.displayName.startsWith('Duplicate Preview') || column.displayName.startsWith('Document Preview') || column.displayName.startsWith('View Details'),
+                            'preview_column_sticky':column.displayName.startsWith('Document Preview'), 'view_column_sticky':column.displayName.startsWith('View Details')}">
+                                <div class="content" *ngIf="!column.fieldName.startsWith('$')">
+                                    <ng-container *ngIf="column.dateFormat && !column.subFieldName">
+                                        <ng-container *ngIf="data[column.fieldName]">
+                                            {{data[column.fieldName] | date: column.dateFormat}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="column.dateFormat && column.subFieldName">
+                                        <ng-container *ngIf="data[column.subFieldName]">
+                                            {{data[column.subFieldName] | date: column.dateFormat}}
+                                        </ng-container>
+
+                                    </ng-container>
+                                    <ng-container *ngIf="!column.dateFormat">
+                                        <ng-container *ngIf="!column.subFieldName">
+                                            {{data[column.fieldName]}}
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('View Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'View Details'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">more_revert</mat-icon>View Details
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Document Preview')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;" [matTooltip]="'Document Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Duplicate Preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Duplicate Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!displayAllButton">
+        <div class="table-container">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <th *ngIf="!column.columnDisable" [ngClass]="{'duplicate_sticky':column.displayName.startsWith('Duplicate Preview'), 'preview_sticky':column.displayName.startsWith('Document Preview'), 'view_sticky':column.displayName.startsWith('View Details')}">
+                                <ng-container>
+                                    <div class="lock-icon " style="float: left" [class.locked]="column.lockColumn"
+                                        (click)="column.lockColumn = !column.lockColumn" matRipple>
+                                        <mat-icon style="  transform: scale(0.6)">lock</mat-icon>
+                                    </div>
+                                    <div class="content " style="float: left">
+                                        <span>{{column.displayName}}</span>
+                                    </div>
+                                    <div class="sort-icon" [class.sort-asc]="column.sortAsc"
+                                        [class.sort-desc]="column.sortAsc === false" (click)="sortClicked(column)"
+                                        matRipple>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === null">
+                                            swap_vert</mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc">arrow_upward
+                                        </mat-icon>
+                                        <mat-icon style="  transform: scale(0.8)" *ngIf="column.sortAsc === false">
+                                            arrow_downward</mat-icon>
+                                    </div>
+                                </ng-container>
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of tableData; let i = index;">
+                        <ng-container *ngFor="let column of filteredColumns">
+                            <td *ngIf="!column.columnDisable" [ngClass]="{'duplicate_column_sticky':column.displayName.startsWith('Duplicate Preview'), 'even': i % 2 !== 0 && column.displayName.startsWith('Document Preview') || column.displayName.startsWith('Duplicate Preview') || column.displayName.startsWith('View Details'), 'odd': i % 2 == 0 || column.displayName.startsWith('Duplicate Preview') || column.displayName.startsWith('Document Preview') || column.displayName.startsWith('View Details'),
+                            'preview_column_sticky':column.displayName.startsWith('Document Preview'), 'view_column_sticky':column.displayName.startsWith('View Details')}">
+                                <div class="content" *ngIf="!column.fieldName.startsWith('$')">
+                                    <ng-container *ngIf="column.dateFormat && !column.subFieldName">
+                                        <ng-container *ngIf="data[column.fieldName]">
+                                            {{data[column.fieldName] | date: column.dateFormat}}
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="column.dateFormat && column.subFieldName">
+                                        <ng-container *ngIf="data[column.subFieldName]">
+                                            {{data[column.subFieldName] | date: column.dateFormat}}
+                                        </ng-container>
+
+                                    </ng-container>
+                                    <ng-container *ngIf="!column.dateFormat">
+                                        <ng-container *ngIf="!column.subFieldName">
+                                            {{data[column.fieldName]}}
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('View Details')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem;margin-right: auto;"
+                                        [matTooltip]="'View Details'" (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon style="font-size: 15px">more_revert</mat-icon>View Details
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Document Preview')">
+                                    <button class="btn" style="margin-left:auto; margin-right: auto;" [matTooltip]="'Document Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                                <div *ngIf="column.displayName.startsWith('Duplicate Preview')">
+                                    <button class="btn"
+                                        style="margin-left: auto; margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;"
+                                        [matTooltip]="'Duplicate Preview'"
+                                        (click)="onCellClicked(column, i, data, $event)">
+                                        <mat-icon>visibility</mat-icon>Preview
+                                    </button>
+                                </div>
+
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="placeholder-container" *ngIf="!loading && !dataTable.length">
+        <span>No items found!</span>
+    </div>
+
+    <div class="pagination-container">
+        <mat-paginator [length]="pageData.totalRecords" [pageIndex]="pageData.currentPage"
+            [pageSize]="pageData.pageSize" aria-label="Select page" (pageChange)="onPageChangeEvent($event)">
+
+        </mat-paginator>
+    </div>
+</div>

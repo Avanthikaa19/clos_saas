@@ -1,0 +1,26 @@
+<div class="main-container">
+    <div class="header-container">
+        {{list.id == null ? 'CREATE' : 'UPDATE'}} RULE SET
+        <span *ngIf="list.id != null" style="float: right; color: silver;">ID: {{list.id}}</span>
+    </div>
+    <div class="content-container">
+        <div class="category-sub-header" style="padding-top: 1rem;color: #343030;font-style: normal;">
+            Name:
+        </div>
+        <input type="text" autocomplete="off" spellcheck="false" [(ngModel)]="list.name" #name="ngModel" required>
+        <div class="err-msg">{{errMsg()}}</div>
+        <div class="category-sub-header" style="color: #343030;font-style: normal;">
+            Description:
+        </div>
+        <textarea matInput [(ngModel)]="list.description" #name="ngModel"></textarea>
+    </div>
+    <div class="bottom_btn">
+        <mat-dialog-actions align="end">
+            <button mat-flat-button mat-dialog-close style="color: white;background-color: rgb(43, 42, 42);">
+        <mat-icon>close</mat-icon>Close
+    </button>
+            <button mat-flat-button class="create" (click)="createRuleSet()" [class.disabled]="errMsg()" [class.btn]="!errMsg()" cdkFocusInitial [disabled]="errMsg()">
+        <mat-icon>add</mat-icon>Create Rule Set
+    </button>
+        </mat-dialog-actions>
+    </div>

@@ -1,0 +1,18 @@
+<mat-tab-group [(selectedIndex)]="selectedIndex" (selectedTabChange)="appVerificationTabChange($event)">
+    <ng-container *ngFor="let tab of applicationVerificationTabs">
+        <mat-tab style="font-weight: 600;" label="{{tab.name}}">
+            <ng-template mat-tab-label style="font-weight:bold;">
+                <mat-icon>{{tab.icon}} </mat-icon> <span class="tabsName"> {{tab.name}} </span>
+            </ng-template>
+        </mat-tab>
+    </ng-container>
+</mat-tab-group>
+<div class="main-container">
+    <app-generic-data-table [columns]="appVerificatincolumns" [filterButton]="true" [pageData]="pageData"
+        [displayAllButton]="true" [exportButton]="true" [tableData]="appVerificationData"
+        (onFilterChange)="onApplyFilter($event)" (onSelectAllDuplicatPreview)="multiCheckDuplicatePreview($event)" (onSelectAllCheckbox)="multiCheckData($event)" [clearButton]="true" (onChange)="columnChange($event)"
+        [loading]="loadingItems" (onClick)="detailClick($event)" (onExportChange)="appVerificationExport($event,loanType)"
+        [filterInput]="true" (onPageChange)="getAppVerificationData($event)"
+        (onSelectAllSelfAssign)="handleSelectAllSelfAssign($event)">
+    </app-generic-data-table>
+</div>

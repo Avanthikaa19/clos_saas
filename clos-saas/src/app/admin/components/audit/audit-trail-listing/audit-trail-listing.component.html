@@ -1,0 +1,19 @@
+
+<div class="column-container">
+    <mat-icon class="mr-3 ml-4 m-3 circle_icon">assignment_ind</mat-icon>
+    <span class="ml-4 user-contain m-3">Audit Trial</span>
+</div>
+<mat-tab-group [(selectedIndex)]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+  <ng-container *ngFor="let tab of matTabHeader">
+      <mat-tab style="font-weight: 600;" label="{{tab.name}}">
+          <ng-template mat-tab-label style="font-weight:bold;">
+              <mat-icon>{{tab.icon}} </mat-icon> <span class="tabsName"> {{tab.name}} </span>
+          </ng-template>
+      </mat-tab>
+  </ng-container>
+</mat-tab-group>
+<div class="main-container">
+    <app-generic-data-table [columns]="auditcolumns" [filterButton]="true" [pageData]="pageData" [newTemplatebutton]="true"  [newTemplate]="true" [exportButton]="true" [clearButton]="true" [loading]="loadingItems"
+    (onExportChange)="accessTemplateListExport($event)"  [tableData]="auditcolumnsData" (onPageChange)="getAuditColumnsData($event)"></app-generic-data-table>
+ </div>
+

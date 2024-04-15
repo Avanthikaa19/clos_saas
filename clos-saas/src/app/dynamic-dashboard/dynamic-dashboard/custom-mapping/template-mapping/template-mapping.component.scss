@@ -1,0 +1,100 @@
+.dialog-theme-light .mat-select-placeholder {
+  color: rgb(79 73 73 / 77%);
+}
+.dialog-theme-dark .form-control::placeholder {
+  color: rgb(122, 107, 107);
+}
+
+.dialog-theme-dark .form-control {
+  color: #ffffffab;
+  background-color: #1f1f1fab;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 1px 5px 0px rgb(113 113 115);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.label {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+::ng-deep .label-light .mat-tab-label-active {
+  opacity: 1 !important;
+  color: #495057;
+  background-color: #fff;
+  // border-color: #dee2e6 #dee2e6 #fff;
+  border-bottom: 3px solid #0e2954;
+}
+::ng-deep .label-light .mat-ink-bar {
+  display: none;
+}
+
+::ng-deep .label-dark .mat-tab-label {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  font-size: 14px !important;
+  font-weight: 800;
+  line-height: 1.43;
+  background-color: #16191d;
+  color: white;
+  text-transform: uppercase;
+}
+::ng-deep .label-dark .mat-tab-label-active {
+  opacity: 1 !important;
+  border-bottom: 2px #14f4ffc7 solid;
+  border-radius: 2px;
+  background-color: #00000029;
+}
+::ng-deep .label-dark .mat-ink-bar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+// mat-select checkbox background - color
+
+
+.line {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 15px;
+  margin-left: 10px;
+  background-color: #f32d32;
+}
+.min-select {
+  width: 30rem;
+  padding: 5px;
+  border-radius: 0.4rem;
+  border: solid #e6e6e6 0.1rem;
+  background-color: #fafafa;
+  box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+  transition: all linear 70ms;
+  outline: solid transparent 0.2rem;
+  resize: none;
+}
+.icon-hov2{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: gray;
+  border-radius: 16px;
+  width: 28px !important;
+  height: 28px;
+}
+.icon-hov2:hover{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(207, 204, 204);
+  border-radius: 16px;
+  width:28px !important;
+  height: 28px;
+}

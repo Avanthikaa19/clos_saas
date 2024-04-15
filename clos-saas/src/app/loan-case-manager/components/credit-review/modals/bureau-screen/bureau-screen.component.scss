@@ -1,0 +1,92 @@
+.popup-content-section {
+    background-color: #f0f8ff8c;
+    box-shadow: inset 0 0 10px #d5d5d4ba;
+    height: 62rem;
+    padding: 15px;
+    overflow-y: auto;
+    >.body-header h3 {
+        color: #161414fa;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .card-section-1 {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        >.card_item {
+            width: 250px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid royalblue;
+            margin-right: 15px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            >.card_header span {
+                font-size: 14px;
+                text-transform: capitalize;
+            }
+            >.card-content {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                >.card-content-count {
+                    flex: 0 1 80%;
+                    font-weight: 600;
+                    font-size: 30px;
+                }
+                >.card-content-icon {
+                    flex: 0 1 20%;
+                    font-size: 40px;
+                }
+            }
+        }
+    }
+}
+
+.popup-header-section {
+    width: 23rem;
+    margin-top: 11px;
+    margin-bottom: 10px;
+    >mat-icon {
+        color: #012970;
+    }
+    >h2 {
+        color: #3445b4;
+        float: right;
+        right: 5.5rem;
+        position: relative;
+        font-size: 22px;
+    }
+}
+
+.popup-footer-section button {
+    float: right;
+    position: relative;
+    top: 11px;
+    background: black;
+    color: #fff;
+}
+
+.table-section {
+    padding: 15px;
+    background: #fff;
+    height: 34vh;
+    overflow-y: auto;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    >.table-content {
+        >table {
+            width: 100%;
+            text-align: center;
+            border-radius: 5px;
+            border-collapse: separate;
+            border-spacing: 0 0.6em;
+            >thead tr {
+                background: aliceblue;
+            }
+            tbody tr {
+                background: #4a45450f;
+            }
+        }
+    }
+}

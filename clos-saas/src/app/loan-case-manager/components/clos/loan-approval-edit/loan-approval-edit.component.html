@@ -1,0 +1,126 @@
+<div class="popup-container">
+    <div class="summary-container">
+        <mat-icon>description</mat-icon>
+        LOAN ADDITIONAL INFORMATION        
+    </div>
+    <div class="row mb-3 pt-3">
+        <div class="col-md-10">
+            <div class="application-list">
+                <ul>
+                    <li>
+                        <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                        <span style="color: royalblue;">{{application?.id}}</span>
+                    </li>
+                    <li>
+                        <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                        <span style="color: royalblue;">{{application?.legalNameOfTheCompany}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table style="width:100%">
+                    <tr>
+                        <td>Loan Type</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.typesOfLoan" readonly></td>
+                        <td>Requested Loan Amount</td>
+                        <td>:</td>
+                        <td><input type="number" readonly [(ngModel)]="application.loanAmount"></td>
+                        <td>Loan Currency</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.loanCurrency" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Interest Rate Type</td>
+                        <td>:</td>
+                        <td><input type="text" readonly [(ngModel)]="application.intrestRateType"></td>
+                        <td>Loan Term</td>
+                        <td>:</td>
+                        <td><input type="text" readonly [(ngModel)]="application.termLoan" ></td>
+                        <td>Payment Method</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.requestRepaymentFrequency" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Min Range</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="minValue" readonly ></td>
+                        <td>Max Range</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="maxValue"  readonly></td>
+                        <td>Credit Limit</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="creditValue"  readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Interest Rate</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.interestRate" readonly ></td>
+                </table>
+            </div>
+            <span style="font-weight:bold;font-size:16px;color:#012970;padding:1rem">Loan Data Entry:-</span>
+            <div class="table-container" style="margin: 0rem 2rem 2rem 2rem;">
+                <table style="width:100%;">
+                    <tr>
+                        <td>Loan Approval Amount</td>
+                        <td>:</td>
+                        <td><input type="number" [(ngModel)]="application.loanApprovalAmount"></td>
+                        <td>Interest Rate</td>
+                        <td>:</td>
+                        <td><input type="text" [(ngModel)]="application.effectiveRate"></td>
+                        <td>Monthly Installment Amount</td>
+                        <td>:</td>
+                        <td><input type="number" [(ngModel)]="application.downPaymentAmount"></td>
+                    </tr>
+                    <tr>
+                        <td>Value Date</td>
+                        <td>:</td>
+                        <td><input  type="date" [(ngModel)]="application.valueDate"></td>
+                        <td>Frequency</td>
+                        <td>:</td>
+                        <td><mat-select class="min-select" [(ngModel)]="application.frequency">
+                            <mat-option *ngFor="let type of frequencyType" [value]="type">
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                        <td>No of Instalment</td>
+                        <td>:</td>
+                        <td><input type="number" [(ngModel)]="application.instalments"></td>
+                    </tr>
+                    <tr>
+                        <td>Maturity Date</td>
+                        <td>:</td>
+                        <td><input type="date"  [(ngModel)]="application.maturityDate"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="bottom-row">
+            <button mat-raised-button class="clos-btn" (click)="onClose()" matTooltip="Close">
+                <mat-icon>close</mat-icon>
+                Close
+            </button>
+            <ng-container>
+                <div class="buttons-container">
+                    <ng-container>
+                        <button mat-raised-button class="clos-submit-btn" matTooltip="Save" (click)="saveInformation()" *ngIf="!formFieldsFill">
+                            <mat-icon>save</mat-icon>
+                            Save
+                        </button>
+                        <button mat-raised-button class="clos-submit-btn" matTooltip="Update" (click)="saveInformation()" *ngIf="formFieldsFill">
+                            <mat-icon>update</mat-icon>
+                            Update
+                        </button>
+                    </ng-container>
+                    
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

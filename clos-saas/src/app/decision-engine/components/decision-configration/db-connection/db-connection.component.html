@@ -1,0 +1,98 @@
+<mat-toolbar class="tool-bar">
+    <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+    <span class="separator-div">
+        <div class="separator"></div>
+    </span>
+    <span [routerLink]="'/desicion-engine/config/config-nav'" style="cursor: pointer;">
+        Data Administration
+    </span>
+    <span class="separator-div">
+      <div class="separator"></div>
+    </span>
+    <span>
+        Database Connection
+    </span>
+    <span class="spacing"></span>
+    <button mat-flat-button class="btn-toolbar" (click)="onBackClick()" style="background-color: royalblue;">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        Go Back
+    </button>
+</mat-toolbar>
+
+<div class="main-container">
+    <div class="header-container flex-row-parent">
+        <div class="left-align flex-stetch">
+
+        </div>
+        <div class="center-left-align flex-stetch">
+            <img src="assets/Icons/Db-config.ico" alt="" style="margin: 0.8rem;" />
+        </div>
+        <div class="center-right-align flex-unstetch flex-column-parent">
+            <div class="flex-stetch header-container">
+                Data Source Configuration
+            </div>
+            <div class="flex-unstetch sub-header-container">
+                
+            </div>
+        </div>
+        <div class="right-align flex-stetch">
+
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="db-list-container flex-row-parent">
+            <div class="left-align flex-stetch">
+
+            </div>
+            <div class="center-align flex-unstetch">
+                <div class="search-container flex-row-parent">
+                    <div class="flex-stetch" style="position: relative;">
+                        <mat-icon class="icon-search">search</mat-icon>
+                        <input class="min-input" [(ngModel)]="searchText" (keyup)="searchDb()" style="height: 3rem; margin-top: 1rem; margin-left: 0.2rem; width: 50rem; padding-left: 3.5rem;" placeholder="Filter by name or type">
+                    </div>
+                    <div class="flex-unstetch">
+
+                    </div>
+                    <div class="flex-stetch">
+                        <!-- <button mat-stroked-button style="margin-top: 0.5rem; margin-right: 1rem;"
+                            (click)="onBackClick()">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            Go Back
+                        </button> -->
+                        <button mat-raised-button (click)="onSelectClick()" style="background-color: #394eb4; color: white; margin-top: 0.5rem;">
+                            <mat-icon>add</mat-icon>
+                            Add source
+                        </button>
+                    </div>
+                </div>
+                <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+                <div class="card-container" *ngIf="!loading">
+                    <div class="card flex-row-parent" *ngFor="let dataSource of mysqlDbItems" (click)="onDataSourceSelect(dataSource)" matRipple>
+                        <div class="left-contain flex-stetch">
+                            <img *ngIf="dataSource.db_type == 'mysql'" src="assets/Icons/mysql_logo.svg" alt="" style="margin: 0.8rem; padding-left: 1rem;" />
+                            <img *ngIf="dataSource.db_type != 'mysql'" src="assets/Icons/xsd_file.svg" alt="" style="margin-top: 1.5rem; margin-left: 2rem;" />
+                        </div>
+                        <div class="center-contain flex-unstetch flex-column-parent">
+                            <div class="flex-stetch header-container">
+                                {{dataSource.name}}
+                            </div>
+                            <div class="flex-unstetch sub-header-container">
+                                {{dataSource.description}}
+                            </div>
+                        </div>
+                        <div class="right-contain flex-stetch" style="padding-left: 1rem;">
+                            <button mat-flat-button style="margin-top: 2rem; margin-right: 1rem; " (click)="onDataSourceSelect(dataSource)">
+                                <mat-icon style="margin-right: 0rem;">navigate_next</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-align flex-stetch">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<notifier-container></notifier-container>

@@ -1,0 +1,14 @@
+<h4 mat-dialog-title>Enter the title for the dashboard
+  <mat-icon class="float-right box-icon-hov" matTooltip="Close" style="cursor: pointer;font-size: 18px; font-weight: bolder;" (click)="onCancelClick()">close</mat-icon>
+</h4>
+<mat-dialog-content>
+  <mat-form-field class="input-field" style="width: 350px;">
+    <mat-label>Enter title</mat-label>
+    <input matInput [(ngModel)]="editedText" style="height: 50px;">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="editedText" style="background-color: black;color:white;float: right;margin-top: 15px;
+  height: 33px;
+  margin-left: 40%;"><span style="font-size: 12px;">APPLY</span></button>
+</mat-dialog-actions>

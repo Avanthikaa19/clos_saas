@@ -1,0 +1,173 @@
+<div class="main-container">
+    <div class="button-container">
+        <div class="column_search-container">
+            <input style="width: 50%" placeholder="Search by column name...">
+        </div>
+        <div class="button-container">
+            <button mat-raised-button class="apply_filter">
+                <span class="material-symbols-outlined">
+                    filter_list
+                </span>
+                <span style="margin-left: 1rem;">
+                    Apply Filter
+                </span>
+            </button>
+            <button mat-raised-button class="clear_filter">
+                <span class="material-symbols-outlined">
+                    clear_all
+                </span>
+                <span style="margin-left: 1rem;">
+                    Clear Filter
+                </span>
+            </button>
+            <button mat-raised-button class="copy_clip">
+                <span class="material-symbols-outlined">
+                    content_copy
+                </span>
+                <span style="margin-left: 1rem;">
+                    Copy to Clipboard
+                </span>
+            </button>
+            <button mat-raised-button class="export">
+                <span class="material-symbols-outlined">
+                    download
+                </span>
+                <span style="margin-left: 1rem;">
+                    Export
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="table-container">
+        <table id="table">
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+            <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Berglunds snabbköp</td>
+                <td>Christina Berglund</td>
+                <td>Sweden</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Ernst Handel</td>
+                <td>Roland Mendel</td>
+                <td>Austria</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Island Trading</td>
+                <td>Helen Bennett</td>
+                <td>UK</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Königlich Essen</td>
+                <td>Philip Cramer</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Laughing Bacchus Winecellars</td>
+                <td>Yoshi Tannamuri</td>
+                <td>Canada</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Magazzini Alimentari Riuniti</td>
+                <td>Giovanni Rovelli</td>
+                <td>Italy</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>North/South</td>
+                <td>Simon Crowther</td>
+                <td>UK</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Paris spécialités</td>
+                <td>Marie Bertrand</td>
+                <td>France</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pagination-container">
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div> -->
+<app-share-data-table [columns]="applicationColumns" [filterButton]="true" [exportButton]="true"  [clearButton]="true" [displayAllButton]="true" [pageData]="pageData" [tableData]="applicationLogData"
+[loading]="loadingItems"></app-share-data-table>

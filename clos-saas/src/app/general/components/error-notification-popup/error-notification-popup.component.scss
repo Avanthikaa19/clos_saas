@@ -1,0 +1,44 @@
+.tl-main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    >.header-container {
+        flex: 0 0 auto;
+        height: 8rem;
+        padding: 1rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+    }
+    >.button-container {
+        flex: 0 0 auto;
+        height: 3rem;
+        padding: 1rem;
+        // margin-top: 1rem solid whitesmoke;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-end;
+        >.spacer {
+            flex: 1 1 auto;
+        }
+    }
+    >.button-container1 {
+        flex: 0 0 auto;
+        height: 3rem;
+        padding: 1rem;
+        // margin-top: 1rem solid whitesmoke;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
+        >.spacer {
+            flex: 1 1 auto;
+        }
+    }
+}

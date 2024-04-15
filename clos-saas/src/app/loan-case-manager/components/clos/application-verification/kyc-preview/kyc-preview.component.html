@@ -1,0 +1,386 @@
+<div class="main-container">
+    <div class="middle_Section">
+        <section class="container-fluid dup-section">
+            <div class="row mb-4 pt-4">
+                <div class="col-md-7">
+                    <div class="application-list">
+                        <ul>
+                            <li>
+                                <span style="font-weight: bold;">APPLICATION ID:</span>
+                                <span style="color: royalblue; margin-left: 5px;">{{appDetails?.ID}}</span>
+                            </li>
+                            <li>
+                                <span style="font-weight: bold;padding-left: 30px;">ENTITY NAME:</span>
+                                <span style="color: royalblue; margin-left: 5px;">{{appDetails?.LEGAL_NAME_OF_THE_COMPANY}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;" class="preview_Container">
+                <div class="content-container">
+                    <mat-tab-group [(selectedIndex)]="activeStepIndex">
+                        <ng-container *ngFor="let categoryName of categoryList let i=index">
+                            <mat-tab class="tabsName" label="{{categoryName}}">
+                                <ng-container *ngIf="categoryName == 'Internal KYC CHECK'">
+                                    <br>
+                                    <!-- <span class="header-span">Internal KYC CHECK</span> -->
+                    <div class="table-container">
+                        <div>
+                            <ng-container *ngIf="databaseDetail">
+                            <ng-container *ngIf="databaseDetail?.['DUPLICATE CHECKING']?.length">
+                                <span style="font-weight:bold;font-size:15px;">1. Duplicate Check :-</span>
+                            <br>
+                                <ng-container
+                                *ngIf="databaseDetail?.['DUPLICATE CHECKING']?.[0]?.['dupDecisionAfter'] == 'EXACT_MATCH'">
+                                    <div class="header-banner">
+                                        <div style="width:98%;margin:1rem 1rem">
+                                            <p style="font-weight:bold;">Application Data :</p>
+                                        </div>
+                                        <table style="margin-left:1rem;" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <ng-container
+                                                        *ngFor="let csvField of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                        <th>{{csvField}}</th>
+                                                    </ng-container>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <ng-container
+                                                        *ngFor="let fieldData of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                        <ng-container
+                                                            *ngFor="let record of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredRecordDetails; let j=index">
+                                                            <td>
+                                                                {{record[fieldData]}}
+                                                            </td>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="width:98%;margin:1rem 1rem">
+                                            <p style="font-weight:bold;">Existing Data :</p>
+                                        </div>
+                                        <table style="margin-left:1rem;" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <ng-container
+                                                        *ngFor="let csvField of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                        <th>{{csvField}}</th>
+                                                    </ng-container>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <ng-container
+                                                        *ngFor="let fieldData of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                        <ng-container
+                                                            *ngFor="let record of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedRecordDetails; let j=index">
+                                                            <td>
+                                                                {{record[fieldData]}}
+                                                            </td>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="width:98%;margin:1rem 1rem">
+                                            <p style="font-weight:bold;">Matched Column :</p>
+                                        </div>
+                                        <table style="margin-left:1rem;" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <ng-container
+                                                        *ngFor="let csvField of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                        <th>{{csvField}}</th>
+                                                    </ng-container>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <ng-container
+                                                        *ngFor="let fieldData of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                        <ng-container
+                                                            *ngFor="let record of databaseDetail?.['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.tableFields let j=index">
+                                                            <td>
+                                                                {{record}}
+                                                            </td>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="width:98%;margin:1rem 1rem">
+                                            <p style="font-weight:bold;">Duplicate Check Status :
+                                                <span style="color:green;margin-left:2rem">
+                                                    {{databaseDetail['DUPLICATE CHECKING'][0]?.multipleMatchedResultList[0]?.applicationStatus}}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="databaseDetail?.['DUPLICATE CHECKING'] && databaseDetail['DUPLICATE CHECKING'][0] && databaseDetail['DUPLICATE CHECKING'][0]['Status'] == 'NO_MATCH'">
+                                    <div class="header-banner">
+                                        <table>
+                                            <tr>
+                                                <td>Matched Column</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <span>{{databaseDetail['DUPLICATE CHECKING'][0].matchedTableFields}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Application Status</td>
+                                                <td>:</td>
+                                                <td><span>{{databaseDetail['DUPLICATE CHECKING'][0].applicationStatus}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Result</td>
+                                                <td>:</td>
+                                                <td><span>{{databaseDetail['DUPLICATE CHECKING'][0].result}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <br><br>
+                            <ng-container *ngIf="databaseDetail?.['NEGATIVE CHECKING']?.length">
+                                <span style="font-weight:bold;font-size:15px;">2. Negative Check :-</span>
+                                <br>
+                                <ng-container *ngIf="databaseDetail && databaseDetail['NEGATIVE CHECKING'] && databaseDetail['NEGATIVE CHECKING'][0] && databaseDetail['NEGATIVE CHECKING'][0]['dupDecisionAfter'] === 'EXACT_MATCH'">
+                                <div class="header-banner">
+                                    <div style="width:98%;margin:1rem 1rem">
+                                        <p style="font-weight:bold;">Application Data :</p>
+                                    </div>
+                                    <table style="margin-left:1rem;" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let csvField of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                    <th>{{csvField}}</th>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let fieldData of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredAppFields">
+                                                    <ng-container
+                                                        *ngFor="let record of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.inquiredRecordDetails; let j=index">
+                                                        <td>
+                                                            {{record[fieldData]}}
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="width:98%;margin:1rem 1rem">
+                                        <p style="font-weight:bold;">Existing Data :</p>
+                                    </div>
+                                    <table style="margin-left:1rem;" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let csvField of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                    <th>{{csvField}}</th>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let fieldData of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedTableFields">
+                                                    <ng-container
+                                                        *ngFor="let record of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedRecordDetails; let j=index">
+                                                        <td>
+                                                            {{record[fieldData]}}
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="width:98%;margin:1rem 1rem">
+                                        <p style="font-weight:bold;">Matched Column :</p>
+                                    </div>
+                                    <table style="margin-left:1rem;" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let csvField of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                    <th>{{csvField}}</th>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let fieldData of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.appFields">
+                                                    <ng-container
+                                                        *ngFor="let record of databaseDetail?.['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.matchedColumns[0]?.tableFields let j=index">
+                                                        <td>
+                                                            {{record}}
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="width:98%;margin:1rem 1rem">
+                                        <p style="font-weight:bold;">Negative Check Status :
+                                            <span style="color:green;margin-left:2rem">
+                                                {{databaseDetail['NEGATIVE CHECKING'][0]?.multipleMatchedResultList[0]?.applicationStatus}} </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="databaseDetail && databaseDetail['NEGATIVE CHECKING'] && databaseDetail['NEGATIVE CHECKING'][0] && databaseDetail['NEGATIVE CHECKING'][0]['Status'] === 'NO_MATCH'">
+                                <div class="header-banner">
+                                    <table>
+                                        <tr>
+                                            <td>Matched Column</td>
+                                            <td>:</td>
+                                            <td>
+                                                <span>{{databaseDetail['NEGATIVE CHECKING'][0].matchedTableFields}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Application Status</td>
+                                            <td>:</td>
+                                            <td><span>{{databaseDetail['NEGATIVE CHECKING'][0].applicationStatus}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Result</td>
+                                            <td>:</td>
+                                            <td><span>{{databaseDetail['NEGATIVE CHECKING'][0].result}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                        </div>
+                        <br><br>
+                        <!-- <div>
+                            <span style="font-weight:bold;font-size:16px;color:#012970;">EXTERNAL KYC CHECK</span>
+                            <div class="header-banner">
+                                <table>
+                                    <tr>
+                                        <td>Credit Rate</td>
+                                        <td>:</td>
+                                        <td><input readonly value="Aa"></td>
+                                        <td>Ideal Range</td>
+                                        <td>:</td>
+                                        <td><input readonly value="AAA to BBB"></td>
+                                        <td>Risk Level</td>
+                                        <td>:</td>
+                                        <td><input style="color:green;font-weight: bold;" readonly value="Low Risk">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div> -->
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="categoryName == 'External KYC CHECK'">
+                    <br>
+                    <!-- <span class="header-span">External KYC CHECK</span> -->
+    <div class="table-container">
+        <div>
+            <ng-container *ngIf="externalkycDetails">
+                    <div class="inner_section">
+                      <div class="card-container" *ngFor="let kyc of externalkycDetails | keyvalue; let even = even">
+                        <div class="card-row">
+                          <table>
+                            <tr>
+                              <td style="font-weight:bold;font-size: 12px;" class="card-label">{{ kyc.key }}</td>
+                              <td class="details-value">:</td>
+                              <td class="details-value" [style.color]="kyc.value === 'VERIFIED' ? 'green' : (kyc.value === 'UNVERIFIED' ? 'red' : 'black')">{{ kyc.value }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+            <br><br>
+    </ng-container>
+        </div>
+        <br><br>
+    </div>
+</ng-container>
+            </mat-tab>
+        </ng-container>
+    </mat-tab-group>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="action__btn-container" *ngIf="!actionOpen">
+        <div class="btn-container">
+            <button mat-raised-button class="clear_btnn" mat-dialog-close matTooltip="Close" (click)="onCloseClick()">
+                <mat-icon>close</mat-icon>
+                Close
+            </button>
+            <ng-container *ngIf="tabStatus !== 'UNDERWRITING_QUEUE' && status != 'verificationQueue' && selectedIndextab != 4">
+                <div class="action-buttons">
+                    <button *ngIf="status != 'PENDING'" mat-raised-button class="rejectandrequest_btnn" mat-dialog-close (click)="onPending()"
+                        matTooltip="" style="float: right;">
+                        <mat-icon>assignment</mat-icon>
+                            Pending                        
+                    </button>
+                    <button mat-raised-button class="reject_btnn" (click)="denyApproveClick(false)" matTooltip="Proceed"
+                        style="float: right;">
+                        <mat-icon>clear</mat-icon>
+                        Reject
+                    </button>
+                    <button mat-raised-button class="apply_btnn" mat-dialog-close style="float: right;" matTooltip="Proceed"
+                        (click)="onProceed()">
+                        <mat-icon>done_all</mat-icon>
+                        Accept
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="action-remarks" *ngIf="actionOpen">
+        <div class="close-action-header">
+            <div class="close-action-content">
+                <textarea prohibitedChars style="width: 111%;resize: none;" placeholder="Remarks.." rows="2"
+                    [(ngModel)]="actionRemark"></textarea>
+            </div>
+        </div>
+        <div class="close-action-actions-container" *ngIf="actionMode==false || actionMode==true">
+            <div class="btn-container">
+                <button mat-raised-button class="clos-btn" matTooltip="Close" (click)="actionOpen=false">
+                    <mat-icon>close</mat-icon>Close
+                </button>
+            </div>
+            <div class="spacer"></div>
+            <button style="margin-top:1rem" [disabled]="!actionRemark" mat-raised-button (click)="actionMode === true ? '':onReject()"
+                class="clos-submit-btn">
+                <mat-icon>{{actionMode === true ? 'done_all' : 'close'}}</mat-icon>
+                <span>{{actionMode === true ? 'Approve' : 'Reject'}}</span>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="placeholder-container" [@fadeInOut] *ngIf="!loading">
+        <span>No items found!</span>
+    </div> -->
+    <div class="loading-container" *ngIf="loading || !databaseDetail">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="placeholder-container" *ngIf="!loading && ((!databaseDetail?.['DUPLICATE CHECKING']?.length && !databaseDetail?.['NEGATIVE CHECKING']?.length) || !externalkycDetails)">
+        <span>No items found!</span>
+    </div>
+</div>

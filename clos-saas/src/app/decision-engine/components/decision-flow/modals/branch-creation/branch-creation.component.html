@@ -1,0 +1,105 @@
+<div class="main-container">
+
+    <div class="content-container">
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <mat-icon style="font-size: 20px;"> blur_linear</mat-icon><span>Branches</span>
+                    </div>
+                </ng-template>
+                <!-- <div class="category-header">
+                    Add Branches:
+                </div> -->
+                <div>
+                    <div></div>
+                    <mat-form-field appearance="outline" style="padding-top: 1.5rem;">
+                        <mat-label>Return Type</mat-label>
+                        <mat-select>
+                            <mat-option value="string">String</mat-option>
+                            <mat-option value="integer">Integer</mat-option>
+                            <mat-option value="boolean">Boolean</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div style="padding-top: 2.5rem; float: right;">
+                        <button mat-stroked-button (click)="addParameter()">
+                            <mat-icon>add_circle_outline</mat-icon>
+                            <span>
+                                Add Branch
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="param-container">
+                    <table style="width: 99%; margin-left: 0px;">
+                        <tbody>
+                            <tr>
+                                <td colspan="3">
+                                    <div *ngFor="let element of flowParams; let i = index" style="position: relative; margin-bottom: 10px;">
+                                        <!-- <button mat-icon-button color="warn" class="min-button min-add-button"
+                                            (click)="flowParams.splice(i, 1);">
+                                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                        </button> -->
+                                        <table>
+                                            <tbody>
+                                                <tr style="height:6rem">
+                                                    <td><span>{{i+1}}.</span></td>
+                                                    <td>
+                                                        <span class="min-label">Branch Name</span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input [(ngModel)]="flowParams[i].branchIndex" class="min-input">
+                                                    </td>
+                                                </tr>
+                                                <tr> <button mat-icon-button color="warn" class="min-button min-add-button" #tooltip="matTooltip" matTooltip="Remove" (click)="flowParams.splice(i, 1);">
+                                                    <mat-icon style="font-size: 14px;margin-bottom:100px">remove</mat-icon>
+                                                </button></tr>
+                                                <!-- <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <span class="min-label">Parameter Type</span>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <mat-select [(ngModel)]="flowParams[i].parameterType"
+                                                            class="min-select" style="background-color: white;">
+                                                            <mat-option *ngFor="let ptype of params" [value]="ptype">
+                                                                {{ptype.name}}</mat-option>
+                                                        </mat-select>
+                                                    </td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="flowParams.length > 1" style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                                        </div>
+
+                                    </div>
+                                    <div style="height: 16px; position: relative; padding-left: 20px;">
+                                        <!-- <span class="add-items-text">Click the + icon to add items.</span> -->
+                                        <!-- <button mat-icon-button color="primary" class="min-button min-add-button"
+                                            (click)="flowParams.push({branchIndex: '', parameterType: ''});">
+                                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                                        </button> -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close style="color: red;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="createBranch()" cdkFocusInitial>
+        <mat-icon>add</mat-icon>Create Branches
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

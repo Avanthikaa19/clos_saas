@@ -1,0 +1,150 @@
+<!-- SELECT MODULE -->
+<!-- <div class="ml-4">
+    <div style="margin-right: auto;">
+        <p class="mb-1" style="font-weight: 600;">AUDIT TRAIL</p>
+        <div class="at-separator-thick"></div>
+      </div>
+      <div class="row"> -->
+<!-- MODULE NAME -->
+<!-- <div class="col-sm-3 col-lg-3 col-xl-3 col-md-3">
+            <div>
+                <p class="hdr mb-3"
+                    style="color:#000000">Module Name<span class="text-danger">*</span></p>
+            </div>
+            <div style="margin-top: -12px;" >
+                <mat-form-field appearance="outline"  
+                    style="height: 48px; font-size: 11px; width: 100%;">
+                    <mat-select  [(ngModel)]="moduleName">
+                        <mat-option *ngFor="let list of module" [value]="list">{{list}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div> -->
+<!-- SUB MODULE NAME -->
+<!-- <div class="col-sm-3 col-lg-3 col-xl-3 col-md-3">
+            <div>
+            <p class="hdr mb-3"
+                style="color:#000000">Sub Module Name<span class="text-danger">*</span></p>
+            </div>
+            <div style="margin-top: -12px;" >
+                <p *ngIf="moduleName == ''" style="margin-top: 20px;color: red">Select the Module Name</p> -->
+<!-- Loan origination -->
+<!-- <mat-form-field appearance="outline" *ngIf="moduleName == 'LOAN_ORIGINATION'"
+                style="height: 48px; font-size: 11px; width: 100%;">
+                <mat-select [(ngModel)]="subModuleName">
+                    <mat-option *ngFor="let list of loan" [value]="list">{{list}}</mat-option>
+                </mat-select>
+            </mat-form-field> -->
+<!-- Flows -->
+<!-- <mat-form-field appearance="outline" *ngIf="moduleName == 'Flows'"
+                style="height: 48px; font-size: 11px; width: 100%;">
+                <mat-select [(ngModel)]="subModuleName">
+                    <mat-option *ngFor="let list of flows" [value]="list">{{list}}</mat-option>
+                </mat-select>
+            </mat-form-field> -->
+<!-- Case Management -->
+<!-- <mat-form-field appearance="outline" *ngIf="moduleName == 'CASEMANAGEMENT'"
+                style="height: 48px; font-size: 11px; width: 100%;">
+                <mat-select [(ngModel)]="subModuleName">
+                    <mat-option *ngFor="let list of case" [value]="list">{{list}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
+        </div> -->
+<!-- AUDIT OBJECT NAME -->
+<!-- <div class="col-sm-3 col-lg-3 col-xl-3 col-md-3"> -->
+<!-- <div>
+            <p class="hdr mb-3"
+                style="color:#000000">Audit Object Name<span class="text-danger">*</span></p>
+            </div>
+            <div style="margin-top: -12px;" >
+                <p *ngIf="moduleName == ''" style="margin-top: 20px;color: red">Select the Module and  Sub Module Name</p>
+                <p *ngIf="moduleName != '' && subModuleName == ''" style="margin-top: 20px;color: red">Select the Sub Module Name</p>
+            <mat-form-field appearance="outline" *ngIf="subModuleName != ''"
+                style="height: 48px; font-size: 11px; width: 100%;">
+                <mat-select [(ngModel)]="auditName">
+                     <mat-option *ngIf="moduleName == 'LOAN_ORIGINATION'"  value="Audit_LOANORIGINATION" (click)="getAudits('Audit_LOANORIGINATION');">Audit_LOANORIGINATION</mat-option>
+                    <mat-option *ngIf="moduleName == 'CASEMANAGEMENT'"   value="Audit_CASEMANAGEMENT"  (click)="getAudits('Audit_CASEMANAGEMENT');">Audit_CASEMANAGEMENT</mat-option>
+                    <mat-option *ngIf="moduleName == 'Flows'"  value="Audit_FLOWS"  (click)="getAudits('Audit_FLOWS');">Audit_FLOWS</mat-option> -->
+<!-- <mat-option *ngFor = "let item of auditObject" (click)="getAudit(item)"> {{item}}</mat-option> -->
+<!-- </mat-select>
+            </mat-form-field>
+            </div>
+        </div>
+    </div> -->
+<!-- <div class="row mt-2" style="overflow:auto;height:84%">
+        <div class="col-lg-12">
+         <table>
+             <tr style="color:#6b6666;">
+               <th *ngFor="let list of auditHeader">{{list}}</th>
+             </tr>
+             <tr *ngFor="let item of auditData">
+               <td style="color: #606266">{{item['user']}}</td>
+               <td style="color: #606266">{{item['module']}}</td>
+               <td style="color: #606266">{{item['object']}}</td>
+               <td style="color: #606266">{{item['action']}}</td>
+               <td style="color: #606266">{{item['info1']}}</td>
+               <td style="color: #606266">{{item['createdTime']}}</td>
+               <td style="color: #606266">{{item['created']|date:dateFormat}}</td>
+            </tr>
+           </table>
+           <ng-container *ngIf="!loading && auditData.length==0">
+            <p class="no-content" style="position: absolute;margin-top: 400px;margin-left: 550px;font-size: 21px;font-weight: bolder;letter-spacing: 1px">No items found!</p>
+          </ng-container>
+          <div *ngIf="loading" class="loading-spinner">
+            <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading.. Please wait..</span>
+          </div>
+     </div>
+    </div>
+    <div class="paginator-container" >
+        <mat-paginator [length]="auditCount" [pageIndex]="pageNum" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page" (page)="getAudit($event)">
+        </mat-paginator>
+      </div> -->
+
+<!-- </div>
+<div class="main-container">
+    <app-generic-data-table [columns]="auditcolumns"  [tableData]="auditData"   [filterButton]="true" [pageData]="pageData" 
+         [exportButton]="true"  [clearButton]="true" [loading]="loadingItems"  (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)" 
+          ></app-generic-data-table> 
+</div> -->
+
+<!-- 
+<mat-tab-group>
+    <ng-container *ngFor="let tab of listmainauditTab">
+        <mat-tab style="font-weight: 600;" label="{{tab.name}}">
+            <ng-template mat-tab-label style="font-weight:bold;">
+                <mat-icon>{{tab.icon}} </mat-icon> <span class="tabsName"> {{tab.name}} </span>
+            </ng-template>
+        </mat-tab>
+    </ng-container>
+</mat-tab-group> -->
+
+<!-- <mat-tab-group>
+    <ng-container *ngFor="let tab of sublistauditTab">
+        <mat-tab style="font-weight: 600;" label="{{tab.name}}">
+            <ng-template mat-tab-label style="font-weight:bold;">
+                <mat-icon>{{tab.icon}} </mat-icon> <span class="tabsName"> {{tab.name}} </span>
+            </ng-template>
+        </mat-tab>
+    </ng-container>
+
+</mat-tab-group> -->
+
+
+<mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChangeEvent($event)">
+    <mat-tab *ngFor="let mainTab of mainTabs; let i = index" label="{{mainTab.name}}">
+        <ng-template matTabContent>
+            <mat-tab-group #subTabGroup (selectedTabChange)="onsubTabChangeEvent($event, i)">
+                <mat-tab *ngFor="let subTab of subTabs[i]" label="{{subTab.name}}">
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
+
+<div class="main-container">
+    <app-generic-data-table [columns]="auditcolumns" [tableData]="auditData" [filterButton]="true" [pageData]="pageData" [exportButton]="true" [clearButton]="true" [loading]="loadingItems" (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)"
+        (onPageChange)="getAudits($event)" (onExportChange)="getDuplicateExportList($event)"></app-generic-data-table>
+</div>

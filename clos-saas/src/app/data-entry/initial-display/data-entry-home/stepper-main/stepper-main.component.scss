@@ -1,0 +1,109 @@
+.main-container {
+    width: 100%;
+    height: 94%;
+    display: grid;
+    grid-template-rows: 0.8fr 0.6fr 8fr;
+    box-shadow: inset 0 0 5px 5px rgba(194, 194, 194, 0.5);
+    border-radius: 1rem;
+    .header-conatiner {
+        display: grid;
+        grid-template-columns: 6fr 1fr;
+        .header-content {
+            width: 23rem;
+            margin-top: 16px;
+            margin-left: 2rem;
+        }
+        h2 {
+            color: #3445b4;
+            float: right;
+        }
+         ::ng-deep .mat-select-value-text {
+            color: #4154F1 !important;
+            font-weight: bold;
+        }
+    }
+    .content-container {
+         ::ng-deep .mat-step-header .mat-step-icon-selected,
+        .mat-step-header .mat-step-icon-state-done,
+        .mat-step-header .mat-step-icon-state-edit {
+            background-color: #3445b4 !important;
+        }
+        position: relative;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        height:10rem;
+    }
+    .button_container {
+        float: right;
+    }
+}
+
+::ng-deep .mat-stepper-horizontal,
+.mat-stepper-vertical {
+    background: none !important;
+}
+
+ ::ng-deep .mat-horizontal-stepper-header {
+    min-width: fit-content;
+}
+
+.mat-stepper-horizontal .mat-horizontal-stepper-header-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    position: relative;
+}
+
+.mat-stepper-arrow {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
+    z-index: 1;
+}
+
+.mat-stepper-arrow-left {
+    left: 0;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.mat-stepper-arrow-right {
+    right: 0;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.mat-stepper-header-overflowed .mat-stepper-arrow {
+    display: block;
+}
+
+.tabColor {
+    color: #4154F1 !important;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: #4154F1 !important;
+}
+
+.main_nav-container {
+    width: 100%;
+    height: 100%
+}
+
+mat-select {
+    padding: 1rem;
+    box-shadow: inset 0 0 5px 2px rgba(136, 136, 136, 0.3);
+}
+
+ ::ng-deep .mat-select-value-text {
+    font-size: 1.4rem;
+}
+
+::ng-deep .select-field .mat-form-field-underline {
+    display: none;
+}

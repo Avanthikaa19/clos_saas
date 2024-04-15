@@ -1,0 +1,24 @@
+<div class="item-block">
+    <ng-content></ng-content>
+    <div class="context-type" matRipple>
+        <p>{{element.cellData.type}}</p>
+    </div>
+    <div class="context-value"
+        [style.border-top-color]="element.cellFormat.borders.top.color"
+        [style.border-bottom-color]="element.cellFormat.borders.bottom.color"
+        [style.border-left-color]="element.cellFormat.borders.left.color"
+        [style.border-right-color]="element.cellFormat.borders.right.color"
+        [style.border-top-width.px]="element.cellFormat.borders.top.thickness"
+        [style.border-bottom-width.px]="element.cellFormat.borders.bottom.thickness"
+        [style.border-left-width.px]="element.cellFormat.borders.left.thickness"
+        [style.border-right-width.px]="element.cellFormat.borders.right.thickness"
+        [style.color]="element.cellFormat.fontColor"
+        [style.background-color]="element.cellFormat.backgroundColor"
+        [style.text-align]="element.cellFormat.textAlign"
+        [style.font-family]="element.cellFormat.font"
+        [style.font-size.px]="element.cellFormat.fontSize"
+        [style.font-weight]="element.cellFormat.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+        [style.font-style]="element.cellFormat.fontStyle.includes('ITALIC')? 'italic' : 'normal'">
+        <p>{{element.cellData.value}}</p>
+    </div>
+</div>

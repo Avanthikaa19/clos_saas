@@ -1,0 +1,109 @@
+<div class="content-container">
+    <form #spouseInfoForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="listFieldName['appmSpnm']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSemp']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer Address 1</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSemPa1']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer Address 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSemPa2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer Address 3</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSemPa3']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer Address 4</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSemPa4']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer ZIP Code</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSeZip']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Employer Phone</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSemTel']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Spouse Annual Salary</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSanSal']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

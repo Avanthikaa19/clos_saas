@@ -1,0 +1,253 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+       SPLIT TEMPLATES
+    </div>
+    <div style="height: 26px; position: relative; padding-left: 20px;">
+        <span class="add-items-text">Click the + icon to add template.</span>
+        <button mat-icon-button color="primary" class="min-button"
+       (click)="addTemplate()">
+           <mat-icon style="font-size: 14px;">add</mat-icon>
+           </button>
+    </div>
+    <mat-tab-group *ngIf="config.splitTemplates && parentSelectedIndex == 1" style="min-height: 450px" class="mat-tab-fill-height" [(selectedIndex)]="selectedTabIndex">
+        <ng-container *ngFor="let element of config.splitTemplates; let i = index">
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <span style="margin-left: 10px;">{{config.splitTemplates[i].templateName}}</span>
+                        <button mat-icon-button color="warn" class="min-button"
+                        (click)="config.splitTemplates.splice(i, 1);check(i)">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                    </div>
+                </ng-template>
+                <table style="position: absolute; height: 100%; width: 100%; overflow-y: auto; background-color: white; padding: 10px; margin-left: 10px;">
+                        <tbody>
+                             <tr style="width: 90%;">
+    
+                                <td>
+                                    <span class="min-label">Template Name</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input [(ngModel)]="config.splitTemplates[i].templateName" style="width: 95%;" class="min-input">
+                                </td>
+                            </tr>
+                            <tr style="width: 90%;">
+                                <td>
+                                    <span class="min-label">Output Route</span>
+                                </td>
+                                <td>:</td>
+                                <td style="width: 98%;">
+                                    <input [(ngModel)]="config.splitTemplates[i].outputRoute" style="width: 95%;" (ngModelChange)="changeValue($event,i)" class="min-input">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div  class="category-sub-header">
+                                        FIELD MAPPING:
+                                    </div>
+                                    <div>
+                                        <app-field-mapper-fragment *ngIf="config.splitTemplates[i].fieldMapping" [(config)]="config.splitTemplates[i].fieldMapping"></app-field-mapper-fragment>
+                                    </div>
+                                    <!-- <table style="width: calc(100% - 60px);">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span class="min-label">Fill</span>
+                                                </td>
+                                                <td>:</td>
+                                                <td>
+                                                    <input [(ngModel)]="config.splitTemplates[i].fieldMapping.fill" class="min-input">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="min-label">Field Status</span>
+                                                </td>
+                                                <td>:</td>
+                                                <td>
+                                                    <input [(ngModel)]="config.splitTemplates[i].fieldMapping.fieldsAre" class="min-input">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div class="category-sub-header">
+                                                        FIELD DEFINITION:
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div *ngFor="let element of config.splitTemplates[i].fieldMapping.definedBy; let j = index" style="position: relative; margin-bottom: 10px;">
+                                                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                                                            (click)="config.splitTemplates[i].fieldMapping.definedBy.splice(j, 1);">
+                                                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                                        </button>
+                                                        <table style="width: calc(100% - 50px);">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><span>{{j+1}}.</span></td>
+                                                                    <td>
+                                                                        <span class="min-label">Field Name</span>
+                                                                    </td>
+                                                                    <td>:</td>
+                                                                    <td>
+                                                                        <input [(ngModel)]="config.splitTemplates[i].fieldMapping.definedBy[j].name" class="min-input">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <span class="min-label">Give As Type</span>
+                                                                    </td>
+                                                                    <td>:</td>
+                                                                    <td>
+                                                                        <input [(ngModel)]="config.splitTemplates[i].fieldMapping.definedBy[j].giveAs" class="min-input">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <span class="min-label">Formula</span>
+                                                                    </td>
+                                                                    <td>:</td>
+                                                                    <td>
+                                                                        <mat-select [(ngModel)]="config.splitTemplates[i].fieldMapping.definedBy[j].formula" class="min-select" style="width: 100%;">
+                                                                            <mat-option *ngFor="let formula of formulas" [value]="formula">{{formula}}</mat-option>
+                                                                        </mat-select>
+                                                                        <span *ngIf="config.splitTemplates[i].fieldMapping.definedBy[j].formula=='EVALUATE'">
+                                                                        <button mat-icon-button  [matMenuTriggerFor]="menu">
+                                                                        <mat-icon style="font-size: 18px;" >error_outline</mat-icon>
+                                                                        </button>
+                                                                    </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                    <span class="min-label">Input ({{config.splitTemplates[i].fieldMapping.definedBy[j].formula=='EVALUATE'?'JS':(config.splitTemplates[i].fieldMapping.definedBy[j].formula=='X_PATH'?'xml':(config.splitTemplates[i].fieldMapping.definedBy[j].formula=='SQL' || config.splitTemplates[i].fieldMapping.definedBy[j].formula=='SQL2'?'sql':'text'))}})</span>
+                                                                    </td>
+                                                                    <td>:</td>
+                                                                    <td>
+
+                                                                        <div style="border: solid silver 1px; width: 100%;">
+                                                                            <ace-editor
+                                                                                [(ngModel)]="config.splitTemplates[i].fieldMapping.definedBy[j].value"
+                                                                                [mode]="config.splitTemplates[i].fieldMapping.definedBy[j].formula=='EVALUATE'?'javascript':(config.splitTemplates[i].fieldMapping.definedBy[j].formula=='X_PATH'?'xml':(config.splitTemplates[i].fieldMapping.definedBy[j].formula=='SQL' || config.splitTemplates[i].fieldMapping.definedBy[j].formula=='SQL2'?'sql':'text'))"
+                                                                                [theme]="'eclipse'"
+                                                                                [options]="options"
+                                                                                [autoUpdateContent]="true"
+                                                                                id="editor{{i}}" style="height:100%; width:100%; overflow: auto;"></ace-editor>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div *ngIf="config.splitTemplates[i].fieldMapping.definedBy.length > 1"
+                                                            style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                                                    </div>
+                                                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                                                        <span class="add-items-text">Click the + icon to add items.</span>
+                                                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                                                            (click)="config.splitTemplates[i].fieldMapping.definedBy.push({name: '', giveAs: 'string', formula: 'NONE', value: ''});">
+                                                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                                </td>
+                            </tr>
+                            <tr *ngIf="getSameOutputRouteWarningMessage(i)">
+                                <td colspan="3">
+                                    <mat-error class="center-align" style="width: 100%; text-align: center; color: orange;">
+                                        Warning: {{showSameOutputRouteWarningMessage}}
+                                    </mat-error>
+                                </td>
+                            </tr>
+    
+                    </tbody>
+                </table>
+            </mat-tab>
+        </ng-container>
+    </mat-tab-group>
+    <!-- <div *ngIf="showSameOutputRouteWarning">
+        {{getSameOutputRouteWarningMessage()}}
+    </div> -->
+    <div class="category-header">
+        ADVANCED
+    </div>
+
+    <table >
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threading</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" name="maxThread"  class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>
+<mat-menu #menu="matMenu"  >
+    <div (click)="$event.stopPropagation();">
+        <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;" (click)="$event.stopPropagation();">
+            <ngx-monaco-editor 
+                class="my-code-editor" 
+                [options]="jsEditorOptions"
+                [(ngModel)]="text"></ngx-monaco-editor>
+        </div>
+        <!-- <div style="border: solid silver 1px; width: 100%;" class="card" (click)="$event.stopPropagation();" >
+            <ace-editor
+               [(ngModel)]="text"
+                [mode]="'javascript'"
+                [theme]="'eclipse'"
+                [options]="options"
+                [autoUpdateContent]="true"
+                style="height:100%; width:100%; overflow: auto;"></ace-editor>
+        </div> -->
+        <div>
+            <span style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-top:5px; color: orangered; font-weight: bold;">
+             Output :
+             <span style="padding-bottom: 2px; padding-top: 10px; padding-right: 20px; color:black;font-weight:medium;" >
+                {{content}}
+             </span>
+            </span>
+        </div>
+        <span style= "margin-left : 100px;" (click)="$event.stopPropagation();" >
+        <button mat-raised-button color="primary" (click)="evaluateclick()" style="height: 33px;" > Verify </button>
+    </span>
+    </div>
+</mat-menu>

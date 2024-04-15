@@ -1,0 +1,38 @@
+<section class="p-5">
+    <div class="main-container">
+        <div class="header_Section">
+            <div><span class="material-symbols-outlined" style="color:#012970;  padding-right: 1rem;">info</span></div>
+            <div>
+                <h2 style="color:#012970">APPLICATION DETAILS</h2>
+            </div>
+        </div>
+        <hr style="margin-bottom: 4rem">
+        <div class="tab-container-wrapper">
+            <div class="tab-container">
+                <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="selectTab($event)">
+                    <mat-tab *ngFor="let data of headerList; let i = index;" label="{{data}}">
+                        <ng-template mat-tab-label style="font-weight: 600;">
+                            <span style="font-weight: 600;  color: #012970">{{data}}</span>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+        <ng-container>
+            <div class="grid-container">
+                <div style="margin-top:2rem" *ngFor="let heading of objedtKey; let i = index">
+                    <b>
+                        <span>{{heading |uppercase}}</span>
+                    </b><br><br>
+                    <mat-form-field matInput style="font-size:16px;width:95%">
+                        <input readonly matInput [value]="objectValues[i] ">
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+</section>

@@ -1,0 +1,60 @@
+<div class="view-job-container">
+<div class="monitor-header">
+    Monitoring Report Jobs
+    <button routerLink="/reports" mat-raised-button><mat-icon class="mr-2">arrow_back_ios</mat-icon>Go Back</button>
+</div>
+<div class="row" style="margin: 0px;">
+
+    <div class="col-sm-6 col-xl-6 col-lg-6" style="padding:0px;margin:0px;height:calc(100vh - 120px)" >
+        <div class="job-list-header" >
+            Jobs list
+            <input type="text" [(ngModel)]="searchJobs" (ngModelChange)="refreshItems()" placeholder="Search By Report Name or Job ID" class="min-input">
+            <span class="min-label">Sort By : </span>
+            <mat-select [(ngModel)]="sortBy" class="min-select">
+                <mat-option value="Start Time Des" selected>Start Time Desc</mat-option>
+                <mat-option value="Start Time Asc">Start Time Asc</mat-option>
+                <mat-option value="End Time Desc">End Time Desc</mat-option>
+                <mat-option value="End Time Asc">End Time Asc</mat-option>
+            </mat-select>
+        </div>
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <div class="job-list">
+            <mat-card *ngFor="let job of jobExecution" class="job-card" [class.job-card-active]="selectedJob== job" (click)="selectedJobinterval(job)" [style]="job.style">
+                <div class="mb-2 font-weight-bold h6" style="width:30%">Job ID : {{job.jobId}}</div>
+                <div class="mb-2 font-weight-bold h6" style="width:40%">Report : {{job.reportName}}</div>
+                <div class="mb-2" style="width:30%">Started On : {{job.startedOn | date : "dd-MM-yyyy HH:mm:ss:ms"}}</div>
+                <div style="width:30%">Run By User : {{job.username}}</div>
+                <div style="width:40%">Output File Name: {{job.outputFileName}}</div>
+                <div style="width:30%" *ngIf="job.progress != 100" class="progress-green" [style.color]="(job.endedError == true)?'red':''">Progress : {{job.progress}}%</div>
+                <div style="width:30%" *ngIf="job.progress == 100">Ended On : {{job.endedOn | date : "dd-MM-yyyy HH:mm:ss:ms"}}</div>
+            </mat-card>
+        </div>
+        <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+            <div>
+                <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+            </div>
+            <div>
+                <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+            </div>
+            <div>
+                <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-6 col-lg-6" style="padding:0px;margin:0px;background:#c0c0c026">
+        <mat-card class="non-select-card" *ngIf="!selectedJob">
+            Select Jobs from left to view more details...
+        </mat-card>
+        <app-selected-job-details *ngIf="selectedJob != null" [selectedJobDetail]="selectedJob"></app-selected-job-details>
+    </div>   
+
+</div>
+</div>
+
+

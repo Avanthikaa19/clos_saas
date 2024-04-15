@@ -1,0 +1,96 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <table *ngIf="config">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Decision Flow Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.decisionFlowName" class="min-input">
+                    <!-- <mat-select style="width: 95%;" class="min-select" [(ngModel)]="config.decisionFlowName" [multiple]="true" #multiSelect> -->
+                    <!-- <mat-option>
+                            <ngx-mat-select-search placeholderLabel="Search Here..." ngModel noEntriesFoundLabel='No flows match criteria.'></ngx-mat-select-search>
+                        </mat-option> -->
+                    <!-- <mat-option [value]="''">
+                            All
+                        </mat-option> -->
+                    <!-- <mat-option *ngFor="let flowName of flowNameList" [value]="flowName">{{flowName}}</mat-option>
+                    </mat-select> -->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">File Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.fileName" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">From Date</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="date" [(ngModel)]="config.fromDate" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">To Date</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="date" [(ngModel)]="config.toDate" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Run Date</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.runDate" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Id</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.batchId" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Num Lines</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.numLines" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Id</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.id" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

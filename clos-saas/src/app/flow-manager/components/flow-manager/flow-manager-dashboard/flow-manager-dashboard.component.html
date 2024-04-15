@@ -1,0 +1,63 @@
+<div class="flm-dashboard-container">
+    <div class="dashboard-title-container">
+        <div class="flm-title noselect">
+            <div class="flm-title-text">
+                System Dashboard
+            </div>
+            <div class="separator-wrapper">
+                <div class="separator"></div>
+            </div>
+            <div class="filter-container">
+                <div class="workflows-loading-container" [@fadeInOut] *ngIf="loadingWorkflows">
+                    <mat-spinner class="darkbg-spinner-color" mode="indeterminate" strokeWidth="2" diameter="20"></mat-spinner>
+                    <span>Loading Worksheets..</span>
+                </div>
+                <div class="workflows-placeholder-container" [@fadeInOut] *ngIf="!loadingWorkflows && workflows?.length == 0">
+                    <span>No Worksheets Found!</span>
+                </div>
+                <div class="workflows-placeholder-container" [@fadeInOut] *ngIf="!loadingWorkflows && workflows.length > 0">
+                    {{selectedCount ? selectedCount : 'All'}} Worksheets Selected.
+                </div>
+                <div class="workflows-selection-container" [@fadeInOut] *ngIf="!loadingWorkflows && workflows.length > 0 && showWorksheetSelection">
+                    <app-worksheet-selector [workflows]="workflows" (selectionChanged)="getNewFilter($event)"
+                    (closeRequested)="showWorksheetSelection = false"></app-worksheet-selector>
+                </div>
+            </div>
+            <button mat-raised-button color="primary" (click)="showWorksheetSelection = true" *ngIf="!loadingWorkflows && workflows.length > 0"
+                [disabled]="showWorksheetSelection">
+                <mat-icon>filter</mat-icon>
+                <span>Select Worksheets</span>
+            </button>
+            <button mat-button (click)="changedWorksheetsFilter(true)" style="color: white;">
+                <mat-icon>refresh</mat-icon>
+                <span>Refresh Dashboard</span>
+            </button>
+            <div class="spacer"></div>
+            <div class="control-buttons">
+                <button mat-button routerLink="/flow-manager/flows">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                    <span style="padding-left: 10px;">Go To Flows</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-grid-container">
+        <div class="grid-parent">
+            <div class="traffic-light-dashboard">
+                <div class="dashboard-header">
+                    <mat-icon>dashboard</mat-icon>
+                    <span>Systems Overview</span>
+                    <div class="spacer"></div>
+                </div>
+                <div class="dashboard-content">
+                    <app-systems-overview-dashboard [reloadSubject]="reloadTrafficLightSubject" [reloadWorkflows]="reloadTrafficLightWorkflows"
+                    (refreshedTimestamp)="systemsDashboardRefreshed($event)" (goToFlows)="goToFlows()"></app-systems-overview-dashboard>
+                </div>
+                <div class="dashboard-footer">
+                    <span>Last Refreshed At {{systemsDashboardRefreshTime | date: 'dd MMM yyyy HH:mm:ss'}}</span>
+                    <div class="spacer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

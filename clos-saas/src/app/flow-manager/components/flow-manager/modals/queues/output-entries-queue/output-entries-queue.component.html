@@ -1,0 +1,165 @@
+<div class="queue-component-container">
+    <div class="inner-container">
+        <button mat-raised-button class="reprocess-btn" *ngIf="selectedIds.length > 0" (click)="reprocessEntries()"
+            [style.background-color]="reprocessing ? 'gray' : 'crimson'" [disabled]="reprocessing">
+            <mat-icon>refresh</mat-icon>
+            <span *ngIf="reprocessing">Reprocessing..</span>
+            <span *ngIf="!reprocessing">Reprocess {{selectedIds.length}} Entries</span>
+        </button>
+        <div class="filter-container">
+            <div class="filter-vert-middle">
+                <input type="checkbox" color="primary" [(ngModel)]="includeSearchKey" style="cursor: pointer; vertical-align: -2px;">
+                <span class="min-label" (click)="includeSearchKey=!includeSearchKey" style="cursor: pointer;">
+                    Filter By
+                </span>
+                <mat-select [(ngModel)]="searchKeyMode" style="width: 100px; margin-left: -5px;">
+                    <mat-option value="ID">ID</mat-option>
+                    <mat-option value="SEARCH_KEY">Search Key</mat-option>
+                </mat-select>
+                <span>:</span>
+
+                <input class="min-input" [(ngModel)]="filter.searchKey"
+                    placeholder="{{includeSearchKey ? 'Enter ' + (searchKeyMode === 'ID' ? 'ID' : 'search key') + ' here..' : 'Disabled'}}"
+                    [disabled]="!includeSearchKey" style="width: 200px;">
+                <input type="checkbox" color="primary" [(ngModel)]="includeBatchId" style="margin-left: 10px; cursor: pointer; vertical-align: -2px;">
+                <span class="min-label" (click)="includeBatchId=!includeBatchId" style="cursor: pointer;">
+                    Batch ID:
+                </span>
+                <input class="min-input" [(ngModel)]="filter.batchId" type="number" min="1"
+                    placeholder="{{includeBatchId ? '' : 'Disabled'}}"
+                    [disabled]="!includeBatchId" style="width: 100px;">
+                <span class="min-label">Processed:</span>
+                <mat-select [(ngModel)]="filter.processed" class="min-select" style="width: auto; min-width: 50px;">
+                    <mat-option [value]="''">All</mat-option>
+                    <mat-option [value]="'N'">No</mat-option>
+                    <mat-option [value]="'Y'">Yes</mat-option>
+                </mat-select>
+                <span class="min-label">Type:</span>
+                <mat-select [(ngModel)]="filter.errored" class="min-select" style="width: auto; min-width: 100px;">
+                    <mat-option [value]="''">All</mat-option>
+                    <mat-option [value]="'Y'">Errored</mat-option>
+                    <mat-option [value]="'N'">Successful</mat-option>
+                </mat-select>
+                <span class="min-label">Q.Inst.:</span>
+                <input class="min-input" [(ngModel)]="filter.queueInstance" style="width: 50px;" type="number" min="0">
+                <span class="min-label">Sort by:</span>
+                <mat-select [(ngModel)]="sortBy" class="min-select" style="width: auto; min-width: 100px;">
+                    <mat-option [value]="'id'">Entry ID</mat-option>
+                    <mat-option [value]="'created'">Created</mat-option>
+                    <mat-option [value]="'searchKey'">Search Key</mat-option>
+                </mat-select>
+                <mat-select [(ngModel)]="sortOrder" (ngModelChange)="refreshEntries()" class="min-select" style="width: auto; min-width: 60px;">
+                    <mat-option [value]="'asc'">Asc.</mat-option>
+                    <mat-option [value]="'desc'">Desc.</mat-option>
+                </mat-select>
+            </div>
+            <div class="filter-vert-middle" style="float: right;">
+                <button mat-button (click)="refreshEntries()" style="color: crimson; background-color: whitesmoke;">
+                    <span style="padding-right: 10px;">Load Entries</span>
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="tableContainer" id="tableContainer" style="height: calc(100% - 45px); overflow-y: auto;">
+            <table cellpadding="0" cellspacing="0" width="100%">
+                <thead class="fixedHeader">
+                    <tr>
+                        <th><a>No.</a></th>
+                        <th>
+                            <div style="text-align: center; position: relative;" class="th-btn noselect" (click)="toggleAllSelection()" matRipple>
+                                <mat-icon style="color: white; font-size: 22px;">playlist_add_check</mat-icon>
+                            </div>
+                        </th>
+                        <th>
+                            <div style="text-align: center; position: relative;" class="noselect">
+                                <mat-icon style="color: white; font-size: 22px;">notifications</mat-icon>
+                            </div>
+                        </th>
+                        <th *ngFor="let field of fields"><a>{{getFieldLabels(field)}}</a></th>
+                        <ng-container *ngIf="ac.super || ac.items.DFM003B_ENTRIES_TRACK">
+                            <th><a>Track</a></th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody class="scrollContent">
+                    <tr *ngFor="let entry of entries; let i = index" [class.tracked-entry-row]="trackedEntryId && entry.id === trackedEntryId">
+                        <td (click)="openEntry(entry.id, $event)">
+                            <div style="color: silver; text-align: center;">
+                                {{(i+1)}}
+                            </div>
+                        </td>
+                        <td (click)="toggleSelection(entry)" matRipple>
+                            <div style="text-align: center;">
+                                <input type="checkbox" color="primary" [ngModel]="entry.selected" style="cursor: pointer; vertical-align: -2px;" readonly>
+                            </div>
+                        </td>
+                        <td (click)="openEntry(entry.id, $event)">
+                            <div style="text-align: center; position: relative;">
+                                <mat-icon *ngIf="entry.error!=null && entry.processed!='Y'" color="warn">report</mat-icon>
+                            </div>
+                        </td>
+                        <td *ngFor="let field of fields; let j = index" (click)="openEntry(entry.id, $event)">
+                            <!-- DATE -->
+                            <div *ngIf="j==1" style="text-align: center;" [class.warn-color]="entry.error!=null">
+                                {{entry[field] | date: 'dd MMM yyyy | HH:mm:ss:SSS'}}
+                            </div>
+                            <!-- SOURCE ID -->
+                            <div *ngIf="j==3" style="text-align: center;" [class.warn-color]="entry.error!=null">
+                                {{entry[field] == null ? '' : entry[field]}}
+                                <span *ngIf="entry[field] != null && entry[field] == taskId" style="font-style: italic; color: silver; font-size: 12px;"> (THIS TASK)</span>
+                            </div>
+                            <!-- SEARCH KEY -->
+                            <div *ngIf="j==7" style="text-align: left;" [class.warn-color]="entry.error!=null">
+                                {{entry[field] == null ? '' : entry[field]}}
+                                <button mat-button color="primary" style="font-size: 12px; line-height: 18px; height: auto; float: right; background-color: rgba(0, 0, 0, 0.03);" 
+                                    (click)="copyValueToClipboard(entry[field], $event)">
+                                    Copy
+                                </button>
+                            </div>
+                            <!-- OTHERS -->
+                            <div *ngIf="j != 1 && j != 3 && j != 7" style="text-align: center;" [class.warn-color]="entry.error!=null">
+                                {{entry[field]==null?'':entry[field]}}
+                            </div>
+                        </td>
+                        <td>
+                            <!-- (click)="openEntry(entry.id, $event)" -->
+                            <button mat-button color="primary" *ngIf="ac.super || ac.items.DFM003B_ENTRIES_TRACK"
+                                style="width: 100%; font-size: 12px; line-height: 18px; height: auto; background-color: rgba(0, 0, 0, 0.03);"
+                                (click)="requestForTrack(entry.id, $event)">
+                                <mat-icon style="color: crimson;">timeline</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <mat-card [@fadeInOut] *ngIf="!loadingEntries && entries.length > 0"
+        class="mat-elevation-z2 opaque-on-hover noselect bot-tab-card">
+        <div class="text">
+            <span>{{(pageSize*(currentPage-1)) + 1}} -
+                {{(pageSize*(currentPage-1)) + entries.length}}/{{totalSize}}</span>
+        </div>
+        <button mat-icon-button style="float: left; margin-right: 50px; margin-left: -10px;" [disabled]="currentPage==1"
+            (click)="currentPage=(currentPage-1); refreshEntries();">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button style="float: right; margin-left: 50px; margin-right: -10px;"
+            [disabled]="currentPage==totalPages" (click)="currentPage=(currentPage+1); refreshEntries();">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </mat-card>
+    <mat-card [@fadeInOut] *ngIf="loadingEntries" class="mid-tab-card mat-elevation-z2">
+        <div class="spinner">
+          <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
+        <div class="text">
+          <span>Loading entries.. Please wait.. </span>
+        </div>
+    </mat-card>
+    <mat-card [@fadeInOut] *ngIf="!loadingEntries && entries.length==0" class="mid-tab-card mat-elevation-z2">
+        <div class="text">
+            <span>No entries found under current search criteria.</span>
+        </div>
+    </mat-card>
+</div>

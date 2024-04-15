@@ -1,0 +1,316 @@
+<div class="main-container">
+    <div class="module-header-container" *ngIf="false">
+        <span class="usr__dtl__txt-container">
+             <!-- <a style="color:black;"><u>User list</u></a> >
+            <span class="usr__name__txt-container">
+                {{userDetail.username ? userDetail.username : 'New user'}}
+              New User 
+            </span> -->
+        </span>
+        <span class="go__back-conntainer">
+            <button (click)="onGoBackClick()" mat-stroked-button
+                style="font-weight: 600;background-color: rgb(248, 248, 248);box-shadow: 3px 3px rgb(238, 236, 236);margin-right: 1rem;">
+                <mat-icon>arrow_circle_left</mat-icon>
+                Go back
+            </button>
+        </span>
+    </div>
+    <div class="tab-container">
+        <div class="main-tabs-container">
+            <mat-tab-group #allTabs>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="tab-icon">person</mat-icon>
+                        <span style="font-weight: 600;">
+                            User
+                        </span>
+                    </ng-template>
+                    <div class="name-container">
+                        <span>
+                            {{userDetail.username ? userDetail.username : 'New user'}}
+                        </span>
+                        <!-- <div class="at-separator-thick"></div> -->
+                    </div>
+                    <div class="crtd-date-container">
+                        <span *ngIf="currentDate">
+                            Created on {{currentDate}}
+                        </span> 
+                        <!-- <span *ngIf="!userDetail.id">
+                            {{currentDate}}
+                        </span> -->
+                    </div>
+                    <div class="form-content-container">
+                        <div class="table-content-container">
+                            <div class="user-detail-table">
+                                <table>
+                                    <tr>
+                                        <td class="required">User Name</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input class="min-input" #usernameInput (input)="onInputChange()" [(ngModel)]="userDetail.username" type="text" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <span *ngIf="!userDetail.username" style="color:red;">User Name is
+                                                    required
+                                                    field.</span>
+                                            </div>
+                                            <div *ngIf="message">
+                                                <span style="color:red;">{{message}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">First Name</td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="value">
+                                                <input class="min-input" [(ngModel)]="userDetail.firstName" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && !userDetail.firstName">
+                                                <span style="color:red;">First Name is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Last Name</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="userDetail.lastName" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && userDetail.firstName && !userDetail.lastName">
+                                                <span style="color:red;">Last Name is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Initial</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" placeholder="Provide intials" [(ngModel)]="userDetail.initial" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                        </td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && userDetail.firstName && userDetail.lastName && !userDetail.initial">
+                                                <span style="color:red;">Initial is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Email</td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="value email">
+                                                <input class="min-input" [(ngModel)]="userDetail.emailId" type="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" (ngModelChange)="emailValueValidation(userDetail.emailId)"
+                                                    oninput="this.value = this.value.replace(/^\s+/g, '');">
+                                                <span class="invalid-email-text">Invalid email address!</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && userDetail.firstName && userDetail.lastName && userDetail.initial && !userDetail.emailId">
+                                                <span style="color:red;">Email is required field.</span>
+                                            </div>
+                                            <div *ngIf="emailerrormessage">
+                                                <span style="color:red;">{{emailerrormessage}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Date Of Birth</td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-form-field appearance="fill" style="font-size: 9px;width: 100%;" class="input-field">
+                                                <input matInput [matDatepicker]="picker" [max]="maxDate" style="font-size: 12px;" [(ngModel)]="DateField" (ngModelChange)="dateChange()" autocomplete="off" readonly>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && userDetail.firstName && userDetail.lastName &&  userDetail.emailId && userDetail.initial && !userDetail.birthdate">
+                                                <span style="color:red;">Date Of Birth is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Gender</td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="userDetail.gender" required class="min-input detail-item-input" style="padding: 0.5rem 1rem 1rem">
+                                                <mat-option *ngFor="let gender of genders" [value]="gender">{{gender}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && userDetail.firstName && userDetail.lastName &&  userDetail.emailId && userDetail.birthdate && userDetail.initial && !userDetail.gender">
+                                                <span style="color:red;">Gender is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Designation</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="userDetail.designation" oninput="this.value = this.value.replace(/^\s+/g, '');"></td>
+                                        <td>
+                                            <div *ngIf="userDetail.username && userDetail.firstName && userDetail.lastName && userDetail.emailId && userDetail.gender && userDetail.initial && !userDetail.designation">
+                                                <span style="color:red;">Designation is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Supervising User</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="userDetail.supervisingUser"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Country</td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="userDetail.country" required class="min-input min-select detail-item-input">
+                                                <mat-option *ngFor="let country of countriesList" [value]="country">{{country}}
+                                                </mat-option>
+                                            </mat-select>
+                                            </td>
+                                            <td> <div *ngIf="userDetail.username && userDetail.firstName && !userDetail.country">
+                                                <span style="color:red;">Country is required field.</span>
+                                            </div>
+                                            <div *ngIf="message">
+                                                <span style="color:red;">{{message}}</span>
+                                            </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Roles</td>
+                                        <td>:</td>
+                                        <div class="parent__row-flex" style="padding-left: 1rem; padding-top: 0.6rem;">
+                                            <ng-container *ngIf="userDetail.roles?.length != 0">
+                                                <div  class="flex-grow user__role-container parent__row-flex">
+                                                    <div class="flex-grow">
+                                                        <mat-icon>how_to_reg</mat-icon>
+                                                    </div>
+                                                    <div style="line-height: 2.5rem; text-align: left;text-transform: capitalize;" class="flex-grow">
+                                                         <span>{{ userDetail.roles[0].name }}</span>
+                                                        <span *ngIf="userDetail.roles.length > 1">({{ userDetail.roles.length - 1 }}+ more)</span>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <div *ngFor="let data of [0]" class="flex-grow user__role-container parent__row-flex">
+                                                <div style="line-height: 2.5rem; text-align: left; margin-left: 0.5rem; font-weight: 100;cursor:pointer" class="flex-grow" (click)='moveToSelectedTab("how_to_regRoles")'>
+                                                    <span class="add-rules"  (click)="openAddRoleDialog()">
+                                                        {{userDetail.id ? 'Edit Roles' : 'Add Roles'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </tr>
+                                    <tr>
+                                        <td>User Groups</td>
+                                        <td>:</td>
+                                        <div class="parent__row-flex" style="padding-left: 1rem; padding-top: 0.6rem;">
+                                            <ng-container *ngIf="userDetail.groups?.length != 0">
+                                                <div  class="flex-grow user__role-container parent__row-flex">
+                                                    <div class="flex-grow">
+                                                        <mat-icon>settings_suggest</mat-icon>
+                                                    </div>
+                                                    <div style="line-height: 2.5rem; text-align: left;text-transform: capitalize;" class="flex-grow">
+                                                        <span>{{ userDetail.groups[0].name }}</span>
+                                                       <span *ngIf="userDetail.groups.length > 1">({{ userDetail.groups.length - 1 }}+ more)</span>
+                                                   </div>
+                                                </div>
+                                            </ng-container>
+                                            <div *ngFor="let data of [0]" class="flex-grow user__role-container parent__row-flex">
+                                                <div style="line-height: 2.5rem; text-align: left; margin-left: 0.5rem; font-weight: 100;cursor:pointer" class="flex-grow" (click)='moveToSelectedTab("how_to_regRoles")'>
+                                                    <span class="add-rules"  (click)="openAddGroupDialog()">
+                                                        {{userDetail.id ? 'Edit Groups' : 'Add Groups'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </table>
+                                <table>
+                                    <ng-container *ngIf="!userDetail.id">
+                                        <table>
+                                            <tr>
+                                                <td style="padding-right:3rem;">LocalAccount</td>
+                                                <td>:</td>
+                                                <input style="margin: 1rem;" type="checkbox" [(ngModel)]="userDetail.localAccount">
+                                            </tr>
+                                        </table>
+                                        <tr *ngIf="userDetail.localAccount"><br>
+                                            <div style="display:flex;flex-direction:row;">
+                                                <table>
+                                                    <td class="required" style="padding-right:4.5rem;">Password</td>
+                                                    <td>:</td>
+                                                    <input type="password" autocomplete="off" style="margin: 1rem;" [(ngModel)]="localUserPassword" (ngModelChange)="getPasswordValidation()" oninput="this.value = this.value.replace(/^\s+/g, '');">
+                                                    <td>
+                                                        <div *ngIf="!localUserPassword">
+                                                            <span style="color:red;margin-left: 1rem;">Password is required
+                                                                field.</span>
+                                                        </div>
+                                                    </td>
+                                                </table>
+                                            </div>
+                                            <div class="password-notifier" *ngIf="passwordMessage">
+                                                {{passwordMessage}}
+                                            </div>
+                                        </tr>
+                                    </ng-container>
+                                    <tr *ngIf="userDetail.id "><br>
+                                        <div>
+                                            <button class="tl-btn" matTooltipPosition="right" (click)="lockUnlockBtnClick()" matTooltip="{{userDetail.isLocked ==true ? 'Click  to unlock user' : 'Click  to Lock User' }}">
+                                                <mat-icon> {{userDetail.isLocked ==true ?
+                                                    'lock_open' : 'lock' }}</mat-icon>
+                                                {{userDetail.isLocked ==true ? 'UnLock User' : 'LockUser' }}
+                                            </button>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- <div>
+                                {{getErrorMsg()}}
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="cdu__btn__container">
+                        <div class="delete__btn-container">
+                            <ng-container>
+                                <button mat-raised-button *ngIf="userDetail.id" (click)="onDeleteBtnClick()">
+                                    <mat-icon style="margin-right: 1rem;">delete</mat-icon>
+                                    <span>
+                                        Delete user
+                                    </span>
+                                </button>
+                            </ng-container>
+                        </div>
+                        <div class="create__btn-container" *ngIf="userDetail.id && userDetail.localAccount" style="margin-right:1rem">
+                            <button class="tl-btn" (click)="openResetPassword()">
+                                <mat-icon>refresh</mat-icon>
+                                <span>
+                                    Reset Password
+                                </span>
+                            </button>
+                        </div>
+                        <div class="create__btn-container" style="margin-right:1rem">
+                            <button class="tl-btn" (click)="saveUser()" [disabled]="disable()" [style.background]="'#0e2954'">
+                                <mat-icon> {{userDetail.id ? 'refresh' : 'save'}}</mat-icon>
+                                {{userDetail.id ? 'Update User' : 'Save user'}}
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                
+                <!-- <mat-tab>
+                    <ng-template mat-tab-label style="font-weight: 600;">
+                        <mat-icon class="tab-icon">groups</mat-icon>
+                        <span style="font-weight: 600;">Groups</span>
+                    </ng-template>
+                    <div>
+                        <app-user-groups [groups]="this.userDetail.groups" (groupChange)="onUserGroupChange($event)">
+                        </app-user-groups>
+                    </div>
+                </mat-tab> -->
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

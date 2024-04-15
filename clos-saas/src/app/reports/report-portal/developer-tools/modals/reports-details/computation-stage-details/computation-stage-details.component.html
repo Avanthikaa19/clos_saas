@@ -1,0 +1,69 @@
+<div class="theme-detail-container">
+    <div class="theme-title">
+        <span>Computation Stage Details</span>
+    </div>
+    <div class="theme-details">
+        <span class="min-label">Name:</span><input [(ngModel)]="stage.name" class="min-input field-name">
+    </div>
+    <div class="theme-details">
+        <span class="min-label">Description:</span><input [(ngModel)]="stage.description"
+            class="min-input field-description">
+    </div>
+    <div class="chkbox text-right mt-2">
+        <mat-checkbox color="primary" [(ngModel)]="stage.parallelize">Parallelize</mat-checkbox>
+    </div>
+    <div class="theme-spec-title mt-0">
+        <span>Computation Queries:</span>
+    </div>
+    <div class="computation-container">
+        <div class="chooser-container" *ngIf="stage.computationQueries.length > 0">
+            <div class="cards-list-container">
+                <div class="cards-list noselect">
+                    <div class="computation-card noselect" [@fadeInOut] *ngFor="let computation of stage.computationQueries; let i = index"  matRipple>
+                        <div class="computation-card1">
+                            <div class="computation-card-name">
+                                {{computation.name}}
+                            </div>
+                            <div class="computation-card-separator">&bull;</div>
+                            <div class="computation-card-description">
+                                {{computation.description}}
+                            </div>
+                        </div>
+                        <div class="computation-card-separator"></div>
+                        <div class="computation-card2">
+                            <div class="computation-card-sql">
+                                {{computation.sql}}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: end;">
+                        <button class="tb-btn noselect" (click)="openComputationQueryChooser($event)">
+                            <mat-icon class="mr-2">add_circle</mat-icon>
+                            Add Query
+                        </button>
+                        <button class="tb-btn tb-btn-red noselect" (click)="removeComputationQuery()">
+                            <mat-icon class="mr-2">remove_circle</mat-icon>
+                            Remove Query
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="computation-chooser" *ngIf="stage.computationQueries.length == 0">
+            <mat-icon class="sheet-icon" [@fadeInOut] (click)="openComputationQueryChooser($event);">add_circle</mat-icon>
+            <div class="display"> Select Computation Query</div>
+        </div>
+    </div>
+</div>
+<div class="extraction-chooser-container">
+    <div class="extraction-chooser-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" [disabled]="stage.computationQueries?.length == 0" (click)="onSelect(stage)">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">Add</span>
+        </button>
+    </div>
+</div>

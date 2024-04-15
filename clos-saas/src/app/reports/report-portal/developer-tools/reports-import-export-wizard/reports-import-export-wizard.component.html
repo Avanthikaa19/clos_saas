@@ -1,0 +1,58 @@
+<div class="exports-list-container">
+    <div class="feature-header">
+        <div class="tools-right">
+            <button [@fadeInOut] *ngIf="!isCreateScrolledIntoView" mat-raised-button color="primary" >
+                <mat-icon>add</mat-icon>
+                <span style="padding-left: 10px;">Create Export Template</span>
+            </button>
+        </div>
+        <span class="feature-title">Create & Edit Export Template</span>
+        <br>
+        <span class="feature-subtitle">You can select these Template to export.</span>
+    </div>
+    <div class="feature-content" (scroll)="createIsInView($event)">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <!-- CARD VIEW -->
+        <div class="export-cards-container">
+            <div #creationDiv class="export-card-create noselect" matTooltip="Create your own export template." (click)="openItemDetails(null)" matRipple>
+                <div class="export-card-create-title">
+                    Create A New Export Template
+                </div>
+                <mat-icon class="export-card-create-icon">add_circle</mat-icon>
+            </div>
+            <div class="export-card-create noselect">
+                <div style="position: absolute; right: 7px;">
+                    <button class="tb-btn noselect" matRipple>
+                        <mat-icon>get_app</mat-icon>
+                        <span>Export</span>
+                    </button>
+                </div>
+                <div class="export-card-header-content">Export Template Name</div>
+                <div class="text-center">--</div>
+                <div class="export-card-header-content">Description</div>
+                <div class="text-center">--</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+        <div>
+            <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+        </div>
+        <div>
+            <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+        </div>
+        <div>
+            <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <button mat-fab color="primary" matTooltip="Reload items in page." class="refresh-button" [disabled]="loadingItems" (click)="refreshItems()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</div>

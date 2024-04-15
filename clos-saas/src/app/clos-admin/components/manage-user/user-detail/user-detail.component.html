@@ -1,0 +1,103 @@
+<div class="registration-container">
+    <div class="tabs">
+        <div class="tab selected">
+            <mat-icon>person</mat-icon>User
+        </div>
+    </div>
+    <div class="tab-content ml-5">
+        <div class="new-user">New User</div>
+        <div class="divider"></div>
+        <div class="created-date">Created on 24-08-2023</div>
+    </div>
+    <div class="registration-form ml-3">
+        <div class="form-field">
+            <label for="firstname">First Name <span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="text" id="firstname" required>
+
+        </div>
+        <div class="form-field">
+            <label for="lastname">Last Name<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="text" id="lastname" required>
+        </div>
+        <div class="form-field">
+            <label for="initials">Initials<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="text" id="initials" required>
+        </div>
+        <div class="form-field">
+            <label for="email">Email<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-field">
+            <label for="dob">Date of Birth<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="date" id="dob" required>
+        </div>
+        <div class="form-field">
+            <label for="gender">Gender<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <mat-select  required  id="gender" class="min-input detail-item-input ml-5" style="padding: 0.5rem 1rem 0.5rem">
+                <mat-option *ngFor="let gender of genders" [value]="gender">{{gender}}
+                </mat-option>           
+             </mat-select>
+        </div>
+        <div class="form-field">
+            <label for="designation">Designation<span class="required-symbol">*</span></label>
+            <span class="colon">:</span>
+            <input type="text" id="designation" required>
+        </div>
+        <div class="form-field">
+            <label for="supervisor">Supervising User</label>
+            <span class="colon">:</span>
+            <input type="text" id="supervisor" required>
+        </div>
+        <div class="form-field">
+            <label for="userRoles">User Groups</label>
+            <span class="colon">:</span>
+            <ng-container>
+                <div class="flex-grow user__role-container parent__row-flex ml-5">
+                    <div class="flex-grow">
+                        <mat-icon>settings_suggest</mat-icon>
+                    </div>
+                    <div style="line-height: 2.5rem; text-align: left;text-transform: capitalize;" class="flex-grow">
+                        <span>{{changeRoleNamesText ? roleNamesFull :
+                            roleNamesShort}}</span>
+                    </div>
+                </div>
+            </ng-container>
+            <span class="add-rules" (click)="openAddGroupDialog()">Add Groups</span>
+        </div>
+        <div class="form-field">
+            <label for="userRoles">User Roles</label>
+            <span class="colon">:</span>
+            <ng-container>
+                <div class="flex-grow user__role-container parent__row-flex ml-5">
+                    <div class="flex-grow">
+                        <mat-icon>how_to_reg</mat-icon>
+                    </div>
+                    <div style="line-height: 2.5rem; text-align: left;text-transform: capitalize;" class="flex-grow">
+                        <span>{{changeRoleNamesText ? roleNamesFull :
+                            roleNamesShort}}</span>
+                    </div>
+                </div>
+            </ng-container>
+            <span class="add-rules" (click)="openAddRoleDialog()">Add Roles</span>
+        </div>
+
+        <div class="form-field">
+            <label for="localAccount">Local Account</label>
+            <span class="colon">:</span>
+            <input type="checkbox" id="localAccount">
+        </div>
+    </div>
+    <div class="save-button">
+        <button>
+            <mat-icon>save</mat-icon>
+            Save User
+        </button>
+    </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,53 @@
+<div class="main-container">
+    <div class="side-nav-container">
+        <div class="nav-container">
+            <ng-container *ngFor="let item of sideNavigationList">
+                <div class="nav-item" [class.active-container]="item.name == currentPanel" (click)="onNavClick(item);" routerLinkActive="active">
+                    <mat-icon class="icon">{{ item.iconName }}</mat-icon>
+                    <span class="name">{{ item.name }}</span>
+                </div>
+            </ng-container>
+            <mat-accordion style="width: 100%;">
+                <ng-container *ngFor="let item of navigationElements">
+                    <span *ngIf="screenList.includes('Application_Entry')" (click)="getMapping('Application_Entry')" >
+                    <mat-expansion-panel [expanded]="item.isExpanded">
+                        <mat-expansion-panel-header class="header-class" style="color: white !important;padding-left: 10px;" (click)="$event.stopPropagation">
+                            <mat-icon class="icon">{{ item.navIcon }}</mat-icon>
+                            <span class="name">{{ item.navName }}</span>
+                             <button class="icon-hov1" matTooltip="Load more" style="border:none;color:white;background-color: transparent;margin-top: 13px;margin-left:23px;z-index: 2;" [hidden]="allTemplate?.length==0||allTemplate?.length<10" (click)="$event.stopPropagation();pageNumber=pageNumber+1;getMapping('Application_Entry')">
+                            <mat-icon style="font-size: 12px;margin-top: 10px;margin-left: 2px;">arrow_forward_ios</mat-icon>
+                        </button>
+                        </mat-expansion-panel-header>
+                        <div style="max-height: 160px;overflow: auto;margin-top: 10px;">
+                        <ng-container *ngFor="let item of allTemplate">
+                            <div class="sub-nav-item" style="padding: 20px;border-radius: 8px;" (click)="viewDashboard(item.id)">
+                                <span class="sub-name">{{ item.dashboardName }}</span>
+                            </div>
+                        </ng-container>
+                        </div>
+                    </mat-expansion-panel>
+                    </span>
+                </ng-container>
+            </mat-accordion>
+        </div>
+        <div class="main-nav-container">
+            <mat-toolbar class="tool-bar">
+                <div class="tool-bar">
+                    <span *ngFor="let breadCrumb of breadCrumbList">
+                        <div style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                            (click)="navToUrl(breadCrumb.url)">
+                            <div class="d-flex">{{breadCrumb.name}}
+                                <span class="separator-div">
+                                    <div class="separator"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </mat-toolbar>
+            <div class="content-container">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

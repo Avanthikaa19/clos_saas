@@ -1,0 +1,14 @@
+@import url(../../../../../common-css/common.scss);
+@import url(../../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 93%;
+    >.header-container {
+        height: 3rem;
+    }
+    >.theme-selection-container {
+        height: 5rem;
+    }
+    >.editor-container {
+        height: calc(100% - 8rem);
+    }
+}

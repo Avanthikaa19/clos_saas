@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+.mat-icon {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 1.85rem;
+}
+
+.mat-stroked-button {
+    color: #394eb4;
+    border-radius: 2rem !important;
+    background-color: white;
+}
+
+.mat-raised-button {
+    border-radius: 2rem !important;
+}
+
+.close {
+    color: red;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.font-header {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.inner-header {
+    font-size: 1.6rem;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: rgb(54, 52, 52);
+}

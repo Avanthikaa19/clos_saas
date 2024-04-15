@@ -1,0 +1,214 @@
+<mat-tab-group>
+    <mat-tab label="Variables">
+        <div class="main-container">
+            <div class="header-container">
+                <div class="category-header">
+                    {{variableFields.id == null ? 'Create' : 'Update'}} Variables
+                </div>
+            </div>
+            <div class="content-container flex-column-parent">
+                <div class="flex-stetch flex-row-parent" style="width: 100%;">
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable">
+                            Var Name
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <input class="min-input" [(ngModel)]="variableFields.name">
+                        </div>
+                    </div>
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable">
+                            Var Type
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <input class="min-input" [(ngModel)]="variableFields.type">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-stetch flex-row-parent" style="width: 100%;">
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable">
+                            Var Tag
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <input class="min-input" [(ngModel)]="variableFields.tags">
+                        </div>
+                    </div>
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable">
+                            In Use
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <!-- <input class="min-input"> -->
+                            <mat-select class="min-select" style="min-width: 17rem;" [(ngModel)]="variableFields.in_use">
+                                <!-- <mat-option value="" disabled selected>In_Use</mat-option> -->
+                                <mat-option value="Y">Y</mat-option>
+                                <mat-option value="N">N</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-stetch flex-row-parent" style="width: 100%;">
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable">
+                            Source
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <input class="min-input" [(ngModel)]="variableFields.source">
+                        </div>
+                    </div>
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable">
+                            Database
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <!-- <input class="min-input"> -->
+                            <mat-select class="min-select" style="min-width: 17rem;" [(ngModel)]="variableFields.database_mode">
+                                <mat-option value="r">R</mat-option>
+                                <mat-option value="w">W</mat-option>
+                                <mat-option value="rw">RW</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-stetch flex-row-parent" style="width: 100%;">
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable" style="max-width: 14rem;">
+                            Description
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <textarea class="min-input" style="height: 50rem;" [(ngModel)]="variableFields.description"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex-unstetch flex-row-parent">
+                        <div class="flex-unstetch lable" style="max-width: 9rem;">
+                            Others
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <button mat-stroked-button color="primary">
+                                <mat-icon style="margin-right: 0px;" (click)="openPythonEditor(variableFields.others)">
+                                    code</mat-icon>
+                            </button>
+                        </div>
+                        <div class="flex-unstetch lable" style="max-width: 9rem;">
+                            Configure
+                        </div>
+                        <div class="flex-stetch">
+                            :
+                        </div>
+                        <div class="flex-unstetch">
+                            <button mat-stroked-button color="primary" (click)="openConfigVariable(variableFields.config)">
+                                <mat-icon style="margin-right: 0px;">
+                                    settings_ethernet</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="flex-unstetch" style="width: 100%; border-bottom: 1px solid gainsboro;">
+                </div> -->
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Parameters" *ngIf="false">
+
+        <div class="main-container" style="height: 36rem;">
+
+            <div class="flex-parent">
+                <mat-card class="flex-container">
+                    <div class="flex-stetch1" style="height: 12rem; ">
+                        <div class="flex-row-parent">
+                            <span class="category-sub-header flex-stetch" style="color: rgb(63, 61, 61);font-size:16px">
+                                Add Parameters:
+                            </span>
+                            <span class="flex-unstetch">
+                                <button mat-icon-button color="warn" class="min-button min-param-button"
+                                    (click)="addParam()">
+                                    <mat-icon style="font-size: 14px;">add</mat-icon>
+                                </button>
+                            </span>
+                        </div>
+                        <div style=" min-height: 10rem; flex: 1 1 auto;margin-top:40px;overflow: auto;">
+                            <div *ngIf="variableFields.parameters" class="fixTableHead">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Parameter Name</th>
+                                            <th>Parameter Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let params of variableFields.parameters">
+                                            <td>{{params.parameterName}}</td>
+                                            <td>{{params.parameterType.name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div *ngIf="!variableFields.parameters" class="message-box "><span class="category-sub-header flex-stetch" style="text-align: center;color: rgb(177, 177, 172);font-size:1.2rem;">Choose + to add
+                                    parameters</span></div>
+                        </div>
+                    </div>
+                </mat-card>
+                <mat-card class="flex-unstetch1">
+                    <div class="flex-row-parent">
+                        <br>
+                        <span class="category-sub-header flex-stetch" style="margin-top: 5px;color: rgb(63, 61, 61);font-size:16px">
+                            Add headers:
+                        </span>
+                        <span class="flex-unstetch" style="position: relative;">
+                            <button mat-icon-button color="warn" class="min-button min-param-button"
+                                (click)="addHeader()" style="top: 0px; line-height: 2px;">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </span>
+                    </div>
+                    <div style="background-color: ghostwhite; height: 67%; border: 0.5px solid rgb(238, 238, 238);margin:10px;padding: 20px;">
+                        <span style="font-size:15px;" *ngFor="let head of header">{{head}} <br><br></span>
+                        <div class="no-record-found" *ngIf="header.length == 0">
+                            <span style="margin-left: -30px;"></span> No headers found
+                        </div>
+                    </div>
+
+                </mat-card>
+            </div>
+        </div>
+    </mat-tab>
+
+</mat-tab-group>
+
+
+<mat-dialog-actions align="end" style="margin-top: 1rem; border-top: 1px solid gainsboro;">
+    <button mat-stroked-button mat-dialog-close style="color: red;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="saveVariables()" cdkFocusInitial>
+        <mat-icon>save</mat-icon>Save
+    </button>
+</mat-dialog-actions>
+
+<notifier-container></notifier-container>

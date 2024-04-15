@@ -1,0 +1,167 @@
+.main-container {
+    height: 83vh;
+    overflow: hidden;
+    >.tool-bar-container {
+        height: 6rem;
+        border-bottom: 1px solid lightgrey;
+    }
+    div {
+        width: 99.5%;
+    }
+    >.rule-definition-container {
+        flex: 0 0 auto;
+        min-height: 30%;
+        .node-data {
+            width: 30%;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            .node-detail {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                margin-left: 20px;
+                .label {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 250px;
+                    text-align: left;
+                }
+                .colen {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 50px;
+                    text-align: center;
+                }
+                .value {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 300px;
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        // border-bottom: 1px solid gainsboro;
+    }
+    >.button-right .button {
+        float: right;
+        height: 10%;
+    }
+    >.condition-container {
+        flex: 1 1 auto;
+        height: 26.5%;
+        >.condition-header {
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >.left-align {
+                flex: 0 0 auto;
+            }
+            >.center-align {
+                flex: 1 1 auto;
+            }
+            >.right-align {
+                flex: 0 0 auto;
+            }
+        }
+        >.condition-body {
+            border: 1px solid gainsboro;
+            height: calc(100% - 4rem);
+            width: 99.8%;
+            overflow-y: auto;
+            >.card-container {
+                height: 8rem;
+                width: 98.5%;
+                background-color: whitesmoke;
+                margin: 1rem;
+                border-radius: 5px;
+            }
+        }
+    }
+    >.action-container {
+        flex: 0 0 auto;
+        // background-color: hotpink;
+        border-bottom: 1px solid gainsboro;
+        height: 21%;
+        >.action-header {
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >.left-align {
+                flex: 0 0 auto;
+            }
+            >.center-align {
+                flex: 1 1 auto;
+            }
+            >.right-align {
+                flex: 0 0 auto;
+            }
+        }
+        >.action-body {
+            border: 1px solid gainsboro;
+            height: calc(100% - 4rem);
+            width: 99.8%;
+            overflow-y: auto;
+            >.list-containeritems {
+                width: 98.5%;
+                padding: 10px;
+                border: 10px solid rgb(255, 255, 255);
+                border-radius: 10px;
+            }
+        }
+    }
+    mat-slide-toggle {
+        transform: scale(1);
+    }
+}
+
+.save-disable {
+    color: blueviolet !important;
+    background-color: white !important;
+    cursor: not-allowed;
+}
+
+.disable-icon {
+    background-color: rgb(236, 229, 222);
+    cursor: not-allowed;
+}
+
+table {
+    width: max-content;
+    border-collapse: separate;
+    box-shadow: 0 1px 9px 1px rgb(0 0 0 / 14%);
+    -webkit-box-shadow: 0 1px 9px 1px rgb(0 0 0 / 14%);
+}
+
+td,
+th {
+    border: none;
+    text-align: left;
+    padding: 2px 8px;
+}
+
+tr:nth-child(1) {
+    background: aliceblue;
+}
+
+tr {
+    background-color: #f5f5f5;
+}
+
+.edit:hover {
+    color: #c0cfe5 !important;
+    font-weight: 600;
+}
+
+.mit-select {
+    width: 50%;
+    border: 1px solid rgb(156, 150, 150);
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: #bcd3f5;
+    margin-left: 5px;
+}

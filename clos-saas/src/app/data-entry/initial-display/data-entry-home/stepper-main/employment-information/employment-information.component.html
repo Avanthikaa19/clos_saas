@@ -1,0 +1,198 @@
+<div class="content-container">
+    <form #employmentInfoForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Name</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" [ngModelOptions]="{standalone: true}" matInput [(ngModel)]="listFieldName['appmEmp']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Address 1</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmpa1']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Address 2</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmpa2']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Zip Code</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmpaz']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Position Title</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmOcc']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Years of Service</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmOccper']" (ngModelChange)="setInput()" appTwoDigitLimitation>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Phone</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" appPhonenumberValidation matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmpTel']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Gross Annual Income<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput #grossAnnualIncome="ngModel" required name="appmAnnSal" [(ngModel)]="listFieldName['appmAnnSal']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': employmentInfoForm.controls['appmAnnSal']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="employmentInfoForm.controls['appmAnnSal']?.invalid && (grossAnnualIncome.dirty || grossAnnualIncome.touched)" class="error-message">
+                                <div *ngIf="employmentInfoForm.controls['appmAnnSal']?.errors?.['required']">
+                                    Gross Annual Income is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Source of Wealth/Income<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select #sourceOfWealth="ngModel" required name="appmSof" [(ngModel)]="listFieldName['appmSof']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': employmentInfoForm.controls['appmSof']?.invalid && (errorBorderStatus) }">
+                                <mat-option *ngFor="let list of wealthList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                            <div *ngIf="employmentInfoForm.controls['appmSof']?.invalid && (sourceOfWealth.dirty || sourceOfWealth.touched)" class="error-message">
+                                <div *ngIf="employmentInfoForm.controls['appmSof']?.errors?.['required']">
+                                    Source of Wealth/Income is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Address 3</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmpa3']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Address 4</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmpa4']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employer/Business Phone 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEmTel2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Employment Type</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmEType']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of employmentTypelIst" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Occupation Code</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmOccCde']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of occupationCodeList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Position/Rank</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmepRank']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of positionList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nature of Business</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmeBus']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of natureOfBusinessList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

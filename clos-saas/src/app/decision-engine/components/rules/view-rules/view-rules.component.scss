@@ -1,0 +1,166 @@
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+.main-container {
+    height: 75vh;
+    margin-top: 2rem;
+    overflow: auto;
+    >.tool-bar-container {
+        height: 6rem;
+        border-bottom: 1px solid lightgrey;
+    }
+    div {
+        width: 99.5%;
+    }
+    >.button-right .button {
+        float: right;
+        height: 10%;
+    }
+    >.condition-container {
+        flex: 1 1 auto;
+        height: 26.5%;
+        >.condition-header {
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >.left-align {
+                flex: 0 0 auto;
+            }
+            >.center-align {
+                flex: 1 1 auto;
+            }
+            >.right-align {
+                flex: 0 0 auto;
+            }
+        }
+        >.condition-body {
+            border: 1px solid gainsboro;
+            height: calc(100% - 4rem);
+            width: 99.8%;
+            overflow-y: auto;
+            >.card-container {
+                height: 8rem;
+                width: 98.5%;
+                background-color: whitesmoke;
+                margin: 1rem;
+                border-radius: 5px;
+            }
+        }
+    }
+    >.action-container {
+        flex: 0 0 auto;
+        border-bottom: 1px solid gainsboro;
+        height: 21%;
+        >.action-header {
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >.left-align {
+                flex: 0 0 auto;
+            }
+            >.center-align {
+                flex: 1 1 auto;
+            }
+            >.right-align {
+                flex: 0 0 auto;
+            }
+        }
+        >.action-body {
+            border: 1px solid gainsboro;
+            height: calc(100% - 4rem);
+            width: 99.8%;
+            overflow-y: auto;
+            >.list-containeritems {
+                width: 98.5%;
+                padding: 10px;
+                border: 10px solid rgb(255, 255, 255);
+                border-radius: 10px;
+            }
+        }
+    }
+    mat-slide-toggle {
+        transform: scale(1);
+    }
+}
+
+.save-disable {
+    color: #0e2954 !important;
+    background-color: white !important;
+    cursor: not-allowed;
+}
+
+.disable-icon {
+    background-color: rgb(236, 229, 222);
+    cursor: not-allowed;
+}
+
+.category-header {
+    font-style: normal;
+    font-weight: bold;
+}
+
+.rule-input {
+    padding-top: 8px;
+}
+
+.matCard {
+    border: 1px solid #ccc;
+    width: 50%;
+}
+
+.category-container {
+    background-color: #0e2954;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 14px 10px;
+    background-color: rgb(179, 179, 179);
+}
+
+.matList {
+    box-shadow: rgba(0, 0, 0, 0.15) 3px 3px 3px 0px;
+    background-color: white;
+    border-left: 4px solid #0e2954;
+    &:hover {
+        background-color: rgb(245, 245, 245);
+    }
+}
+
+.cardHeader {
+    background-color: #0e2954;
+    padding: 15px;
+    color: white;
+    border-radius: 4px;
+}
+
+.left__end-container {
+    flex: 1 1 auto;
+    margin: 3rem;
+}
+.rule-btn{
+    background-color: #0e2954;
+    color: white;
+}
+.definition-container {
+    margin: 0.5rem;
+    height: 8rem;
+    >.flex-container {
+        display: flex;
+        flex-direction: row;
+        .flex-column {
+            margin: 5px;
+            padding-left: 1rem;
+            flex: 0 0 23%;
+            .name {
+                width: 13rem;
+                padding: 1rem;
+                color: rgb(151, 146, 146);
+            }
+            input {
+                width: 60%!important;
+            }
+        }
+    }
+}

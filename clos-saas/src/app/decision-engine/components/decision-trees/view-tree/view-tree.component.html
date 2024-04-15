@@ -1,0 +1,205 @@
+<mat-toolbar class="tool-bar">
+    <span class="create-tree-container">
+        <button mat-stroked-button onclick="history.back()" style="background:blue;color:white">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <span>
+                Go back to Previous
+            </span>
+    </button>
+    </span>
+
+    <span class="create-tree-container">
+  </span>
+    <div class="spacer">
+
+    </div>
+    <div class="spacer">
+
+    </div>
+    <div class="spacer">
+
+    </div>
+    <div class="spacer">
+
+    </div>
+    <div class="spacer">
+
+    </div>
+    <div class="spacer">
+        <span class="create-tree-container">
+  </span>
+        <div class="spacer">
+
+        </div>
+
+    </div>
+    <div class="spacer">
+
+    </div>
+    <div class="spacer">
+        <span class="create-tree-container">
+    </span>
+    </div>
+
+    <div class="spacer">
+
+    </div>
+
+    <div class="spacer">
+
+    </div>
+
+    <span class="create-tree-container">
+      <button mat-stroked-button (click)="getDecisionTreeById()">
+          <mat-icon>refresh</mat-icon>
+          <span>
+              Refresh
+          </span>
+    </button>
+    </span>
+    <div style="padding-left:1rem">
+
+    </div>
+    <span class="create-tree-container">
+    <button mat-stroked-button [disabled]="disableSave" [class.save-disable]="disableSave==true" (click)="saveTree()" >
+        <mat-icon>save</mat-icon>
+        <span style="font-size: 14px">
+            {{disableSave  ? 'Saving..' : 'Save'}}
+        </span>
+    </button>
+    </span>
+</mat-toolbar>
+<div class="main-container">
+    <mat-divider></mat-divider>
+
+    <div class="header-box" style="margin-bottom:0.5rem;padding:1.5rem;" *ngIf="decisionTreeData">
+        <span class="flowname" style="font-weight: 500;">Name</span>
+        <span class="flowname" style="padding-right: 10px;font-size: 17px;">:</span>
+        <input class="flowname" style="text-transform: capitalize;" [(ngModel)]="decisionTreeData.name" class="min-input" style="width:40rem">
+        <span class="flowname" style="font-weight: 500;padding-left: 1rem;">Description</span>
+        <span class="flowname" style="padding-right: 10px;font-size: 17px;">:</span>
+        <input class="flowname" style="text-transform: capitalize;" [(ngModel)]="decisionTreeData.description" class="min-input" style="width:40rem">
+    </div>
+    <mat-divider></mat-divider>
+
+
+    <div style="overflow: auto;" class="body-container">
+        <mat-spinner class="spinner-class" *ngIf="loading" diameter="45"></mat-spinner>
+
+        <div class="main-nav-container">
+            <mat-card>
+                <mat-card-content>
+                    <div class="d-flex">
+                        <div class="d-flex mr-2"><span class="mr-2" style="    background: beige;
+                            width: 35px;">
+                            </span>Start</div>
+                            <div class="d-flex mr-2"><span class="mr-2" style="    background: skyblue;
+                                width: 35px;">
+                                </span>Product Type</div>
+                                <div class="d-flex mr-2"><span class="mr-2" style="    background: #fff982;
+                                    width: 35px;">
+                                    </span>Revenue</div>
+                                    <div class="d-flex mr-2"><span class="mr-2" style="    background: #fed8d8;
+                                        width: 35px;">
+                                        </span>SectorCode</div>
+                                        <div class="d-flex mr-2"><span class="mr-2" style="    background: #d9cdcd;
+                                            width: 35px;">
+                                            </span>Min Limit</div>
+                                            <div class="d-flex mr-2"><span class="mr-2" style="    background: lightgreen;
+                                                width: 35px;">
+                                                </span>Max Limit</div>
+                    </div>
+                    <!-- <ngx-graph style="position: relative;" [showMiniMap]="true" [miniMapMaxHeight]="100" [miniMapMaxWidth]="140" [miniMapPosition]="position" [draggingEnabled]="false" [showMiniMap]="true" [zoomLevel]="value/70" [animate]=true class="chart-container" [view]="[1350, 598]"
+                        [links]="links" [nodes]="nodes" [clusters]="clusters" layout="dagreCluster">
+
+                        <ng-template #defsTemplate>
+                            <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+                                <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                            </svg:marker>
+                        </ng-template>
+
+                        <ng-template #clusterTemplate let-cluster>
+                            <svg:g class="node cluster" *ngIf="cluster.clustertype=='Condition'" (click)="triggerfunc();selectCluster(cluster)">
+                                <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height" style="fill: rgb(236, 136, 90);" />
+                                <svg:text alignment-baseline="central" [attr.x]="cluster.dimension.width-110" [attr.y]="-10">
+                                    {{cluster.label|titlecase}}
+                                </svg:text>
+                            </svg:g>
+
+                            <svg:g class="node cluster" *ngIf="cluster.clustertype=='Action'" (click)="triggerfunc();selectCluster(cluster)">
+                                <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height" style="fill: rgb(117, 214, 95);stroke:3px;" />
+                                <svg:text alignment-baseline="central" [attr.x]="cluster.dimension.width-110" [attr.y]="-10">
+                                    {{cluster.label|titlecase}}
+                                </svg:text>
+                            </svg:g>
+                            <svg:g class="node cluster" *ngIf="cluster.clustertype=='Start'" (click)="triggerfunc();selectCluster(cluster)">
+                                <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height" style="fill: rgb(229, 203, 156);" />
+                                <svg:text alignment-baseline="central" [attr.x]="cluster.dimension.width-110" [attr.y]="-10">
+                                    {{cluster.label|titlecase}}
+                                </svg:text>
+                            </svg:g>
+                        </ng-template>
+
+                        <ng-template #nodeTemplate let-node style="cursor: pointer;">
+                            <svg:g class="node" [style.visibility]="node.visibility" (click)="triggerfunc(node.id,node.id);" (contextmenu)="onRightClick($event, node);clusterselect(node.id);triggerfunc(node.id,node.id);">
+                                <svg:path class="line" [attr.stroke]="color" [style.visibility]="node.visibility" marker-end="url(#arrow)"></svg:path>
+                                <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" style="fill: rgb(233, 202, 228);cursor: pointer;" />
+                                <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2" style="color:red;cursor: pointer;">
+                                    {{node.label}}
+                                </svg:text>
+                            </svg:g>
+                        </ng-template>
+
+                        <ng-template #linkTemplate let-link>
+                            <svg:g class="edge">
+                                <svg:path class="line" [style.visibility]="link.visibility" marker-end="url(#arrow)"></svg:path>
+                                <svg:text class="edge-label" text-anchor="middle">
+                                    <textPath class="text-path" [attr.href]="'#' + link.id" [attr.stroke]="nodetarget.includes(link.target)?'red':'blue'" [style.dominant-baseline]="link.dominantBaseline" startOffset="50%">
+                                        {{link.value}}
+                                    </textPath>
+                                </svg:text>
+                            </svg:g>
+                        </ng-template>
+                    </ngx-graph> -->
+                    <div echarts [options]="treeGraphOption" class="demo-chart"></div>
+
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+    </div>
+
+    <!-- an hidden div is created to set the position of appearance of the menu-->
+    <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="rightMenu"></div>
+
+
+    <!-- standard material menu -->
+    <mat-menu style="width: 100px;" #rightMenu="matMenu">
+        <ng-template matMenuContent let-item="item">
+            <button mat-menu-item (click)="createSplitNode(item)"> Next field</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item [matMenuTriggerFor]="action"> Conditions</button>
+            <mat-menu #action="matMenu">
+                <button mat-menu-item (click)="nodeEdit(item)">  Edit </button>
+                <mat-divider></mat-divider>
+
+
+
+                <button mat-menu-item (click)="nodeDelete(item)">Delete </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item *ngIf="selectedClusterNext.length> 0" (click)="addNode(item)">Add child Field </button>
+                <mat-divider></mat-divider>
+            </mat-menu>
+            <button mat-menu-item [matMenuTriggerFor]="actionNode"> Action</button>
+            <mat-menu #actionNode="matMenu">
+                <button mat-menu-item (click)="addActionNodeandClustertotree(item)">Value</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="AddFunctionActionNodeandCluster(item)">Function</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item>Expression</button>
+            </mat-menu>
+        </ng-template>
+    </mat-menu>
+
+</div>
+<notifier-container></notifier-container>

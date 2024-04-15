@@ -1,0 +1,575 @@
+.dialog-theme-light .mat-select-placeholder {
+  color: rgb(79 73 73 / 77%);
+}
+.dialog-theme-dark .form-control::placeholder {
+  color: rgb(122, 107, 107);
+}
+
+.dialog-theme-dark .form-control {
+  color: #ffffffab;
+}
+
+.dashboard-theme-light {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.65);
+  // font-family: "Poppins";
+}
+
+.dashboard-theme-dark {
+  font-size: 20px;
+  font-weight: bold;
+  color: silver;
+  // font-family: "Poppins";
+}
+
+.card {
+  .panel-name-theme-light {
+    font-size: 17px;
+    // font-weight: bold;
+    color: rgba(0, 0, 0, 0.65);
+    /* font-family: "Poppins"; */
+    display: flex;
+    justify-content: end;
+    padding: 7px 26px 0px 26px;
+    // border-bottom: 1px solid #d5d0d0;
+    align-items: center;
+  }
+  .panel-name-theme-light1 {
+    font-size: 17px;
+    // font-weight: bold;
+    color: rgba(0, 0, 0, 0.65);
+    /* font-family: "Poppins"; */
+    display: flex;
+    justify-content: end;
+    // border-bottom: 1px solid #d5d0d0;
+    align-items: center;
+  }
+  .label{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 900;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .box-theme-light {
+    height: 100%;
+    border: 1px solid rgba(139, 139, 139, 0.233);
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: aliceblue;
+
+    > p {
+      color: #262323;
+      // font-weight: bold;
+    }
+
+    mat-icon {
+      color: #60a5f3;
+    }
+  }
+
+  .panel-name-theme-dark {
+    font-size: 17px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.65);
+    /* font-family: "Poppins"; */
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 25px;
+  }
+
+  .box-theme-dark {
+    height: 100%;
+    border: 1px solid rgba(139, 139, 139, 0.233);
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    > p {
+      color: silver;
+      font-weight: bold;
+    }
+
+    mat-icon {
+      color: #14f4ffc7;
+    }
+  }
+}
+
+//COMMON INPUT STYLES
+.min-input-theme-dark {
+  background-color: #212529;
+  color:silver;
+  box-sizing: border-box;
+  border: solid whitesmoke 1px;
+  height:31px;
+  border-radius: 15px;
+  font-size: 17px;
+  font-weight: 800;
+  padding: 20px;
+  
+}
+.min-input-theme-light {
+  background-color: whitesmoke;
+  box-sizing: border-box;
+  border: solid #dfe1e3 1px;
+  height:31px;
+  border-radius: 15px;
+  font-size: 17px;
+  font-weight: 800;
+  padding: 20px;
+}
+
+.min-input:hover {
+  border: solid rgb(218, 218, 218) 1px;
+}
+
+.hdr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-card-create-title {
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  position: absolute;
+  top: calc(50% + 40px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: dimgray;
+}
+.theme-card-create-icon {
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: whitesmoke;
+    font-size: 64px;
+    width: 88px;
+    height: 65px;
+    border: 1px solid;
+    border-radius: 15px;
+    display: flex;
+    align-self: center;
+    background-color: #0e2954;
+    cursor: pointer;
+    padding-left: 10px;
+}
+.load-more-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.load-more-icon {
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.spinner-container {
+  margin-right: 10px;
+  color: rgb(7,148,173); /* Adjust the margin as needed */
+}
+.icon-hov2{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: gray;
+  border-radius: 16px;
+  width: 28px !important;
+  height: 28px;
+}
+.icon-hov2:hover{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  border-radius: 16px;
+  width:28px !important;
+  height: 28px;
+}
+.zoom-bar {
+  position: absolute;
+  bottom: 7%; /* Adjust the top distance as needed */
+  right: 3%; /* Adjust the right distance as needed */
+}
+input[type="range"] {
+  width: 80%;
+}
+.alpha-value,
+.beta-value {
+font-weight: bold;
+}
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 28px;
+}
+.load-more-container1{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.example-container {
+  width: inherit;
+}
+.image-row {
+  display: flex;
+  justify-content: space-between;
+}
+.image-item {
+  cursor: pointer;
+  text-align: center; 
+  width: 30%; 
+  padding: 10px; 
+  //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+.image-item img {
+  width: 100%; 
+  max-height: inherit; 
+  object-fit: cover;
+}
+.image-item p {
+  margin-top: 10px;
+}
+.image-item img:hover{
+    border: 2px solid blue; 
+}
+.image-item:hover {
+font-weight: bold;
+}
+.check-icon {
+  position: relative;
+  font-size: 24px;
+  color: white;
+  background-color: rgb(29, 29, 173);
+  border-radius: 45%;
+}
+@media (max-width: 1000px) {
+  .responsive-button .text {
+      display: none;
+  }
+  .responsive-button .icon {
+      margin-right: 0px !important;
+}
+@media(max-width: 500px){
+  .bg{
+    width:180px !important;
+  }
+}
+}
+.wider-td{
+width: 200px;
+text-align: center;
+padding-bottom: 20px;
+}
+.chart-container {
+  display: flex; /* Use flexbox to control size */
+  flex-direction: column; /* Stack chart vertically, adjust as needed */
+  width: 100%; /* Container takes full width of its parent */
+  height: 100%; /* Container takes full height of its parent */
+}
+::ng-deep #cdk-overlay-0 {
+   top:53% !important;
+   left:47% !important;
+}
+::ng-deep #cdk-overlay-3 {
+  right:9% !important;
+}
+::ng-deep #cdk-overlay-3 {
+  right:1% !important;
+}
+
+highcharts-chart {
+  flex: 1; /* Allow the chart to grow to fill available space */
+  width: 95%; /* Chart takes full width of its parent */
+  height: 100%; /* Chart takes full height of its parent */
+}
+::ng-deep .highcharts-background{
+   fill:none;
+}
+.menu {
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  font-family: sans-serif;
+  font-size: 14px;
+  width:220px;
+  z-index: 20;
+  position: fixed;  /* Fixed position to make it visible */
+  top: 40px;
+  max-height: calc(100% - 40px);  /* Set a maximum height to enable scrolling */
+  overflow-y: auto;  /* Enable vertical scrolling when the content exceeds the height */
+}
+.highcharts-title{
+  fill: none;
+}
+//Class for table in CLOS
+.main-container {
+  background-color: #fafcfe;
+  border-radius: 0.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  >.button-container {
+      flex: 0 0 auto;
+      height: 7rem;
+      padding: 0.5rem;
+      padding-top: 1.5rem;
+      flex-direction: row;
+
+      >.column_search-container {
+          flex: 1 1 auto;
+          // flex: 0 0 auto;
+          //     width: 40%;
+          position: relative;
+      }
+      >.button-container {
+          flex: 0 0 auto;
+          >.header-container {
+              height: 3rem;
+              padding: 0.5rem;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              >div.spacer {
+                  flex: 1 1 auto;
+              }
+              >*:not(div.spacer) {
+                  flex: 0 0 auto;
+              }
+              >.button-item-container {
+                  color: white;
+                  padding: 0.5rem 1rem;
+                  margin-right: 1rem;
+                  border-radius: 0.3rem;
+                  display: flex;
+                  align-items: center;
+                  cursor: pointer;
+                  transition: all linear 70ms;
+                  box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.4);
+                  background-color: #0e2954;
+                  >* {
+                      text-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.4);
+                  }
+              }
+          }
+          >button {
+              margin-left: 1rem;
+          }
+      }
+  }
+  .filter-container {
+      padding: 0.5rem 1rem;
+      max-height: 15rem;
+      overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+  }
+  
+  .filter-chips-container {
+      // margin: 0.5rem; /* Add margin between filter containers */
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem; /* Add space between chips */
+  }
+  .filter-name {
+      font-weight: bold;
+      margin: 1rem;
+      display: flex;
+      flex-direction: row;
+      color: #0e2954;
+  }
+/* External CSS File (styles.css or a similar file) */
+
+/* Apply styles to the table container */
+.row-hov:hover td {
+  background: rgba(212, 212, 212, 0.568);
+  color: rgb(61, 69, 107);
+  cursor: pointer;
+}
+
+.mat-calendar-table-header th {
+  text-align: center;
+  padding: 0 !important;
+}
+
+}
+.dv-table{
+  border-collapse:collapse;
+  text-align:center;
+  font-size: 12px;
+}
+.dv-table th{
+  text-align: middle;
+      background-color: #0e2954;
+      color: white;
+      z-index: 15;
+      padding: 3px 30px 3px 0px;
+position: sticky;
+top: -1px;
+z-index: 2;
+white-space: nowrap;
+text-transform: uppercase;
+}
+.dv-table td{
+  border-top: 4px solid #ffffff;
+  line-height: 35px;
+  cursor: pointer;
+  padding: 11px 25px !important;
+  white-space: nowrap;
+  // border-bottom: 2px solid #fffcfc;
+}
+.dv-table tr{
+  background-color: #f8f8f8;
+  cursor: pointer;
+  padding: 11px 25px !important;
+  white-space: nowrap;
+  // background-color: rgba(169, 203, 206, 0.47);
+  // border-bottom: 2px solid #fffcfc;
+  font-weight: 400;
+}
+.row-hov:hover td {
+  background-color: #ddd;
+}
+
+.mat-calendar-table-header th {
+  text-align: center;
+  padding: 0 !important;
+}
+.table-container {
+  flex: 1 1 auto;
+  // border: 1px solid gainsboro;
+  border-radius: 0.5rem;
+  overflow: auto;
+  height: 0;
+  position: relative;
+  table-layout: fixed;
+  margin:0.5rem;
+  #table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: max-content;
+     
+      td>div.content {
+          white-space: nowrap;
+          overflow: hidden;
+          padding-left: 1rem;
+          // padding: 0.5rem 1rem 0.5rem 1rem;
+      }
+      th>div.content {
+          padding-top: 0.4rem;
+          white-space: nowrap;
+          overflow: hidden;
+      }
+      th>div.content_check {
+          padding-top: 0.4rem;
+          white-space: nowrap;
+          overflow: hidden;
+          padding-left: 0.6rem;
+      }
+  }
+  #table td {
+      border-top: 4px solid #ffffff;
+      line-height: 35px;
+      color:black;
+  }
+  #table tbody tr:hover td {
+      background-color: #ddd
+  }
+  #table tbody tr {
+      background-color: #f8f8f8;
+
+  }
+  #table tbody tr:hover {
+      background-color: #ddd;
+  }
+  #table tbody {
+      overflow-y: auto;
+      height: auto
+  }
+  th {
+      position: sticky;
+      top: 0;
+  }
+    #table thead {
+      position: sticky;
+      top: 0;
+      background-color: #0e2954;
+      color: white;
+    }
+  #table th {
+      text-align: middle;
+      z-index: 15;
+      padding: 3px 30px 3px 0px;
+      // min-width: 21rem;
+      max-height: 2rem;
+       ::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+          border-color: white !important;
+          background-color: #adadad !important;
+      }
+       ::ng-deep mat-checkbox .mat-checkbox-checkmark-path {
+          stroke: blue !important;
+      }
+       ::ng-deep .mat-checkbox .mat-checkbox-frame {
+          border-color: white !important;
+      }
+       ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+          background-color: white !important;
+          border-color: white !important;
+      }
+  }
+}
+.total-items {
+  position: absolute;
+  top: 0;
+  right: -300px;
+  background-color: transparent;
+  padding: 5px;
+}
+.paginator-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 1rem;
+  >.left-container {
+      flex: 0 0 auto;
+  }
+  >.middle-container {
+      flex: 0 0 auto;
+  }
+  >.right-container {
+      margin-top: 1rem;
+      flex: 0 0 auto;
+  }
+}
+.page-links {
+  position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    // color: #007bff;
+    background-color: transparent;
+    border: 0px solid #dee2e6;
+  }
+  .page-links.active{
+    font-weight: bold;
+  }

@@ -1,0 +1,192 @@
+<div class="no-access" *ngIf="!ac.super && !(ac.items?.CREATE_APPS_VIEW && ac.items?.CREATE_APPS)">
+  <app-no-access></app-no-access>
+</div>
+<section class="p-5" *ngIf="ac.super || (ac.items?.CREATE_APPS_VIEW && ac.items?.CREATE_APPS)">
+  <div class="d-flex mb-4">
+    <div style="margin-right: auto;">
+      <p class="mb-1" style="font-weight: 600;">ALL APPLICATIONS</p>
+      <div class="at-separator-thick"></div>
+    </div>
+    <div style="height: 20px;padding-right: 15px;margin-top: -2px;">
+      <mat-form-field [hidden]="!openCustomDate" appearance="fill" (click)="picker.open()" class="mr-2" style="float: right;font-size: 10px;">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+           <input matStartDate placeholder="Start date" [(ngModel)]="startDate" readonly>
+           <input matEndDate placeholder="End date" [(ngModel)]="endDate"
+              (ngModelChange)="onKeyup();" readonly>
+        </mat-date-range-input>
+        <mat-icon *ngIf="startDate!=null" matDatepickerToggleIcon class="clearDate" style="cursor: pointer;position:absolute;margin-left: 180px;margin-top: -20px;"
+           (click)="clearDate($event)">clear</mat-icon>
+        <mat-date-range-picker  #picker>
+        </mat-date-range-picker>
+     </mat-form-field>
+     <!-- button group for date selection -->
+     <mat-button-toggle-group *ngIf="openToggle==true" [(value)]="dateValue" style="margin-right: 25px;height: 40px"
+        (change)="FilterDate($event)">
+        <mat-button-toggle value="T" matTooltip="Today" matTooltipClass="homeTooltip" class="btn-line"
+           matTooltipPosition="above">T</mat-button-toggle>
+        <mat-button-toggle value="YES" matTooltip="Yesterday" matTooltipClass="homeTooltip"
+           matTooltipPosition="above">Y</mat-button-toggle>
+        <mat-button-toggle value="1W" matTooltip="This Week" matTooltipClass="homeTooltip"
+           matTooltipPosition="above">1W</mat-button-toggle>
+        <mat-button-toggle value="1M" matTooltip="This Month" matTooltipClass="homeTooltip" class="btn-line"
+           matTooltipPosition="above">1M</mat-button-toggle>
+        <mat-button-toggle value="1Y" matTooltip="This Year" matTooltipClass="homeTooltip" class="btn-line"
+           matTooltipPosition="above">1Y</mat-button-toggle>
+        <mat-button-toggle value="All" matTooltip="All" matTooltipClass="homeTooltip" class="btn-line"
+           matTooltipPosition="above">All</mat-button-toggle>
+        <mat-button-toggle value="Y" matTooltip="Custom Date" matTooltipClass="homeTooltip" class="btn-line"
+           matTooltipPosition="above" (click)="openCustomDate=true;picker.open();">
+           <mat-icon style="font-size:17px">today</mat-icon>
+        </mat-button-toggle>
+     </mat-button-toggle-group>
+    </div>
+    <button mat-button class="tl-btn py-0 mr-3" style="background: black;" (click)="applyAllFilters()"><span
+        class="material-symbols-outlined" style="margin-right: 10px;">
+        filter_list
+      </span>Apply All Filter</button>
+    <button mat-button class="tl-btn py-0 mr-3" style="background: #d30000;" (click)="clearsAllFilterSort()"><span
+        class="material-symbols-outlined" style="margin-right: 10px;">
+        clear
+      </span>Clear All Filter/Sort</button>
+    <button mat-button class="tl-btn py-0" style="background: rgb(52 69 180);"
+      *ngIf="ac.super || ac.items?.CREATE_APPS_CREATE"
+      [routerLink]="'/loan-org/loan/main-app-list/loan-processes/process/1'" (click)="addNewApplication()"><span
+        class="material-symbols-outlined" style="margin-right: 10px;">
+        post_add
+      </span>Create New Application</button>
+  </div>
+  <div style="overflow-y: scroll;height: 700px;" class="content-container">
+    <table matSort (matSortChange)="onSortBtnClick($event)">
+      <tr style="color:#6b6666;background-color: aliceblue;position: sticky;top: -10px;">
+        <th>S.No</th>
+        <th *ngFor="let item of applicationHeader" [mat-sort-header]="item">{{item}}</th>
+        <th  *ngIf="ac.super || ac.items?.CREATE_APPS_AMEND" >Edit</th>
+        <th *ngIf="ac.super || ac.items?.CREATE_APPS_DELETE">Delete</th>
+      </tr>
+
+      <tr style="top: 5.5%; text-transform: capitalize;">
+        <th></th>
+        <th>
+          <div class="d-flex">
+            <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+              filter_list
+            </mat-icon>
+            <input class="min-input flex-grow" [(ngModel)]="applicantName"
+              style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;">
+          </div>
+        </th>
+        <th>
+          <div class="d-flex">
+            <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+              filter_list
+            </mat-icon>
+            <input class="min-input flex-grow" type="number" [(ngModel)]="applicationId"
+              style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;">
+          </div>
+        </th>
+        <th>
+          <div class="d-flex">
+            <!-- <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+              filter_list
+            </mat-icon> -->
+            <!-- <input class="min-input flex-grow" placeholder="DD/MM/YYYY" [(ngModel)]="applicationDate"
+              style="background-color: white;min-width: 15rem; padding-left: 1rem;"> -->
+          </div>
+        </th>
+        <th>
+          <div class="d-flex">
+            <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+              filter_list
+            </mat-icon>
+            <mat-select class="min-input flex-grow" [(ngModel)]="idc"
+              style="background-color: white;min-width: 15rem; padding-left: 1rem;">
+              <mat-option value="Pending">Pending</mat-option>
+              <mat-option value="Done">Done</mat-option>
+              <mat-option value="INITIAL_INFO_SHARED">INITIAL_INFO_SHARED</mat-option>
+            </mat-select>
+          </div>
+        </th>
+        <th>
+          <div class="d-flex">
+            <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+              filter_list
+            </mat-icon>
+            <mat-select class="min-input flex-grow" [(ngModel)]="fdc"
+              style="background-color: white;min-width: 15rem; padding-left: 1rem;">
+              <mat-option value="Pending">Pending</mat-option>
+              <mat-option value="Done">Done</mat-option>
+            </mat-select>
+          </div>
+        </th>
+        <th>
+          <div class="d-flex">
+            <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+              filter_list
+            </mat-icon>
+            <mat-select class="min-input flex-grow" [(ngModel)]="doc"
+              style="background-color: white;min-width: 15rem; padding-left: 1rem;">
+              <mat-option value="Pending">Pending</mat-option>
+              <mat-option value="Done">Done</mat-option>
+            </mat-select>
+          </div>
+        </th>
+        <th><div class="d-flex">
+          <mat-icon class="flex-shrink  mt-2 mr-1 table-head-icon" style="font-size: 16px;">
+            filter_list
+          </mat-icon>
+          <mat-select class="min-input flex-grow" [(ngModel)]="applicationStage"
+            style="background-color: white;min-width: 15rem; padding-left: 1rem;">
+            <mat-option value="VERIFICATION QUEUE">VERIFICATION QUEUE</mat-option>
+            <mat-option value="UNDERWRITER QUEUE">UNDERWRITER QUEUE</mat-option>
+            <mat-option value="FULL_DATA_CAPTURE">FULL_DATA_CAPTURE</mat-option>
+            <mat-option value="ACCEPTED">ACCEPTED</mat-option>
+            <mat-option value="DECLINED">DECLINED</mat-option>
+
+          </mat-select>
+        </div></th>
+        <th  *ngIf="ac.super || ac.items?.CREATE_APPS_AMEND" ></th>
+        <th *ngIf="ac.super || ac.items?.CREATE_APPS_DELETE"></th>
+      </tr>
+
+      <tr *ngFor="let item of applicationArrayList;let i = index">
+        <td style="color: gray">{{(pageSize*pageNo)+(i+1)}}</td>
+        <td style="color: gray">{{item.applicantName}}</td>
+        <td style="color: gray">{{item.id}}</td>
+        <td style="color: gray;text-align: center;">{{item.createdTime == null ? '-':item.createdTime |
+          date:'dd/MM/yyyy'}}</td>
+        <td style="color: gray;text-align: center;"><span class="badge badge-pill"
+            [class]="item.idc_status == null || item.idc_status?.toUpperCase() == 'PENDING'?'badge-warning':'badge-success'">{{item.idc_status == null?
+            'Pending':item.idc_status}}</span></td>
+        <td style="color: gray;text-align: center;"><span class="badge badge-pill"
+            [class]="item.fdc_status == null || item.fdc_status?.toUpperCase() == 'PENDING'?'badge-warning':'badge-success'">{{item.fdc_status == null?
+            'Pending':item.fdc_status}}</span></td>
+        <td style="color: gray;text-align: center;"><span class="badge badge-pill"
+            [class]="item.doc_status == null  || item.doc_status?.toUpperCase() == 'PENDING'?'badge-warning':'badge-success'">{{item.doc_status == null?
+            'Pending':item.doc_status}}</span></td>
+        <td style="color: gray;text-align: center;">{{item.applicationStage}}</td>
+        <td style="color: green !important;text-align: center;"><mat-icon  style="cursor: pointer;"
+            *ngIf="ac.super || ac.items?.CREATE_APPS_AMEND" 
+            [style.cursor]="item.applicationStage === 'DECLINED' ? 'default' : 'pointer'"
+            [style.color]="item.applicationStage === 'DECLINED' ? 'gray' : 'green'"
+            (click)="item.applicationStage !== 'DECLINED' && editApplication(item.id)"
+            [routerLink]="item.applicationStage !== 'DECLINED' ? '/loan-org/loan/main-app-list/loan-processes/process/1' : null"               >
+            edit_note</mat-icon></td>
+        <td style="color: red !important;text-align: center;"><span class="material-symbols-outlined" style="cursor: pointer;"
+            *ngIf="ac.super || ac.items?.CREATE_APPS_DELETE" (click)="deleteConfirmation(item.id)">delete</span></td>
+      </tr>
+    </table>
+    <ng-container *ngIf="!loadingApplications && applicationArrayList.length==0">
+      <p class="no-content" >No items found!</p>
+    </ng-container>
+    <div *ngIf="loadingApplications" class="loading-spinner">
+      <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+      <span>Loading.. Please wait..</span>
+    </div>
+  </div>
+  <div class="paginator-container" *ngIf="!loadingApplications">
+    <mat-paginator [length]="entryCount" [pageIndex]="pageNo" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page" (page)="getApplicationList($event)">
+    </mat-paginator>
+  </div>
+</section>

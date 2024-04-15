@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-lg-12 p-4" style="    background: whitesmoke;
+    border-top-left-radius: 10px;">
+       <p class="mb-1" style="font-weight: 600;">ALTERNATE IDENTIFICATION DETAILS</p>
+       <div class="at-separator-thick"></div>
+       <form class="pt-5">
+    <mat-hint style="margin: 6px;" align="start"><strong>ID Type</strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+        class="mt-2 d-block no-underline input-field select-field">
+        <mat-select [value]="'value'">
+            <mat-option  value="value" >-</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-hint style="margin: 6px;" align="start"><strong>ID Number</strong> </mat-hint>      
+<mat-form-field appearance="fill" style="font-size: 8px;"
+class="mt-2 d-block no-underline input-field">
+<input matInput type="text" placeholder=""  autocomplete="off" />
+</mat-form-field>
+<mat-hint style="margin: 6px;" align="start"><strong>ID Issue Country</strong> </mat-hint>
+<mat-form-field appearance="fill" style="font-size: 8px;"
+class="mt-2 d-block no-underline input-field select-field">
+<mat-select [value]="'value'">
+    <mat-option  value="value" >-</mat-option>
+</mat-select>
+</mat-form-field>
+<mat-hint style="margin: 6px;" align="start"><strong>ID Expiry Date</strong> </mat-hint>
+<mat-form-field appearance="fill" style="font-size: 8px;"
+class="mt-2 d-block no-underline input-field">
+<input matInput [matDatepicker]="datepicker">
+<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+<mat-datepicker #datepicker>
+</mat-datepicker>
+</mat-form-field>
+       </form>
+       <div class="d-flex" style="margin-top: 15px;">
+        <div style="margin-right: auto;">
+            <button mat-button class="go-back-btn" [mat-dialog-close]="true" style="background: #ededed;" >
+          <span class="material-symbols-outlined" style="margin-right: 10px;">
+              close
+              </span>Cancel</button>
+            </div>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="next-btn"><span class="material-symbols-outlined" style="margin-right: 10px;color: white;">
+          save
+          </span>Save</button>
+    </div>
+    </div></div>

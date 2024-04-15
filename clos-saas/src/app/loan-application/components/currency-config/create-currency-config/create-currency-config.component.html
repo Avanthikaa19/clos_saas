@@ -1,0 +1,98 @@
+<div class="popup-container">
+    <div class="summary-container">
+        <mat-icon>attach_money</mat-icon>
+        Configure the Currency
+    </div>
+    <hr>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table>
+                    <tr>
+                        <td>Country <span style="color:red;">*</span> </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="currencyConfig.country" (ngModelChange)="getCountryAndCurrency()">
+                                <mat-option>
+                                    <ngx-mat-select-search placeholderLabel="Search Country..." [(ngModel)]="searchCountry"
+                                      (ngModelChange)="onCountryFilter()" noEntriesFoundLabel='No columns match search criteria.'>
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let name of country" [value]="name">
+                                    {{name}}    
+                                </mat-option>
+                            </mat-select>                       
+                         </td>
+                         <td>Currency <span style="color:red;">*</span> </td>
+                         <td>:</td>
+                         <td>
+                             <mat-select class="min-select" [(ngModel)]="currencyConfig.currency">
+                                 <mat-option>
+                                     <ngx-mat-select-search placeholderLabel="Search Currency..." [(ngModel)]="searchCurrency" (ngModelChange)="onCurrencyFilter()"
+                                         noEntriesFoundLabel='No columns match search criteria.'>
+                                     </ngx-mat-select-search>
+                                 </mat-option>
+                                 <mat-option *ngFor="let name of currency" [value]="name">
+                                     {{name}}
+                                 </mat-option>
+                             </mat-select>                       
+                          </td>
+                    </tr>
+                    <tr>
+                        <td>Inter-Bank Offer Rate Name <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <input class="min-select" [(ngModel)]="currencyConfig.interBankName" type="text">
+                        </td>
+                        <td>Base Rate <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <input class="min-select" [(ngModel)]="currencyConfig.baseRate" type="number" (ngModelChange)="calculateInterBankRate()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Operator <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="currencyConfig.operator" (ngModelChange)="calculateInterBankRate()">
+                                <mat-option value="+">+</mat-option>
+                                <mat-option value="-">-</mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Spread <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <input class="min-select" [(ngModel)]="currencyConfig.spread" type="number" (ngModelChange)="calculateInterBankRate()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Inter-Bank Offer Rate <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <input readonly class="min-select"  [(ngModel)]="currencyConfig.interBankRate" type="number" (ngModelChange)="calculateInterBankRate()">
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="close-action-actions-container">
+        <span style="color: red;font-weight: bold;margin:2rem;">
+            {{errMsg()}}
+        </span>
+        <div class="btn-container">
+            <button style="margin-top:1rem;" [disabled]="!currencyConfig.country || !currencyConfig.currency || !currencyConfig.interBankName || !currencyConfig.interBankRate || !currencyConfig.baseRate || !currencyConfig.spread || !currencyConfig.operator"  (click)="saveCurrencyAndCurrency()" mat-raised-button mat-dialog-close
+                class="clos-submit-btn">
+                <mat-icon>{{ data ? 'update' : 'save' }}</mat-icon>
+                <span>{{ data ? 'Update' : 'Save' }}</span>
+            </button>
+        </div>
+        <div class="spacer"></div>
+        <button mat-raised-button style="margin-top:1rem;float: left;" class="clos-btn"
+            matTooltip="Close" mat-dialog-close>
+            <mat-icon>close</mat-icon>Close
+        </button>
+    </div>
+</div>

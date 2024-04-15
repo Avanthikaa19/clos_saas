@@ -1,0 +1,103 @@
+<div class="main-container" >
+    <!-- AD007A_ADMIN_APPROVE_CHANGES -->
+    <div class="header-container parent__row-flex">
+        <!-- <div class="header__name-container flex-grow">
+            <span style="font-weight: 600;">Changes Approval</span>
+        </div> -->
+        <div class="export__btn-container flex-shrink">
+            <button class="apply__filter__btn-container" mat-button (click)="getChangesApprovalByMultiSortFilter()"
+                [class.edit]="changesApproval.length==0" [disabled]="changesApproval.length==0">
+                <mat-icon style="margin-right: 1rem;">filter_list</mat-icon>
+                Apply All Filters / Sort
+            </button>
+            <button class="blk__delete__btn-container" (click)="onClearBtnClick()" mat-button>
+                <mat-icon style="margin-right: 1rem;">close</mat-icon>
+                Clear All Filter / Sort
+            </button>
+            <button mat-raised-button color="primary">
+                <mat-icon style="margin-right: 1rem;">get_app</mat-icon>
+                Export
+            </button>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="table-container" style="overflow: auto;">
+            <div *ngIf="loading" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr style="text-transform: capitalize;">
+                        <th *ngFor="let header of changeApprovalHeaders">{{header.name}}
+                            <mat-icon class="flex-shrink table-head-icon" (click)="onSortBtnClick(header)">
+                                {{header.order === 'ASC' ? 'arrow_upward' : 'arrow_downward'}}
+                            </mat-icon>
+                        </th>
+                        <th>Approve</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr style="top: 5.5%; text-transform: capitalize;">
+                        <th *ngFor="let header of changeApprovalHeaders">
+                            <div class="parent__row-flex" *ngIf="filterColumns.includes(header.name)">
+                                <input class="min-input flex-grow" placeholder="{{header.name}}"
+                                    style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;"
+                                    [(ngModel)]="header.filter"
+                                    (ngModelChange)="filterChangeEvent(header.name,header.filter)">
+                                <mat-icon class="flex-shrink table-head-icon" (click)="getChangesApprovalByMultiSortFilter()">
+                                    filter_list
+                                </mat-icon>
+                            </div>
+                            <div class="parent__row-flex" *ngIf="!filterColumns.includes(header.name)">
+                                <input [disabled]="!filterColumns.includes(header.name)" class="min-input flex-grow"
+                                    placeholder="{{header.name}}"
+                                    style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;">
+                                <mat-icon class="flex-shrink table-head-icon">filter_list
+                                </mat-icon>
+                            </div>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <ng-container *ngIf="!loading && changesApproval.length==0">
+                        <span>No Data found</span>
+                    </ng-container> -->
+                    <div class="placeholder-container" [@fadeInOut] *ngIf="!loading && !changesApproval.length">
+                        <span>No Data found!</span>
+                    </div>
+                    <ng-container>
+                        <tr *ngFor="let changeApprove of changesApproval">
+                            <td *ngFor="let header of changeApprovalHeaders">{{getValues(changeApprove[header.name])}}</td>
+                            <td style="text-align: center;">
+                                <button mat-button class="delete-btn" style=" background: rgba(16, 121, 13, 0.1);line-height: 0px !important;
+                                    color: green;" (click)="onApproveClick(changeApprove)">
+                                    <mat-icon style="margin-right: 1rem;">check</mat-icon>
+                                    <span>Approve</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="paginator-container">
+        <div class="fetch-container">
+            <!-- <span>
+                Fetched 469 datas in 0.05 seconds
+            </span> -->
+        </div>
+        <div class="pg-container">
+            <mat-paginator [length]="entryCount" [pageIndex]="pageNum" [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+                (page)="getChangeApprovalByFilter($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="no-access" *ngIf="!ac.super && !ac.items?.AD007A_ADMIN_APPROVE_CHANGES || !ac.items?.AL004A_ALERTS_APPROVE_CHANGES">
+    <app-no-access></app-no-access>
+</div> -->

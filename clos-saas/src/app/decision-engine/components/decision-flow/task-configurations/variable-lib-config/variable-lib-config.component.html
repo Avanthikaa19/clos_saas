@@ -1,0 +1,101 @@
+<!-- <div class="header-container">
+    <span class="header">
+        Variables Library :
+    </span>
+</div>
+<div class="content-container">
+    <div class="search-container">
+        <div>
+            <mat-icon class="icon-search">search</mat-icon>
+            <input class="min-input" placeholder="Search  Variable Library by Name" [(ngModel)]="searchText"  (ngModelChange)="filterColumns($event);">
+            <mat-icon  class="icon-search" style="margin-left:90rem;cursor:pointer;" *ngIf="searchText" (click)="clearSearchField()" >close</mat-icon>
+    
+        </div>
+    </div>
+    <div class="body-container" *ngIf="VariablesLib.length>0 && !loading">
+        <div class="card-container" *ngFor="let  var_library of  filteredColumns" (click)="selectVariable(var_library)"
+            [class.selected-card]="var_library.id==selectedVariable">
+            <div class="card-body-container">
+                <div class="card-image-container">
+                    <img src="assets/Icons/variable1.png">
+                </div>
+                <div class="card-content-container">
+                    <div class="card_body-content">
+                        {{var_library.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="no-record-found" style="margin: 20rem;margin-left:13rem;" *ngIf="VariablesLib.length == 0 && !loading">
+        No Variable Library found
+    </div>
+<mat-spinner  *ngIf="loading"  style="margin: 20rem;margin-left:53rem;" diameter="40"></mat-spinner>
+
+</div>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close (click)="oncancelClick()">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button mat-raised-button class="selectButton" [disabled]="!selectedVariable" (click)="onSelectVariableClick()">
+        <mat-icon>done</mat-icon>
+        <span>Select QueryVariable</span>
+    </button>
+</mat-dialog-actions> -->
+
+<div class="popup-box">
+    <div class="header">
+        <span class="title">
+            Variables Library :
+        </span>
+        <br>
+        <br>
+        <mat-divider></mat-divider>
+
+        <div class="search-container">
+            <div>
+                <mat-icon class="icon-search">search</mat-icon>
+
+                <input class="min-input" placeholder="Search  Variable Library by Name" [(ngModel)]="searchText" (ngModelChange)="filterColumns($event);">
+
+            </div>
+            <mat-icon class="icon-search" style="margin-left:80rem;cursor:pointer; margin-top: 6rem;" *ngIf="searchText" (click)="clearSearchField()">close</mat-icon>
+
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="row-main mt-5" *ngIf="VariablesLib.length > 0 && !loading">
+            <div class="col" *ngFor="let  var_library of  filteredColumns" (click)="selectVariable(var_library)" [class.selected-card]="var_library.id==selectedVariable">
+                <div class="image">
+                    <img src="assets/Icons/variable1.png">
+                </div>
+                <div class="card-content-container">
+                    <div class="card_body-content" matTooltip={{var_library.name}}>
+                        {{var_library.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="no-record-found" *ngIf="VariablesLib.length == 0 && !loading">
+            No Variable Library found
+        </div>
+        <div class="no-record-found" *ngIf="filteredColumns.length == 0 && !loading">
+            No Variable Library found
+        </div>
+        <mat-spinner *ngIf="loading" style="margin: 20rem;margin-left:44rem;" diameter="40"></mat-spinner>
+    </div>
+
+</div>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close (click)="oncancelClick()">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+    <button mat-raised-button class="selectButton" [disabled]="!selectedVariable" (click)="onSelectVariableClick()">
+        <mat-icon>done</mat-icon>
+        <span>Select QueryVariable</span>
+    </button>
+</mat-dialog-actions>

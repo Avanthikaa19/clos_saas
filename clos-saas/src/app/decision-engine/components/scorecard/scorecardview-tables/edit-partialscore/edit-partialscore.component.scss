@@ -1,0 +1,42 @@
+.at-separator-thick {
+    background: #d4d4d4;
+    height: 4px;
+    margin: 0%;
+    width: 60px;
+}
+
+::ng-deep .input-field .mat-form-field-underline {
+    display: none;
+}
+
+ ::ng-deep .select-field .mat-form-field-underline {
+    display: none;
+}
+
+ ::ng-deep .input-field .mat-form-field-flex {
+    white-space: nowrap;
+    background-color: rgb(251 251 251 / 70%);
+    color: #606266;
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    outline: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+input {
+    box-shadow: none;
+}
+
+input:focus {
+    outline: none;
+    background: transparent;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

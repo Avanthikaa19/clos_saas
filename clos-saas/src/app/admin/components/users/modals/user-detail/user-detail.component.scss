@@ -1,0 +1,232 @@
+@use "src/theme" as theme;
+
+@import url(../../../../../common-styles/form-style.scss);
+
+.main-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    > .module-header-container {
+        height: 2.5rem;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > .usr__dtl__txt-container {
+            flex: 1 1 auto;
+            color: theme.$sub-header-text-colour;
+            > .usr__name__txt-container {
+                color: theme.$sub-second-header-text-colour;
+            }
+        }
+        > .go__back-conntainer {
+            flex: 0 0 auto;
+        }
+    }
+    > .tab-container {
+        > .main-tabs-container {
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            .tab-icon {
+                margin-right: 8px;
+            }
+            .name-container {
+                padding: 1rem;
+                margin-top: 1rem;
+                span {
+                    font-size: 1.6rem;
+                    padding: 1rem;
+                    font-weight: 600;
+                }
+            }
+            .crtd-date-container {
+                padding: 0rem;
+                span {
+                    font-size: 1.2rem;
+                    padding: 0rem 1rem 1rem 2rem;
+                    color: map-get(theme.$primary-palette, 100);
+                }
+            }
+            .form-content-container {
+                height: 60vh;
+                margin: 1rem 1rem 1rem 2rem;
+                border: 1.5px dashed lightgray;
+                border-radius: 0.5rem;
+                overflow: auto;
+                .table-content-container {
+                    padding: 1rem 1rem 0rem 2rem;
+                    font-weight: 600;
+                    /* font-size: 3rem; */
+                    >.user-detail-table{
+                        .required:after {
+                        content:" *";
+                        color: red;
+                      }
+                    }
+                    .user__role-container {
+                        background-color: whitesmoke;
+                        padding-top: 0.5rem;
+                        height: 3rem;
+                        min-width: 10rem;
+                        text-align: center;
+                        vertical-align: middle;
+                        border-radius: 0.5rem;
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        &:last-child {
+                            background-color: white;
+                            text-decoration: underline;
+                        }
+                        &:not(:first-child) {
+                            margin-left: 0.5rem;
+                        }
+                    }
+                    .user__group-container {
+                        background-color: whitesmoke;
+                        padding: 0.5rem 1rem 0 1rem;
+                        height: 3rem;
+                        min-width: 10rem;
+                        text-align: center;
+                        vertical-align: middle;
+                        border-radius: 0.5rem;
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        &:last-child {
+                            background-color: white;
+                            text-decoration: underline;
+                        }
+                        &:not(:first-child) {
+                            margin-left: 0.5rem;
+                        }
+                    }
+                }
+            }
+            .cdu__btn__container {
+                height: 5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 2rem;
+                span {
+                    font-weight: 600;
+                }
+                > .delete__btn-container {
+                    flex: 1 1 auto;
+                    button {
+                        background-color: #d30000;
+                        color: white;
+                        box-shadow: 3px 3px rgb(230, 230, 230);
+                        margin-left: 2rem;
+                    }
+                }
+                > .create__btn-container {
+                    flex: 0 0 auto;
+                    >.save_btn {
+                        background-color: #012970;
+                        color: white;
+                        box-shadow: 3px 3px rgb(230, 230, 230);
+                        margin-right: 1rem;
+                       
+                    }
+                    >.save_btn:disabled{
+                        background-color: lightgray;
+                    }
+                }
+            }
+        }
+    }
+}
+
+:host ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+:host ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    color: #012970;
+    opacity: 1;
+}
+.button-data{
+    width:10rem;
+}
+
+/*table */
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 8px;
+    color: #817979;
+    :not(even) {
+        min-width: 35rem;
+    }
+}
+
+.at-separator-thick {
+    background: #d4d4d4;
+    height:4px;
+    margin-left: 0.5%;
+    width: 60px;
+  }
+
+::ng-deep .input-field .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .input-field .mat-form-field-flex{
+    white-space: nowrap;
+    background-color: rgb(245 245 245);
+    color: #606266;
+    outline: 0;
+    -webkit-transition: .1s;
+    transition: .1s;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+
+.lock_unlock-btn{
+    background-color:#e7e3e3;
+    margin-top:1.3rem;
+    font-weight:bold;
+}
+.email {
+    .invalid-email-text {
+      margin-left: 10px;
+      color: red;
+      opacity: 0;
+      transition: opacity linear 50ms;
+    }
+  }
+  .email .min-input:invalid ~ .invalid-email-text {
+    opacity: 1;
+  }
+  .password-notifier{
+      font-size: small;
+      color:red;
+      margin-left: 1rem;
+  }
+  
+  input{
+    box-shadow: none;
+  }
+  input:focus{
+        outline: none;
+        background: transparent;
+}
+.add-rules {
+    font-size: 14px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+

@@ -1,0 +1,7 @@
+<div class="column-container">
+    <mat-icon class="mr-3 ml-4 m-3 circle_icon">security</mat-icon>
+    <span class="ml-4 user-contain m-3">Access Template</span>
+</div>
+<div class="main-container">
+    <app-admin-table [columns]="roleColumns" [filterButton]="true" [clearButton]="true" [exportButton]="true" [newUsers]="true" (onAddNewUserClick)="onAddNewUserClick($event)"></app-admin-table>
+</div>

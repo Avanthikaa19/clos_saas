@@ -1,0 +1,57 @@
+<div class="layout-chooser-container">
+    <div class="layout-title noselect">
+        <span>Select Layout</span>
+    </div>
+    <div class="chooser-container">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <div class="search-container noselect">
+            <label class="min-label">Filter:</label>
+            <input class="min-input" [(ngModel)]="nameSearch" placeholder="By Layout Name" (keydown.enter)="onSearchClicked()">
+            <button mat-button (click)="onSearchClicked()">
+                <mat-icon>search</mat-icon>
+                <span style="padding-left: 10px;">Search</span>
+            </button>
+        </div>
+        <div class="cards-list-container">
+            <div class="cards-list noselect">
+                <div *ngFor="let layout of layouts" class="layout-chooser-card" [class.selected-card]="layout === selectedLayout" matRipple (click)="selectedLayout = layout">
+                    <div class="layout-preview">
+                        <app-layout-card [layout]="layout"></app-layout-card>
+                        <div class="overlay"> </div>
+                    </div>
+                    <div class="layout-details">
+                        <h6>{{layout.name}}</h6>
+                        <p>{{layout.description}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+                <div>
+                    <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+                </div>
+                <div>
+                    <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layout-chooser-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" [disabled]="!selectedLayout" (click)="onSelect(selectedLayout)">
+            <mat-icon>check</mat-icon>
+            <span style="padding-left: 10px;">Select</span>
+        </button>
+    </div>
+</div>

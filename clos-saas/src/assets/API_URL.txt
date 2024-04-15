@@ -1,1 +1,1 @@
-https://clos-dev.finsurge.tech/los-gui/#/login
+https://apps-dev.finsurge.tech:14600/api/

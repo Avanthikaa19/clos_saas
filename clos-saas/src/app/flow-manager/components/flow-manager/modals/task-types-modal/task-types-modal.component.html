@@ -1,0 +1,72 @@
+<div style="height: 600px; overflow: hidden; position: relative;">
+    <mat-card [@fadeInOut] *ngIf="loadingTypes" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 14px;">
+        <div style="display: flex;">
+            <mat-spinner [diameter]="20">
+            </mat-spinner>
+            <span style="margin-left: 10px;">Loading. Please wait..</span>
+        </div>
+    </mat-card>
+    <div class="header-container">
+        <span>Select Task Type</span>
+    </div>
+    <div class="filter-band">
+        <mat-icon>filter_list</mat-icon>
+        <span>Filter:</span>
+        <mat-form-field class="search-name">
+            <input matInput [(ngModel)]="filterName" placeholder="Search By Name">
+        </mat-form-field>
+        <mat-form-field class="search-layer">
+            <mat-label>Layer</mat-label>
+            <mat-select [(ngModel)]="filterLayer">
+                <mat-option value="">All</mat-option>
+                <mat-option value="INPUT" class="input-layer">Input Layer</mat-option>
+                <mat-option value="PROCESSING" class="processing-layer">Processing Layer</mat-option>
+                <mat-option value="OUTPUT" class="output-layer">Output Layer</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="search-purpose">
+            <mat-label>Purpose</mat-label>
+            <mat-select [(ngModel)]="filterPurpose">
+                <mat-option value="">All</mat-option>
+                <mat-option value="GENERAL">General / Multipurpose</mat-option>
+                <mat-option value="DEALS" class="purpose-deal">Trade Related</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div style="height: calc(100% - 170px); width: 100%; padding-bottom: 10px; overflow-y: auto; overflow-x: hidden;">
+        <div style="width: 100%; padding: 10px;" fxLayout="row wrap" fxLayoutGap="20px grid" class="noselect">
+            <ng-container *ngFor="let type of taskTypes">
+                <!-- <ng-container *ngIf="type.type !='FILE_WATCHER_LOCAL' && type.type !='FILE_WATCHER_MD_LOCAL' && type.type !='FILE_WRITER_LOCAL' "> -->
+                <div fxFlex="0 0 33.3" [@fadeInOut] *ngIf="(filterName == '' || type.displayName.toLowerCase().includes(filterName.toLowerCase()))
+                    && (filterLayer == '' || type.layer == filterLayer) && (filterPurpose == '' || filterPurpose == type.purpose)">
+                    <div fxFlex class="type-card" (click)="selectTaskType(type)" (dblclick)="selectTaskType(type);completeSelection();" 
+                        [class.selected-type]="type==selectedTaskType" [class.purpose-deal]="type.purpose=='DEALS'" 
+                        [class.input-layer]="type.layer=='INPUT'" [class.processing-layer]="type.layer=='PROCESSING'" [class.output-layer]="type.layer=='OUTPUT'">
+                        <div class="type-icon">
+                            <div *ngIf="type.layer=='INPUT'" class="icon-image input-task-icon"></div>
+                            <div *ngIf="type.layer=='PROCESSING'" class="icon-image processing-task-icon"></div>
+                            <div *ngIf="type.layer=='OUTPUT'" class="icon-image output-task-icon"></div>
+                            <!-- <img [src]="'../assets/images/icons/dfm/' + type.layer + '_TASK.png'"> -->
+                        </div>
+                        <div class="type-content">
+                            <span class="type-title">{{type.displayName}}</span>
+                            <p class="type-description">{{type.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            <!-- </ng-container> -->
+            </ng-container>
+        </div>
+    </div>
+    <div style="height: 50px; margin-top: 10px; padding-top: 10px; border-top: silver solid 1px;">
+        <button mat-raised-button class="clos-submit-btn" (click)="completeSelection()" [disabled]="selectedTaskType==null" 
+            style="margin-left: 10px; float: right; transition: all linear 200ms;">
+            <mat-icon>done_outline</mat-icon>
+            <span style="padding-left: 10px;">Select {{selectedTaskType == null ? 'One First' : selectedTaskType.displayName}}</span>
+        </button>
+        <button mat-stroked-button class="clos-btn" (click)="onClose()" style=" float: right;">
+            <mat-icon>clear</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,589 @@
+<div class="layout-detail-container">
+    <div class="header-container">
+        <div class="layout-name-wrapper">
+            <span *ngIf="!editingLayoutName">{{layout.name}}</span>
+            <input *ngIf="editingLayoutName" [(ngModel)]="layout.name" class="min-input">
+            <button mat-icon-button class="edit-btn" (click)="editingLayoutName = !editingLayoutName">
+                <mat-icon [@fadeInOut] *ngIf="!editingLayoutName" style="color: royalblue;">edit</mat-icon>
+                <mat-icon [@fadeInOut] *ngIf="editingLayoutName" style="color: crimson;">done</mat-icon>
+            </button>
+            <span *ngIf="!editingLayoutDesc">{{layout.description}}</span>
+            <input *ngIf="editingLayoutDesc" maxlength="255" [(ngModel)]="layout.description" class="min-input">
+            <button mat-icon-button class="edit-btn" (click)="editingLayoutDesc = !editingLayoutDesc">
+                <mat-icon [@fadeInOut] *ngIf="!editingLayoutDesc" style="color: royalblue;">edit</mat-icon>
+                <mat-icon [@fadeInOut] *ngIf="editingLayoutDesc" style="color: crimson;">done</mat-icon>
+            </button>
+        </div>
+        <div class="title">
+            Layout Editor
+        </div>
+    </div>
+    <div class="toolbar-container">
+        <div class="tb-btn-container">
+            <button class="tb-btn noselect" (click)="addNewTitleBand($event)" matRipple>
+                <mat-icon>add</mat-icon>
+                <span>Add Title Band</span>
+            </button>
+            <button class="tb-btn noselect" (click)="addNewHeaderBand($event)" matRipple>
+                <mat-icon>add</mat-icon>
+                <span>Add Header Band</span>
+            </button>
+            <button class="tb-btn noselect" (click)="openExtractionQuerySelection($event)" matRipple>
+                <mat-icon>add</mat-icon>
+                <span>Add Extraction Band</span>
+            </button>
+            <button class="tb-btn noselect" (click)="addNewFooterBand($event)" matRipple>
+                <mat-icon>add</mat-icon>
+                <span>Add Footer Band</span>
+            </button>
+            <div class="tb-space"></div>
+            <button class="tb-btn noselect" *ngIf="!selectedElement" (click)="openThemeSelection($event, 'Base')" matRipple>
+                <mat-icon>format_paint</mat-icon>
+                <span>Apply A Theme</span>
+            </button>
+            <button class="tb-btn noselect" (click)="updateBandGroupMetaData();printSpecification($event)" matRipple>
+                <mat-icon>bug_report</mat-icon>
+            </button>
+            <button class="tb-btn noselect" (click)="clearSelections($event)" matRipple>
+                <mat-icon>clear_all</mat-icon>
+            </button>
+            <button class="tb-btn noselect" (click)="autoAlignBands($event)" matRipple>
+                <mat-icon>refresh</mat-icon>
+                <span>Re-Align</span>
+            </button>
+            <div>
+                <mat-slide-toggle style="margin: 10px;" color="primary" [(ngModel)]="useDarkBg">
+                    Dark BG
+                </mat-slide-toggle>
+                <mat-slide-toggle style="margin: 10px;" color="primary" [(ngModel)]="showData">
+                    Show Data
+                </mat-slide-toggle>
+                <button mat-icon-button (click)="showAllHints = true">
+                    <mat-icon>info</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="tb-btn-container">
+            <div class="tb-empty-placeholder noselect">
+                <span [@fadeInOut] *ngIf="!selectedElement">Select an band to show more options.</span>
+            </div>
+            <div class="tb-title noselect">
+                <span>Band:</span>
+            </div>
+            <button class="tb-btn noselect" (click)="addNewElement($event)" [@fadeInOut] *ngIf="selectedElement && !selectedElement.name.includes('Title Band')"
+                matRipple>
+                <mat-icon>add_circle</mat-icon>
+                <span>Add Element</span>
+            </button>
+            <button class="tb-btn tb-btn-red noselect" (click)="deleteElement($event, selectedElement)" [@fadeInOut] *ngIf="selectedElement"
+                matRipple>
+                <mat-icon>delete_forever</mat-icon>
+                <span>Remove Band</span>
+            </button>
+            <button class="tb-btn noselect" (click)="toggleAnchors($event, selectedElement)" [@fadeInOut] *ngIf="selectedElement"
+                matRipple>
+                <mat-icon>{{selectedElement.anchored ? 'lock_open' : 'lock'}}</mat-icon>
+                <span>{{selectedElement.anchored ? 'Release' : 'Anchor'}}</span>
+            </button>
+            <div class="tb-btn noselect" [@fadeInOut] *ngIf="selectedElement && selectedElement.innerBorders">
+                <mat-icon>border_all</mat-icon>
+                <input type="number" min="0" max="3" class="min-input" readonly
+                    [(ngModel)]="selectedElement.innerBorders.thickness"
+                    (ngModelChange)="setElementStyle(selectedElement)"
+                    (click)="ignoreClick($event)">
+                <input class="min-input c-pointer" type="color" [(ngModel)]="selectedElement.innerBorders.color"
+                    (ngModelChange)="setElementStyle(selectedElement)">
+            </div>
+            <div class="expandable-btn-container" [@fadeInOut] *ngIf="selectedElement && selectedElement.outerBorders">
+                <button class="tb-btn noselect" (click)="toggleToolbarItem($event, 2)"
+                    [class.tb-btn-pressed]="toolbarExpandedItem === 2" matRipple>
+                    <mat-icon>border_all</mat-icon>
+                    <span>Band Borders</span>
+                </button>
+                <div class="left-arrow" [class.expanded-arrow]="toolbarExpandedItem === 2"></div>
+                <div class="on-click-view" [class.expanded-view]="toolbarExpandedItem === 2">
+                    <div class="content">
+                        <button class="tb-btn noselect" (click)="clearOuterBorder($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)" matRipple>
+                            <mat-icon>border_clear</mat-icon>
+                        </button>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_top</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedElement.outerBorders.top.thickness"
+                                (ngModelChange)="setElementStyle(selectedElement)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedElement.outerBorders.top.color"
+                                (ngModelChange)="setElementStyle(selectedElement)">
+                        </div>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_right</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedElement.outerBorders.right.thickness"
+                                (ngModelChange)="setElementStyle(selectedElement)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedElement.outerBorders.right.color"
+                                (ngModelChange)="setElementStyle(selectedElement)">
+                        </div>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_bottom</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedElement.outerBorders.bottom.thickness"
+                                (ngModelChange)="setElementStyle(selectedElement)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedElement.outerBorders.bottom.color"
+                                (ngModelChange)="setElementStyle(selectedElement)">
+                        </div>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_left</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedElement.outerBorders.left.thickness"
+                                (ngModelChange)="setElementStyle(selectedElement)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedElement.outerBorders.left.color"
+                                (ngModelChange)="setElementStyle(selectedElement)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tb-btn noselect default-cursor" [@fadeInOut] *ngIf="selectedElement">
+                <mat-icon>format_color_fill</mat-icon>
+                <span>BG: </span>
+                <input class="min-input c-pointer" type="color" [(ngModel)]="selectedElement.backgroundColor"
+                    (ngModelChange)="setElementStyle(selectedElement)">
+            </div>       
+            <button class="tb-btn noselect" *ngIf="selectedElement" (click)="openThemeSelection($event, selectedElement.name)" matRipple>
+                <mat-icon>format_paint</mat-icon>
+                <span>Apply A Theme</span>
+            </button>
+        </div>
+        <div class="tb-btn-container">
+            <div class="tb-empty-placeholder noselect">
+                <span [@fadeInOut] *ngIf="!selectedElement || !selectedSubElement">Select an element in a band to show more options.</span>
+            </div>
+            <div class="tb-title noselect">
+                <span>Element:</span>
+            </div>
+            <button class="tb-btn tb-btn-red noselect" [@fadeInOut] *ngIf="selectedSubElement" [disabled]="!selectedSubElement.deletable || selectedElement.elements?.length==1"
+                (click)="deleteInnerElement($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex); realignInnerElements(selectedElement); clearSelections();"
+                matRipple>
+                <mat-icon>delete_outline</mat-icon>
+                <span>Remove Item</span>
+            </button>
+            <div class="expandable-btn-container" [@fadeInOut] *ngIf="selectedSubElement">
+                <button class="tb-btn noselect" (click)="toggleToolbarItem($event, 1)"
+                    [class.tb-btn-pressed]="toolbarExpandedItem === 1" matRipple>
+                    <mat-icon>border_all</mat-icon>
+                    <span>Borders</span>
+                </button>
+                <div class="left-arrow" [class.expanded-arrow]="toolbarExpandedItem === 1"></div>
+                <div class="on-click-view" [class.expanded-view]="toolbarExpandedItem === 1">
+                    <div class="content">
+                        <button class="tb-btn noselect" (click)="clearBorders($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)" matRipple>
+                            <mat-icon>border_clear</mat-icon>
+                        </button>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_top</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedSubElement.cellFormat.borders.top.thickness"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedSubElement.cellFormat.borders.top.color"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)">
+                        </div>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_right</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedSubElement.cellFormat.borders.right.thickness"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedSubElement.cellFormat.borders.right.color"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)">
+                        </div>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_bottom</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedSubElement.cellFormat.borders.bottom.thickness"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedSubElement.cellFormat.borders.bottom.color"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)">
+                        </div>
+                        <div class="tb-btn noselect">
+                            <mat-icon>border_left</mat-icon>
+                            <input type="number" min="0" max="3" class="min-input"
+                                [(ngModel)]="selectedSubElement.cellFormat.borders.left.thickness"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)"
+                                (click)="ignoreClick($event)">
+                            <input class="min-input c-pointer" type="color" [(ngModel)]="selectedSubElement.cellFormat.borders.left.color"
+                                (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tb-btn noselect default-cursor" [@fadeInOut] *ngIf="selectedSubElement">
+                <mat-icon>font_download</mat-icon>
+                <span>Font: </span>
+                <mat-select [(ngModel)]="selectedSubElement.cellFormat.font" (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)" 
+                    class="min-select" [style.font-family]="selectedSubElement.cellFormat.font">
+                        <mat-option [value]="selectedSubElement.cellFormat.font" [style.font-family]="selectedSubElement.cellFormat.font">{{selectedSubElement.cellFormat.font}}</mat-option>
+                        <mat-option *ngFor="let font of fontFamilyNames" [value]="font" [style.font-family]="font">{{font}}</mat-option>
+                </mat-select>
+                <input type="number" min="0" class="min-input short-input"
+                    [(ngModel)]="selectedSubElement.cellFormat.fontSize"
+                    (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)"
+                    (click)="ignoreClick($event)">
+            </div>
+            <button class="tb-btn noselect" (click)="toggleFontStyle($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex, 'BOLD')" 
+            matRipple [@fadeInOut] *ngIf="selectedSubElement"
+            [class.tb-btn-pressed]="selectedSubElement.cellFormat.fontStyle.includes('BOLD')">
+                <mat-icon>format_bold</mat-icon>
+            </button>
+            <button class="tb-btn noselect" (click)="toggleFontStyle($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex, 'ITALIC')" 
+            matRipple [@fadeInOut] *ngIf="selectedSubElement"
+            [class.tb-btn-pressed]="selectedSubElement.cellFormat.fontStyle.includes('ITALIC')">
+                <mat-icon>format_italic</mat-icon>
+            </button>
+            <div class="tb-btn noselect default-cursor" [@fadeInOut] *ngIf="selectedSubElement">
+                <mat-icon>format_color_text</mat-icon>
+                <span>FG: </span>
+                <input class="min-input c-pointer" type="color" [(ngModel)]="selectedSubElement.cellFormat.fontColor"
+                    (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)">
+                <mat-icon>format_color_fill</mat-icon>
+                <span>BG: </span>
+                <input class="min-input c-pointer" type="color" [(ngModel)]="selectedSubElement.cellFormat.backgroundColor"
+                    (ngModelChange)="setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)">
+            </div>
+            <button class="tb-btn noselect" (click)="alignElement($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex, 'LEFT')" 
+            matRipple [@fadeInOut] *ngIf="selectedSubElement"
+            [class.tb-btn-pressed]="selectedSubElement.cellFormat.textAlign === 'LEFT'">
+                <mat-icon>format_align_left</mat-icon>
+            </button>
+            <button class="tb-btn noselect" (click)="alignElement($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex, 'CENTER')" 
+            matRipple [@fadeInOut] *ngIf="selectedSubElement"
+            [class.tb-btn-pressed]="selectedSubElement.cellFormat.textAlign === 'CENTER'">
+                <mat-icon>format_align_center</mat-icon>
+            </button>
+            <button class="tb-btn noselect" (click)="alignElement($event, selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex, 'RIGHT')" 
+            matRipple [@fadeInOut] *ngIf="selectedSubElement"
+            [class.tb-btn-pressed]="selectedSubElement.cellFormat.textAlign === 'RIGHT'">
+                <mat-icon>format_align_right</mat-icon>
+            </button>
+            <div class="tb-btn noselect default-cursor" [@fadeInOut] *ngIf="(selectedElement?.name.includes('Header Band') || selectedElement?.name.includes('Footer Band') || selectedElement?.name.includes('Extraction Band') )  && selectedSubElement">
+                <mat-icon> swap_horiz</mat-icon>
+                <span>Place At: </span>
+                <mat-select [(ngModel)]="selectedSubElement.align" (ngModelChange)="realignInnerElements(selectedElement)" 
+                    class="min-select" style="width: 70px;">
+                    <mat-option [value]="'LEFT'" >Left</mat-option>
+                    <mat-option [value]="'RIGHT'" >Right</mat-option>
+                </mat-select>
+            </div>
+            <div class="tb-space"></div>
+        </div>
+    </div>
+    <div id="grid-canvas-parent" class="grid-container" [class.alt-actions-enabled]="shiftKeyDown"
+        (scroll)="onCanvasScrolled($event)">
+        <div id="grid-canvas-col-label" class="grid-canvas-col-label noselect" [style.width.px]="canvasWidthPx"
+            [style.height.px]="rowHeightPx">
+        </div>
+        <div id="grid-canvas" class="grid-canvas noselect" [class.light-bg]="!useDarkBg" [class.dark-bg]="useDarkBg"
+            [style.width.px]="canvasWidthPx" [style.height.px]="canvasHeightPx" (click)="selectElement($event, null)">
+            <ng-container *ngFor="let tBand of layout.specification.titleBand">
+                <div id="title-band" class="grid-element" [class.selected-grid-element]="tBand === selectedElement"
+                    (click)="selectElement($event, tBand)" [style]="tBand.style" [@fadeInOut]
+                    *ngIf="tBand.include && tBand.visible">
+                    <div class="grid-element-band-item-wrapper" 
+                        [style.top.px]="(tBand.margins.top * rowHeightPx) - 1"
+                        [style.left.px]="(tBand.margins.left * columnWidthPx) - 1"
+                        [style.width.px]="(tBand.width * columnWidthPx) + 1"
+                        [style.height.px]="(tBand.height * rowHeightPx) + 1">
+                        <div class="grid-element-band-item" (click)="selectInnerElement($event, tBand, 0, 0)"
+                            [style]="tBand.contextElement.style"
+                            [class.selected-grid-element-band-item]="tBand.contextElement === selectedSubElement">
+                            <span></span>
+                            <a *ngIf="!showData">{{tBand.contextElement.name}}</a>
+                            <a *ngIf="showData">{{tBand.contextElement.cellData.value}}</a>
+                        </div>
+                    </div>
+                    <mat-icon class="grid-element-anchor noselect" *ngIf="tBand.anchored">lock</mat-icon>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let hBand of layout.specification.headerBands">
+                <div id="header-band" class="grid-element" [class.selected-grid-element]="hBand === selectedElement"
+                (click)="selectElement($event, hBand)" [style]="hBand.style" [@fadeInOut]
+                *ngIf="hBand.include && hBand.visible">
+                <div class="grid-element-band-item-wrapper" 
+                    [style.top.px]="(hBand.margins.top * rowHeightPx) - 1"
+                    [style.left.px]="(hBand.margins.left * columnWidthPx) - 1"
+                    [style.width.px]="(hBand.width * columnWidthPx) + 1"
+                    [style.height.px]="(rowHeightPx) + 1">
+                    <ng-container *ngFor="let hbandElement of hBand.elements;let i=index;">
+                        <div class="grid-element-band-item" (click)="selectInnerElement($event, hBand, 0, i, hbandElement)" 
+                            [style]="hbandElement.style"  *ngIf="hbandElement.include &&  hbandElement.visible"
+                            [class.selected-grid-element-band-item]="hbandElement === selectedSubElement" cdkDragLockAxis="x">
+                            <span></span>
+                            <a *ngIf="!showData">{{hbandElement.name}}</a>
+                            <a *ngIf="showData">{{hbandElement.cellData.value}}</a>
+                        </div>
+                    </ng-container>
+                </div>
+                <mat-icon class="grid-element-anchor noselect" *ngIf="hBand.anchored">lock</mat-icon>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let eBand of layout.specification.extractionBands">
+                <div id="extraction-band" class="grid-element" [class.selected-grid-element]="eBand === selectedElement"
+                (click)="selectElement($event, eBand)" [style]="eBand.style" [@fadeInOut]
+                *ngIf="eBand.include && eBand.visible">
+                <div class="grid-element-band-item-wrapper" 
+                    [style.top.px]="(eBand.margins.top * rowHeightPx) - 1"
+                    [style.left.px]="(eBand.margins.left * columnWidthPx) - 1"
+                    [style.width.px]="(eBand.width * columnWidthPx) + 1"
+                    [style.height.px]="(eBand.height * rowHeightPx) + 1"
+                    cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="interChangeElementPosition($event, eBand)">
+                    <div *ngFor="let eBandElement of eBand.elements;let i=index;" >
+                        <div class="grid-element-band-item" (click)="selectInnerElement($event, eBand, 0, i, eBandElement)" 
+                            [style]="eBandElement.fieldHeaderCell.style" cdkDragLockAxis="x" cdkDrag *ngIf="eBandElement.fieldHeaderCell.include &&  eBandElement.fieldHeaderCell.visible"
+                            [class.selected-grid-element-band-item]="eBandElement.fieldHeaderCell === selectedSubElement">
+                            <span></span>
+                            <a *ngIf="!showData">{{eBandElement.fieldHeaderCell.name}}</a>
+                            <a *ngIf="showData">{{eBandElement.fieldHeaderCell.cellData.value}}</a>
+                        </div>
+                        <div class="grid-element-band-item" (click)="selectInnerElement($event, eBand, 1, i, eBandElement)" 
+                            [style]="eBandElement.fieldDataCell.style" *ngIf="eBandElement.fieldHeaderCell.include &&  eBandElement.fieldHeaderCell.visible"
+                            [class.selected-grid-element-band-item]="eBandElement.fieldDataCell === selectedSubElement">
+                            <span></span>
+                            <a *ngIf="!showData">{{eBandElement.fieldDataCell.name}}</a>
+                            <a *ngIf="showData">{{eBandElement.fieldDataCell.cellData.value}}</a>
+                        </div>
+                    </div>
+                </div>
+                <mat-icon class="grid-element-anchor noselect" *ngIf="eBand.anchored">lock</mat-icon>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let fBand of layout.specification.footerBands">
+                <div id="footer-band" class="grid-element" [class.selected-grid-element]="fBand === selectedElement"
+                (click)="selectElement($event, fBand)" [style]="fBand.style" [@fadeInOut]
+                *ngIf="fBand.include && fBand.visible">
+                <div class="grid-element-band-item-wrapper" 
+                    [style.top.px]="(fBand.margins.top * rowHeightPx) - 1"
+                    [style.left.px]="(fBand.margins.left * columnWidthPx) - 1"
+                    [style.width.px]="(fBand.width * columnWidthPx) + 1"
+                    [style.height.px]="(rowHeightPx) + 1">
+                    <ng-container *ngFor="let fBandElement of fBand.elements;let i=index;">
+                        <div class="grid-element-band-item" (click)="selectInnerElement($event, fBand, 0, i, fBandElement)"
+                            [style]="fBandElement.style" *ngIf="fBandElement.include &&  fBandElement.visible"
+                            [class.selected-grid-element-band-item]="fBandElement === selectedSubElement" cdkDragLockAxis="x">
+                            <span></span>
+                            <a *ngIf="!showData">{{fBandElement.name}}</a>
+                            <a *ngIf="showData">{{fBandElement.cellData.value}}</a>
+                        </div>
+                    </ng-container>
+                </div>
+                <mat-icon class="grid-element-anchor noselect" *ngIf="fBand.anchored">lock</mat-icon>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="groups-container highlight-border-once" *ngIf="selectedSubElement" [style.max-height]="cellDataExpanded ? 'calc(100% - 765px)' : '40px'" style="top: 240px; z-index: 30;">
+        <div class="groups-title">
+            <div class="groups-title-text icon-container">
+                <div class="stretch-item">
+                    {{selectedSubElement.name}}'s Data
+                </div>
+                <div class="icon hoverable noselect" (click)="openEditFormula(selectedSubElement.cellData.type, selectedSubElement.cellData.value)" matRipple>
+                    <mat-icon>edit</mat-icon>
+                </div>
+                <div class="icon hoverable noselect" matRipple
+                    (click)="cellDataExpanded = !cellDataExpanded">
+                    <mat-icon *ngIf="cellDataExpanded">unfold_less</mat-icon>
+                    <mat-icon *ngIf="!cellDataExpanded">unfold_more</mat-icon>
+                </div>
+            </div>
+            <div class="groups-search" [@fadeInOut] [hidden]="!cellDataExpanded">
+                <mat-select [(ngModel)]="selectedSubElement.cellData.type" placeholder="Select Data Type" (ngModelChange)="getEditorLanguage($event);setInnerElementStyle(selectedElement, selectedSubElementRowIndex, selectedSubElementColIndex)" 
+                    class="min-select">
+                    <mat-option [value]="'STATIC_TEXT'" >STATIC TEXT</mat-option>
+                    <mat-option [value]="'EVALUATE_JS'" >EVALUATE JS</mat-option>
+                    <mat-option [value]="'SQL'" >SQL</mat-option>
+                    <mat-option [hidden]="!selectedElement.name.includes('Extraction Band')" [value]="'QUERY_FIELD'" >QUERY FIELD</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="groups-list" *ngIf="cellDataExpanded" style="overflow: hidden;">
+            <div class="group-container">
+                <ngx-monaco-editor [hidden]="selectedSubElement.cellData.type =='QUERY_FIELD'" class="my-code-editor" [options]="editorOptions" [(ngModel)]="selectedSubElement.cellData.value"></ngx-monaco-editor>
+                <mat-select *ngIf="selectedSubElement.cellData.type =='QUERY_FIELD'" [(ngModel)]="selectedSubElement.cellData.value" placeholder="Select Field" class="min-select">
+                    <mat-option *ngFor="let eBand of selectedElement.elements" [value]="eBand.fieldHeaderCell.name" >{{eBand.fieldHeaderCell.name}}</mat-option>
+            </mat-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="groups-container highlight-border-once" [style.max-height]="layoutBandGroupsExpanded ? 'calc(100% - 450px)' : '40px'">
+        <div class="groups-title">
+            <div class="groups-title-text icon-container">
+                <div class="stretch-item">
+                    Layout Groups
+                </div>
+                <div class="icon hoverable noselect" matRipple
+                    (click)="layoutBandGroupsExpanded = !layoutBandGroupsExpanded">
+                    <mat-icon *ngIf="layoutBandGroupsExpanded">unfold_less</mat-icon>
+                    <mat-icon *ngIf="!layoutBandGroupsExpanded">unfold_more</mat-icon>
+                </div>
+            </div>
+            <div class="groups-search" [@fadeInOut] [hidden]="!layoutBandGroupsExpanded">
+                <input class="min-input" placeholder="Search Groups or Elements">
+            </div>
+        </div>
+        <div class="groups-list" [@fadeInOut] *ngIf="layoutBandGroupsExpanded">
+            <div class="group-container" *ngFor="let group of layoutBandGroups" cdkDropList (cdkDropListDropped)="interChangeBand($event, group.bands)">
+                <div class="group-name icon-container" [class.selected-group-name]="group === selectedGroup" matRipple
+                    (click)="selectedGroup = group">
+                    <div class="title-icon noselect">
+                        <mat-icon>view_stream</mat-icon>
+                    </div>
+                    <div class="stretch-item">
+                        {{group.name}}
+                    </div>
+                    <div class="icon hoverable noselect" (click)="enableGroupVisibility($event, group)" matRipple>
+                        <mat-icon>visibility</mat-icon>
+                    </div>
+                    <div class="icon hoverable noselect" (click)="disableGroupVisibility($event, group)" matRipple>
+                        <mat-icon>visibility_off</mat-icon>
+                    </div>
+                    <div class="icon hoverable noselect" matRipple (click)="group.expanded = !group.expanded">
+                        <mat-icon *ngIf="group.expanded">unfold_less</mat-icon>
+                        <mat-icon *ngIf="!group.expanded">unfold_more</mat-icon>
+                    </div>
+                </div>
+                <ng-container *ngIf="group.expanded">
+                    <div *ngFor="let band of group.bands" class="band-name" matTooltip="drag and drop to change band order"  [class.selected-band]="band === selectedElement" (click)="selectElement($event, band)"
+                        matRipple>
+                        <div class="icon-container drag" cdkDrag>
+                            <div class="chkbox">
+                                <mat-checkbox color="primary" [ngModel]="band.include"
+                                    (ngModelChange)="onElementInclusivityChange(band)"></mat-checkbox>
+                            </div>
+                            <div class="stretch-item">
+                                {{band.name}}
+                            </div>
+                            <div class="icon hoverable noselect" (click)="toggleAnchors($event, band)" matRipple>
+                                <mat-icon *ngIf="band.anchored">lock</mat-icon>
+                                <mat-icon *ngIf="!band.anchored">lock_open</mat-icon>
+                            </div>
+                            <div class="icon hoverable noselect" (click)="toggleVisibility($event, band)" matRipple>
+                                <mat-icon *ngIf="band.visible">visibility</mat-icon>
+                                <mat-icon *ngIf="!band.visible">visibility_off</mat-icon>
+                            </div>
+                        </div>
+                        <div *ngIf="band.name.includes('Title Band')" class="band-inner-element-list">
+                            <div class="band-inner-element" [class.selected-band-inner-element]="band.contextElement === selectedSubElement">
+                                <div class="tree-pointer" style="left: 2px;"></div>
+                                <div class="band-inner-element-name" (click)="selectInnerElement($event, band, 0, 0)">
+                                    <span class="chkbox">
+                                        <mat-checkbox color="primary" [ngModel]="band.include"
+                                            (ngModelChange)="onElementInclusivityChange(band)"></mat-checkbox>
+                                    </span>
+                                    <span class="sp-name">{{band.contextElement.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="band.name.includes('Header Band') || band.name.includes('Footer Band')" class="band-inner-element-list" cdkDropList (cdkDropListDropped)="interChangeElementPosition($event, band)">
+                            <div *ngFor="let element of band.elements; let i=index" class="band-inner-element" [class.selected-band-inner-element]="element === selectedSubElement" 
+                                matTooltip="drag and drop to change item order" cdkDrag>
+                                <div class="tree-pointer"></div>
+                                <div class="band-inner-element-name" cdkDragHandle (click)="selectInnerElement($event, band, 0, i, element)">
+                                    <span class="chkbox">
+                                        <mat-checkbox color="primary" [ngModel]="element.include"
+                                            (ngModelChange)="onElementInclusivityChange(element, band)"></mat-checkbox>
+                                    </span>
+                                    <span class="sp-name">{{element.name}}</span>
+                                    <span class="sp-details"> Aligned {{element.align === 'LEFT' ? 'Left' : 'Right'}}</span>
+                                    <span class="icon hoverable noselect" (click)="toggleVisibility($event, element, band)" matRipple>
+                                        <mat-icon *ngIf="element.visible">visibility</mat-icon>
+                                        <mat-icon *ngIf="!element.visible">visibility_off</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="band.name.includes('Extraction Band')" class="band-inner-element-list" cdkDropList (cdkDropListDropped)="interChangeElementPosition($event, band)">
+                            <div *ngFor="let element of band.elements; let i=index" class="band-inner-element"  style="height:60px"   [class.selected-band-inner-element]="element.fieldHeaderCell === selectedSubElement || element.fieldDataCell === selectedSubElement "
+                                matTooltip="drag and drop to change item order" cdkDrag>
+                                <div class="tree-pointer"></div>
+                                <div class="band-inner-element-name" cdkDragHandle>
+                                    <span class="chkbox">
+                                        <mat-checkbox color="primary" [ngModel]="element.fieldHeaderCell.include"
+                                            (ngModelChange)="onElementInclusivityChange(element.fieldHeaderCell, band);onElementInclusivityChange(element.fieldDataCell, band);"></mat-checkbox>
+                                    </span>
+                                    <span class="sp-name" (click)="$event.stopPropagation();selectInnerElement($event, band, 0, i, element)">{{element.fieldHeaderCell.name}}</span>
+                                    <span class="sp-details"> Aligned {{element.fieldHeaderCell.align === 'LEFT' ? 'Left' : 'Right'}}</span>
+                                    <span class="icon hoverable noselect" (click)="toggleVisibility($event, element.fieldHeaderCell,band);toggleVisibility($event, element.fieldDataCell,band)" matRipple>
+                                        <mat-icon *ngIf="element.fieldHeaderCell.visible">visibility</mat-icon>
+                                        <mat-icon *ngIf="!element.fieldHeaderCell.visible">visibility_off</mat-icon>
+                                    </span>
+                                    <div (click)="$event.stopPropagation();selectInnerElement($event, band, 1, i, element)">
+                                        <span class="sp-name" >{{element.fieldDataCell.name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="toolbar-container groups-actions">
+            <div class="tb-btn-container">
+                <div class="tb-space"></div>
+                <div class="tb-btn noselect" (click)="createNewGroup($event)" matRipple>
+                    <mat-icon>add</mat-icon>
+                    <span>New Group</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actions-container">
+        <div class="sheets-container">
+            <div class="sheet-container">
+                Sheet Name: <input placeholder="Sheet 1" [(ngModel)]="layout.defaultSheetName"class="min-input">
+            </div>
+            <div style="float: right; padding-top: 5px;">
+                <span class="key-code" [@fadeInOut] *ngIf="shiftKeyDown">
+                    <a>Shift</a>
+                </span>
+                <span class="key-code" [@fadeInOut] *ngIf="ctrlKeyDown">
+                    <a>Ctrl</a>
+                </span>
+                <span class="key-code" [@fadeInOut] *ngIf="altKeyDown">
+                    <a>Alt</a>
+                </span>
+            </div>
+        </div>
+        <div style="float: right;margin-top: -24px;display: flex;">
+            <button class="tb-btn noselect" [hidden]="layout?.id" (click)="createLayout()" matRipple>
+                <mat-icon>save</mat-icon>
+                <span>Save</span>
+            </button>
+            <button class="tb-btn tb-btn-red noselect" (click)="onClose()" matRipple>
+                <mat-icon>close</mat-icon>
+                <span>Close</span>
+            </button>
+            <button class="tb-btn tb-btn-red noselect"  *ngIf="layout?.id" (click)="deleteLayout()" matRipple>
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+            </button>
+            <button class="tb-btn noselect" *ngIf="layout?.id"  (click)="updateLayout()" matRipple>
+                <mat-icon>save</mat-icon>
+                <span>Update</span>
+            </button>
+        </div>
+    </div>
+    <div class="hint-container" [@fadeInOut] *ngIf="showAllHints">
+        <app-layout-editor-hints></app-layout-editor-hints>
+        <div class="hint-actions">
+            <button mat-button color="warn" (click)="showAllHints = false">
+                <mat-icon>close</mat-icon>
+                <span>Close</span>
+            </button>
+        </div>
+    </div>
+</div>

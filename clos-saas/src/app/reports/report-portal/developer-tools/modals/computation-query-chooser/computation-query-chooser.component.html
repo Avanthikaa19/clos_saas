@@ -1,0 +1,64 @@
+<div class="extraction-chooser-container">
+    <div class="extraction-title noselect">
+        <span>Computation Query Chooser</span>
+    </div>
+    <div class="chooser-container">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <div class="search-container noselect">
+            <label class="min-label">Filter:</label>
+            <input class="min-input" [(ngModel)]="nameSearch" placeholder="By Query Name" (keydown.enter)="onSearchClicked()">
+            <button mat-button (click)="onSearchClicked()">
+                <mat-icon>search</mat-icon>
+                <span style="padding-left: 10px;">Search</span>
+            </button>
+        </div>
+        <div class="cards-list-container">
+            <div class="cards-list noselect">
+                <div class="extraction-card noselect" style="min-height: 100px;" [@fadeInOut] *ngFor="let computation of computations" [class.selected-card]="computation === selectedQuery" (click)="selectedQuery = computation" matRipple>
+                    <div class="extraction-details1">
+                        <div class="extraction-card-name">
+                            {{computation.name}}
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-description">
+                            {{computation.description}}
+                        </div>
+                    </div>
+                    <div class="extraction-details-separator"></div>
+                    <div class="extraction-details2">
+                        <div class="extraction-card-sql">
+                            {{computation.sql}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+                <div>
+                    <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+                </div>
+                <div>
+                    <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="extraction-chooser-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" [disabled]="!selectedQuery" (click)="onSelect(selectedQuery)">
+            <mat-icon>check</mat-icon>
+            <span style="padding-left: 10px;">Select</span>
+        </button>
+    </div>
+</div>

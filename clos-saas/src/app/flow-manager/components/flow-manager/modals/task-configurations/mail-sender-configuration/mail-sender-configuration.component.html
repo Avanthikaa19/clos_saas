@@ -1,0 +1,342 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        CONFIGURE:
+    </div>
+    <table *ngIf="config.properties">
+        <tbody>
+            <tr>
+                <td colspan="5">
+                    <input type="checkbox" name="includeSystemProperties" [(ngModel)]="config.includeSystemProperties"
+                        style="margin-top: 7px;">
+                    <span class="min-label">Include System Properties</span>
+                </td>
+            </tr>
+            <tr *ngFor="let prop of config.properties; let index = index; trackBy: trackByIndex;">
+                <td>{{index + 1}}.</td>
+                <td>
+                    <input type="checkbox" name="enabled{{index}}" [(ngModel)]="config.properties[index].enabled"
+                        style="margin-top: 7px; margin-right: 5px;">
+                </td>
+                <td>
+                    <input [(ngModel)]="config.properties[index].name" class="min-input" style="min-width: 300px;"
+                        [disabled]="!config.properties[index].enabled">
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.properties[index].value"
+                        *ngIf="config.properties[index].type=='boolean'" class="min-select"
+                        style="width: calc(100% - 20px);">
+                        <mat-option [value]="'true'">true</mat-option>
+                        <mat-option [value]="'false'">false</mat-option>
+                    </mat-select>
+                    <input [(ngModel)]="config.properties[index].value" *ngIf="config.properties[index].type!='boolean'"
+                        class="min-input"
+                        placeholder="{{config.properties[index].enabled?'No value given.':'Disabled.'}}"
+                        type="{{config.properties[index].type}}" [disabled]="!config.properties[index].enabled"
+                        style="width: calc(100% - 20px);">
+                    <button mat-icon-button color="warn"
+                        style="position: absolute; right: 0; width: 30px; height: 30px; line-height: 30px;"
+                        (click)="config.properties.splice(index, 1);">
+                        <mat-icon style="font-size: 14px; width: 30px; height: 30px; line-height: 30px;">remove
+                        </mat-icon>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="3">
+                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                        <span class="add-items-text">Click the + icon to add items.</span>
+                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.properties.push({name: '', type: 'text', enabled: false, value: ''});">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        ADDRESSES:
+    </div>
+    <table *ngIf="config.addresses">
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">To</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <table style="width: calc(100% - 20px);">
+                            <tbody>
+                                <tr *ngFor="let toAdr of config.addresses.to; let index = index; trackBy: trackByIndex;">
+                                    <td style="min-width: 20px;">{{index + 1}}.</td>
+                                    <td>
+                                        <input [(ngModel)]="config.addresses.to[index]" class="min-input"
+                                            style="width: calc(100% - 20px);">
+                                        <button mat-icon-button color="warn"
+                                            style="position: absolute; right: 0; width: 30px; height: 30px; line-height: 30px;"
+                                            (click)="config.addresses.to.splice(index, 1);">
+                                            <mat-icon style="font-size: 14px; width: 30px; height: 30px; line-height: 30px;">remove
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="min-width: 20px;"></td>
+                                    <td>
+                                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                                            <span class="add-items-text">Click the + icon to add items.</span>
+                                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                                (click)="config.addresses.to.push('');">
+                                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">CC</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <table style="width: calc(100% - 20px);">
+                            <tbody>
+                                <tr *ngFor="let ccAdr of config.addresses.cc; let index = index; trackBy: trackByIndex;">
+                                    <td style="min-width: 20px;">{{index + 1}}.</td>
+                                    <td>
+                                        <input [(ngModel)]="config.addresses.cc[index]" class="min-input"
+                                            style="width: calc(100% - 20px);">
+                                        <button mat-icon-button color="warn"
+                                            style="position: absolute; right: 0; width: 30px; height: 30px; line-height: 30px;"
+                                            (click)="config.addresses.cc.splice(index, 1);">
+                                            <mat-icon style="font-size: 14px; width: 30px; height: 30px; line-height: 30px;">remove
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="min-width: 20px;"></td>
+                                    <td>
+                                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                                            <span class="add-items-text">Click the + icon to add items.</span>
+                                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                                (click)="config.addresses.cc.push('');">
+                                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">BCC</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <table style="width: calc(100% - 20px);">
+                            <tbody>
+                                <tr *ngFor="let ccAdr of config.addresses.bcc; let index = index; trackBy: trackByIndex;">
+                                    <td style="min-width: 20px;">{{index + 1}}.</td>
+                                    <td>
+                                        <input [(ngModel)]="config.addresses.bcc[index]" class="min-input"
+                                            style="width: calc(100% - 20px);">
+                                        <button mat-icon-button color="warn"
+                                            style="position: absolute; right: 0; width: 30px; height: 30px; line-height: 30px;"
+                                            (click)="config.addresses.bcc.splice(index, 1);">
+                                            <mat-icon style="font-size: 14px; width: 30px; height: 30px; line-height: 30px;">remove
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="min-width: 20px;"></td>
+                                    <td>
+                                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                                            <span class="add-items-text">Click the + icon to add items.</span>
+                                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                                (click)="config.addresses.bcc.push('');">
+                                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        MESSAGE:
+    </div>
+    <div [@fadeInOut] *ngIf="loading" class="loading-container">
+        <mat-spinner [diameter]="20"></mat-spinner>
+        <span>Loading..</span>
+    </div>
+    <table [@fadeInOut] *ngIf="config.message && !loading">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Subject (text)</span>
+                </td>
+                <td>:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%; height: 100px;">
+                        <ngx-monaco-editor 
+                            class="my-code-editor" 
+                            [options]="editorOptions"
+                            [(ngModel)]="config.message.subject"></ngx-monaco-editor>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Content (text/html)</span>
+                </td>
+                <td>:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;">
+                        <ngx-monaco-editor 
+                            class="my-code-editor" 
+                            [options]="editorOptions"
+                            [(ngModel)]="config.message.content"></ngx-monaco-editor>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>
+                        <span class="min-label">Show Preview:</span>
+                        <input type="checkbox" name="passThrough" [(ngModel)]="preview" style="margin-top: 7px;">
+                    </div>
+                    <div style="width: 600px;">
+                        <iframe *ngIf="preview" width="100%" height="600" [srcdoc]="config.message.content " style="border: silver solid 1px;"></iframe>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        ATTACHMENTS:
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">File Paths:</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <table style="width: calc(100% - 20px);">
+                            <tbody>
+                                <tr *ngFor="let file of config.message.attachments; let index = index; trackBy: trackByIndex;">
+                                    <td style="min-width: 20px;">{{index + 1}}.</td>
+                                    <td>
+                                        <input [(ngModel)]="config.message.attachments[index]" class="min-input"
+                                            style="width: calc(100% - 20px);">
+                                        <button mat-icon-button color="warn"
+                                            style="position: absolute; right: 0; width: 30px; height: 30px; line-height: 30px;"
+                                            (click)="config.message.attachments.splice(index, 1);">
+                                            <mat-icon style="font-size: 14px; width: 30px; height: 30px; line-height: 30px;">remove
+                                            </mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="min-width: 20px;"></td>
+                                    <td>
+                                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                                            <span class="add-items-text">Click the + icon to add items.</span>
+                                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                                (click)="config.message.attachments.push('');">
+                                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <br>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Max Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling Ms</span>
+                </td>
+                <td>:</td>
+                <td>
+
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

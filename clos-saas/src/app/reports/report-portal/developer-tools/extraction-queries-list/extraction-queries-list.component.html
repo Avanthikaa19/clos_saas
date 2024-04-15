@@ -1,0 +1,85 @@
+<div class="extractions-list-container">
+    <div class="feature-header">
+        <div class="tools-right">
+            <button [@fadeInOut] *ngIf="!isCreateScrolledIntoView" mat-raised-button color="primary" (click)="openItemDetails(null)">
+                <mat-icon>add</mat-icon>
+                <span style="padding-left: 10px;">Create Extraction Query</span>
+            </button>
+        </div>
+        <span class="feature-title">Create & Edit Extraction Queries</span>
+        <br>
+        <span class="feature-subtitle">You can select these extraction queries for inclusion in any layout.</span>
+    </div>
+    <div class="feature-content" (scroll)="createIsInView($event)">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <!-- CARD VIEW -->
+        <div class="extraction-cards-container">
+            <div #creationDiv class="extraction-card-create noselect" (click)="openItemDetails(null)" matTooltip="Create a new extraction query." matRipple>
+                <div class="extraction-card-create-title">
+                    Create A New Extraction Query
+                </div>
+                <mat-icon class="extraction-card-create-icon">add_circle</mat-icon>
+            </div>
+            <ng-container *ngFor="let extraction of extractions">
+                <div class="extraction-card noselect" [@fadeInOut] *ngIf="!loadingItems" (click)="openItemDetails(extraction)" matRipple>
+                    <div class="extraction-details1">
+                        <div class="extraction-card-name">
+                            {{extraction.name}}
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-description">
+                            {{extraction.description}}
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-fields-count">
+                            {{extraction.fields.length}} Fields
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-fields-count">
+                            <!-- {{extraction.parameters.length}} Parameters -->
+                        </div>
+                    </div>
+                    <div class="extraction-details-separator"></div>
+                    <div class="extraction-details2">
+                        <div class="extraction-card-sql">
+                            {{extraction.sql}}
+                        </div>
+                    </div>
+                    <div class="extraction-details-separator"></div>
+                    <div class="extraction-details3">
+                        <ng-container *ngFor="let field of extraction.fields">
+                            <div class="extraction-field" *ngIf="field && field.name && field.type" [matTooltip]="'Field: ' + field.name + '\nType: ' + field.type">
+                                <div class="extraction-field-name">
+                                    {{field.name}}
+                                </div>
+                                <div class="extraction-field-type">
+                                    {{field.type.charAt(0)}}
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+        <div>
+            <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+        </div>
+        <div>
+            <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+        </div>
+        <div>
+            <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <button mat-fab color="primary" matTooltip="Reload items in page." class="refresh-button" [disabled]="loadingItems" (click)="refreshItems()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</div>

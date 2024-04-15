@@ -1,0 +1,36 @@
+/*LOADING SPINNER */
+
+.loading-spinner-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: white;
+   
+}
+.vertical { 
+    border-left: 2px solid rgb(99, 94, 94); 
+    height: 330px; 
+    position:absolute; 
+    left: 70%; 
+}
+.header {
+    padding-left: 10px;
+    font-size: 16px; 
+    font-weight: 500;
+    font-style: italic;
+    height: 50px; 
+    line-height: 50px; 
+    vertical-align: middle;
+    box-sizing: border-box;
+    border-bottom: gainsboro solid 1px;
+    position: relative;
+    > .right-align {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

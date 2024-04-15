@@ -1,0 +1,327 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-sub-header">
+        GENERAL
+    </div>
+ <table>
+     <tbody>
+
+        <tr>
+            <td>
+                <span class="min-label">Deal Type</span>
+            </td>
+            <td>:</td>
+            <td>
+                <mat-select [(ngModel)]="config.dealType" class="min-select"  style="margin-top: 7px;">
+                    <mat-option [value]="'fxSpot'">PLS Fx Spot</mat-option>
+                    <mat-option [value]="'scf'">PLS Scf</mat-option>
+                </mat-select>
+            </td>
+        </tr>
+
+        <tr *ngIf="config.dealType == 'fxSpot'">
+            <td>
+                <span class="min-label">Split To SCF Deals</span>
+            </td>
+            <td>:</td>
+            <td>
+                <input type="checkbox" name="splitToSCFDeals" [(ngModel)]="config.splitToSCFDeals" 
+                    style="margin-top: 7px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="min-label">Pass Through</span>
+            </td>
+            <td>:</td>
+            <td>
+                <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" 
+                    style="margin-top: 7px;">
+            </td>
+        </tr>
+     </tbody>
+ </table>
+
+    <div class="category-sub-header">
+        TRADE INJECTION:
+    </div>
+    <table *ngIf="config.tradeInjection">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Enabled</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="enabled" [(ngModel)]="config.tradeInjection.enabled" 
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        FILTER & ACTIONS:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Fetch By Status</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.tradeInjection.fetchByStatus" class="min-select" style="width: 100%;">
+                        <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Inject Entries Into</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.tradeInjection.injectIntoQueueOf" class="min-select" style="width: 100%;">
+                        <mat-option [value]="'PREVIOUS_TASK'">Previous Task</mat-option>
+                        <mat-option [value]="'THIS_TASK'">Current Task</mat-option>
+                    </mat-select>
+                    <input [(ngModel)]="config.tradeInjection.injectIntoQueueOf" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Update Status To</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.tradeInjection.updateStatusOnInject" class="min-select" style="width: 100%;">
+                        <mat-option [value]="null">Don't Update Status</mat-option>
+                        <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        TRADE FIELD - ENTRY MAP:
+                    </div>
+                </td>
+            </tr>
+            <tr *ngFor="let item of config.tradeInjection.entryFieldMap | keyvalue; let index = index; trackBy: trackByIndex;">
+                <td>
+                    <span class="min-label">{{item.key}}</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.tradeInjection.entryFieldMap[item.key]" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FIELD MAPPING:
+    </div>
+    <table *ngIf="config.fieldMapping">
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        ACTIONS:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Insert/Update Trade</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="insertUpdateTrade" [(ngModel)]="config.fieldMapping.insertUpdateTrade" 
+                        style="margin-top: 7px;">
+                    <span style="float: right; font-style: italic; font-size: 13px; padding-left: 20px; margin-top: 3px; color: silver;">
+                        (Uses Trade Field - Entry Map from Trade Injection configuration.)
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Validate Treasury Reference</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="validateTreasuryReference" [(ngModel)]="config.fieldMapping.validateTreasuryReference" 
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr *ngIf="config.fieldMapping.insertUpdateTrade">
+                <td>
+                    <span class="min-label">Also Update Status To</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.fieldMapping.updateStatusOnMap" class="min-select" style="width: 100%;">
+                        <mat-option [value]="null">Don't Update Status</mat-option>
+                        <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr *ngIf="config.fieldMapping.insertUpdateTrade">
+                <td>
+                    <span class="min-label">Trade Recon Procedure</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.fieldMapping.tradeReconProcedure" class="min-select" style="width: 100%;">
+                        <mat-option [value]="'EOD'">EOD (Group by src, ccy, value date & treasury ref.)</mat-option>
+                        <mat-option [value]="'None'">None</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        FIELD DATA:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>
+                        <!-- <app-field-mapper-fragment *ngIf="config.fieldMapping" [(config)]="config.fieldMapping"></app-field-mapper-fragment> -->
+                    </div>
+                </td>
+            </tr>
+            <!-- <tr>
+                <td>
+                    <span class="min-label">Fill</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.fieldMapping.fill" class="min-select" style="width: 100%;">
+                        <mat-option [value]="'WHEN_EMPTY'">Only When Empty</mat-option>
+                        <mat-option [value]="'ALWAYS'">Always</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        FIELD DEFINITION:
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div *ngFor="let element of config.fieldMapping.definedBy; let i = index" style="position: relative; margin-bottom: 10px;">
+                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                            (click)="config.fieldMapping.definedBy.splice(i, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <table style="width: calc(100% - 50px);">
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                    <td>
+                                        <span class="min-label">Field Name</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.fieldMapping.definedBy[i].name" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Give As Type</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.fieldMapping.definedBy[i].giveAs" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Formula</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <mat-select [(ngModel)]="config.fieldMapping.definedBy[i].formula" class="min-select" style="width: 100%;">
+                                            <mat-option *ngFor="let formula of formulas" [value]="formula">{{formula}}</mat-option>
+                                        </mat-select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td>
+                                    <span class="min-label">Input ({{config.fieldMapping.definedBy[i].formula=='EVALUATE'?'JS':(config.fieldMapping.definedBy[i].formula=='X_PATH'?'xml':(config.fieldMapping.definedBy[i].formula=='SQL' || config.fieldMapping.definedBy[i].formula=='SQL2'?'sql':'text'))}})</span>
+                                  </td>
+                                  <td>:</td>
+                                  <td>
+                                    <div style="border: solid silver 1px; width: 100%;">
+                                      <ace-editor [(ngModel)]="config.fieldMapping.definedBy[i].value"
+                                                  [mode]="config.fieldMapping.definedBy[i].formula=='EVALUATE'?'javascript':(config.fieldMapping.definedBy[i].formula=='X_PATH'?'xml':(config.fieldMapping.definedBy[i].formula=='SQL' || config.fieldMapping.definedBy[i].formula=='SQL2'?'sql':'text'))"
+                                                  [theme]="'eclipse'"
+                                                  [options]="options"
+                                                  [autoUpdateContent]="true"
+                                                  id="editor{{i}}" style="height:100%; width:100%; overflow: auto;"></ace-editor>
+                                    </div>
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="config.fieldMapping.definedBy.length > 1"
+                            style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                    </div>
+                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                        <span class="add-items-text">Click the + icon to add items.</span>
+                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.fieldMapping.definedBy.push({name: '', giveAs: 'string', formula: 'NONE', value: ''});">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr> -->
+        </tbody>
+
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input  name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

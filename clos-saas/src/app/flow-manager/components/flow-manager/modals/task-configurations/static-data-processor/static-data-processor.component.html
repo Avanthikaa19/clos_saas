@@ -1,0 +1,683 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Static Data</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <!-- <input [(ngModel)]="config.staticData" class="min-input"> -->
+                    <mat-select [(ngModel)]="config.staticData" class="min-select">
+                        <mat-option [value]="'INSTRUMENT'">INSTRUMENT</mat-option>
+                        <mat-option [value]="'HOLIDAY'">HOLIDAY</mat-option>
+                        <mat-option [value]="'PARTY'">PARTY</mat-option>
+                        <mat-option [value]="'TYPOLOGY'">TYPOLOGY</mat-option>
+                        <mat-option [value]="'PORTFOLIO'">PORTFOLIO</mat-option>
+                        <mat-option [value]="'CURRENCY'">CURRENCY</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Action Type</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <!-- <input [(ngModel)]="config.actionType" class="min-input"> -->
+                    <mat-select [(ngModel)]="config.actionType" class="min-select">
+                        <mat-option [value]="'UPDATE'">UPDATE</mat-option>
+                        <mat-option [value]="'INSERT'">INSERT</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+
+            <tr *ngIf="config.actionType == 'INSERT'">
+                <td>
+                    <span class="min-label">On Exist</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.onExist" class="min-select">
+                        <mat-option [value]="'IGNOREIFEXIST'">IGNORE IF EXIST</mat-option>
+                        <mat-option [value]="'INSERTUPDATE'">INSERT & UPDATE</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="config.actionType == 'UPDATE'">
+        <div class="category-sub-header">
+            TRADE PROCESSING:
+        </div>
+        <table *ngIf="config.rules">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <span>Match Rules:</span>
+                    </td>
+                </tr>
+                <tr *ngFor="let rule of config.rules; let index = index;">
+                    <td valign="top"><span>{{index+1}}.</span></td>
+                    <td>
+                        <div style="width: 100%;">
+                            <table>
+                                <tbody>
+                                    <tr>
+
+                                        <td valign="top">
+                                            <span class="min-label">Match By</span>
+                                        </td>
+                                        <td valign="top">:</td>
+                                        <td>
+                                            <div style="width: 100%;"
+                                                *ngFor="let rule of config.rules[index].match; let i = index;"
+                                                style="position: relative; margin-bottom: 10px;">
+                                                <button mat-icon-button color="warn" class="min-button min-add-button"
+                                                    (click)="config.rules[index].match.splice(i, 1);">
+                                                    <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                                </button>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="min-label">Field Name</span>
+                                                            </td>
+                                                            <td>:</td>
+                                                            <td *ngIf="config.staticData == 'INSTRUMENT'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'product'">Product</mat-option>
+                                                                    <mat-option [value]="'instrument'">Instrument
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'PORTFOLIO'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'simplePortfolio'">Simple Portfolio(Label)</mat-option>
+                                                                    <mat-option [value]="'description'">Description
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'branch'">Branch</mat-option>
+                                                                    <mat-option [value]="'department'">Department
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'entity'">Entity</mat-option>
+                                                                    <mat-option [value]="'combinedPortfolio'">
+                                                                        CombinedPortfolio</mat-option>
+                                                                        <mat-option [value]="'dspLabel'">DspLabel</mat-option>
+                                                                        <mat-option [value]="'desc'">Desc</mat-option>
+                                                                        <mat-option [value]="'depth'">Depth</mat-option>
+                                                                        <mat-option [value]="'leafId'">LeafId</mat-option>
+                                                                        <mat-option [value]="'leafLabel'">LeafLabel</mat-option>
+                                                                        <mat-option [value]="'level1'">Level1</mat-option>
+                                                                        <mat-option [value]="'level2'">Level2</mat-option>
+                                                                        <mat-option [value]="'level3'">Level3</mat-option>
+                                                                        <mat-option [value]="'level4'">Level4</mat-option>
+                                                                        <mat-option [value]="'level5'">Level5</mat-option>
+                                                                        <mat-option [value]="'portfolioDesk'">PortfolioDesk</mat-option>
+                                                                        <mat-option [value]="'path'">Path</mat-option>
+                                                                        <mat-option [value]="'root'">Root</mat-option>
+                                                                        <mat-option [value]="'accur'">Accur</mat-option>
+                                                                        <mat-option [value]="'accsection'">Accsection</mat-option>
+                                                                        <mat-option [value]="'bkgTrade'">BkgTrade</mat-option>
+                                                                        <mat-option [value]="'costCenter'">CostCenter</mat-option>
+                                                                        <mat-option [value]="'inputBy'">InputBy</mat-option>
+                                                                        <mat-option [value]="'managedBy'">ManagedBy</mat-option>
+                                                                        <mat-option [value]="'pCenter'">PCenter</mat-option>
+                                                                        <mat-option [value]="'procArea'">ProcArea</mat-option>
+                                                                        <mat-option [value]="'prodType'">ProdType</mat-option>
+                                                                        <mat-option [value]="'riskplMx'">RiskplMx</mat-option>
+                                                                        <mat-option [value]="'trader'">Trader</mat-option>
+                                                                        <mat-option [value]="'mxId'">MxId</mat-option> 
+                                                                        <mat-option [value]="'tSection'">TSection</mat-option>
+
+                                                                        
+
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'HOLIDAY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'reason'">Reason</mat-option>
+                                                                    <mat-option [value]="'date'">Date</mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'TYPOLOGY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'description'">Description
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'PARTY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'name'">Name</mat-option>
+                                                                    <mat-option [value]="'description'">Description
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'legalEntity'">LegalEntity
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'parent'">Parent</mat-option>
+                                                                    <mat-option [value]="'origin'">Origin</mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'CURRENCY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'calendar'">Calendar
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'fullName'">FullName
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="min-label">Field Value</span>
+                                                            </td>
+                                                            <td>:</td>
+                                                            <td>
+                                                                <input
+                                                                    [(ngModel)]="config.rules[index].match[i].fieldValue"
+                                                                    class="min-input" type="text">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div *ngIf="config.rules[index].match.length > 1"
+                                                    style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                                                </div>
+                                            </div>
+                                            <div style="height: 26px; position: relative; padding-left: 20px;">
+                                                <span class="add-items-text">Click the + icon to add items.</span>
+                                                <button mat-icon-button color="primary"
+                                                    class="min-button min-add-button"
+                                                    (click)="config.rules[index].match.push({fieldName: '', fieldValue: ''});">
+                                                    <mat-icon style="font-size: 14px;">add</mat-icon>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="min-label">Strict Match</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="checkbox" name="strictMatch"
+                                                [(ngModel)]="config.rules[index].strictMatch" style="margin-top: 7px;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td valign="top">
+                                            <span class="min-label">Update By</span>
+                                        </td>
+                                        <td valign="top">:</td>
+                                        <td>
+                                            <div style="width: 100%;"
+                                                *ngFor="let obj of config.rules[index].update; let i = index;"
+                                                style="position: relative; margin-bottom: 10px;">
+                                                <button mat-icon-button color="warn" class="min-button min-add-button"
+                                                    (click)="config.rules[index].update.splice(i, 1);">
+                                                    <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                                </button>
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="min-label">Field Name</span>
+                                                            </td>
+                                                            <td>:</td>
+                                                            <td *ngIf="config.staticData == 'INSTRUMENT'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'product'">Product</mat-option>
+                                                                    <mat-option [value]="'instrument'">Instrument
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'PORTFOLIO'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'description'">Description
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'branch'">Branch</mat-option>
+                                                                    <mat-option [value]="'department'">Department
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'entity'">Entity</mat-option>
+                                                                    <mat-option [value]="'combinedPortfolio'">
+                                                                        CombinedPortfolio</mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'HOLIDAY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'reason'">Reason</mat-option>
+                                                                    <mat-option [value]="'date'">Date</mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'TYPOLOGY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'description'">Description
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'PARTY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'name'">Name</mat-option>
+                                                                    <mat-option [value]="'description'">Description
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'legalEntity'">LegalEntity
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'parent'">Parent</mat-option>
+                                                                    <mat-option [value]="'origin'">Origin</mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                            <td *ngIf="config.staticData == 'CURRENCY'">
+                                                                <mat-select
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldName"
+                                                                    class="min-select">
+                                                                    <mat-option [value]="'id'">ID</mat-option>
+                                                                    <mat-option [value]="'calendar'">Calendar
+                                                                    </mat-option>
+                                                                    <mat-option [value]="'label'">Label</mat-option>
+                                                                    <mat-option [value]="'fullName'">FullName
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="min-label">Field Value</span>
+                                                            </td>
+                                                            <td>:</td>
+                                                            <td>
+                                                                <input
+                                                                    [(ngModel)]="config.rules[index].update[i].fieldValue"
+                                                                    class="min-input" type="text">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div *ngIf="config.rules[index].update.length > 1"
+                                                    style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                                                </div>
+                                            </div>
+                                            <div style="height: 26px; position: relative; padding-left: 20px;">
+                                                <span class="add-items-text">Click the + icon to add items.</span>
+                                                <button mat-icon-button color="primary"
+                                                    class="min-button min-add-button"
+                                                    (click)="config.rules[index].update.push({fieldName: '', fieldValue: ''});">
+                                                    <mat-icon style="font-size: 14px;">add</mat-icon>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="config.actionType == 'INSERT'">
+        <table>
+            <tbody>
+                <div *ngIf="config.staticData == 'TYPOLOGY'">
+                    <div class="category-sub-header">TYPOLOGY:</div>
+                    <tr>
+                        <td><span class="min-label">Description</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryTypologyFieldMap.description" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Label</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryTypologyFieldMap.label" class="min-input"></td>
+                    </tr>
+                </div>
+                <div *ngIf="config.staticData == 'PORTFOLIO'">
+                    <div class="category-sub-header">PORTFOLIO:</div>
+                    <tr>
+                        <td><span class="min-label">Combined Portfolio</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.combinedPortfolio" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Description</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.description" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Label</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.simplePortfolio" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Department</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.department" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Branch</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.branch" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Entity</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.entity" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">DspLabel</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.dspLabel" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Desc</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.desc" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Depth</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.depth" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">LeafId</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.leafId" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">LeafLabel</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.leafLabel" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level1</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level1" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level2</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level2" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level3</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level3" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level4</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level4" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level5</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level5" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">portfolioDesk</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.portfolioDesk" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level8</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level8" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Level9</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.level9" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Path</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.path" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Root</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.root" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Accur</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.accur" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Accsection</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.accsection" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">BkgTrade</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.bkgTrade" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">CostCenter</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.costCenter" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">InputBy</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.inputBy" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">ManagedBy</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.managedBy" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">PCenter</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.pCenter" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">ProcArea</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.procArea" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">ProdType</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.prodType" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">RiskplMx</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.riskplMx" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Trader</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.trader" class="min-input"></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="min-label">MxId</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.mxId" class="min-input"></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="min-label">TSection</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPortfolioFieldMap.tSection" class="min-input"></td>
+                    </tr>
+
+
+                </div>
+                <div *ngIf="config.staticData == 'PARTY'">
+                    <div class="category-sub-header"> PARTY:</div>
+                    <tr>
+                        <td><span class="min-label">Name</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPartyFieldMap.name" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Description</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPartyFieldMap.description" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Legal Entity</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPartyFieldMap.legalEntity" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Parent</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPartyFieldMap.parent" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Origin</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryPartyFieldMap.origin" class="min-input"></td>
+                    </tr>
+                </div>
+                <div *ngIf="config.staticData == 'HOLIDAY'">
+                    <div class="category-sub-header">HOLIDAY:</div>
+                    <tr>
+                        <td><span class="min-label">Date</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryHolidayFieldMap.date" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Reason</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryHolidayFieldMap.reason" class="min-input"></td>
+                    </tr>                  
+                    <tr>
+                        <td><span class="min-label">Label</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryHolidayFieldMap.label" class="min-input"></td>
+                    </tr>
+                
+                </div>
+                <div *ngIf="config.staticData == 'INSTRUMENT'">
+                    <div class="category-sub-header">INSTRUMENT:</div>
+                    <tr>
+                        <td><span class="min-label">Product</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryInstrumentFieldMap.product" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Instrument</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryInstrumentFieldMap.instrument" class="min-input"></td>
+                    </tr>
+                </div>
+                <div *ngIf="config.staticData == 'CURRENCY'">
+                    <div class="category-sub-header">CURRENCY:</div>
+                    <tr>
+                        <td><span class="min-label">Calendar</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryCurrencyFieldMap.calendar" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Label</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryCurrencyFieldMap.label" class="min-input"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="min-label">Full Name</span></td>
+                        <td>:</td>
+                        <td><input [(ngModel)]="config.entryCurrencyFieldMap.fullName" class="min-input"></td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+    </div><br>
+    <div class="category-header">
+        ADVANCED
+    </div><br>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Max Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling Ms</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

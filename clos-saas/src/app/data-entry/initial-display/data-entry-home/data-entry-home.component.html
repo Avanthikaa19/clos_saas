@@ -1,0 +1,64 @@
+<div class="main-container">
+    <div class="side_nav-container">
+        <div class="nav_content-container" *ngFor="let navElement of navigationElements">
+            <ng-container *ngIf="navElement.subNav">
+                <mat-expansion-panel class="expansion-container" [expanded]="true">
+                    <mat-expansion-panel-header style="margin-left: -3px;">
+                        <div class="flex-element-expansion">
+                            <div class="icon-container">
+                                <span class="material-symbols-outlined">
+                                    {{navElement.navIcon}}
+                                </span>
+                            </div>
+                            <div class="name-container">
+                                {{navElement.navName}}
+                            </div>
+                        </div>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngFor="let subNav of navElement.subNav">
+                        <div class="list-container ml-1" style="margin-left: 5px;" (click)="onNavClick(subNav.navName);"
+                            [class.active-container]="subNav.navName == currentPanel">
+                            <div class="flex-element">
+                                <div class="icon-container mr-3">
+                                    <span class="material-symbols-outlined">
+                                        {{subNav.navIcon}}
+                                    </span>
+                                </div>
+                                <div class="name-container">
+                                    {{subNav.navName}}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </mat-expansion-panel>
+            </ng-container>
+        </div>
+    </div>
+    <div class="main_nav-container">
+        <!-- FOR BREADCRUMBS -->
+        <!-- <mat-toolbar class="tool-bar">
+            <div *ngFor="let breadCrumb of breadCrumbList" class="tool-bar">
+                <span style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                    (click)="navToUrl(breadCrumb)">{{breadCrumb.name}}</span>
+                <span class="separator-div">
+                    <div class="separator"></div>
+                </span>
+            </div>
+        </mat-toolbar> -->
+        <div class="d-flex pl-3 p-3" style="font-weight: 500;
+            background: ghostwhite;
+            box-shadow: rgb(0 0 0 / 4%) 0px 3px 8px;">
+            <span *ngFor="let breadCrumb of breadCrumbList">
+                <div style="cursor: pointer;margin-top:0.5rem;font-style: italic;" (click)="navToUrl(breadCrumb)">
+                    <div class="d-flex">{{breadCrumb.name}}
+                        <span class="material-symbols-outlined ml-2">
+                            chevron_right
+                        </span>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+</div>

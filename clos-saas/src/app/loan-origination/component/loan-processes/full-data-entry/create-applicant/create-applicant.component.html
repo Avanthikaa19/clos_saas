@@ -1,0 +1,105 @@
+<div class="col-lg-12" style="background: whitesmoke;box-shadow: 0 1px 9px 1px rgb(0 0 0 / 11%);
+height: 650px;
+border-top-left-radius: 10px;">
+<div style="margin-right: auto;">
+    <p class="mb-1" style="font-weight: 600;">CREATE APPLICANTS</p>
+    <div class="at-separator-thick"></div>
+  </div>
+    <div class="pt-4">
+        <mat-hint style="margin: 6px;" align="start"><strong>First Name<span style="color:red;margin-left: 5px;" *ngIf="data.name==''">*</span></strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput type="text" placeholder="Enter the First Name" style="font-size: 12px;"
+                [(ngModel)]="data.name"
+                autocomplete="off" />
+        </mat-form-field>
+        <mat-hint style="margin: 6px;" align="start"><strong>Last Name<span style="color:red;margin-left: 5px;" *ngIf="data.surName==''">*</span></strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput type="text" placeholder="Enter the Last Name" style="font-size: 12px;"
+                [(ngModel)]="data.surName"
+                autocomplete="off" />
+        </mat-form-field>
+        <mat-hint style="margin: 6px;" align="start"><strong>Date of Birth<span style="color:red;margin-left: 5px;" *ngIf="data.dob==null">*</span></strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput [matDatepicker]="picker" placeholder="Enter the Date of Birth" style="font-size: 12px;"
+                [(ngModel)]="data.dob" [max]="maxDate" (focus)="picker.open()"
+                autocomplete="off" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-hint style="margin: 6px;" align="start"><strong>Title/Position</strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput type="text" placeholder="Enter the Title/Position" style="font-size: 12px;"
+                [(ngModel)]="data.position"
+                autocomplete="off" />
+        </mat-form-field>
+        <mat-hint style="margin: 6px;" align="start"><strong>Email ID<span style="color:red;margin-left: 5px;" *ngIf="data.emailId==''">*</span></strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput type="email" placeholder="Enter the Email ID" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #emailId="ngModel" style="font-size: 12px;"
+                [(ngModel)]="data.emailId"
+                autocomplete="off" />
+                <div *ngIf="emailId.invalid && (emailId.dirty || emailId.touched)" class="input_error">
+                    <div *ngIf="emailId.errors?.['required']" style="color: red;">Email is required.</div>
+                    <div *ngIf="emailId.errors?.['pattern']" style="color: red;">Email address is invalid</div>
+                </div>
+        </mat-form-field>
+        <mat-hint style="margin: 6px;" align="start"><strong>%Ownership</strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput type="text" id="ownership" placeholder="Enter the Ownership in %" style="font-size: 12px;"
+                [(ngModel)]="data.ownerShip"
+                autocomplete="off" (keypress)="inputValidation($event)" />
+            <mat-hint style="font-size: 12px;color: red !important;" *ngIf="data.ownerShip < 0 || data.ownerShip>100">*Please enter the value between 0 and 100</mat-hint>
+            <span matSuffix style="font-size: 14px;">%</span>
+        </mat-form-field>
+        <mat-hint style="margin: 10px;" align="start"><strong>Year in Business</strong> </mat-hint>
+        <mat-form-field appearance="fill" style="font-size: 8px;"
+            class="mt-2 d-block no-underline input-field">
+            <input matInput type="number" placeholder="Enter the Year in Business" style="font-size: 12px;"
+                [(ngModel)]="data.applicantYearInBusiness"
+                autocomplete="off" />
+        </mat-form-field>
+        <mat-hint style="margin: 6px;" align="start"><strong>Bureau Search Consent</strong> </mat-hint>
+        <mat-checkbox style="margin-left:10px"
+            [(ngModel)]="data.bureauSearchConsent">
+        </mat-checkbox>
+    </div>
+    <div class="mt-4 d-flex">
+        <button mat-button style="color: white;background: red;font-weight: 600;" (click)="back()" mat-dialog-close=""> <span class="material-symbols-outlined"
+                style="margin-right: 10px;font-size: 23px;">
+                close
+            </span>Cancel</button>
+        <button mat-button class="next-btn ml-auto" *ngIf="data.id == null" mat-dialog-close="" (click)="createApplicant();" 
+                                [disabled]="data.name == '' ||
+                                data.surName == ''|| 
+                                data.dob == null||
+                                data.emailId == ''">
+            <span [style.opacity]="(data.name == ''||
+                                data.surName == ''||
+                                data.dob == null||
+                                data.emailId == ''
+            )?'0':''" class="material-symbols-outlined"
+                style="margin-right: 10px;color: white;">
+                save
+            </span>Save
+        </button>
+        <button mat-button class="next-btn ml-auto" (click)="updateApplicant();" *ngIf="data.id != null" mat-dialog-close=""
+                            [disabled]="data.name == ''||
+                                data.surName == ''|| 
+                                data.dob == null||
+                                data.emailId == ''">
+            <span [style.opacity]="(data.name == ''||
+                                data.surName == ''|| 
+                                data.dob == null||
+                                data.emailId == ''
+                )?'0':''"class="material-symbols-outlined"
+                style="margin-right: 10px;color: white;">
+                update
+            </span>Update
+        </button>
+    </div>
+</div>

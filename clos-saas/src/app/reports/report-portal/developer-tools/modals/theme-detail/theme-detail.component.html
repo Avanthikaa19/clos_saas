@@ -1,0 +1,142 @@
+<div class="theme-detail-container">
+    <div class="theme-title">
+        <span>Theme Details</span>
+    </div>
+    <div class="theme-details">
+        <span class="required">Name</span>
+        <span class="required_input">:</span>
+        <input oninput="this.value = this.value.replace(/^\s+/g, '');" [(ngModel)]="theme.name" class="min-input field-name">
+        <span class="min-label">Visible To:</span>
+        <mat-select [(ngModel)]="theme.visibleTo" class="min-select" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'">Everyone</mat-option>
+        </mat-select>
+        <span class="min-label">Editable By:</span>
+        <mat-select [(ngModel)]="theme.editableBy" class="min-select" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'" [disabled]="theme.visibleTo === 'OWNER_ONLY'">Everyone</mat-option>
+        </mat-select>
+    </div>
+    <div class="theme-details">
+        <span class="required">Description</span>
+        <span class="requied_input">:</span>
+        <input [(ngModel)]="theme.description" oninput="this.value = this.value.replace(/^\s+/g, '');" class="min-input field-description">
+    </div>
+    <div class="theme-spec-title">
+        <span>Configure:</span>
+    </div>
+    <div class="theme-spec-container">
+        <table class="theme-spec-table noselect">
+            <tr>
+                <td colspan="10" class="theme-ignore"></td>
+            </tr>
+            <tr>
+                <td colspan="10" class="theme-selectable" matRipple [style.border-top-color]="theme.specification.titleCell.borders.top.color" [style.border-bottom-color]="theme.specification.titleCell.borders.bottom.color" [style.border-left-color]="theme.specification.titleCell.borders.left.color"
+                    [style.border-right-color]="theme.specification.titleCell.borders.right.color" [style.border-top-width.px]="theme.specification.titleCell.borders.top.thickness" [style.border-bottom-width.px]="theme.specification.titleCell.borders.bottom.thickness"
+                    [style.border-left-width.px]="theme.specification.titleCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.titleCell.borders.right.thickness" [style.color]="theme.specification.titleCell.fontColor" [style.background-color]="theme.specification.titleCell.backgroundColor"
+                    [style.text-align]="theme.specification.titleCell.textAlign" [style.font-family]="theme.specification.titleCell.font" [style.font-size.px]="theme.specification.titleCell.fontSize" [style.font-weight]="theme.specification.titleCell.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                    [style.font-style]="theme.specification.titleCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'" (click)="openCellToEdit(theme.specification.titleCell, 'Report Title')">
+                    Report Title</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="theme-ignore"></td>
+                <td colspan="6" class="theme-selectable" matRipple [style.border-top-color]="theme.specification.subTitleCell.borders.top.color" [style.border-bottom-color]="theme.specification.subTitleCell.borders.bottom.color" [style.border-left-color]="theme.specification.subTitleCell.borders.left.color"
+                    [style.border-right-color]="theme.specification.subTitleCell.borders.right.color" [style.border-top-width.px]="theme.specification.subTitleCell.borders.top.thickness" [style.border-bottom-width.px]="theme.specification.subTitleCell.borders.bottom.thickness"
+                    [style.border-left-width.px]="theme.specification.subTitleCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.subTitleCell.borders.right.thickness" [style.color]="theme.specification.subTitleCell.fontColor"
+                    [style.background-color]="theme.specification.subTitleCell.backgroundColor" [style.text-align]="theme.specification.subTitleCell.textAlign" [style.font-family]="theme.specification.subTitleCell.font" [style.font-size.px]="theme.specification.subTitleCell.fontSize"
+                    [style.font-weight]="theme.specification.subTitleCell.fontStyle.includes('BOLD')? 'bold' : 'normal'" [style.font-style]="theme.specification.subTitleCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'" (click)="openCellToEdit(theme.specification.subTitleCell, 'Report Title 2')">
+                    Report Title 2</td>
+                <td colspan="2" class="theme-ignore"></td>
+            </tr>
+            <tr>
+                <td colspan="10" class="theme-ignore"></td>
+            </tr>
+            <tr>
+                <td colspan="1" class="theme-selectable" style="width: 150px;" matRipple [style.border-top-color]="theme.specification.headerCell.borders.top.color" [style.border-bottom-color]="theme.specification.headerCell.borders.bottom.color" [style.border-left-color]="theme.specification.headerCell.borders.left.color"
+                    [style.border-right-color]="theme.specification.headerCell.borders.right.color" [style.border-top-width.px]="theme.specification.headerCell.borders.top.thickness" [style.border-bottom-width.px]="theme.specification.headerCell.borders.bottom.thickness"
+                    [style.border-left-width.px]="theme.specification.headerCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.headerCell.borders.right.thickness" [style.color]="theme.specification.headerCell.fontColor" [style.background-color]="theme.specification.headerCell.backgroundColor"
+                    [style.text-align]="theme.specification.headerCell.textAlign" [style.font-family]="theme.specification.headerCell.font" [style.font-size.px]="theme.specification.headerCell.fontSize" [style.font-weight]="theme.specification.headerCell.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                    [style.font-style]="theme.specification.headerCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'" (click)="openCellToEdit(theme.specification.headerCell, 'Header Item')">
+                    Header Item</td>
+                <td colspan="8" class="theme-ignore"></td>
+                <td colspan="1" class="theme-selectable" style="width: 150px;" matRipple [style.border-top-color]="theme.specification.headerCell.borders.top.color" [style.border-bottom-color]="theme.specification.headerCell.borders.bottom.color" [style.border-left-color]="theme.specification.headerCell.borders.left.color"
+                    [style.border-right-color]="theme.specification.headerCell.borders.right.color" [style.border-top-width.px]="theme.specification.headerCell.borders.top.thickness" [style.border-bottom-width.px]="theme.specification.headerCell.borders.bottom.thickness"
+                    [style.border-left-width.px]="theme.specification.headerCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.headerCell.borders.right.thickness" [style.color]="theme.specification.headerCell.fontColor" [style.background-color]="theme.specification.headerCell.backgroundColor"
+                    [style.text-align]="theme.specification.headerCell.textAlign" [style.font-family]="theme.specification.headerCell.font" [style.font-size.px]="theme.specification.headerCell.fontSize" [style.font-weight]="theme.specification.headerCell.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                    [style.font-style]="theme.specification.headerCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'" (click)="openCellToEdit(theme.specification.headerCell, 'Header Item')">
+                    Header Item</td>
+            </tr>
+            <tr>
+                <td colspan="10" class="theme-ignore"></td>
+            </tr>
+            <tr>
+                <td *ngFor="let i of [1,2,3,4,5]" colspan="2" class="theme-selectable" style="width: 20%;" matRipple [style.border-top-color]="theme.specification.fieldHeaderCell.borders.top.color" [style.border-bottom-color]="theme.specification.fieldHeaderCell.borders.bottom.color"
+                    [style.border-left-color]="theme.specification.fieldHeaderCell.borders.left.color" [style.border-right-color]="theme.specification.fieldHeaderCell.borders.right.color" [style.border-top-width.px]="theme.specification.fieldHeaderCell.borders.top.thickness"
+                    [style.border-bottom-width.px]="theme.specification.fieldHeaderCell.borders.bottom.thickness" [style.border-left-width.px]="theme.specification.fieldHeaderCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.fieldHeaderCell.borders.right.thickness"
+                    [style.color]="theme.specification.fieldHeaderCell.fontColor" [style.background-color]="theme.specification.fieldHeaderCell.backgroundColor" [style.text-align]="theme.specification.fieldHeaderCell.textAlign" [style.font-family]="theme.specification.fieldHeaderCell.font"
+                    [style.font-size.px]="theme.specification.fieldHeaderCell.fontSize" [style.font-weight]="theme.specification.fieldHeaderCell.fontStyle.includes('BOLD')? 'bold' : 'normal'" [style.font-style]="theme.specification.fieldHeaderCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'"
+                    (click)="openCellToEdit(theme.specification.fieldHeaderCell, 'Field Header')">
+                    Field Header</td>
+            </tr>
+            <tr>
+                <td *ngFor="let i of [1,2,3,4,5]" colspan="2" class="theme-selectable" style="width: 20%;" matRipple [style.border-top-color]="theme.specification.fieldDataCell.borders.top.color" [style.border-bottom-color]="theme.specification.fieldDataCell.borders.bottom.color"
+                    [style.border-left-color]="theme.specification.fieldDataCell.borders.left.color" [style.border-right-color]="theme.specification.fieldDataCell.borders.right.color" [style.border-top-width.px]="theme.specification.fieldDataCell.borders.top.thickness"
+                    [style.border-bottom-width.px]="theme.specification.fieldDataCell.borders.bottom.thickness" [style.border-left-width.px]="theme.specification.fieldDataCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.fieldDataCell.borders.right.thickness"
+                    [style.color]="theme.specification.fieldDataCell.fontColor" [style.background-color]="theme.specification.fieldDataCell.backgroundColor" [style.text-align]="theme.specification.fieldDataCell.textAlign" [style.font-family]="theme.specification.fieldDataCell.font"
+                    [style.font-size.px]="theme.specification.fieldDataCell.fontSize" [style.font-weight]="theme.specification.fieldDataCell.fontStyle.includes('BOLD')? 'bold' : 'normal'" [style.font-style]="theme.specification.fieldDataCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'"
+                    (click)="openCellToEdit(theme.specification.fieldDataCell, 'Field Data')">
+                    Field Data</td>
+            </tr>
+            <tr>
+                <td colspan="10" class="theme-ignore"></td>
+            </tr>
+            <tr>
+                <td colspan="1" class="theme-selectable" style="width: 150px;" matRipple [style.border-top-color]="theme.specification.footerCell.borders.top.color" [style.border-bottom-color]="theme.specification.footerCell.borders.bottom.color" [style.border-left-color]="theme.specification.footerCell.borders.left.color"
+                    [style.border-right-color]="theme.specification.footerCell.borders.right.color" [style.border-top-width.px]="theme.specification.footerCell.borders.top.thickness" [style.border-bottom-width.px]="theme.specification.footerCell.borders.bottom.thickness"
+                    [style.border-left-width.px]="theme.specification.footerCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.footerCell.borders.right.thickness" [style.color]="theme.specification.footerCell.fontColor" [style.background-color]="theme.specification.footerCell.backgroundColor"
+                    [style.text-align]="theme.specification.footerCell.textAlign" [style.font-family]="theme.specification.footerCell.font" [style.font-size.px]="theme.specification.footerCell.fontSize" [style.font-weight]="theme.specification.footerCell.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                    [style.font-style]="theme.specification.footerCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'" (click)="openCellToEdit(theme.specification.footerCell, 'Footer Item')">
+                    Footer Item</td>
+                <td colspan="8" class="theme-ignore"></td>
+                <td colspan="1" class="theme-selectable" style="width: 150px;" matRipple [style.border-top-color]="theme.specification.footerCell.borders.top.color" [style.border-bottom-color]="theme.specification.footerCell.borders.bottom.color" [style.border-left-color]="theme.specification.footerCell.borders.left.color"
+                    [style.border-right-color]="theme.specification.footerCell.borders.right.color" [style.border-top-width.px]="theme.specification.footerCell.borders.top.thickness" [style.border-bottom-width.px]="theme.specification.footerCell.borders.bottom.thickness"
+                    [style.border-left-width.px]="theme.specification.footerCell.borders.left.thickness" [style.border-right-width.px]="theme.specification.footerCell.borders.right.thickness" [style.color]="theme.specification.footerCell.fontColor" [style.background-color]="theme.specification.footerCell.backgroundColor"
+                    [style.text-align]="theme.specification.footerCell.textAlign" [style.font-family]="theme.specification.footerCell.font" [style.font-size.px]="theme.specification.footerCell.fontSize" [style.font-weight]="theme.specification.footerCell.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                    [style.font-style]="theme.specification.footerCell.fontStyle.includes('ITALIC')? 'italic' : 'normal'" (click)="openCellToEdit(theme.specification.footerCell, 'Footer Item')">
+                    Footer Item</td>
+            </tr>
+            <tr>
+                <td colspan="10" class="theme-ignore"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="theme-details-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <div class="spacer"></div>
+        <span class="save-validation-error">
+            {{
+                !theme.name  ? 'Theme Name is required.' :
+                (
+                    !theme.description ? 'Description is required.' : ''
+                    
+                )
+            }}
+        </span>
+
+        <button mat-raised-button color="primary" class="item-right" *ngIf="!theme.id" [disabled]="saving" [disabled]="disable()" (click)="createTheme()">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Creating...' : 'Create'}}</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="theme.id" [disabled]="saving" (click)="updateTheme()">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Saving Changes...' : 'Save Changes'}}</span>
+        </button>
+        <button mat-raised-button color="warn" class="item-right" *ngIf="theme.id" [disabled]="saving" (click)="deleteTheme()">
+            <mat-icon>delete</mat-icon>
+            <span style="padding-left: 10px;">Delete Theme</span>
+        </button>
+    </div>
+</div>

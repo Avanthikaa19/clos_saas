@@ -1,0 +1,60 @@
+<div style="height: 100%; width: 100%; background-color: white; font-size: 14px; padding-top: 10px; overflow: hidden;">
+    <div class="category-header" style="margin-bottom: 5px;">
+        TEST UPLOAD FILE
+    </div>
+    <table style="width: 100%;">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Upload Path</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="uploadFilePath" class="min-input" style="width: calc(100% - 50px);" type="text"
+                        placeholder="Path Excluding File Name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Overwrite</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="overwrite" [(ngModel)]="overwrite" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- FILE SELECTION INPUT -->
+                    <input class="center-align upload-button" type="file" #file style="display: none"
+                    (change)="selectFile($event)"/>
+                    <!-- FILE SELECTION BUTTON -->
+                    <ng-container *ngIf="ac.super || ac.items?.DFM004A_FILES_UPLOAD">
+                        <button mat-raised-button style="margin: 5px; width: 150px;" color="primary" (click)="file.click()" *ngIf="fileArray.length==0 && !uploading">
+                            <mat-icon>cloud_upload</mat-icon>
+                            <span style="padding-left: 10px;">Select File</span>
+                        </button>
+                        <!-- FILE UPLOAD BUTTON -->
+                        <button mat-raised-button style="margin: 5px; width: 150px;" color="primary" *ngIf="fileArray.length>0" (click)="upload()">
+                            <mat-icon>cloud_upload</mat-icon>
+                            <span style="padding-left: 10px;">{{uploading ? 'Uploading' : 'Upload'}}</span>
+                        </button>
+                    </ng-container>
+                </td>
+                <td></td>
+                <td>
+                    <!-- CLEAR BUTTON -->
+                    <button mat-button style="margin: 5px;" (click)="fileArray=[]; selectedFileName='';" *ngIf="fileArray.length>0 && !uploading">
+                        <mat-icon>clear</mat-icon>
+                        <span style="padding-left: 10px;">Clear Selection</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span *ngIf="selectedFileName" class="min-label" style="color: silver;">{{selectedFileName}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,144 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Pass Through</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td> 
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Condition</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.condition" class="min-input" type="text">
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+    <!-- <div class="category-sub-header">
+        DATA_FILTER:
+    </div> -->
+
+    <!-- <table *ngIf="config.rules ">
+        <tbody>
+            
+            <tr *ngFor="let rule of config.rules; let index = index;">
+                <td valign="top">
+                    <span class="min-label">Match By</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div style="width: 100%;" *ngFor="let rule of config.rules[index].match; let i = index;"
+                    style="position: relative; margin-bottom: 10px;">
+                    <button mat-icon-button color="warn" class="min-button min-add-button"
+                        (click)="config.rules[index].match.splice(i, 1);">
+                        <mat-icon style="font-size: 14px;">remove</mat-icon>
+                    </button>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="min-label">Field Name</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input [(ngModel)]="config.rules[index].match[i].fieldName" class="min-input" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="min-label">Field Value</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input [(ngModel)]="config.rules[index].match[i].fieldValue" class="min-input" type="text">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="config.rules[index].match.length > 1" style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                </div>
+                <div style="height: 26px; position: relative; padding-left: 20px;">
+                    <span class="add-items-text">Click the + icon to add items.</span>
+                    <button mat-icon-button color="primary" class="min-button min-add-button"
+                        (click)="config.rules[index].match.push({fieldName: '', fieldValue: ''});">
+                        <mat-icon style="font-size: 14px;">add</mat-icon>
+                    </button>
+                </div>
+                </td>
+            </tr>
+        </tbody>
+
+    </table> -->
+   
+    <div class="category-header">
+        VALIDATION
+    </div>
+  
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Validation</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="preValidate" [(ngModel)]="config.validation.preValidate" style="margin-top: 7px;">
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table>
+        <tbody>
+           
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling Ms</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span class="min-label">Max Threads</span>
+                </td> 
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+           
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

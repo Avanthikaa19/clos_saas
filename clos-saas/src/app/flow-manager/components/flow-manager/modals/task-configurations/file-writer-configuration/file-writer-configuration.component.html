@@ -1,0 +1,308 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        PATHS:
+    </div>
+    <table *ngIf="config && config.paths">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Target Directory</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.paths.target" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FILE NAME:
+    </div>
+    <table *ngIf="config.files">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Exact File Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.general.name" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Write Mode</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.files.general.writeMode" class="min-select">
+                        <mat-option [value]="'APPEND'">APPEND</mat-option>
+                        <mat-option [value]="'OVERWRITE'">OVERWRITE</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">Name Pattern</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <div *ngFor="let element of config.files.general.namePattern; let i = index; trackBy: trackByIndex;"
+                         style="margin-bottom: 1px; position: relative;">
+                            <input [(ngModel)]="config.files.general.namePattern[i]" class="min-input">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                            (click)="config.files.general.namePattern.splice(i, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                        </div>
+                        <div style="height: 26px; position: relative;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.files.general.namePattern.push('');">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Use Temp Location</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="useTempDirectory" [(ngModel)]="config.files.general.useTempDirectory" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Wait Until Move (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.general.moveTimeout" type="number" min="1" class="min-input" [disabled]="!config.files.general.useTempDirectory">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FILE DATA:
+    </div>
+    <table *ngIf="config.files">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Field Structure</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.files.tabularData.fieldStructure" class="min-select">
+                        <mat-option [value]="'DELIMITED'">Delimited</mat-option>
+                        <mat-option [value]="'FIXED_WIDTH'">Fixed Width</mat-option>
+                        <mat-option [value]="'XML'">XML</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <ng-container *ngIf="config.files.tabularData.fieldStructure=='DELIMITED'">
+                <tr>
+                    <td>
+                        <span class="min-label">Delimiter</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.fieldDelimiter" class="min-input">
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="config.files.tabularData.fieldStructure=='XML'">
+                <tr>
+                    <td>
+                        <span class="min-label">Root</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.rootNode" class="min-input">
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="config.files.tabularData.fieldStructure=='FIXED_WIDTH'">
+                <tr>
+                    <td>
+                        <span class="min-label">Field Lengths</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <div style="position: relative;">
+                            <span *ngIf="config.files.tabularData.fieldLengths.length == 0" class="add-items-text">Click the + icon to add items.</span>
+                            <input *ngFor="let element of config.files.tabularData.fieldLengths; let index = index; trackBy: trackByIndex;"
+                                [(ngModel)]="config.files.tabularData.fieldLengths[index]" class="min-input" style="width: 50px; margin-right: 1px;"
+                                type="number" min="1">
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.files.tabularData.fieldLengths.push(1);">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label">Field Indexes</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <div style="position: relative;">
+                            <span *ngIf="config.files.tabularData.fieldIndexes.length == 0" class="add-items-text">Click the + icon to add items.</span>
+                            <input *ngFor="let element of config.files.tabularData.fieldIndexes; let index = index; trackBy: trackByIndex;"
+                                [(ngModel)]="config.files.tabularData.fieldIndexes[index]" class="min-input" style="width: 50px; margin-right: 1px;"
+                                type="number" min="0">
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.files.tabularData.fieldIndexes.push(0);">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
+            <tr>
+                <td>
+                    <span class="min-label">Write Field Headers</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox"  name="writeFieldHeaders" [(ngModel)]="config.files.tabularData.writeFieldHeaders"
+                    style="margin-top: 7px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative;">
+        <div class="category-sub-header">
+            FIELD DEFINITIONS:
+        </div>
+        <mat-slide-toggle (click)="toggleFieldsViewLevel()" style="position: absolute; right: 10px; top: 0;">
+            {{buttonName}}
+        </mat-slide-toggle>
+    </div>
+    <table *ngIf="config.files" style="width: 97%;">
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <div *ngFor="let element of config.files.tabularData.fields; let i = index" style="position: relative; margin-bottom: 10px;">
+                        <button mat-icon-button color="warn" class="min-button1 min-add-button1"
+                            (click)="config.files.tabularData.fields.splice(i, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" class="min-button2 min-add-button2" [disabled]="i==(config.files.tabularData.fields.length-1)" (click)="arraymove(config.files.tabularData.fields,i,i+1)">
+                        <mat-icon style="font-size: 14px;">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" class="min-button3 min-add-button3" [disabled]="i == 0" (click)="arraymove(config.files.tabularData.fields,i,i-1)">
+                    <mat-icon style="font-size: 14px;">keyboard_arrow_up</mat-icon>
+                    </button>
+                        <table style="width: calc(100% - 50px);">
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                 
+                                    <td>
+                                        <span class="min-label">Field Name</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.files.tabularData.fields[i].name" class="min-input1">
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="show">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Write Format</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.files.tabularData.fields[i].writeFormat" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Write As Field</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.files.tabularData.fields[i].writeAsField" class="min-input">
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="config.files.tabularData.fieldStructure=='XML'">
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <span class="min-label">XML Path</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input [(ngModel)]="config.files.tabularData.fields[i].xmlPath" class="min-input"> 
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                
+                            </ng-container>
+                            </tbody>
+                        </table>
+                        <div *ngIf="config.files.tabularData.fields.length > 1" style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="height: 26px; position: relative; padding-left: 40px;">
+        <span class="add-items-text">Click the + icon to add items.</span>
+        <button mat-icon-button color="primary" class="min-button min-add-button"
+            (click)="config.files.tabularData.fields.push({name: '$[hdr:' + (config.files.tabularData.fields.length) + ']', writeFormat: 'string', writeAsField: '',xmlPath: 'string'});">
+            <mat-icon style="font-size: 14px;">add</mat-icon>
+        </button>
+    </div>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Entries Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Retain Write Data</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="retainWriteData" [(ngModel)]="config.task.retainWriteData" style="margin-top: 7px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

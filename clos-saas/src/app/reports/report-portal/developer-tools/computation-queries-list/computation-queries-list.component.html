@@ -1,0 +1,62 @@
+<div class="computations-list-container">
+    <div class="feature-header">
+        <div class="tools-right">
+            <button [@fadeInOut] *ngIf="!isCreateScrolledIntoView" mat-raised-button color="primary" (click)="openItemDetails(null)">
+                <mat-icon>add</mat-icon>
+                <span style="padding-left: 10px;">Create Computation Query</span>
+            </button>
+        </div>
+        <span class="feature-title">Create & Edit Computation Queries</span>
+        <br>
+        <span class="feature-subtitle">You can select these computation queries for inclusion in any report's pre-processing stages.</span>
+    </div>
+    <div class="feature-content" (scroll)="createIsInView($event)">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <!-- CARD VIEW -->
+        <div class="computation-cards-container">
+            <div #creationDiv class="computation-card-create noselect" (click)="openItemDetails(null)" matTooltip="Create a new computation query." matRipple>
+                <div class="computation-card-create-title">
+                    Create A New Computation Query
+                </div>
+                <mat-icon class="computation-card-create-icon">add_circle</mat-icon>
+            </div>
+            <div class="computation-card noselect" [@fadeInOut] *ngFor="let computationQuery of computationQueries" (click)="openItemDetails(computationQuery)" matRipple>
+                <div class="computation-details1">
+                    <div class="computation-card-name">
+                        {{computationQuery.name}}
+                    </div>
+                    <div class="computation-card-separator">&bull;</div>
+                    <div class="computation-card-description">
+                        {{computationQuery.description}}
+                    </div>
+                </div>
+                <div class="computation-details-separator"></div>
+                <div class="computation-details2">
+                    <div class="computation-card-sql">
+                        {{computationQuery.sql}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+        <div>
+            <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+        </div>
+        <div>
+            <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+        </div>
+        <div>
+            <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <button mat-fab color="primary" matTooltip="Reload items in page." class="refresh-button" [disabled]="loadingItems" (click)="refreshItems()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</div>

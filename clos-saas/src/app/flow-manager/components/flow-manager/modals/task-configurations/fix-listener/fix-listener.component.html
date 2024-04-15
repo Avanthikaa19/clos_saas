@@ -1,0 +1,271 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        CONNECTION:
+    </div>
+    <table *ngIf="config.connection">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Start Time </span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.startTime" class="min-input">
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <span class="min-label">Reconnect Interval</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.reconnectInterval" class="min-input">
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <span class="min-label">End Time</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.endTime" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Socket Accept Port</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.socketAcceptPort" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Socket Connect Host</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.socketConnectHost" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        SESSION:
+    </div>
+    <table *ngIf="config.session">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Target Comp ID </span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.session.targetCompID" class="min-input">
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <span class="min-label">Begin String</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.session.beginString" class="min-input">
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <span class="min-label">Sender Comp ID</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.session.senderCompID" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        MESSAGE:
+    </div>
+    <tr>
+        <td>
+            <span class="min-label">Acknowledge On Read</span>
+        </td> 
+        <td>:</td>
+        <td>
+            <input type="checkbox"  name="acknowledgeOnRead" [(ngModel)]="config.message.acknowledgeOnRead"
+            style="margin-top: 7px;">
+        </td>
+    </tr>
+    <div class="category-sub-header">
+        Field Data:
+    </div>
+    <table *ngIf="config.message">
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">Field Tags</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <div *ngFor="let element of config.message.tabularData.fieldTags; let index = index; trackBy: trackByIndex;"
+                            style="margin-bottom: 1px; position: relative;">
+                            <input [(ngModel)]="config.message.tabularData.fieldTags[index]" class="min-input" type="text">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                                (click)="config.message.tabularData.fieldTags.splice(index, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                        </div>
+                        <div style="height: 26px; position: relative;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.message.tabularData.fieldTags.push(0);">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">Key Fields</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <div *ngFor="let element of config.message.tabularData.keyFields; let index = index; trackBy: trackByIndex;"
+                            style="margin-bottom: 1px; position: relative;">
+                            <input [(ngModel)]="config.message.tabularData.keyFields[index]" class="min-input" type="text">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                                (click)="config.message.tabularData.keyFields.splice(index, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                        </div>
+                        <div style="height: 26px; position: relative;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.message.tabularData.keyFields.push('');">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <tr>
+        <td colspan="3">
+            <div class="category-sub-header">
+                FIELDS:
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <div *ngFor="let element of config.message.tabularData.fields; let i = index" style="position: relative; margin-bottom: 10px;">
+                <button mat-icon-button color="warn" class="min-button min-add-button"
+                    (click)="config.message.tabularData.fields.splice(i, 1);">
+                    <mat-icon style="font-size: 14px;">remove</mat-icon>
+                </button>
+                <table style="width: calc(100% - 50px);">
+                    <tbody>
+                        <tr>
+                            <td><span>{{i+1}}.</span></td>
+                            <td>
+                                <span class="min-label">Field Name</span>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input [(ngModel)]="config.message.tabularData.fields[i].name" class="min-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span class="min-label">Read As</span>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input [(ngModel)]="config.message.tabularData.fields[i].readAs" class="min-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span class="min-label">Read As Format</span>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                 <input [(ngModel)]="config.message.tabularData.fields[i].readAsFormat" class="min-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span class="min-label">Required</span>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="checkbox"  name="required" [(ngModel)]="config.message.tabularData.fields[i].required" style="margin-top: 7px;">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="config.message.tabularData.fields.length > 1"
+                    style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+            </div>
+            <div style="height: 26px; position: relative; padding-left: 20px;">
+                <span class="add-items-text">Click the + icon to add items.</span>
+                <button mat-icon-button color="primary" class="min-button min-add-button"
+                    (click)="config.message.tabularData.fields.push({name: '', readAs: 'string', readAsFormat: 'string', required: true});">
+                    <mat-icon style="font-size: 14px;">add</mat-icon>
+                </button>
+            </div>
+        </td>
+    </tr>
+     <div class="category-header">
+                ADVANCED
+            </div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="min-label">MultiThread</span>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="checkbox" name="multiThread" [(ngModel)]="config.task.multiThread" style="margin-top: 7px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="min-label">Insert Batch Size</span>
+                        </td> 
+                        <td>:</td>
+                        <td>
+                            <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="min-label">Retain Read Data</span>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="checkbox" name="retainReadData" [(ngModel)]="config.task.retainReadData" style="margin-top: 7px;">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="position: relative; height: 50px;">
+                <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <mat-icon>bug_report</mat-icon>
+                    <span style="padding-left: 10px;">Print Config To Console</span>
+                </button>
+            </div>
+</div>

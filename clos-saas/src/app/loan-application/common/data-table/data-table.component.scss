@@ -1,0 +1,120 @@
+.main-container {
+    background-color: #F6F9FF;
+    border-radius: 0.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    >.button-container {
+        flex: 0 0 auto;
+        height: 5rem;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: row;
+
+        >.column_search-container {
+            flex: 1 1 auto;
+        }
+
+        >.button-container {
+            flex: 0 0 auto;
+
+            >button {
+                margin-left: 1rem;
+            }
+
+        }
+    }
+
+    >.table-container {
+        flex: 1 1 auto;
+        border: 1px solid gainsboro;
+        border-radius: 0.5rem;
+        overflow: auto;
+        height: 0;
+        position: relative;
+        table-layout: fixed;
+
+        #table {
+            border-collapse: collapse;
+            width: 100%;
+            overflow: auto;
+
+            .lock-icon {
+                left: 0.1rem;
+                opacity: 0.3;
+            }
+
+            .sort-icon {
+                right: 0.1rem;
+                opacity: 0.5;
+            }
+
+            .locked {
+                opacity: 1;
+            }
+
+            .sort-asc {
+                opacity: 1;
+            }
+
+            .sort-desc {
+                opacity: 1;
+            }
+        }
+
+        #table td,
+        #table th {
+            border: 1px solid #ddd;
+            padding: 4px;
+        }
+
+        #table td {
+            min-width: 30rem;
+        }
+
+        // #table tr{
+        //     background-color: #F8F8F8;
+        // }
+        #table tr:nth-child(even) {
+            background-color: #F8F8F8;
+        }
+
+        #table tr:hover {
+            background-color: #ddd;
+        }
+
+        #table th {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            text-align: left;
+            background-color: #3445b4;
+            color: white;
+        }
+    }
+
+    >.pagination-container {
+        flex: 0 0 auto;
+        height: 5rem;
+    }
+}
+
+button.apply_filter {
+    background-color: #3445B4;
+    color: white;
+}
+
+button.clear_filter {
+    background-color: orangered;
+    color: white;
+}
+
+button.copy_clip {
+    background-color: gray;
+    color: white;
+}
+
+button.export {
+    background-color: black;
+    color: white;
+}

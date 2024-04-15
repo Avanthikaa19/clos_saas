@@ -1,0 +1,64 @@
+<mat-toolbar class="tool-bar">
+    <span>Decision Engine</span>
+    <div class="separator-div">
+        <div class="separator"></div>
+    </div>
+    <span> Main Menu</span>
+</mat-toolbar>
+<div [class.main-container-light]="!themeSelection" [class.main-container-dark]="themeSelection" [style.height.px]="screenHeight - 55">
+    <div class="content-container" style="margin-top: 5rem;">
+        <div class="card-container" matRipple *ngFor="let projectDetail of projectDetailsModule">
+            <div class="content-card-container" routerLink="{{projectDetail.routerLink}}" (click)="selectedModule(projectDetail.routerLink)">
+                <div style="padding:1rem" class="card-header-container">
+                    <h2><span class="class-font">{{projectDetail.name}}</span>
+                        <div class="wip" style="margin-top: 0.7rem; margin-right: 1rem;" *ngIf="projectDetail.icon != 'explorer-module'  && projectDetail.icon != 'action-module' && projectDetail.icon != 'config-module' && projectDetail.icon != 'test-module' && projectDetail.icon != 'static-data'">
+                            WIP
+                        </div>
+                    </h2>
+                </div>
+                <div class="card-body-container">
+                    <p style="font-size: 1.2rem;">{{projectDetail.description}}</p>
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'explorer-module'">
+                    <img src="assets/Icons/search.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'action-module'">
+                    <img src="assets/Icons/dashb.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'config-module'">
+                    <img src="assets/Icons/configurations.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'compare-module'">
+                    <img src="assets/Icons/compare.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'test-module'">
+                    <img src="assets/Icons/test.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'verify-module'">
+                    <img src="assets/Icons/correct.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'dashboard'">
+                    <img src="assets/Icons/dashb.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'ai-ml'">
+                    <img src="assets/Icons/ai.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'monitoring'">
+                    <img src="assets/Icons/monitoring_01.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'voice-box'">
+                    <img src="assets/Icons/voice.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'reports'">
+                    <img src="assets/Icons/reports.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'case_mng'">
+                    <img src="assets/Icons/case_mng.png">
+                </div>
+                <div class="card-icon-container" *ngIf="projectDetail.icon == 'static-data'">
+                    <img src="assets/Icons/static.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

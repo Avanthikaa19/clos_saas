@@ -1,0 +1,399 @@
+<div [style.height.px]="screenHeight - 55" class="main-container">
+
+    <mat-toolbar class="tool-bar">
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon style="font-size: x-large;padding-bottom:1rem ;">menu</mat-icon>
+        </button>
+        <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+        <span class="separator-div">
+            <div class="separator"></div>
+        </span>
+        <span [routerLink]="'/desicion-engine/test'" style="cursor: pointer;">
+            Test
+        </span>
+        <span class="separator-div">
+          <div class="separator"></div>
+        </span>
+        <span>
+           Decision Flow
+        </span>
+        <span class="spacing"></span>
+        <!-- <button mat-flat-button class="btn-toolbar" (click)="goBack()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            Go Back
+        </button> -->
+    </mat-toolbar>
+    <mat-drawer-container class="drawer-container">
+        <mat-drawer #drawer class="drawer-sidenav" mode="side" opened="true">
+            <!-- <div class="drawer-sidenav-title">
+                <span class="drawer-sidenav-title-text">Navigate</span>
+            </div> -->
+            <div class="search ">
+                <!-- <mat-form-field class="input" appearance="fill"> -->
+                <!-- <mat-label>Search File...</mat-label> -->
+                <input type="text" autocomplete="off" placeholder="Search Flow Name" (input)="searchFlow()" [(ngModel)]="inputText">
+                <mat-icon style="cursor:pointer;" *ngIf="inputText" (click)="clearSearchField()">close</mat-icon>
+                <!-- <button matSuffix mat-icon-button aria-label="Clear">
+                        <mat-icon>search</mat-icon>
+                </button> -->
+                <!-- </mat-form-field> -->
+            </div>
+            <mat-nav-list class="drawer-sidenav-list">
+                <div *ngFor="let flo of flowList" [class.drawer-sidenav-feature-selected]="flo.id == selectedFlowId" (click)="selectFlow(flo.id);getOneFlow();">
+                    <a class="drawer-sidenav-feature noselect" mat-list-item>
+                        <mat-icon style="color: royalblue;">insert_drive_file</mat-icon>
+                        <span style="padding-left: 10px; color: gray;">{{flo.name}}</span>
+                    </a>
+                </div>
+            </mat-nav-list>
+        </mat-drawer>
+        <div class="drawer-sidenav-content" [@fadeInOutRouter]>
+            <!-- <div class="header-container">
+                <section style="padding-right: 40px;padding-top: 15px;float: right" class="example-section">
+                    <mat-slide-toggle  *ngIf="show && output" (change)="testing($event)"
+                        class="example-margin"
+                        [(ngModel)]="checked"
+                        [disabled]="disabled"
+                        >Apply Filters
+                    </mat-slide-toggle>
+                  </section>
+            </div> -->
+            <div class="content-container">
+                <div class="content-header flex-row-parent">
+                    <!-- <div class="flex-stetch" style="padding-left: 1rem; position: relative;">
+                        <ng-container *ngIf="show && output">
+                            <mat-icon class="icon-search" style="left: 1.5rem;">search</mat-icon>
+                            <input class="min-input" style="width: 40rem;padding-left: 3rem; height: 3rem;"
+                                [matAutocomplete]="auto" [(ngModel)]="searchKeyString" placeholder="Search here..."
+                                (ngModelChange)="onKeyChange(searchKeyString)">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of tableHeader" [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </ng-container>
+                    </div> -->
+                    <!-- <div class="flex-stetch" style="padding-left: 1rem; position: relative;">
+                        <span *ngIf="show && output">
+                            =
+                        </span>
+                    </div> -->
+                    <!-- <div class="flex-unstetch" style="padding-left: 1rem;">
+                        <ng-container *ngIf="show && output">
+                            <input class="min-input" style="width: 40rem;padding-left: 3rem; height: 3rem;"
+                                [matAutocomplete]="auto" [(ngModel)]="searchValueString" placeholder="Search here..."
+                                (ngModelChange)="onValueChange(searchValueString)">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of valueOptions" [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </ng-container>
+                    </div> -->
+                    <!-- <div class="flex-stetch" style="padding-left: 1rem;">
+                        <ng-container *ngIf="show && output">
+                            <button mat-flat-button style="color: royalblue;" (click)="addFilter()">
+                                <mat-icon>add</mat-icon>
+                                <span>
+                                    Add Filter
+                                </span>
+                            </button>
+                        </ng-container>
+                    </div> -->
+                    <div class="flex-unstetch" style="padding-left: 1rem;">
+                        <!-- <ng-container *ngIf="show && output">
+                            <button mat-flat-button (click)="applyFilters()">
+                                <mat-icon>visibility</mat-icon>
+                                <span>
+                                    View & Apply Filter
+                                </span>
+                            </button>
+                        </ng-container> -->
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 1rem;">
+                        <!-- <ng-container *ngIf="show && preview">
+                            <mat-form-field appearance="fill" class="datepicker">
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput style="outline: none;background: transparent;box-shadow: none;" [(ngModel)]="startdate" [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+                                <!-- <mat-datepicker-toggle matSuffix matTooltip="click to save date" (click)="saveDate()">
+                                    <mat-icon matDatepickerToggleIcon>save</mat-icon>
+                                </mat-datepicker-toggle> -->
+                                <!-- <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </ng-container> -->
+                        <!-- <ng-container *ngIf="show && preview">
+                            <button mat-raised-button (click)="openConfigureDialog()">
+                                <mat-icon style="color: #394eb4;">perm_data_setting</mat-icon>
+                                <span style="color: #394eb4;">
+                                    Configure Flow
+                                </span>
+                            </button>
+                        </ng-container> -->
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 1rem;">
+                        <!-- <ng-container *ngIf="show && preview">
+                            <input hidden type="file" #uploadcsv accept=".csv" (input)="handleFileInput1($event)" multiple />
+                            <button mat-raised-button (click)="uploadcsv.click();" [disabled]="uploading" id="btn">
+                                <mat-icon style="color: royalblue;">cloud_upload</mat-icon>
+                                <span style="color: royalblue;">
+                                    {{uploading ? 'File Uploading..' : 'File Upload'}}
+                                </span>
+                            </button>
+                        </ng-container> -->
+                        <!-- <ng-container *ngIf="show && output">
+                            <button mat-stroked-button style="color: black;" (click)="copyTableToClipboard()">
+                                <mat-icon>content_copy</mat-icon>
+                                <span>
+                                    Copy to clipboard
+                                </span>
+                            </button>
+                        </ng-container> -->
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 2rem;">
+                        <ng-container *ngIf="ac.super || ac.items?.DF003J_DECISION_FLOW_RUN">
+                        <ng-container *ngIf="show && preview">
+                            <button mat-raised-button (click)="exec();" [disabled]="executing">
+                                <mat-icon style="color: limegreen;">play_arrow</mat-icon>
+                                <span style="color: limegreen;">
+                                    {{executing ? 'Running...' : 'Run'}}
+                                </span>
+                            </button>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="ac.super || ac.items?.DF003G_DECISION_FLOW_EXPORT">
+                        <ng-container *ngIf="show && output">
+                            <button mat-stroked-button style="color: crimson;" (click)="getExportFile()">
+                                <mat-icon style="color: crimson;">get_app</mat-icon>
+                                <span style="color: crimson;">
+                                    Export
+                                </span>
+                            </button>
+                        </ng-container>
+                        </ng-container>
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 2rem;">
+                        <ng-container *ngIf="show && preview">
+                            <button mat-raised-button (click)="goBackToConfig()">
+                                <mat-icon style="color: royalblue;">chevron_left</mat-icon>
+                                <span style="color: royalblue;">
+                                   Go to config
+                                </span>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="show && output">
+                            <button mat-stroked-button style="color: limegreen;" (click)="goBackToConfig()">
+                                <mat-icon style="color: limegreen;">chevron_left</mat-icon>
+                                <span style="color: limegreen;">
+                                    Go to config
+                                </span>
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+                <mat-card class="select-card" *ngIf="!show">
+                    <mat-icon>info</mat-icon>Click to Preview Flow
+                </mat-card>
+                <ng-container *ngIf="preview">
+                    <div class="content-body-flow">
+                        <mat-progress-spinner *ngIf="spin_load" class="spinner-wrapper" [color]="color" [mode]="mode" [diameter]="80">
+                        </mat-progress-spinner>
+                        <!-- <u><b>Preview</b></u> -->
+                        <ngx-graph *ngIf="!spin_load" [links]="links" [view]="[1520,690]" [nodes]="nodes" [curve]="shape.curveLinear" [miniMapMaxWidth]="miniMapMaxWidthPx" [animate]="animate" [layout]="layout" [miniMapMaxHeight]="miniMapMaxHeightPx" [draggingEnabled]="draggingEnabled"
+                            [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [zoomLevel]="zoomLevel" [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel" [autoZoom]="autoZoom" [autoCenter]="autoCenter" [panOnZoom]="panOnZoom"
+                            [panOffsetX]="panOffsetX" [panOffsetY]="panOffsetY" [showMiniMap]="showMiniMap" [miniMapPosition]="miniMapPosition" [miniMapMaxWidth]="miniMapMaxWidthPx" [miniMapMaxHeight]="miniMapMaxHeightPx" [layoutSettings]="layoutSettings">
+
+                            <ng-template #defsTemplate>
+                                <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+                                    <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                                </svg:marker>
+                            </ng-template>
+                            <ng-template #nodeTemplate let-node>
+                                <svg:g class="node">
+                                    <svg:rect rx="5" ry="5" [attr.width]="node.dimension.width + 30" [attr.height]="node.data.height" class="shadow" />
+                                    <svg:rect rx="5" ry="5" [attr.width]="node.dimension.width + 30" [attr.height]="node.dimension.height" style="fill: rgb(179 80 163);" />
+                                    <svg:rect rx="5" ry="5" y="45" [attr.width]="node.dimension.width + 30" [attr.height]="15" style="fill: rgb(233, 186, 230);" />
+                                    <svg:text alignment-baseline="central" [attr.x]="40" [attr.y]="22" style="fill:white;">
+                                        {{node.label}}
+                                    </svg:text>
+                                    <svg:text alignment-baseline="central" text-anchor="middle" fill="rgba(35, 35, 35, 1)" [attr.x]="(node.dimension.width+30)/2" [attr.y]="52" style="font-size: 10px;">
+                                        {{node.data.configName}}
+                                    </svg:text>
+
+                                    <svg:rect rx="3" ry="3" x="2" y="2" [attr.width]="28" [attr.height]="40" style="fill: rgba(0, 0, 0, 0.3);" />
+
+                                </svg:g>
+
+                                <svg:g *ngIf="node.data.flow_type === 'QUERY_VARIABLE'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)" viewBox="0 0 20 20">
+                                    <path fill="none" d="M9.634,10.633c0.116,0.113,0.265,0.168,0.414,0.168c0.153,0,0.308-0.06,0.422-0.177l4.015-4.111c0.229-0.235,0.225-0.608-0.009-0.836c-0.232-0.229-0.606-0.222-0.836,0.009l-3.604,3.689L6.35,5.772C6.115,5.543,5.744,5.55,5.514,5.781C5.285,6.015,5.29,6.39,5.522,6.617L9.634,10.633z">
+                                    </path>
+                                    <path fill="none" d="M17.737,9.815c-0.327,0-0.592,0.265-0.592,0.591v2.903H2.855v-2.903c0-0.327-0.264-0.591-0.591-0.591c-0.327,0-0.591,0.265-0.591,0.591V13.9c0,0.328,0.264,0.592,0.591,0.592h15.473c0.327,0,0.591-0.264,0.591-0.592v-3.494C18.328,10.08,18.064,9.815,17.737,9.815z">
+                                    </path>
+                                </svg:g>
+
+                                <svg:g *ngIf="node.data.flow_type === 'RULE_SET'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill="none" d="M17.222,5.041l-4.443-4.414c-0.152-0.151-0.356-0.235-0.571-0.235h-8.86c-0.444,0-0.807,0.361-0.807,0.808v17.602c0,0.448,0.363,0.808,0.807,0.808h13.303c0.448,0,0.808-0.36,0.808-0.808V5.615C17.459,5.399,17.373,5.192,17.222,5.041zM15.843,17.993H4.157V2.007h7.72l3.966,3.942V17.993z">
+                                    </path>
+                                    <path fill="none" d="M5.112,7.3c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808c0-0.447-0.363-0.808-0.808-0.808H5.92C5.475,6.492,5.112,6.853,5.112,7.3z">
+                                    </path>
+                                    <path fill="none" d="M5.92,5.331h4.342c0.445,0,0.808-0.361,0.808-0.808c0-0.446-0.363-0.808-0.808-0.808H5.92c-0.444,0-0.808,0.361-0.808,0.808C5.112,4.97,5.475,5.331,5.92,5.331z">
+                                    </path>
+                                    <path fill="none" d="M13.997,9.218H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,9.58,14.442,9.218,13.997,9.218z">
+                                    </path>
+                                    <path fill="none" d="M13.997,11.944H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,12.306,14.442,11.944,13.997,11.944z">
+                                    </path>
+                                    <path fill="none" d="M13.997,14.67H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.447,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,15.032,14.442,14.67,13.997,14.67z">
+                                    </path>
+                                </svg:g>
+
+                                <svg:g *ngIf="node.data.flow_type === 'FUNCTIONS'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)" viewBox="0 0 20 20">
+                                    <path d="M17.35,2.219h-5.934c-0.115,0-0.225,0.045-0.307,0.128l-8.762,8.762c-0.171,0.168-0.171,0.443,0,0.611l5.933,5.934c0.167,0.171,0.443,0.169,0.612,0l8.762-8.763c0.083-0.083,0.128-0.192,0.128-0.307V2.651C17.781,2.414,17.587,2.219,17.35,2.219M16.916,8.405l-8.332,8.332l-5.321-5.321l8.333-8.332h5.32V8.405z M13.891,4.367c-0.957,0-1.729,0.772-1.729,1.729c0,0.957,0.771,1.729,1.729,1.729s1.729-0.772,1.729-1.729C15.619,5.14,14.848,4.367,13.891,4.367 M14.502,6.708c-0.326,0.326-0.896,0.326-1.223,0c-0.338-0.342-0.338-0.882,0-1.224c0.342-0.337,0.881-0.337,1.223,0C14.84,5.826,14.84,6.366,14.502,6.708">
+                                    </path>
+                                </svg:g>
+
+                                <!-- *ngIf="node.data.task.status?.status==='RUNNING'"  -->
+                                <!-- running icon -->
+                                <svg:g *ngIf="node.data.flow_type === 'TREE'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <!-- <path data-name="layer1" fill="none" stroke="rgb(0,255,0)" stroke-width="2" d="M14.68,12.621c-0.9,0-1.702,0.43-2.216,1.09l-4.549-2.637c0.284-0.691,0.284-1.457,0-2.146l4.549-2.638c0.514,0.661,1.315,1.09,2.216,1.09c1.549,0,2.809-1.26,2.809-2.808c0-1.548-1.26-2.809-2.809-2.809c-1.548,0-2.808,1.26-2.808,2.809c0,0.38,0.076,0.741,0.214,1.073l-4.55,2.638c-0.515-0.661-1.316-1.09-2.217-1.09c-1.548,0-2.808,1.26-2.808,2.809s1.26,2.808,2.808,2.808c0.9,0,1.702-0.43,2.217-1.09l4.55,2.637c-0.138,0.332-0.214,0.693-0.214,1.074c0,1.549,1.26,2.809,2.808,2.809c1.549,0,2.809-1.26,2.809-2.809S16.229,12.621,14.68,12.621M14.68,2.512c1.136,0,2.06,0.923,2.06,2.06S15.815,6.63,14.68,6.63s-2.059-0.923-2.059-2.059S13.544,2.512,14.68,2.512M5.319,12.061c-1.136,0-2.06-0.924-2.06-2.06s0.923-2.059,2.06-2.059c1.135,0,2.06,0.923,2.06,2.059S6.454,12.061,5.319,12.061M14.68,17.488c-1.136,0-2.059-0.922-2.059-2.059s0.923-2.061,2.059-2.061s2.06,0.924,2.06,2.061S15.815,17.488,14.68,17.488"
+                         style="transform: scale(0.27);"></path> -->
+                                    <path fill=" rgb(188, 226, 188)" stroke-width="1" stroke='rgb(188, 226, 188)' d="M14.68,12.621c-0.9,0-1.702,0.43-2.216,1.09l-4.549-2.637c0.284-0.691,0.284-1.457,0-2.146l4.549-2.638c0.514,0.661,1.315,1.09,2.216,1.09c1.549,0,2.809-1.26,2.809-2.808c0-1.548-1.26-2.809-2.809-2.809c-1.548,0-2.808,1.26-2.808,2.809c0,0.38,0.076,0.741,0.214,1.073l-4.55,2.638c-0.515-0.661-1.316-1.09-2.217-1.09c-1.548,0-2.808,1.26-2.808,2.809s1.26,2.808,2.808,2.808c0.9,0,1.702-0.43,2.217-1.09l4.55,2.637c-0.138,0.332-0.214,0.693-0.214,1.074c0,1.549,1.26,2.809,2.808,2.809c1.549,0,2.809-1.26,2.809-2.809S16.229,12.621,14.68,12.621M14.68,2.512c1.136,0,2.06,0.923,2.06,2.06S15.815,6.63,14.68,6.63s-2.059-0.923-2.059-2.059S13.544,2.512,14.68,2.512M5.319,12.061c-1.136,0-2.06-0.924-2.06-2.06s0.923-2.059,2.06-2.059c1.135,0,2.06,0.923,2.06,2.059S6.454,12.061,5.319,12.061M14.68,17.488c-1.136,0-2.059-0.922-2.059-2.059s0.923-2.061,2.059-2.061s2.06,0.924,2.06,2.061S15.815,17.488,14.68,17.488">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.name === 'Start'" class="svg-icon icon-tick" height="100%" width="100%" transform="translate(8 14)">
+                                    <path data-name="layer1" fill=" rgb(188, 226, 188)" d="M6 2l52 30L6 62V2z" stroke-linejoin="round" stroke-linecap="round" style="transform: scale(0.27);">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.name==='End'" class="svg-icon icon-cross" height="100%" width="100%" transform="translate(8 14)">
+                                    <path d="M24 3c0-1.657-1.343-3-3-3h-18c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h18c1.657 0 3-1.343 3-3v-18z" style="transform: scale(0.65);" />
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'CONDITION'" class="svg-icon icon-tick" xmlns="http://www.w3.org/2000/svg" fill=" rgb(188, 226, 188)" width="16" height="36" class="bi bi-diamond-fill" viewBox="0 0 16 16" transform="translate(8 14)">
+                                    <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435z" />
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'VARIABLES'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" width="200px" d="M17.431,2.156h-3.715c-0.228,0-0.413,0.186-0.413,0.413v6.973h-2.89V6.687c0-0.229-0.186-0.413-0.413-0.413H6.285c-0.228,0-0.413,0.184-0.413,0.413v6.388H2.569c-0.227,0-0.413,0.187-0.413,0.413v3.942c0,0.228,0.186,0.413,0.413,0.413h14.862c0.228,0,0.413-0.186,0.413-0.413V2.569C17.844,2.342,17.658,2.156,17.431,2.156 M5.872,17.019h-2.89v-3.117h2.89V17.019zM9.587,17.019h-2.89V7.1h2.89V17.019z M13.303,17.019h-2.89v-6.651h2.89V17.019z M17.019,17.019h-2.891V2.982h2.891V17.019z">
+                                    </path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'VARIABLE_LIB'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill="none" d="M16.254,3.399h-0.695V3.052c0-0.576-0.467-1.042-1.041-1.042c-0.576,0-1.043,0.467-1.043,1.042v0.347H6.526V3.052c0-0.576-0.467-1.042-1.042-1.042S4.441,2.476,4.441,3.052v0.347H3.747c-0.768,0-1.39,0.622-1.39,1.39v11.813c0,0.768,0.622,1.39,1.39,1.39h12.507c0.768,0,1.391-0.622,1.391-1.39V4.789C17.645,4.021,17.021,3.399,16.254,3.399z M14.17,3.052c0-0.192,0.154-0.348,0.348-0.348c0.191,0,0.348,0.156,0.348,0.348v0.347H14.17V3.052z M5.136,3.052c0-0.192,0.156-0.348,0.348-0.348S5.831,2.86,5.831,3.052v0.347H5.136V3.052z M16.949,16.602c0,0.384-0.311,0.694-0.695,0.694H3.747c-0.384,0-0.695-0.311-0.695-0.694V7.568h13.897V16.602z M16.949,6.874H3.052V4.789c0-0.383,0.311-0.695,0.695-0.695h12.507c0.385,0,0.695,0.312,0.695,0.695V6.874z M5.484,11.737c0.576,0,1.042-0.467,1.042-1.042c0-0.576-0.467-1.043-1.042-1.043s-1.042,0.467-1.042,1.043C4.441,11.271,4.908,11.737,5.484,11.737z M5.484,10.348c0.192,0,0.347,0.155,0.347,0.348c0,0.191-0.155,0.348-0.347,0.348s-0.348-0.156-0.348-0.348C5.136,10.503,5.292,10.348,5.484,10.348z M14.518,11.737c0.574,0,1.041-0.467,1.041-1.042c0-0.576-0.467-1.043-1.041-1.043c-0.576,0-1.043,0.467-1.043,1.043C13.475,11.271,13.941,11.737,14.518,11.737z M14.518,10.348c0.191,0,0.348,0.155,0.348,0.348c0,0.191-0.156,0.348-0.348,0.348c-0.193,0-0.348-0.156-0.348-0.348C14.17,10.503,14.324,10.348,14.518,10.348z M14.518,15.212c0.574,0,1.041-0.467,1.041-1.043c0-0.575-0.467-1.042-1.041-1.042c-0.576,0-1.043,0.467-1.043,1.042C13.475,14.745,13.941,15.212,14.518,15.212z M14.518,13.822c0.191,0,0.348,0.155,0.348,0.347c0,0.192-0.156,0.348-0.348,0.348c-0.193,0-0.348-0.155-0.348-0.348C14.17,13.978,14.324,13.822,14.518,13.822z M10,15.212c0.575,0,1.042-0.467,1.042-1.043c0-0.575-0.467-1.042-1.042-1.042c-0.576,0-1.042,0.467-1.042,1.042C8.958,14.745,9.425,15.212,10,15.212z M10,13.822c0.192,0,0.348,0.155,0.348,0.347c0,0.192-0.156,0.348-0.348,0.348s-0.348-0.155-0.348-0.348C9.653,13.978,9.809,13.822,10,13.822z M5.484,15.212c0.576,0,1.042-0.467,1.042-1.043c0-0.575-0.467-1.042-1.042-1.042s-1.042,0.467-1.042,1.042C4.441,14.745,4.908,15.212,5.484,15.212z M5.484,13.822c0.192,0,0.347,0.155,0.347,0.347c0,0.192-0.155,0.348-0.347,0.348s-0.348-0.155-0.348-0.348C5.136,13.978,5.292,13.822,5.484,13.822z M10,11.737c0.575,0,1.042-0.467,1.042-1.042c0-0.576-0.467-1.043-1.042-1.043c-0.576,0-1.042,0.467-1.042,1.043C8.958,11.271,9.425,11.737,10,11.737z M10,10.348c0.192,0,0.348,0.155,0.348,0.348c0,0.191-0.156,0.348-0.348,0.348s-0.348-0.156-0.348-0.348C9.653,10.503,9.809,10.348,10,10.348z">
+                                    </path>
+                                </svg:g>
+
+                                <svg:g *ngIf="node.data.flow_type === 'TABLE'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <!-- <path
+                        d="M24 3c0-1.657-1.343-3-3-3h-18c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h18c1.657 0 3-1.343 3-3v-18z"
+                        style="transform: scale(0.65);" /> -->
+                                    <!-- <path fill="none" stroke="rgb(0,255,0)" d="M17.728,4.419H2.273c-0.236,0-0.429,0.193-0.429,0.429v10.304c0,0.234,0.193,0.428,0.429,0.428h15.455c0.235,0,0.429-0.193,0.429-0.428V4.849C18.156,4.613,17.963,4.419,17.728,4.419 M17.298,14.721H2.702V9.57h14.596V14.721zM17.298,8.712H2.702V7.424h14.596V8.712z M17.298,6.566H2.702V5.278h14.596V6.566z M9.142,13.005c0,0.235-0.193,0.43-0.43,0.43H4.419c-0.236,0-0.429-0.194-0.429-0.43c0-0.236,0.193-0.429,0.429-0.429h4.292C8.948,12.576,9.142,12.769,9.142,13.005"></path> -->
+                                    <path fill=" rgb(188, 226, 188)" width="200px" d="M3.015,4.779h1.164V3.615H3.015V4.779z M18.73,1.869H1.269c-0.322,0-0.582,0.26-0.582,0.582v15.133
+                                    c0,0.322,0.26,0.582,0.582,0.582H18.73c0.321,0,0.582-0.26,0.582-0.582V2.451C19.312,2.129,19.052,1.869,18.73,1.869z
+                                     M18.148,16.42c0,0.322-0.261,0.582-0.582,0.582H2.433c-0.322,0-0.582-0.26-0.582-0.582V6.525h16.297V16.42z M18.148,5.361H1.851
+                                    V3.615c0-0.322,0.26-0.582,0.582-0.582h15.133c0.321,0,0.582,0.26,0.582,0.582V5.361z M7.671,4.779h1.165V3.615H7.671V4.779z
+                                     M5.344,4.779h1.164V3.615H5.344V4.779z"></path>
+                                </svg:g>
+                                <svg:g *ngIf="node.data.flow_type === 'TABLES'" class="svg-icon icon-tick" fill=" rgb(188, 226, 188)" height="100%" width="100%" transform="translate(8 14)">
+                                    <path fill=" rgb(188, 226, 188)" width="200px" d="M3.015,4.779h1.164V3.615H3.015V4.779z M18.73,1.869H1.269c-0.322,0-0.582,0.26-0.582,0.582v15.133
+                                            c0,0.322,0.26,0.582,0.582,0.582H18.73c0.321,0,0.582-0.26,0.582-0.582V2.451C19.312,2.129,19.052,1.869,18.73,1.869z
+                                             M18.148,16.42c0,0.322-0.261,0.582-0.582,0.582H2.433c-0.322,0-0.582-0.26-0.582-0.582V6.525h16.297V16.42z M18.148,5.361H1.851
+                                            V3.615c0-0.322,0.26-0.582,0.582-0.582h15.133c0.321,0,0.582,0.26,0.582,0.582V5.361z M7.671,4.779h1.165V3.615H7.671V4.779z
+                                             M5.344,4.779h1.164V3.615H5.344V4.779z"></path>
+                                </svg:g>
+                            </ng-template>
+
+                            <ng-template #linkTemplate let-link>
+                                <svg:g class="edge">
+                                    <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+                                    <svg:text class="edge-label" text-anchor="middle">
+                                        <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline" startOffset="50%">
+                                            {{link.label}}
+                                        </textPath>
+                                    </svg:text>
+                                </svg:g>
+                            </ng-template>
+                        </ngx-graph>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="output">
+                    <div class="content-body-table">
+                        <div *ngIf="loading" class="loading-spinner">
+                            <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                            <span>Executing.. Please wait..</span>
+                        </div>
+                        <ag-grid-angular *ngIf="!loading" [rowData]="rowData" [sideBar]="sideBar" style="width: 100%; height: 100%;" [enableCellTextSelection]="true" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true" [rowClassRules]="rowClassRules" [defaultColDef]="defaultColDef"
+                            [id]="myGrid" class="ag-theme-alpine">
+                        </ag-grid-angular>
+                        <!-- <table class="table" id='tableID'>
+                            <thead>
+                                <tr >
+                                    <th *ngFor="let header of tableHeader">
+                                        <span *ngIf="!flowConfigData.outputColumn.includes(header)"
+                                            [matTooltip]="header" [matTooltipPosition]="'above'">
+                                            {{header}}
+
+                                            <div *ngIf="header==selectedLogMessage" class="floating">Selected Div
+                                                <p style="margin-top:50px;font-size:18px"> {{selectedLogMessage}}</p>
+                                            </div>
+                                        </span>
+                                        <span *ngIf="flowConfigData.outputColumn.includes(header)" [matTooltip]="header"
+                                            [matTooltipPosition]="'above'" style="color: #E8C7C8">
+                                            {{header}}
+
+
+                                            <div *ngIf="header==selectedLogMessage" class="floating">Selected Div
+                                                <p style="margin-top:50px;font-size:18px"> {{selectedLogMessage}}</p>
+                                            </div>
+                                        </span>
+                                       
+                                        <span *ngIf="checked" (click)="displayDiv(header)" class="container" style="float: right;"><mat-icon style="padding-left: 50px;">arrow_drop_down</mat-icon></span>
+
+                                    </th>  
+                                   
+                                </tr>
+                               
+                               
+                            </thead>
+                            <tbody> 
+                                <ng-container>
+                                    <tr *ngFor="let tableRes of tableResponse">
+                                        <td *ngFor="let header of tableHeader">
+                                            <div *ngIf="getTypeOf(tableRes[header]) != 'number'"
+                                                style="text-align: left;">
+                                                {{tableRes[header]}}
+                                            </div>
+                                            <ng-container
+                                                *ngIf="header == 'NOTIONAL' || header == 'NOTIONAL_BASE' || header == 'MAX_TRADE_RATE' || header == 'PNL_VALUE' || header.startsWith('SUM')">
+                                                <div *ngIf="getTypeOf(tableRes[header]) == 'number'"
+                                                    class="amount-field">
+                                                    {{getCommaSeperated(tableRes[header])}}
+                                                </div>
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="header != 'NOTIONAL' && header != 'NOTIONAL_BASE' && header != 'RATE' && header != 'MAX_TRADE_RATE' && header != 'PNL_VALUE' && !header.startsWith('SUM')">
+                                                <div *ngIf="getTypeOf(tableRes[header]) == 'number'"
+                                                    class="amount-field">
+                                                    {{tableRes[header]}}
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="header == 'RATE'">
+                                                <div *ngIf="getTypeOf(tableRes[header]) == 'number'"
+                                                    class="amount-field">
+                                                    {{currencyRate(tableRes[header])}}
+                                                </div>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+
+                        </table> -->
+                    </div>
+                </ng-container>
+            </div>
+            <div class="bottom-container">
+
+            </div>
+        </div>
+    </mat-drawer-container>
+</div>
+<notifier-container></notifier-container>
+
+
+<!-- {{getTypeOf(tableRes[header])}} -->

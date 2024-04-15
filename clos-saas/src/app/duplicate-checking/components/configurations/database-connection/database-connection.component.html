@@ -1,0 +1,197 @@
+<div class="main-container">
+    <div class="header-container flex-row-parent">
+        <div class="left-align flex-stetch">
+
+        </div>
+        <div class="center-left-align flex-stetch">
+            
+        </div>
+        <div class="right-align flex-stetch">
+            <button mat-raised-button style="margin-top: 1rem; background-color: #394eb4; color: white;" onclick="history.back()">
+                <mat-icon>arrow_circle_left</mat-icon>
+                Go Back
+             </button>
+        </div>
+    </div>
+    <div class="content-container flex-row-parent">
+        <div class="left-align flex-stetch">
+           
+        </div>
+        <div class="center-align flex-unstetch" style="background-color: #f6feff;">
+            <div class="header-container category-sub-header" style="color: black;background-color: white;
+            border-right-width: 2px;border-top-width: 2px;border-left-width: 2px;border-bottom-width: 0px;
+            border-right-style: solid;border-top-style: solid;border-left-style: solid;
+            border-right-color: rgb(213, 212, 212);border-top-color: rgb(213, 212, 212);border-left-color: rgb(213, 212, 212);">
+                CONFIGURATIONS:-
+            </div>
+            <div class="inputs-container" style="overflow-y: auto; padding-top: 1rem;background-color: white;">
+                <mat-tab-group>
+                    <mat-tab label="Rule Configurations">
+                        <br>
+                        <span class="flex-row-parent">
+                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 5rem;">
+                                Rule Name<span style="color: red;margin: 5px;">*</span>
+                            </div>
+                            <div class="flex-stetch colen">
+                                <span>
+                                    :
+                                </span>
+                             </div>
+                             <div class="flex-unstetch field" style="padding: 0.5rem; margin-left: 4.5rem;">
+                                <input class="min-input" [(ngModel)]="variables.name" placeholder="{{variables.name == ''?'-':variables.name}}"
+                                style=" margin-bottom: 0.5rem; width: 50%;margin-left: 7rem;">
+                             </div>
+                        </span>
+                        <span class="flex-row-parent">
+                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 5rem;">
+                                Description
+                            </div>
+                            <div class="flex-stetch colen">
+                                <span>
+                                    :
+                                </span>
+                             </div>
+                             <div class="flex-unstetch field" style="padding: 0.5rem; margin-left: 5.8rem;">
+                                <input class="min-input" [(ngModel)]="variables.description" placeholder="{{variables.description == ''?'-':variables.description}}"
+                                 style=" margin-bottom: 0.5rem; width: 50%;margin-left: 6.9rem;">
+                             </div>
+                        </span>
+                        <span class="flex-row-parent">
+                            <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 5rem;">
+                                Matching Threshold<span style="color: red;margin: 5px;">*</span>
+                            </div>
+                            <div class="flex-stetch colen">
+                                <span>
+                                    :
+                                </span>
+                             </div>
+                             <div class="flex-unstetch field" style="padding: 0.5rem; margin-left: 4.5rem;">
+                                <input class="min-input" [(ngModel)]="variables.matchingThreshold" placeholder="{{variables.matchingThreshold == ''?'-':variables.matchingThreshold}}"
+                                style=" margin-bottom: 0.5rem; width: 54%;margin-left: 1rem;">
+                             </div>
+                        </span>
+                    </mat-tab>
+                    <mat-tab label="Matching Configurations">
+                        <div class="inputs-container" style="overflow-y: auto; padding-top: 1rem;background-color: white;" *ngFor="let item of config; let i=index">
+                            <button mat-raised-button  style="margin-top: 1rem; margin-right: 1rem;background-color: black; color: white;margin-left: 900px;" (click)="addTable()">
+                                <mat-icon>add</mat-icon>
+                                    Add Table
+                            </button>
+                            <span class="flex-row-parent" style="margin-top: -3.5rem;">
+                                <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 5rem;">
+                                    Table Name
+                                </div>
+                                <div class="flex-stetch colen">
+                                    <span>
+                                        :
+                                    </span>
+                                 </div>
+                                <div class="flex-unstetch field" style="padding: 0.5rem;margin-left: 5.2rem;">
+                                    <ng-container>
+                                        <mat-select placeholder="{{item.tableName.length == 0?'Nil':''}}" class="min-input" style=" margin-bottom: 0.5rem; width: 50%;padding: 5px;" [value]="item.tableName">
+                                            <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: #f5f5f5;top:0">
+                                                <input placeholder="Search.." style="width: 100%;" [(ngModel)]="item.tableName" (ngModelChange)="getTable(item.tableName)">
+                                            </div>
+                                             <mat-option *ngFor="let data of tableDrpdwn" [value]="data" (click)="getFields(data,'');item.tableName = data;">{{data}}</mat-option>
+                                        </mat-select>
+                                    </ng-container>            
+                                 </div>
+                            </span>
+                            <hr>
+                            <button mat-raised-button  style="margin-top: 1rem; margin-right: 1rem;background-color: black; color: white;margin-left: 900px;" 
+                                (click)="addField(item)" [hidden]="item.fieldsDetails.length == 0">
+                                <mat-icon>add</mat-icon>
+                                    Add Field
+                            </button> 
+                            <ng-container *ngFor="let name of item.fieldsDetails">
+                                <span class="flex-row-parent" style="margin-left: 50px;margin-top: -3.5rem;">
+                                    <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                         Database Field
+                                    </div>
+                                    <div class="flex-stetch colen">
+                                        <span>
+                                            :
+                                        </span>
+                                    </div>
+                                    <!-- {{newFieldDrp[i]?.tableName}} -->
+                                    <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 7.8rem;">
+                                        <ng-container>
+                                            <mat-select placeholder="{{name.tableFields.length == 0?'Nil':''}}" class="min-input" style=" margin-bottom: 0.5rem; width: 50%;padding: 5px;" multiple [value]="name.tableFields">
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top:0">
+                                                    <input placeholder="Search.." style="width: 100%;" [(ngModel)]="name.tableFields" (ngModelChange)="getFields(this.tableName,name.tableFields);">
+                                                </div>
+                                                <ng-container >
+                                        
+                                                <mat-option *ngFor="let tableDrp of newFieldDrp[i]?.data" (onSelectionChange)="tableField(tableDrp,$event,name.tableFields)" [value]="tableDrp">{{tableDrp}}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </ng-container>   
+                                    </div>        
+                                </span>
+                                <span class="flex-row-parent" style="margin-left: 50px;">
+                                    <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                       Exclude Special Char
+                                    </div>
+                                    <div class="flex-stetch colen">
+                                        <span>
+                                            :
+                                        </span>
+                                    </div>
+                                    <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 3.8rem;">
+                                        <ng-container>
+                                            <mat-select class="min-input" placeholder="{{name.characters.length == 0?'Nil':''}}" style=" margin-bottom: 0.5rem; width: 50%;padding: 5px;" multiple [value]="name.characters">
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top:0">
+                                                    <input placeholder="Search.." style="width: 100%;" [(ngModel)]="name.characters">
+                                                </div>
+                                                 <mat-option  *ngFor="let data of splchr" [value]="data" (onSelectionChange)="charField(data,$event,name.characters)">{{data}}</mat-option> 
+                                            </mat-select>
+                                        </ng-container>   
+                                    </div>        
+                                </span>
+                                <span class="flex-row-parent" style="margin-left: 50px;">
+                                    <div class="flex-stetch lable" style="padding: 0.5rem; margin-left: 1rem;">
+                                        Application Field
+                                    </div>
+                                    <div class="flex-stetch colen">
+                                        <span>
+                                            :
+                                        </span>
+                                    </div>
+                                    <div class="flex-unstetch field" style="padding: 0.5rem;  margin-left: 6.5rem;">
+                                        <ng-container>
+                                            <mat-select placeholder="{{name.applicationFields.length==0?'Nil':''}}" class="min-input" style=" margin-bottom: 0.5rem; width: 50%;padding: 5px;" multiple [value]="name.applicationFields">
+                                                <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                                                    <input placeholder="Search.." style="width: 100%;" [(ngModel)]="name.applicationFields" (ngModelChange)="getAppDrpdwn(name.applicationFields);">
+                                                </div>
+                                                <mat-option *ngFor="let data of appDrpdwn" [value]="data" (onSelectionChange)="appField(data,$event,name.applicationFields)">{{data}}</mat-option>
+                                            </mat-select>
+                                        </ng-container>            
+                                    </div>
+                                </span>
+                                <hr>
+                                <br>
+                                <br>
+                            </ng-container>
+                        
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+            <div class="bottom-container flex-row-parent" *ngIf="!loading">
+                <div class="flex-stetch">
+                    <button mat-raised-button *ngIf="!config_id" style="margin-left: 90rem; background-color: #394eb4; color: white;" (click)="saveRules();">
+                       <mat-icon>save</mat-icon>
+                       Save
+                    </button>
+                    <button mat-raised-button *ngIf="config_id" style="margin-left: 90rem; background-color: #394eb4; color: white;" (click)="updateRules(config_id);">
+                        <mat-icon>update</mat-icon>
+                        Update
+                     </button>
+                </div>
+            </div>
+        </div>
+        <div class="right-align flex-stetch">
+        </div>
+    </div>
+</div>

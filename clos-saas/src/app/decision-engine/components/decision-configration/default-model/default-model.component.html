@@ -1,0 +1,139 @@
+<mat-toolbar class="tool-bar">
+    <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+    <span class="separator-div">
+        <div class="separator"></div>
+    </span>
+    <span [routerLink]="'/desicion-engine/config/config-nav'" style="cursor: pointer;">
+        Data Administration
+    </span>
+    <span class="separator-div">
+      <div class="separator"></div>
+    </span>
+    <span>
+        Default Model Selector
+    </span>
+    <span class="spacing"></span>
+    <button mat-flat-button class="btn-toolbar" (click)="onBackClick()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        Go Back
+    </button>
+</mat-toolbar>
+<div class="main-container">
+    <!-- <div class="header-container">
+        <div class="category-sub-header">
+            Default Project Model:
+            <button mat-stroked-button style="float:right;"
+            (click)="onBackClick()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            Go Back
+        </button>
+        </div>
+    </div> -->
+    <div class="content-container flex-row-parent">
+        <div class="side-nav flex-stetch">
+            <mat-list>
+                <mat-list-item (click)="onClick('objectModel')" [class.selected-model]="'objectModel' == selectedTab">
+                    <mat-icon>settings</mat-icon>
+                    <span>
+                        Object Model
+                    </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <!-- <mat-list-item (click)="onClick('dataBase')" [class.selected-model]="'dataBase' == selectedTab">
+                    <mat-icon>compare_arrows</mat-icon>
+                    <span>
+                        Database
+                    </span>
+                </mat-list-item> -->
+                <mat-divider></mat-divider>
+                <!-- <mat-list-item>Item 3</mat-list-item> -->
+            </mat-list>
+        </div>
+        <div class="main-nav flex-unstetch flex-row-parent">
+            <div class="list-nav flex-unstetch">
+
+                <div class="card">
+                    <div class="search-container" style="position: sticky;height: 3rem;">
+                        <mat-icon class="icon-search" style="left: 8px;top: 12px;">search</mat-icon>
+                        <input class="min-input" style="height: 3rem; padding-left: 3rem;" placeholder="Search Here...">
+                    </div>
+                    <div class="card-container" *ngFor="let model of objectmodels" (click)="selectedCard(model)" [class.selected-card]="model == selectedObjectModel">
+                        <div [style.color]="model.is_default?'red':''" style="padding: 1rem;">
+                            <span style="font-size: 1.8rem; font-weight: 500; text-transform: capitalize;">
+                                {{model.name}}
+                            </span>
+                            <div style="font-size: 1.2rem; margin-top: 1rem; color: silver;">
+                                Some Sample description
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-main-nav flex-stetch">
+                <div class="nav-details">
+                    <div *ngIf="!selectedObjectModel" class="no-select">
+                        Please Select Model From Left
+                    </div>
+                    <div class="main-nav-data" *ngIf="selectedObjectModel">
+                        <div class="header-data">
+                            <span>
+                                {{selectedObjectModel.name}}
+                            </span>
+                            <span style="float: right; padding-right: 1rem; color: silver; font-size: 1.4rem; font-style: italic;">
+                                ID:  {{selectedObjectModel.id}}
+                            </span>
+                        </div>
+                        <div class="content-data">
+                            <p matLine style=" color: #ff0b55;">Model Name:</p>
+                            <p matLine style="padding-left: 10px; text-transform: capitalize;">
+                                {{selectedObjectModel.name}}
+                            </p>
+                            <p matLine style=" color: #ff0b55; padding-top: 1rem;">Type:</p>
+                            <p matLine style="padding-left: 10px;">
+                                <mat-chip-list aria-label="Fish selection">
+                                    <mat-chip> {{selectedObjectModel.type}}</mat-chip>
+                                </mat-chip-list>
+                            </p>
+                            <p matLine style=" color: #ff0b55; padding-top: 1rem;">Created By:</p>
+                            <p matLine style="padding-left: 10px;">
+                                {{selectedObjectModel.created_by}}
+                            </p>
+                            <p matLine style=" color: #ff0b55; padding-top: 1rem;">Created On:</p>
+                            <p matLine style="padding-left: 10px;">
+                                {{selectedObjectModel.created_on | date: 'dd-MM-yyyy'}}
+                            </p>
+                            <p matLine style=" color: #ff0b55; padding-top: 1rem;">Is Default:</p>
+                            <p matLine style="padding-left: 10px;" *ngIf="selectedObjectModel.is_default">
+                                Yes
+                            </p>
+                            <p matLine style="padding-left: 10px;" *ngIf="!selectedObjectModel.is_default">
+                                No
+                            </p>
+                            <!-- <p matLine style=" color: #ff0b55; padding-top: 1rem;">Status:</p>
+                            <p matLine style="padding-left: 10px;">
+                                {{selectedObjectModel.status}}
+                            </p> -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="default-btn flex-items-row">
+                    <div class="flex-unstetch">
+
+                    </div>
+                    <div class="flex-stetch" style="padding-right: 1rem;" *ngIf="showSaveBtn">
+                        <button mat-raised-button (click)="saveDefaultModel()" style="color: white; background-color: black;">
+                            <mat-icon>
+                                save
+                            </mat-icon>
+                            <span>
+                                Save as default
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

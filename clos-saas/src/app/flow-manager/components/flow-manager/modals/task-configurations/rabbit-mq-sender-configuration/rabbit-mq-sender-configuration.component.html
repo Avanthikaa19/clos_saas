@@ -1,0 +1,295 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        CONNECTION:
+    </div>
+    <table *ngIf="config.connection">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Preset</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.connection.mqConfig" class="min-select">
+                        <mat-option [value]="''">None / Manual Input</mat-option>
+                        <mat-option *ngFor="let cfg of mqConfigs" [value]="cfg">{{cfg.toUpperCase()}}</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <ng-container *ngIf="config.connection.mqConfig == undefined || config.connection.mqConfig == null || config.connection.mqConfig.trim() == ''">
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">URL Prefix</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.mqUrlPrefix" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Host</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.mqHost" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Port</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.mqPort" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Queue Name</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.mqQueueName" class="min-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label left-pad-20">Encoding</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.connection.mqEncoding" class="min-input">
+                    </td>
+                </tr>
+            </ng-container>
+            <tr>
+                <td>
+                    <span class="min-label">Requires Authentication</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="requireAuthentication"
+                        [(ngModel)]="config.connection.requireAuthentication" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr *ngIf="config.connection.requireAuthentication">
+                <td>
+                    <span class="min-label left-pad-20">User ID</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.mqUserid" class="min-input">
+                </td>
+            </tr>
+            <tr *ngIf="config.connection.requireAuthentication">
+                <td>
+                    <span class="min-label left-pad-20">Password</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.connection.mqPassword" class="min-input" type="password">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        Field Data:
+    </div>
+    <table *ngIf="config.message">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Write Field Headers</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="writeFieldHeaders" [(ngModel)]="config.message.tabularData.writeFieldHeaders"
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Field Structure</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.message.tabularData.fieldStructure" class="min-select">
+                        <mat-option [value]="'DELIMITED'">Delimited</mat-option>
+                        <mat-option [value]="'FIXED_WIDTH'">Fixed Width</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <ng-container *ngIf="config.message.tabularData.fieldStructure=='DELIMITED'">
+                <tr>
+                    <td>
+                        <span class="min-label">Delimiter</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.message.tabularData.fieldDelimiter" class="min-input">
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="config.message.tabularData.fieldStructure=='FIXED_WIDTH'">
+                <tr>
+                    <td>
+                        <span class="min-label">Field Lengths</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <div style="position: relative;">
+                            <span *ngIf="config.message.tabularData.fieldLengths.length == 0" class="add-items-text">Click the + icon to add items.</span>
+                            <input *ngFor="let element of config.message.tabularData.fieldLengths; let index = index; trackBy: trackByIndex;"
+                                [(ngModel)]="config.message.tabularData.fieldLengths[index]" class="min-input" style="width: 50px; margin-right: 1px;"
+                                type="number" min="1">
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.message.tabularData.fieldLengths.push(1);">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label">Field Indexes</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <div style="position: relative;">
+                            <span *ngIf="config.message.tabularData.fieldIndexes.length == 0" class="add-items-text">Click the + icon to add items.</span>
+                            <input *ngFor="let element of config.message.tabularData.fieldIndexes; let index = index; trackBy: trackByIndex;"
+                                [(ngModel)]="config.message.tabularData.fieldIndexes[index]" class="min-input" style="width: 50px; margin-right: 1px;"
+                                type="number" min="0">
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.message.tabularData.fieldIndexes.push(0);">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        Fields:
+    </div>
+    <table style="width: calc(100% - 20px);">
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <div *ngFor="let element of config.message.tabularData.fields; let i = index" style="position: relative; margin-bottom: 10px;">
+                        <button mat-icon-button color="warn" class="min-button1 min-add-button1"
+                        (click)="config.message.tabularData.fields.splice(i, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" class="min-button2 min-add-button2" [disabled]="i==(config.message.tabularData.fields.length-1)" (click)="arraymove(config.message.tabularData.fields,i,i+1)">
+                        <mat-icon style="font-size: 14px;">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" class="min-button3 min-add-button3" [disabled]="i == 0" (click)="arraymove(config.message.tabularData.fields,i,i-1)">
+                    <mat-icon style="font-size: 14px;">keyboard_arrow_up</mat-icon>
+                    </button>
+                        <table style="width: calc(100% - 50px);">
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                    <td>
+                                        <span class="min-label">Field Name</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.message.tabularData.fields[i].name" class="min-input1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Write As Field</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.message.tabularData.fields[i].writeAsField" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Write Format</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                         <input [(ngModel)]="config.message.tabularData.fields[i].writeFormat" class="min-input">
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                        <div *ngIf="config.message.tabularData.fields.length > 1"
+                            style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                    </div>
+                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                        <span class="add-items-text">Click the + icon to add items.</span>
+                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.message.tabularData.fields.push({name: '', writeAsField: '', writeFormat: ''});">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Retries On Send Error</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.message.retryOnSendError" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Entries Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough"
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Audit Write Data</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="retainWriteData" [(ngModel)]="config.task.retainWriteData"
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

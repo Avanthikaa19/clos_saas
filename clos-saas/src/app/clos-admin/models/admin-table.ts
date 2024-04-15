@@ -1,0 +1,32 @@
+export class ColumnDefinition {
+  public fieldName: string;
+  public subFieldName?: string;
+  public displayName: string;
+  public lockColumn: boolean;
+  public sortAsc: boolean;
+  public sortOrder?: number;
+  public searchText: any;
+  public dateFormat?: string;
+  public dateFrom?: any;
+  public searchItem?: any[];
+  public columnDisable?: boolean;
+  public dropDownList?: string[];
+  public fromDate?: string;
+  public toDate?: string;
+  public timeFrom?: string;
+  public timeTill?: string;
+  public rangeFrom?: any;
+  public rangeTo?: any;
+  public isExport: boolean;
+  public hideExport?: boolean;
+  public dateTill?: any;
+  public filterDisable?: boolean;
+  public inOrder?: boolean;
+  public viewSticky?: boolean;
+  public isBoolean?: boolean;
+  public isList?: boolean;
+  public initialStatus?: boolean;
+  public selectAllButtonReprocess?:boolean;
+  public auditDate?:boolean;
+  public auditTime?:boolean;
+}

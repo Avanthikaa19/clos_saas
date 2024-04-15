@@ -1,0 +1,198 @@
+<ng-container *ngIf="((ac.super || ac.items.DTS001D_DECISION_TABLE_MODIFY) && !noAccess)">
+    <div *ngIf="loading">
+        <mat-toolbar class="tool-bar">
+            <span class="create-table-container" style="margin-left: 1rem;">
+                <button class="clos-submit-btn" mat-flat-button (click)="goBack()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                    <span style="font-size: 14px">
+                        Go back to table list
+                    </span>
+                </button>
+            </span>
+            <div class="spacer"></div>
+            <span class="create-table-container">
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+
+                <button  mat-flat-button (click)="refreshData()" style="margin-right: 1rem;background-color: #0e2954;color: white;">
+                    <mat-icon>refresh</mat-icon>
+                    <span style="font-size: 14px">
+                        Refresh
+                    </span>
+                </button>
+                <ng-container *ngIf="ac.super || ac.items?.DTS001D_DECISION_TABLE_MODIFY">
+                    <button mat-flat-button [disabled]="!tableDataById.name" [class.save-disable]="disableSave==true"
+                        (click)="saveDecisionTableById()" style="margin-right: 1rem;background-color: #0e2954;color: white;">
+                        <div *ngIf="!this.decisionTableService.saveUpdate">
+                            <mat-icon>save</mat-icon><span style="font-size: 14px">{{disableSave ? 'Saving..' :
+                                'Save'}}</span>
+                        </div>
+                        <div *ngIf="this.decisionTableService.saveUpdate">
+                            <mat-icon>update</mat-icon><span style="font-size: 14px">{{disableSave ? 'Updating..' :
+                                'Update'}}</span>
+                        </div>
+                    </button>
+                </ng-container>
+            </span>
+        </mat-toolbar>
+        <mat-divider></mat-divider>
+        <div class="header-box" style="margin-bottom:0.5rem;padding:1.5rem;">
+            <span class="flowname" style="font-weight: 500;">Name <sup style="color: red;top:1px;">*</sup></span>
+            <span class="flowname" style="padding-right: 10px;font-size: 17px;">:</span>
+            <input class="flowname" style="text-transform: capitalize;" [(ngModel)]="tableDataById.name"
+                class="min-input" (change)="detectChange()" style="width:40rem">
+            <span class="flowname" style="font-weight: 500;padding-left: 1rem;">Description</span>
+            <span class="flowname" style="padding-right: 10px;font-size: 17px;">:</span>
+            <input class="flowname" style="text-transform: capitalize;" [(ngModel)]="tableDataById.description"
+                (change)="detectChange()" class="min-input" style="width:40rem">
+        </div>
+        <mat-divider></mat-divider>
+        <div class="main-container">
+            <div class="body-container">
+                <div class="main-nav-container">
+                    <div class="table-container">
+                        <div class="header-section">
+                            <ng-container *ngIf="ac.super || ac.items?.DTS001F_DECISION_TABLE_INSERT_COLUMN">
+                                <button mat-flat-button matTooltip="Insert Column" matTooltipPosition="above"
+                                    (click)="insertHeader()">
+                                    <span class="ico-add-column"></span>
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="ac.super || ac.items?.DTS001G_DECISION_TABLE_INSERT_ROW">
+                                <button mat-flat-button matTooltip="Insert Row" matTooltipPosition="above"
+                                    (click)="insertRow()">
+                                    <span class="ico-add-row"></span>
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="ac.super || ac.items?.DTS001I_DECISION_TABLE_DELETE_COLUMN">
+                                <button mat-flat-button matTooltip="Delete Selected Row" matTooltipPosition="above"
+                                    (click)="deleteRow()">
+                                    <span class="ico-remove-row"></span>
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="ac.super || ac.items?.DTS001J_DECISION_TABLE_DELETE_ROW">
+                                <button mat-flat-button matTooltip="Delete Selected Column"
+                                    matTooltipPosition="above" (click)="deleteColumn()">
+                                    <span class="ico-remove-column"></span>
+                                </button>
+                            </ng-container>
+                            <!-- <button mat-stroked-button matTooltip="Save Table" matTooltipPosition="above"
+                            (click)="updateDecisionTable()">
+                            <span class="ico-save-table"></span>
+                        </button>
+                       
+                        <button mat-stroked-button matTooltip="Remove Column" matTooltipPosition="above"
+                            [disabled]="tableDataById.columns.length == 0"
+                            [class.disable-icon]="tableDataById.columns.length == 0" (click)="removeColumn()">
+                            <span class="ico-remove-column"></span>
+                        </button>
+                        <button mat-stroked-button matTooltip="Insert Row" matTooltipPosition="above"
+                            (click)="addRows()" [disabled]="tableDataById.columns.length == 0"
+                            [class.disable-icon]="tableDataById.columns.length == 0">
+                            <span class="ico-add-row"></span>
+                        </button>
+                    
+                        <button mat-stroked-button matTooltip="Delete Selected Row" matTooltipPosition="above"
+                            (click)="deleteSelectedRow()" [disabled]="selectedRow==null||tableDataById.rows.length == 0"
+                            [class.disable-icon]="selectedRow==null||tableDataById.rows.length == 0">
+                            <span class="ico-remove-rowselect"></span>
+                        </button>
+                        <button mat-stroked-button matTooltip="Delete Selected Column" matTooltipPosition="above"
+                            (click)="deleteSelectedColumn()"
+                            [disabled]="selectedColumn==null||tableDataById.columns.length == 0"
+                            [class.disable-icon]="selectedColumn==null||tableDataById.columns.length == 0">
+                            <span class="ico-remove-columnselect"></span>
+                        </button> -->
+                        </div>
+                        <br>
+                        <div class="body-section table-responsive">
+                            <table class="table" *ngIf="tableDataById">
+                                <thead>
+                                    <tr>
+                                        <th class="slNo-header" *ngIf="tableDataById.headers.length != 0">
+                                            Sl.No
+                                        </th>
+                                        <!-- <ng-container *ngIf="objResultMode=='Object Model'"> -->
+                                        <ng-container *ngFor="let header of tableDataById.headers;let i = index;">
+                                            <ng-container *ngFor="let obj of header.object_model">
+                                                <th [class.action-header]="header.type =='actionVariable'">
+                                                    <div (click)="selectHeader(header)">
+                                                        {{ obj.name }}
+                                                    </div>
+                                                </th>
+                                            </ng-container>
+                                        </ng-container>
+                                        <!-- </ng-container> -->
+                                        <!-- <ng-container *ngIf="objResultMode=='Database'">
+                                        <th *ngFor="let header of multipleColumnArrray;let j = index;">
+                                            <div [class.action-header]="header.type =='actionVariable'" (click)="selectHeader(header)" style="text-align: center; vertical-align: middle; display: flex; justify-content: center; align-items: center;">
+                                                {{header.object_model[0]?.name}}
+                                            </div>
+                                        </th>
+                                    </ng-container> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let values of tableDataById.rows; let i = index;">
+                                        <td *ngIf="tableDataById.headers.length != 0" style="text-align: center;"
+                                            (click)="selectRow(values)">
+                                            <div style="display: flex; justify-content: center; align-items: center;">
+                                                {{i+1}}</div>
+                                        </td>
+                                        <ng-container *ngFor="let value of tableDataById.cells;let j = index">
+                                            <td *ngIf="value.row_order === values.sequence_order"
+                                                (dblclick)="editTableCell(value)"
+                                                [class.selected-cell]="selected == value.row_order && unselectrow"
+                                                [class.selected-cells]="selectedhead == value.header_order && unselectcolumn"
+                                                [matTooltip]="getTooltipText(value.operator)"
+                                                style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                                <ng-container *ngIf="value.cell_type=='Custom'">
+                                                    {{value.custom_operand}}&nbsp;&nbsp;{{ getOperatorText(value.operator) }}
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="value.cell_type == 'Standard' && value.standard_operand != null">
+                                                    <ng-container *ngIf="value.data_type=='string'">
+                                                        {{value.standard_operand['text_value']}}
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="value.data_type == 'integer'||value.data_type == 'slashedinteger'">
+                                                        {{value.standard_operand['numeric_value'].replace('/(\d)(?=(\d{3})+(?!\d))/g',"$1,")}}
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="value.cell_type == 'StdOptype' && value.standard_operand_type != null">
+                                                    <ng-container *ngIf="value.data_type=='string'">
+                                                        {{value.standard_operand_type['type']}}
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="value.data_type == 'integer'||value.data_type == 'slashedinteger'">
+                                                        {{value.standard_operand_type['type'].replace('/(\d)(?=(\d{3})+(?!\d))/g',
+                                                        "$1,")}}
+                                                    </ng-container>
+                                                </ng-container>
+
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!loading" style="margin-top: 25%; margin-left: 30%;">
+        <div class="loading__line">
+            <div class="load-1">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <p style="display: inline-block;"> Loading...</p>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div class="no-access" *ngIf="(!ac.super && !ac.items?.DTS001D_DECISION_TABLE_MODIFY) || noAccess">
+    <app-no-access></app-no-access>
+</div>

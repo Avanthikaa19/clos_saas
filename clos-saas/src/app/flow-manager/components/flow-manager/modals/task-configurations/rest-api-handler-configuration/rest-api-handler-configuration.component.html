@@ -1,0 +1,405 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        PRE-PROCESSING PIPELINE :
+    </div>
+    <!-- <div class="category-sub-header">
+        DEFINITIONS :
+    </div> -->
+    <ng-container *ngIf="config.preProcessingPipeline">
+        <div style="border: 1px solid #e8e8e8;padding: 10px;border-radius: 10px;">
+            <div style="width: 100%; padding: 10px;"
+                *ngFor="let preprocessing of config.preProcessingPipeline.varDefinitions; let index = index;"
+                style="position: relative; margin-bottom: 10px;">
+                <button mat-icon-button color="warn" class="min-button min-add-button"
+                    (click)="config.preProcessingPipeline.varDefinitions.splice(index, 1);">
+                    <mat-icon style="font-size: 14px;">remove</mat-icon>
+                </button>
+                <ng-container>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><span>{{index + 1}}.</span></td>
+                                <td>
+                                    <span class="min-label">Name</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input class="min-input" type="text" [(ngModel)]="preprocessing.varName"
+                                        style="margin-top: 7px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <span class="min-label">ExpirySeconds</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input class="min-input" type="number" [(ngModel)]="preprocessing.varExpirySeconds"
+                                        style="margin-top: 7px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <span class="min-label">URL</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input class="min-input" type="text" [(ngModel)]="preprocessing.url"
+                                        style="margin-top: 7px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <span class="min-label">URL-Method</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select [(ngModel)]="preprocessing.urlMethod" class="min-select">
+                                        <mat-option [value]="'POST'">POST</mat-option>
+                                        <mat-option [value]="'GET'">GET</mat-option>
+                                        <mat-option [value]="'PUT'">PUT</mat-option>
+                                        <mat-option [value]="'DELETE'">DELETE</mat-option>
+                                    </mat-select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td valign="top">
+                                    <span class="min-label">Headers</span>
+                                </td>
+                                <td valign="top">:</td>
+                                <td>
+                                    <div style="width: 100%; position: relative; margin-bottom: 10px;"
+                                        *ngFor="let headers of preprocessing.headers;let i = index;">
+                                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                                            (click)="preprocessing.headers.splice(i, 1);">
+                                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                        </button>
+                                        <table>
+                                            <tbody>
+                                                <ng-container>
+                                                    <tr>
+                                                        <td><span>{{i + 1}}.</span></td>
+                                                        <td>
+                                                            <span class="min-label">Name</span>
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input class="min-input" type="text"
+                                                                [(ngModel)]="headers.name" style="margin-top: 7px;">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <span class="min-label">Value</span>
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input class="min-input" type="text"
+                                                                [(ngModel)]="headers.value" style="margin-top: 7px;">
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="preprocessing.headers.length > 1"
+                                            style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                                        </div>
+                                    </div>
+                                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                                        <span class="add-items-text">Click the + icon to add items.</span>
+                                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                                            (click)="preprocessing.headers.push({name: '', value: ''});">
+                                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <span class="min-label">RequestBody</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input class="min-input" type="text" [(ngModel)]="preprocessing.requestBody"
+                                        style="margin-top: 7px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <span class="min-label">ResponseValueMapping</span>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <input class="min-input" type="text"
+                                        [(ngModel)]="preprocessing.responseValueMapping" style="margin-top: 7px;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+                <div *ngIf="config.preProcessingPipeline.varDefinitions.length > 1"
+                    style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                </div>
+            </div>
+            <div style="height: 26px; position: relative; padding-left: 20px;">
+                <span class="add-items-text">Click the + icon to add items.</span>
+                <button mat-icon-button color="primary" class="min-button min-add-button"
+                    (click)="config.preProcessingPipeline.varDefinitions.push({varName: '', varExpirySeconds: 0,url:'',urlMethod:'',headers:[{name: '', value: ''}],requestBody:'',responseValueMapping:''});">
+                    <mat-icon style="font-size: 14px;">add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <div class="category-sub-header">
+        PROCESSING PIPELINE :
+    </div>
+    <!-- <ng-container *ngIf="config.processingPipeline"> -->
+    <div style="border: 1px solid #e8e8e8;padding: 10px;border-radius: 10px;">
+        <table *ngIf="config.processingPipeline">
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="min-label">PREVIOUS ENTRY AS REQUEST BODY</span>
+                        </td>
+                    <td>:</td>
+                    <td>
+                        <input type="checkbox" [(ngModel)]="config.processingPipeline.enabled"  style="margin-top: 7px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label">URL</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input class="min-input" type="text" [(ngModel)]="config.processingPipeline.url"
+                            style="margin-top: 7px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label">URLMethod</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select [(ngModel)]="config.processingPipeline.urlMethod" class="min-select">
+                            <mat-option [value]="'POST'">POST</mat-option>
+                            <mat-option [value]="'GET'">GET</mat-option>
+                            <mat-option [value]="'PUT'">PUT</mat-option>
+                            <mat-option [value]="'DELETE'">DELETE</mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <span class="min-label">Headers</span>
+                    </td>
+                    <td valign="top">:</td>
+                    <td>
+                        <div style="width: 100%; position: relative; margin-bottom: 10px;"
+                            *ngFor="let headers of  config.processingPipeline.headers;let i = index;">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                                (click)=" config.processingPipeline.headers.splice(i, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                            <table>
+                                <tbody>
+                                    <ng-container>
+                                        <tr>
+                                            <td><span>{{i + 1}}.</span></td>
+                                            <td>
+                                                <span class="min-label">Name</span>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input class="min-input" type="text" [(ngModel)]="headers.name"
+                                                    style="margin-top: 7px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <span class="min-label">Value</span>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input class="min-input" type="text" [(ngModel)]="headers.value"
+                                                    style="margin-top: 7px;">
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <div *ngIf="config.processingPipeline.headers.length > 1"
+                                style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                            </div>
+                        </div>
+                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.processingPipeline.headers.push({name: '', value: ''});">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label">RequestBody</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input class="min-input" type="text" [(ngModel)]="config.processingPipeline.requestBody"
+                            style="margin-top: 7px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-input" class="min-label">BurstingKey</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input class="min-input" type="text"
+                            [(ngModel)]="config.processingPipeline.responseValueBurstingKey" style="margin-top: 7px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <span class="min-label">ResponseValueMappings</span>
+                    </td>
+                    <td valign="top">:</td>
+                    <td>
+                        <div style="width: 100%; position: relative; margin-bottom: 10px;"
+                            *ngFor="let responseValueMappings of  config.processingPipeline.responseValueMappings;let i = index;">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                                (click)=" config.processingPipeline.responseValueMappings.splice(i, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                            <table>
+                                <tbody>
+                                    <ng-container>
+                                        <tr>
+                                            <td><span>{{i + 1}}.</span></td>
+                                            <td>
+                                                <span class="min-label">ResponseNode</span>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input class="min-input" type="text"
+                                                    [(ngModel)]="responseValueMappings.responseNode"
+                                                    style="margin-top: 7px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <span class="min-label">OutputFieldName</span>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input class="min-input" type="text"
+                                                    [(ngModel)]="responseValueMappings.outputFieldName"
+                                                    style="margin-top: 7px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <span class="min-label">OutputFieldType</span>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input class="min-input" type="text"
+                                                    [(ngModel)]="responseValueMappings.outputFieldType"
+                                                    style="margin-top: 7px;">
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <div *ngIf="config.processingPipeline.responseValueMappings.length > 1"
+                                style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;">
+                            </div>
+                        </div>
+                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.processingPipeline.responseValueMappings.push({responseNode: '', outputFieldName: '',outputFieldType:''});">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- </ng-container> -->
+    <div class="category-sub-header">
+        POST-PROCESSING PIPELINE :
+    </div>
+    <div style="border: 1px solid #e8e8e8;padding: 10px;border-radius: 10px; margin-bottom: 10px;">
+        <app-field-mapper-fragment [(config)]="config.postProcessingPipeline.fieldMapping"></app-field-mapper-fragment>
+    </div>
+
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Entries Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Retain Request Data</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="retainRequestData" [(ngModel)]="config.task.retainRequestData"
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threading</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="number" min="0" name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

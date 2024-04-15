@@ -1,0 +1,219 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height" style="overflow-y: auto; font-size: 14px; padding: 10px; background-color: white;">
+    <table style="width: 50%; min-width: 1000px;">
+        <tbody>
+            <!-- <tr><td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+            </td></tr>
+            <tr>
+                <td>
+                    <span>1. DOT Command Portal Service (DCP) [Legacy]:</span>
+                </td>
+                <td>
+                    <button style="width: 50%;" (click)="startDCP()" *ngIf="dcpRunning!=null" [disabled]="dcpRunning">Start</button>
+                    <button style="width: 50%;" (click)="stopDCP()" *ngIf="dcpRunning!=null" [disabled]="!dcpRunning">Stop</button>
+                </td>
+            </tr>
+            <tr><td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+            </td></tr>
+            <tr>
+                <td>
+                    <span>2. Refresh Market Data Cache (MDIMS):</span>
+                </td>
+                <td>
+                    <button style="width: 50%;" (click)="refreshMDIMSI()" [disabled]="refreshingMDIMSI">Intraday</button>
+                    <button style="width: 50%;" (click)="refreshMDIMSC()" [disabled]="refreshingMDIMSC">Closing</button>
+                </td>
+            </tr>
+            <tr><td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+            </td></tr>
+            <tr>
+                <td>
+                    <span>3. Load File To Sample Highs & Lows (BB):</span>
+                    <input [(ngModel)]="loadBBFilePath" placeholder="BB File Path In Server" [disabled]="loadingBBFile"
+                        style="width: 40%; margin-left: 20px;">
+                    <span style="margin-left: 5px;">and sample for</span>
+                    <input [(ngModel)]="loadBBSampleMinutes" placeholder="Sample Minutes" [disabled]="loadingBBFile" type="number" min="1" style="width: 50px; margin-left: 5px;">
+                    <span style="margin-left: 5px;">mins.</span>
+                </td>
+                <td>
+                    <button style="width: 100%;" (click)="loadBBFile()" [disabled]="loadingBBFile">Load</button>
+                </td>
+            </tr>
+            <tr><td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+            </td></tr>
+            <tr>
+                <td>
+                    <span>4. Load File To Sample FWD Highs & Lows (BB):</span>
+                    <input [(ngModel)]="loadBBFWDFilePath" placeholder="BB File Path In Server" [disabled]="loadingBBFile"
+                        style="width: 40%; margin-left: 20px;">
+                    <span style="margin-left: 5px;">and sample for</span>
+                    <input [(ngModel)]="loadBBFWDSampleMinutes" placeholder="Sample Minutes" [disabled]="loadingBBFile" type="number" min="1" style="width: 50px; margin-left: 5px;">
+                    <span style="margin-left: 5px;">mins.</span>
+                </td>
+                <td>
+                    <button style="width: 100%;" (click)="loadBBFWDFile()" [disabled]="loadingBBFile">Load</button>
+                </td>
+            </tr> -->
+            <tr><td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+            </td></tr>
+            <td colspan="2">
+                <div class="spinners-container">
+                    <div class="spinner-container-wrapper">
+                        <div class="spinner-title">
+                            CPU USAGE:
+                        </div>
+                        <div class="cpu-spinner-container">
+                            <mat-progress-spinner
+                                class="cpu-spinner-base"
+                                [color]="'primary'"
+                                [mode]="'determinate'"
+                                [value]="100">
+                            </mat-progress-spinner>
+                            <mat-progress-spinner
+                                class="cpu-spinner-actual"
+                                [color]="cpu_usage > 50 ? 'warn' : 'accent'"
+                                [mode]="'determinate'"
+                                [value]="cpu_usage">
+                            </mat-progress-spinner>
+                            <span class="cpu-value">
+                                {{cpu_usage}}%
+                            </span>
+                        </div>
+                        <div class="details-container">
+                            <table>
+                                <tr>
+                                    <td class="details-label">
+                                        Logical Processors:
+                                    </td>
+                                    <td class="details-value">
+                                        {{processors}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="spinner-container-wrapper">
+                        <div class="spinner-title">
+                            MEMORY USAGE:
+                        </div>
+                        <div class="cpu-spinner-container">
+                            <mat-progress-spinner
+                                class="cpu-spinner-base"
+                                [color]="'primary'"
+                                [mode]="'determinate'"
+                                [value]="100">
+                            </mat-progress-spinner>
+                            <mat-progress-spinner
+                                class="cpu-spinner-actual"
+                                [color]="memory_usage > 50 ? 'warn' : 'accent'"
+                                [mode]="'determinate'"
+                                [value]="memory_usage">
+                            </mat-progress-spinner>
+                            <span class="cpu-value">
+                                {{memory_usage}}%
+                            </span>
+                        </div>
+                        <div class="details-container">
+                            <table>
+                                <tr>
+                                    <td class="details-label">
+                                        Available:
+                                    </td>
+                                    <td class="details-value">
+                                        {{total_memory_mb}} MB
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="details-label">
+                                        Used:
+                                    </td>
+                                    <td class="details-value">
+                                        {{used_memory_mb}} MB
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <tr><td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+            </td></tr>
+            <tr>
+                <td>
+                    <span>1. DB Connections: (Max allowed: {{max_connections_allowed}} connections)</span>
+                </td>
+                <td>
+                    <div class="cpu-spinner-container">
+                        <mat-progress-spinner
+                            class="cpu-spinner-base"
+                            [color]="'primary'"
+                            [mode]="'determinate'"
+                            [value]="100">
+                        </mat-progress-spinner>
+                        <div class="idle-spinner cpu-spinner-actual">
+                            <mat-spinner
+                                [mode]="'determinate'"
+                                [value]="((active_connections + idle_connections)/max_connections_allowed) * 100">
+                            </mat-spinner>
+                        </div>
+                        <mat-progress-spinner
+                            class="cpu-spinner-actual"
+                            [color]="((active_connections/max_connections_allowed) * 100) > 50 ? 'warn' : 'accent'"
+                            [mode]="'determinate'"
+                            [value]="(active_connections/max_connections_allowed) * 100">
+                        </mat-progress-spinner>
+                        <span class="cpu-value">
+                            {{active_connections}}
+                            <span style="font-style: italic; font-weight: 400; color: gray;">
+                                + {{idle_connections}}
+                            </span>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div style="height: 5px; border-bottom: silver solid 1px; margin-bottom: 5px;"></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="td-diagnostics">
+                <span>2. Diagnostics:</span>
+                <button (click)="getThreadDump()"  [disabled]="generatingThreadDump">{{generatingThreadDump ? 'Generating..' : 'Thread Dump'}}</button>
+                <button (click)="getHeapDump(true)"  [disabled]="generatingHeapDump">{{generatingHeapDump ? 'Generating..' : 'Live Heap Dump'}}</button>
+                <button (click)="getHeapDump(false)"  [disabled]="generatingHeapDump">{{generatingHeapDump ? 'Generating..' : 'Complete Heap Dump'}}</button>
+                <button (click)="performGC()"  [disabled]="performingGC">{{performingGC ? 'Requesting..' : 'Perform GC'}}</button>
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div style="min-height: 10px;">
+                        <mat-progress-bar mode="buffer" *ngIf="loadingMetrics" color="primary" style="opacity: 0.2;"></mat-progress-bar>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="background-color: white;">
+                    <div echarts (chartInit)="onChartInit($event)" [options]="options" [merge]="updateOptions" class="demo-chart">
+
+                    </div>
+                    <span style="color: silver; font-weight: normal; padding-left: 20px;">
+                        Using {{statusData.length}} data points. 
+                        <ng-container *ngIf="statusData.length">
+                            From: {{statusData[0].timestampDate | date:'dd-MMM-yyyy HH:mm:ss'}} | Latest: {{statusData[statusData.length-1].timestampDate | date:'dd-MMM-yyyy HH:mm:ss'}}
+                        </ng-container> 
+                    </span>
+                    <div style="padding: 10px 20px;">
+                        <input type="checkbox" [(ngModel)]="windowEnabled" style="vertical-align: middle;">
+                        Window Size: <input [(ngModel)]="windowSize" type="number" style="width: 80px;">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

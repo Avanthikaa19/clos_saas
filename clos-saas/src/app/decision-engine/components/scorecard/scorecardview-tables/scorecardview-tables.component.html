@@ -1,0 +1,185 @@
+<div class="main-container" *ngIf="((ac.items?.SC005D_SCORE_CARD_EDIT || ac.super) && !noAccess)">
+    <div class="tool-bar-container flex-row-parent">
+        <!-- Back to Score Card List -->
+        <span class="flex-unstetch" style="margin-left: 1rem;">
+            <button mat-stroked-button (click)="back()" class="button-container">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>
+                    Go back to Previous
+                </span>
+            </button>
+        </span>
+        <!-- Save Scorecard Details -->
+        <span class="flex-stetch" style="margin-right: 1rem;">
+            <ng-container *ngIf="ac.super || ac.items?.SC005K_SCORE_CARD_SAVE">
+                <button mat-flat-button [disabled]="disableSave" [class.save-disable]="disableSave==true"
+                    (click)="updateScoreCard()" class="button-container">
+                    <div>
+                        <mat-icon style="margin-top: 0.5rem;">save</mat-icon><span>{{disableSave ? 'Saving..' :
+                            'Save'}}</span>
+                    </div>
+                </button>
+            </ng-container>
+        </span>
+    </div>
+    <div class="rule-definition-container">
+        <div class="category-header">
+            Score Card
+        </div>
+        <div class="node-data" style="width: 100%;">
+            <div class="sub-container flex-row-parent">
+                <div class="flex-unstetch" style="margin: 1rem;">
+                    <span  style="margin-left: 1rem;">Reference Name</span>
+                    <span  style="margin-left: 1rem;">:</span>
+                    <input style="margin: 1rem;width: 25rem;" type="text"  [(ngModel)]="tableList['name']">
+                </div>
+                <div class="flex-unstetch" style="margin: 1rem;">
+                    <span style="margin-left: 1rem;">Description</span>
+                    <span style="margin-left: 1rem;">:</span>
+                    <input style="margin: 1rem;width: 25rem;" type="text"  [(ngModel)]="tableList['description']">
+                </div>
+                <div class="flex-unstetch" style="margin: 1rem;">
+                    <span style="margin-left: 1rem;">Initial Score</span>
+                    <span style="margin-left: 1rem;">:</span>
+                    <input style="margin: 1rem;width: 25rem;" type="number" [(ngModel)]="tableList['initialScore']">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Score Card Table -->
+    <div style="margin-top:-3rem;" class="category-header">
+        Variables
+    </div>
+    <!-- To add Score Card Variables -->
+    <ng-container *ngIf="ac.items?.SC005F_SCORE_CARD_CREATE_VARIABLE || ac.super">
+        <span class="flex-unstetch" style="float:right;margin: 0.5rem;">
+            <button mat-flat-button (click)="createVariables()" class="button-container"
+                [matTooltip]="'Click here to add variable'" style="margin-right:2rem;">
+                <mat-icon>add</mat-icon>
+                <span>
+                    Add Variable
+                </span>
+            </button>
+        </span>
+    </ng-container>
+    <div class="row">
+        <div class="table-container">
+            <table class="main-table">
+                <thead>
+                    <tr class="button-container">
+                        <th>Variables</th>
+                        <th>Bins</th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let item of scoreCardVariables">
+                    <td style="color: #000000;">
+                        <div class="name-container">
+                            <p>Name :</p>
+                            <p class="name-details-container">
+                                {{item.name}}</p>
+                        </div>
+                        <div class="name-container">
+                            <p>Type :</p>
+                            <p class="name-details-container">{{item.type}}
+                            </p>
+                        </div>
+                        <div class="name-container">
+                            <p>Baseline Score :</p>
+                            <p class="name-details-container">{{item.value ==
+                                null?'0':item.value}}</p>
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="main-bins-container">
+                            <div class="col-lg-1" style="text-align:center;margin-top:5px;margin-left: 2rem;">
+                                Values:
+                            </div>
+                            <div class="input">
+                                <input type="text" [(ngModel)]="item.input" placeholder="Add values here">
+                                <ng-container *ngIf="ac.items?.SC005H_SCORE_CARD_CREATE_ROW || ac.super">
+                                    <div class="col-lg-6">
+                                        <button mat-flat-button (click)="putVariables(item.id,item.input)"
+                                            class="button-container" [matTooltip]="'Click here to add values'">
+                                            <mat-icon style="margin-bottom:0.4rem;">add</mat-icon>ADD
+                                        </button>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <ng-container *ngIf="ac.items?.SC005G_SCORE_CARD_DELETE_VARIABLE || ac.super">
+                                <div class="col">
+                                    <button mat-flat-button style="background:red;color:white;float: right;"
+                                        [matTooltip]="'Delete Variables'" (click)="deleteDialog(item.id);">
+                                        <mat-icon style="margin-bottom:0.4rem;" class="delete-button-icon">delete
+                                        </mat-icon>DELETE
+                                    </button>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="nested-table">
+                            <!-- Score Card Table Values -->
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <!-- <th></th> -->
+                                        <th>Label</th>
+                                        <th>Values</th>
+                                        <th>Partial Score</th>
+                                        <th>Reason Code</th>
+                                        <ng-container *ngIf="ac.items?.SC005J_SCORE_CARD_DELETE_ROW || ac.super">
+                                            <th>Delete</th>
+                                        </ng-container>
+                                    </tr>
+                                </thead>
+                                <tr *ngFor="let element of item.scorecardconditons"
+                                    style="background: rgb(255, 255, 255);">
+                                    <td style="text-align:center;">{{element.name == null?'-':element.name}}</td>
+                                    <td style="text-align:center;">{{element.values == null?'0':element.values}}
+                                    </td>
+                                    <td style="text-align:center;">{{element.partialscore ==
+                                        null?'0':element.partialscore}}
+                                        <span *ngIf="ac.items?.SC005I_SCORE_CARD_EDIT_ROW || ac.super">
+                                            <mat-icon style="color:green;cursor:pointer;"
+                                                [matTooltip]="'Edit Partial Score'"
+                                                (click)="editpartialScore(element.id,element.partialscore);">edit
+                                            </mat-icon>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:center;">{{element.reasoncode ==
+                                        null?'-':element.reasoncode}}
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <ng-container *ngIf="ac.items?.SC005J_SCORE_CARD_DELETE_ROW || ac.super">
+                                            <button mat-icon-button (click)="deleteBins(element.id);"
+                                                style="color:red;cursor:pointer;" [matTooltip]="'Delete Bin'">
+                                                <mat-icon> delete</mat-icon>
+                                            </button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <!-- No Items Found -->
+                                <tr *ngIf="item.scorecardconditons.length == 0" style="background: rgb(255, 255, 255);">
+                                    <td></td>
+                                    <td></td>
+                                    <td style="color:red;">No items found!</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <!-- No Variables Found -->
+                <tr *ngIf="scoreCardVariables.length == 0">
+                    <td></td>
+                    <td style="text-align:center;color:#394eb4">No Variables Found !!</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="no-access" *ngIf="(!ac.super && !ac.items?.SC005D_SCORE_CARD_EDIT) || noAccess">
+    <app-no-access></app-no-access>
+</div>
+<notifier-container></notifier-container>

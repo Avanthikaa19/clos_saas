@@ -1,0 +1,226 @@
+<div class="main-container">
+    <div class="content-container">
+        <div class="table-container" style="overflow-y: auto;overflow-x: hidden;height: 50rem;">
+            <table>
+                <tr>
+                    <td>Litigation History
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.litigationHistory" (ngModelChange)="saveApplicationData() "  (input)="restrictToLetters($event, 'applicationDetails')" appPreventSpace>
+                    </td>
+                    <td>Ongoing Litigations
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.ongoingLitigations" (ngModelChange)="saveApplicationData()"  (input)="restrictToLetters($event, 'ongoingLitigations')" appPreventSpace>
+                    </td>
+                    <td>Recent Audits on Regulatory Complaince
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.recentAuditsOnRegulatoryCompliance" (ngModelChange)="saveApplicationData()"  (input)="restrictToLetters($event, 'recentAuditsOnRegulatoryCompliance')" appPreventSpace>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Past loan defaults
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.pastLoanDefaults" (ngModelChange)="saveApplicationData()"  (input)="restrictToLetters($event, 'pastLoanDefaults')" appPreventSpace>
+                    </td>
+                    <td>Financial Fluctuations
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="applicationDetails.financialFluctuations" (ngModelChange)="saveApplicationData()"  (input)="restrictToLetters($event, 'financialFluctuations')" appPreventSpace>
+                    </td>
+                </tr>
+            </table>
+            <mat-expansion-panel class="exp-pnl">
+                <mat-expansion-panel-header style="background-color: whitesmoke; ">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            Sustainability Practices:-
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <td>Carbon Emission
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.carbonEmission" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Sustainable / Green Technology
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.greenTechnologies" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Indirect GHG emissions
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select"[(ngModel)]="applicationDetails.ghgEmission" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sustainablity Level
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.sustainabilityLevel" (ngModelChange)="saveApplicationData() ">
+                                <mat-option ngDefaultControl *ngFor="let data of riskValue"  [value]="data" [(ngModel)]="applicationDetails.sustainabilityLevel" (ngModelChange)="saveApplicationData() ">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Renewable energy usage
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select"  [(ngModel)]="applicationDetails.renewableEnergyUsage" (ngModelChange)="saveApplicationData() ">
+                                <mat-option ngDefaultControl *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Certifications
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.certifications" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="exp-pnl">
+                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            Environmental, Social and Governance (ESG) Information:-
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <td>Diversity, equity and inclusion (DEI) strategy
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.diversityEquityInclusion" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <!-- <td>Period
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.period" (ngModelChange)="saveApplicationData() ">
+                        </td> -->
+                        <td>ESG Score
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.esgScore" (ngModelChange)="saveApplicationData()"(keydown)="preventLetterE($event)" appCommaSeparatedInput>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Compliance with Environment Standard
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="applicationDetails.complianceWithEnvironmentStandard" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let data of riskValue"  [value]="data">
+                                    {{data}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfFieldName" style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField" [value]="udfFieldName">{{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputField()" matTooltip="Add Fields" style="background-color:#0e2954;color: white;">
+                                    <mat-icon>add</mat-icon></button></td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldNames;let i=index">
+                            <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{ fieldName }}</td>
+                            <td>:</td>
+                            <td>
+                                <ng-container [ngSwitch]="getFieldType(fieldName)">
+                                    <input *ngSwitchCase="'ALPHA_NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="text" class="udf-input">
+                                    <input *ngSwitchCase="'DATE'" [max]="currentDate" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="date" class="udf-input">
+                                    <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                    <input *ngSwitchCase="'DATE_TIME'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="datetime-local" class="udf-input">
+                                    <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                </ng-container>
+                            </td>
+                            <td>
+                                <button style="border-radius: 44%;background-color: aliceblue;border: none;" matTooltip="Remove">
+                                    <mat-icon (click)="removeInput(i)" style="color: red;">remove</mat-icon>
+                                </button>
+                            </td>
+                        </div>
+                        </tr>
+                    </table>
+               </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="loading-container" *ngIf="loading">
+            <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading... Please wait...</span>
+        </div>
+        <div class="button-container">
+            <button  mat-raised-button style="margin:1rem;" class="clos-submit-btn" mat-raised-button (click)="nexttab()">
+                <mat-icon>forward</mat-icon>
+                <span>Next</span>
+            </button>
+            <button  mat-raised-button style="margin:1rem;" class="clos-submit-btn" mat-raised-button (click)="previoustab()">
+                <mat-icon style="transform: rotate(180deg)">forward</mat-icon>
+                <span>Previous</span>
+            </button>
+        </div>
+    </div>
+</div>

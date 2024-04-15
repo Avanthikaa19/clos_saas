@@ -1,0 +1,34 @@
+<div class="main-container">
+    <div class="header-container">
+        <span class="category-sub-header" style="font-size: 1.5rem;">
+            Add Rules :
+            <ng-container *ngIf="ac.super || ac.items?.DR001C_DECISION_RULES_CREATE">
+            <button mat-stroked-button mat-dialog-close style="color:#394eb4;float:right;bottom: 13px;" (click)="createRuleNav()">
+                <mat-icon>add</mat-icon>Create Rule
+            </button>
+        </ng-container>
+        </span>
+
+    </div>
+    <div *ngIf="!loading" class="content-container" style="overflow-y: scroll;">
+        <!-- <div class="content-container" style="overflow-y: scroll;"> -->
+        <div class="check-card-container">
+            <mat-checkbox style="margin-top: 0.8rem; margin-left: 1rem;" [(ngModel)]="masterSelected" (change)="master_change()" [(indeterminate)]="master_indeterminate">Select/ Unselect All</mat-checkbox>
+        </div>
+        <div class="check-card-container" *ngFor="let rule of rules">
+            <mat-checkbox style="margin-top: 0.8rem; margin-left: 1rem;" (change)="list_change()" (value)="rule.id" [(ngModel)]="rule.is_selected">{{rule.name}}</mat-checkbox>
+        </div>
+    </div>
+    <mat-spinner class="spinner-class" *ngIf="loading" diameter="55"></mat-spinner>
+
+</div>
+
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close style="color: red;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" cdkFocusInitial (click)="ruleUpdateInRuleSet()">
+        <mat-icon>add</mat-icon>Add
+    </button>
+</mat-dialog-actions>

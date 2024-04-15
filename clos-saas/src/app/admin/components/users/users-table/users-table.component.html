@@ -1,0 +1,10 @@
+<div class="column-container">
+    <mat-icon class="mr-3 ml-4 m-3 circle_icon">supervised_user_circle</mat-icon>
+    <span class="ml-4 user-contain m-3">Users ({{getCurrentUser()}})</span>
+</div>
+<div class="main-container">
+    <app-generic-data-table [columns]="userTableColumns" [filterButton]="true" [exportButton]="true" [clearButton]="true"
+    [filterInput]="false" (onCreateNewUserClick)="onAddNewUserClick($event)" [addNewUser]="true"
+    [tableData]="manageUserData" [pageData]="pageData" (onExportChange)="getExportList($event)" (onPageChange)="getManageUserData($event)" 
+   [loading]="loadingItems" (onClick)="detailClick($event)" (onFilterChange)="onApplyFilter($event)" (onChange)="columnChange($event)"></app-generic-data-table>
+</div>

@@ -1,0 +1,12 @@
+<div>
+
+    <textarea class="task-validator-input" placeholder="Paste Here" [(ngModel)]="validate" autocomplete="off"
+        ng-paste="true" > </textarea>
+
+   
+    <button mat-raised-button style="float: left;; background-color: crimson; color: white; margin-left: 10px;"
+        (click)="validateConfig(validate)" [disabled]="creating">
+        <mat-icon>add</mat-icon>
+        <span style="padding-left: 10px;">Validate</span>
+    </button>
+</div>

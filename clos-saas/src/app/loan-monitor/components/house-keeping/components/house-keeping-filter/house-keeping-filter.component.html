@@ -1,0 +1,106 @@
+<div class="main-container">
+    <div class="header-container">
+        <span class="h3">FILTERS:-</span>
+    </div> 
+    <div class="middle-container" cdkScrollable>
+        <div class="filter-container">
+            <div *ngFor="let column of filteredColumns">
+                <div *ngIf="!column.filterDisable">
+                    <label class="label"> {{column.displayName}}:</label><br>
+                    <div class="search-input" (click)="onFilterDropDown(column,searchText)">
+                        <ng-container *ngIf="column.dateFormat">
+                            <mat-form-field style="margin-top: 1rem;width: 45%;" appearance="fill">
+                                <input style="margin-top:1rem" matInput [matDatepicker]="pickerFrom" [(ngModel)]="column.dateFrom" (ngModelChange)="onfromDateSelection(column, column.dateFrom)" placeholder="From Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                                <mat-datepicker-toggle matSuffix>
+                                    <mat-icon matDatepickerToggleIcon (click)="this.fromDate=''">
+                                        clear</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerFrom>
+                                </mat-datepicker>
+                            </mat-form-field>
+                            <p style="margin-left: 1.5rem; margin-right: 1rem; margin-top: 3rem;">to</p>
+                            <mat-form-field style="margin-top: 1rem;width:47%;" appearance="fill">
+                                <input style="margin-top:1rem" matInput [matDatepicker]="pickerTo" placeholder="To Date" [(ngModel)]="column.dateTill" (ngModelChange)="ontoDateSelection(column, column.dateTill)">
+                                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                                <mat-datepicker-toggle matSuffix>
+                                    <mat-icon matDatepickerToggleIcon (click)="this.toDate=''">
+                                        clear
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerTo></mat-datepicker>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngIf="column.fieldName.endsWith('time') && !column.fieldName?.toLowerCase().endsWith('datetime')">
+                            <mat-form-field style="margin-top: 1rem;width:47%;" appearance="fill">
+                                <input style="margin-top:1rem" matInput type="time" step="2" placeholder="From Time">
+                            </mat-form-field>
+                            <p style="margin-left: 1.5rem; margin-right: 1rem; margin-top: 3rem;">to</p>
+                            <mat-form-field style="margin-top: 1rem;width:47%;" appearance="fill">
+                                <input style="margin-top:1rem" matInput type="time" step="2" placeholder="To Time">
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngIf="!column.dateFormat && !column.fieldName.endsWith('Date') && !column.fieldName.endsWith('time') && !column.fieldName.endsWith('Time')&& !column.displayName.endsWith('Date')">
+                            <mat-form-field class="example-chip-list" appearance="fill">
+                                <mat-chip-list #chipList aria-label="Fruit selection">
+                                    <mat-chip *ngFor="let fruit of column.searchText" (removed)="remove(fruit,column)">
+                                        {{fruit}}
+                                        <button matChipRemove>
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                    <input placeholder="Search..." #fruitInput [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event, column)" [(ngModel)]="searchText" (ngModelChange)="onColumnSelection(column,searchText)">
+                                </mat-chip-list>
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, column); fruitInput.value=''">
+                                    <span *ngFor="let list of column.dropDownList" (click)="onSearchTextChanged()">
+                                        <mat-option *ngIf="!column.searchText?.includes(list)" [value]="list">
+                                            {{list}}
+                                        </mat-option>
+                                    </span>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngIf="column.fieldName?.toLowerCase().endsWith('createdtime')">
+                            <mat-form-field style="margin-top: 1rem;width:47%;" appearance="fill">
+                                <input style="margin-top:1rem" matInput type="datetime-local" step="2" [(ngModel)]="column.dateFrom" (ngModelChange)="dateTimeChangeEvent(column,column.dateFrom)" placeholder="From DateTime">
+                                <mat-datepicker-toggle matSuffix>
+                                    <mat-icon matDatepickerToggleIcon style="font-size: 15px" (click)="column.searchItem=null;column.dateFrom=null;column.fromDate=null;">clear
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                            </mat-form-field>
+                            <p style="margin-left: 1.5rem; margin-right: 1rem; margin-top: 3rem;">to</p>
+                            <mat-form-field style="margin-top: 1rem;width:47%;" appearance="fill">
+                                <input style="margin-top:1rem" matInput type="datetime-local" step="2" [(ngModel)]="column.dateTill" (ngModelChange)="dateTimeChangeEvent(column,column.dateTill)" placeholder="To DateTime">
+                                <mat-datepicker-toggle matSuffix>
+                                    <mat-icon matDatepickerToggleIcon style="font-size: 15px" (click)="column.searchItem=null;column.dateTill=null;column.toDate=null;">clear
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="button-container">
+        <button mat-raised-button class="apply_filter" (click)="onApplyClick()">
+            <span class="material-symbols-outlined">
+               check
+            </span>
+            <span style="margin-left: 1rem">
+                Apply
+            </span>
+        </button>
+        <button mat-raised-button class="clear_filter  mr-3" (click)="onCloseClick()">
+            <span class="material-symbols-outlined" style="margin-bottom: 1rem">
+                &times;
+            </span>
+            <span style="margin-left: 1rem;">
+                Close
+            </span>
+        </button>
+    </div>
+</div>

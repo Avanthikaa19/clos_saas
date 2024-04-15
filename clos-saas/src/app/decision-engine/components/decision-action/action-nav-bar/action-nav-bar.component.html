@@ -1,0 +1,33 @@
+<div class="main-container">
+    <mat-toolbar class="tool-bar">
+        <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon style="font-size: x-large;padding-bottom:1rem ;margin-top: 0;">menu</mat-icon>
+      </button>
+        <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Action</span>
+        <span class="separator-div">
+        <div class="separator"></div>
+      </span>
+        <span> 
+        {{moduleName}}
+      </span>
+        <span class="spacing"></span>
+        <button mat-flat-button class="btn-toolbar" onclick="history.back()" style="background-color: #0e2954;">
+          <mat-icon>arrow_circle_left</mat-icon>
+          Go Back
+      </button>
+    </mat-toolbar>
+
+    <mat-drawer-container class="example-container" [style.height.px]="screenHeight" autosize>
+        <mat-drawer #drawer class="example-sidenav" mode="side" style="overflow-x: hidden;background-color: #0e2954;" opened>
+
+            <mat-list *ngFor="let node of folderData" style="padding: 10px;">
+                <mat-list-item [routerLink]="node.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" class="list-item" (click)="getModuleName(node.name)">
+                    <mat-icon>label_important</mat-icon>
+                    <span style="color: #0e2954;font-weight: bold;">{{node.name|titlecase}}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </mat-list>
+        </mat-drawer>
+        <router-outlet></router-outlet>
+    </mat-drawer-container>
+</div>

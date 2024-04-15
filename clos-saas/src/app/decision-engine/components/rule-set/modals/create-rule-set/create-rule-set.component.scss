@@ -1,0 +1,89 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 92%;
+    border-bottom: 1px solid lightgray;
+    border-radius: 0px;
+    .header-container {
+        height: 3rem;
+        border-bottom: 1px solid gainsboro;
+        font-size: 1.6rem;
+        font-weight: bold;
+        font-style: normal;
+        justify-content: center;
+        padding-left: 1.0rem;
+        color: rgba(14, 41, 84, 1);
+        text-shadow: 2px 2px rgb(223, 223, 223);
+    }
+    .content-container {
+        // height: 95%;
+        padding: 1rem 1rem 1rem 1rem;
+    }
+    .param-container {
+        padding: 1rem 0rem 0rem 0rem;
+        background-color: whitesmoke;
+        height: 44vh;
+        overflow-y: auto;
+        border-radius: 5px;
+        // border: 1px solid silver;
+    }
+}
+
+.min-input {
+    background-color: white;
+}
+
+.min-description {
+    height: 20%;
+}
+
+.err-msg {
+    font-size: 1.2rem;
+    color: red;
+    margin-left: 1.8rem;
+    padding-top: 1rem;
+}
+
+.btn {
+    color: white;
+    background-color: rgb(43, 42, 42);
+}
+
+.disabled {
+    background-color: whitesmoke;
+}
+
+.content-container input[type='text'],
+textarea {
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    border: solid transparent 1px;
+    border-radius: 3px;
+    transition: all linear 100ms;
+    width: 98%;
+    min-height: 40px;
+    max-height: 80px;
+    padding: 0 10px;
+    /* position: relative; */
+    /* top: 10px; */
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.content-container {
+    overflow-y: auto;
+    height: 600px;
+}
+
+.bottom_btn {
+    margin-top: 7rem;
+}
+.create {
+    background-color: #0e2954;
+    color: white;
+}
+
+.create button:disabled {
+    background-color: rgb(43, 42, 42);
+    color: white;
+}

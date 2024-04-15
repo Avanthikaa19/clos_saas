@@ -1,0 +1,60 @@
+
+
+<div class="tl-main-container">
+    <div class="header-container">
+        <div class="icon-container">
+        </div>
+        <div class="title-container">
+            <div class="component-title" style="border-bottom:none">
+                <span style="font-size:1.4rem">
+                    To Export Selected Fields
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="search-container" style="position: relative;">
+        <input class="min-input" [(ngModel)]="filterValue" (input)="filterItems()">
+    </div>
+    <div class="content-container" style="height: 500px;">
+        <div class="content-container">
+            <div class="list-container">
+                <!-- <mat-checkbox class="checkbox-content" [(ngModel)]="selectAll" (ngModelChange)="selectAllChanged()">{{ 'SELECT ALL' }}</mat-checkbox> -->
+            </div>
+            <ng-container  *ngFor="let key of allKeys">
+                <div class="list-container">
+               <!-- <mat-checkbox class="checkbox-content" (change)="fields(key, $event)">{{ key.toLocaleUpperCase() }}</mat-checkbox> -->
+               <mat-checkbox class="checkbox-content" (change)="fields(key, $event)" [checked]="selectAllFields[key]">{{ key.toLocaleUpperCase() }}</mat-checkbox>
+            </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="button-container">
+        <div style='float: left;'>
+            <button class="tl-btn" mat-dialog-close style="background:red">
+                <mat-icon>clear</mat-icon>Close
+            </button>
+        </div>
+        <div style="margin-left: 1rem;">
+            <button class="tl-btn-submit"  [matMenuTriggerFor]="menu">
+                <mat-icon>get_app</mat-icon>Export
+            </button>
+            <mat-menu #menu="matMenu" yPosition="above">
+                <button mat-menu-item (click)="exportAllApps('csv')">
+                  <span>CSV</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="exportAllApps('xlsx')">
+                  <span>XLSX</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="exportAllApps('pdf')">
+                  <span>PDF</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="exportAllApps('xls')">
+                  <span>XLS</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+  </div>

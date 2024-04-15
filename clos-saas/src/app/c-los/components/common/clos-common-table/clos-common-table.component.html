@@ -1,0 +1,134 @@
+<div class="main-container">
+    <div class="header-container">
+        <div class="spacer"></div>
+        <ng-container>
+            <div class="button-item-container" matTooltip="Add User" (click)="onAddFieldClick($event)" *ngIf="addButton" routerLink="/manage-user/userdetail">
+                <mat-icon>add</mat-icon>
+            </div>
+            <div class="button-item-container" matTooltip="Apply Filter" *ngIf="filterButton" (click)="openFilter()">
+                <mat-icon>filter_list</mat-icon>
+            </div>
+            <div class="button-item-container" matTooltip="Clear Filters" *ngIf="clearButton" (click)="clearClick()">
+                <mat-icon>clear</mat-icon>
+            </div>
+            <div class="button-item-container" matTooltip="Export" *ngIf="exportButton" (click)="exportClick()">
+                <mat-icon>download</mat-icon>
+            </div>
+        </ng-container>
+    </div>
+    <div class="filter-chips-container" *ngFor="let column of filteredColumns">
+        <div *ngIf="column.searchText.length>0 || column.dateFormat">
+            <mat-chip-list>
+                <div style="margin-left:1rem; margin-bottom:0.2rem">
+                    <span>
+                     <span *ngIf="column.dateFormat">
+                         <ng-container *ngIf="column.fromDate">
+                             {{column.displayName |titlecase}} From :
+                             <mat-chip [value]="column.fromDate" [selectable]="true" [removable]="true"
+                                 (removed)="onClearFilterClick(column,column.fromDate,'fromDate')">
+                                 {{column.fromDate}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </ng-container>
+                         <ng-container *ngIf="column.toDate">
+                             {{column.displayName |titlecase}} To :
+                             <mat-chip [value]="column.toDate" [selectable]="true" [removable]="true"
+                                 (removed)="onClearFilterClick(column,column.toDate,'toDate')">
+                                 {{column.toDate}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </ng-container>
+                     </span>
+                    <span *ngIf="!column.dateFormat">
+                         <span style="margin-left:1rem" *ngIf="column?.searchText?.length>0">{{column.displayName
+                             | titlecase}} :</span>
+
+                    <span *ngFor="let filter of column.searchText">
+                             <mat-chip *ngIf="filter === 0 || filter != ''" [value]="filter" [selectable]="true"
+                                 [removable]="true" (removed)="onClearFilterClick(column,filter,'searchText')">
+                                 {{filter}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </span>
+                    <span *ngIf="column.timeFrom">
+                             {{column.displayName|titlecase}} From:
+                             <mat-chip [value]="column.timeFrom" [selectable]="true" [removable]="true"
+                                 (removed)="onClearFilterClick(column,column.timeFrom,'timeFrom')">
+                                 {{column.timeFrom}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </span>
+                    <span *ngIf="column.timeTill">
+                             {{column.displayName | titlecase}} To:
+                             <mat-chip [value]="column.timeTill" [selectable]="true" [removable]="true"
+                                 (removed)="onClearFilterClick(column,column.timeTill,'timeTill')">
+                                 {{column.timeTill}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </span>
+                    <span *ngIf="column.rangeFrom || column.rangeFrom === 0">
+                             {{column.displayName|titlecase}} From:
+                             <mat-chip [value]="column.rangeFrom" [selectable]="true" [removable]="true"
+                                 (removed)="onClearFilterClick(column,column.rangeFrom,'rangeFrom')">
+                                 {{column.rangeFrom}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </span>
+                    <span *ngIf="column.rangeTo || column.rangeTo === 0">
+                             {{column.displayName | titlecase}} To:
+                             <mat-chip [value]="column.rangeTo" [selectable]="true" [removable]="true"
+                                 (removed)="onClearFilterClick(column,column.rangeTo,'rangeTo')">
+                                 {{column.rangeTo}}
+                                 <mat-icon matChipRemove>cancel</mat-icon>
+                             </mat-chip>
+                         </span>
+                    </span>
+                    </span>
+                </div>
+            </mat-chip-list>
+        </div>
+    </div>
+    <ng-container>
+        <div class="table-container">
+            <table id="table" class="table table-striped">
+                <thead>
+                    <ng-container *ngFor="let column of filteredColumns">
+                        <th>
+                            <div style="display:flex">
+                                <tr>
+                                    {{column.displayName}}
+                                </tr>
+                                <div class="sort-icon" [class.sort-asc]="column.sortAsc" [class.sort-desc]="column.sortAsc === false">
+                                    <mat-icon *ngIf="column.sortAsc === null">swap_vert</mat-icon>
+                                    <mat-icon *ngIf="column.sortAsc">arrow_upward</mat-icon>
+                                    <mat-icon *ngIf="column.sortAsc === false">arrow_downward</mat-icon>
+                                </div>
+                            </div>
+                        </th>
+                    </ng-container>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- <ng-container>
+                            <td>
+                            </td>
+                        </ng-container> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+</div>
+<div class="paginator-container">
+    <div class="left-container">
+        <!-- <ng-container *ngFor="let item of dataTable | paginate: { itemsPerPage: 20, currentPage:pageData.currentPage, totalItems: pageData.totalPages
+            }" let i="index">
+        </ng-container> -->
+    </div>
+    <div class="middle-container">
+        <!-- <pagination-controls class="pagination-controls" (pageChange)="onPageChangeEvent($event)" previousLabel="" nextLabel=""></pagination-controls> -->
+    </div>
+    <div class="right-container">
+        Total Items: <span style="font-weight: bold"></span>
+    </div>
+</div>

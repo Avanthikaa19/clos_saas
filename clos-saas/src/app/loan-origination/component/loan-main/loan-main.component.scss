@@ -1,0 +1,15 @@
+.main-container {
+  height: 852px;
+  margin: 10px;
+}
+
+.main-item >.mat-list-item:hover{
+  color: blue;
+  cursor: pointer;
+}
+
+.main-item >.mat-list-item.active{
+  background: aliceblue;
+  color: blue;
+  border-radius: 5px;
+}

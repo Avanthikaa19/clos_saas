@@ -1,0 +1,149 @@
+<div class="content-container">
+    <form #addressForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Address 1<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <textarea name="appmAddr1" required matInput #address1="ngModel" [(ngModel)]="listFieldName['appmAddr1']" (ngModelChange)="setInput()" style="font-size:16px;width:78%; margin-top:1.5rem" [ngClass]="{ 'error-border': addressForm.controls['appmAddr1']?.invalid && (errorBorderStatus) }"></textarea>
+                        <div *ngIf="addressForm.controls['appmAddr1']?.invalid && (address1.dirty || address1.touched)" class="error-message">
+                            <div *ngIf="addressForm.controls['appmAddr1']?.errors?.['required']">
+                                Home Address 1 is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Address 2<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <textarea matInput required name="appmAddr2" #address2="ngModel" style="font-size:16px;width:78%; margin-top:1.5rem" [(ngModel)]="listFieldName['appmAddr2']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': addressForm.controls['appmAddr2']?.invalid && (errorBorderStatus) }"></textarea>
+                        <div *ngIf="addressForm.controls['appmAddr2']?.invalid && (address2.dirty || address2.touched)" class="error-message">
+                            <div *ngIf="addressForm.controls['appmAddr2']?.errors?.['required']">
+                                Home Address 2 is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Address 3<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <textarea matInput required name="appmAddr3" #homeaddress3="ngModel" style="font-size:16px;width:78%; margin-top:1.5rem" [(ngModel)]="listFieldName['appmAddr3']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': addressForm.controls['appmAddr3']?.invalid && (errorBorderStatus) }"></textarea>
+                        <div *ngIf="addressForm.controls['appmAddr3']?.invalid && (homeaddress3.dirty || homeaddress3.touched)" class="error-message">
+                            <div *ngIf="addressForm.controls['appmAddr3']?.errors?.['required']">
+                                Home Address 3 is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="textarea_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Address 4<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <textarea required name="appmAddr4" #homeaddress4="ngModel" matInput style="font-size:16px;width:78%; margin-top:1.5rem" [(ngModel)]="listFieldName['appmAddr4']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': addressForm.controls['appmAddr4']?.invalid && (errorBorderStatus) }"></textarea>
+                        <div *ngIf="addressForm.controls['appmAddr4']?.invalid && (homeaddress4.dirty || homeaddress4.touched)" class="error-message">
+                            <div *ngIf="addressForm.controls['appmAddr4']?.errors?.['required']">
+                                Home Address 4 is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Address City<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" required name="appmCity" #homeAddresCity="ngModel" matInput [(ngModel)]="listFieldName['appmCity']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': addressForm.controls['appmCity']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="addressForm.controls['appmCity']?.invalid && (homeAddresCity.dirty || homeAddresCity.touched)" class="error-message">
+                                <div *ngIf="addressForm.controls['appmCity']?.errors?.['required']">
+                                    Home Address City is required.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Address Province<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="string" required name="appmProv" #homeAddresProvince="ngModel" matInput [(ngModel)]="listFieldName['appmProv']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': addressForm.controls['appmProv']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="addressForm.controls['appmProv']?.invalid && (homeAddresProvince.dirty || homeAddresProvince.touched)" class="error-message">
+                                <div *ngIf="addressForm.controls['appmProv']?.errors?.['required']">
+                                    Home Address Province is required.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Add ZIP Code<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" required name="appmZip" #homeAddZipCode="ngModel" matInput [(ngModel)]="listFieldName['appmZip']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': addressForm.controls['appmZip']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="addressForm.controls['appmZip']?.invalid && (homeAddZipCode.dirty || homeAddZipCode.touched)" class="error-message">
+                                <div *ngIf="addressForm.controls['appmZip']?.errors?.['required']">
+                                    Home Add ZIP Code is required.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Phone</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" appPhonenumberValidation matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPhone']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Years of Stay</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmResPer']" (ngModelChange)="setInput()" appTwoDigitLimitation>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Ownership</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPropty']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of homeOwnerList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

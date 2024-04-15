@@ -1,0 +1,96 @@
+<div class="dup-main-container">
+    <div class="header-container">
+        <div class="title-container">
+            <span style="font-size:1.8rem;font-weight: bold;">
+                Loan Product Configuration
+
+            </span>
+        </div>
+    </div>
+    <div class="body-container">
+        <div class="button-container">
+            <div class="search-item-container">
+                <input class="input-field" placeholder="Search the rules..." 
+                    [(ngModel)]="searchTerm" (ngModelChange)="getSearchItem(searchTerm)">
+                <mat-icon class="icon" (click)="clearSearchItem()">close</mat-icon>
+            </div>
+            <div class="spacer"></div>
+            <div class="action-buttons">
+                <button mat-flat-button matTooltip="Add Loan config" (click)="addConfiguration();"
+                    class="clos-submit-btn">
+                    <mat-icon>add</mat-icon>
+                    <span>Add Config</span>
+                </button>
+            </div>
+        </div>
+        <div id="configID" class="card-content-container">
+            <ng-container *ngFor="let rule of filteredLoanList">
+                <div class="card-container"
+                    [style.border-left]="rule.status == 'active'? '4px solid green' : '4px solid rgba(14, 41, 84, 1)'">
+                    <div class="top-card-container">
+                        <div class="header" [style.color]="rule.status == 'active'? 'green' : 'rgba(14, 41, 84, 1)'">
+                            <span>Loan Type: </span> {{rule.loanType}}
+                        </div>
+                        <div class="edit-delete">
+                            <mat-icon matTooltip="Click here to edit" (click)="onDataSourceSelect(rule)">edit</mat-icon>
+                            <button class="delete" style="background: none;border: none;color: red;"
+                                (click)="deleteRules(rule.id)" [disabled]="rule.status == 'active'">
+                                <mat-icon
+                                    [matTooltip]="rule.status == 'active' ? 'This rule cannot be deleted because it is active ' : 'Click here to delete'">delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="content-card-container">
+                        <span>Product Type: </span> {{rule.product}}
+                        <div class="d-flex mt-4" style="margin-left: -15px;">
+                            <div class="content-card-container ml-4">
+                                <span> Max Value : </span>&nbsp;{{rule.maxLoanAmount}}
+                            </div>
+                            <div class="content-card-container ml-4">
+                                <span>Min Value :</span> &nbsp; {{rule.minLoanAmount}}
+                            </div>
+                        </div>
+                        <div class="d-flex mt-4" style="margin-left: -15px;">
+                            <div class="content-card-container ml-4">
+                                <span> Interest Rate : </span>&nbsp;{{rule.interestRate}}
+                            </div>
+                        </div>
+                        <!-- <div class="d-flex mt-4" style="margin-left: -15px;">
+                        <div class="content-card-container ml-4">
+                           <span> Collateral Category : </span>&nbsp;{{rule.collateralCategory}}
+                        </div>
+                    </div>
+                    <div class="d-flex mt-4" style="margin-left: -15px;">
+                        <div class="content-card-container ml-4">
+                           <span> Collateral Type : </span>&nbsp;{{rule.collateralType}}
+                        </div>
+                    </div> -->
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!loading && loanConfigList?.length == 0">
+                <p class="loading-spinner">No database found!</p>
+            </ng-container>
+            <div *ngIf="noItemsFound" class="loading-spinner">No items found!</div>
+            <div *ngIf="loading" class="loading-spinner">
+                <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                <span>Loading.. Please wait..</span>
+            </div>
+        </div>
+    </div>
+    <div class="paginator-container" *ngIf="loanConfigList?.length !== 0">
+        <div class="left-container">
+            <ng-container
+                *ngFor="let item of loanConfigList | paginate: {itemsPerPage: pageData.pageSize, currentPage:pageData.currentPage, totalItems: pageData.totalRecords}"
+                let i="index">
+            </ng-container>
+        </div>
+        <div class="middle-container">
+            <pagination-controls class="pagination-controls" (pageChange)="onPageChangeEvent($event)" previousLabel=""
+                nextLabel=""></pagination-controls>
+        </div>
+        <div class="right-container">
+            Total Items: <span style="font-weight: bold">{{this.pageData.totalRecords}}</span>
+        </div>
+    </div>
+</div>

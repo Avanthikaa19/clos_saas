@@ -1,0 +1,201 @@
+<div class="component-container" style="font-size: 14px;" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <div class="title-container" cdkDragHandle matTooltip="Hold and drag to move.">
+        <span style="color: silver;">{{worksheet.id}}. </span> {{worksheet.name}} <span style="color: silver;">/ {{task.id==null?'CREATE NEW TASK':'TASK DETAILS'}}</span>
+        <span *ngIf="task.id" style="float: right; color: silver; font-weight: 400;">TASK ID:
+            {{task.id}}</span>
+    </div>
+    <mat-tab-group class="mat-tab-fill-height" [(selectedIndex)]="selectedTabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <mat-icon>list</mat-icon><span style="margin-left: 10px;">General</span>
+                </div>
+            </ng-template>
+            <div style="overflow-y: auto; height: 65rem; background-color: white; padding: 10px;">
+                <mat-grid-list cols="3" rowHeight="50px" [gutterSize]="'5px'">
+                    <!-- ROW 1 -->
+                    <mat-grid-tile colspan="1">
+                        <mat-spinner *ngIf="loadingTypes" [diameter]="20" style="position: absolute; left: 50%; top: 10px; transform: translateX(-50%);">
+                        </mat-spinner>
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>TYPE</mat-label>
+                            <mat-select placeholder="Task Type" [(ngModel)]="selectedTaskType" (ngModelChange)="updateTaskTypeAndLayer()" [disabled]="loadingTypes">
+                                <mat-option *ngFor="let taskType of taskTypes" [value]="taskType">{{taskType.type}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-spinner *ngIf="loadingLayers" [diameter]="20" style="position: absolute; left: 50%; top: 10px; transform: translateX(-50%);">
+                        </mat-spinner>
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>LAYER</mat-label>
+                            <input matInput placeholder="Task Layer" [(ngModel)]="task.layer" autocomplete="off" readonly disabled>
+                            <!-- <mat-select placeholder="Task Layer" [(ngModel)]="task.layer" [disabled]="true">
+                                <mat-option *ngFor="let layer of taskLayers" [value]="layer">{{layer}}</mat-option>
+                            </mat-select> -->
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>NAME</mat-label>
+                            <input matInput placeholder="Task Name" [(ngModel)]="task.name" autocomplete="off">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <!-- ROW 2 -->
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>NO. OF OUTPUT ROUTES</mat-label>
+                            <input matInput placeholder="Instances" [disabled]="task.type!='ROUTER'" [(ngModel)]="task.instances" (ngModelChange)="configChanged()" autocomplete="off">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="2">
+                        <mat-form-field [style.width.%]="task.prevTaskId === -1 ? 30 : 70" appearance="fill">
+                            <mat-label>INPUT TASK</mat-label>
+                            <mat-select placeholder="Previous Task" [(ngModel)]="task.prevTaskId" #prevTaskSelect>
+                                <mat-option [value]="0">None. This is the first task in the flow.</mat-option>
+                                <mat-option *ngFor="let preTask of this.worksheet.tasks; let index = index" [value]="preTask.id">
+                                    {{preTask.id}}.{{preTask.name}}</mat-option>
+                                <mat-option [value]="-1">{{task.prevTaskId === -1 ? 'ID' : 'Enter Task ID'}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <ng-container *ngIf="prevTaskSelect.value === -1">
+                            <mat-form-field style="width: 40%;" appearance="fill">
+                                <mat-label>INPUT TASK ID</mat-label>
+                                <input matInput placeholder="Task ID" [(ngModel)]="prevTaskManualValue" autocomplete="off" type="number" min="1">
+                            </mat-form-field>
+                        </ng-container>
+                        <mat-form-field style="width: 30%;" appearance="fill">
+                            <mat-label>INPUT ROUTE</mat-label>
+                            <input matInput placeholder="Worksheet ID" [(ngModel)]="task.prevTaskInstance" autocomplete="off" type="number" min="1">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <!-- ROW 2 -->
+                    <mat-grid-tile colspan="3">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>DESCRIPTION</mat-label>
+                            <input matInput placeholder="Task Description" [(ngModel)]="task.description" autocomplete="off">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                </mat-grid-list>
+                <div class="general-subcategory-header-container">
+                    <span>DASHBOARD & NOTIFICATIONS</span>
+                </div>
+                <mat-grid-list cols="3" rowHeight="50px" [gutterSize]="'5px'">
+                    <!-- ROW 1 -->
+                    <mat-grid-tile colspan="3">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>RELATED TO SYSTEM</mat-label>
+                            <mat-select placeholder="Select System" [(ngModel)]="task.systemName">
+                                <mat-option [value]="null">Default</mat-option>
+                                <mat-option *ngFor="let system of systems; let i = index" [value]="system.systemName">
+                                    {{system.systemName}} &bull;
+                                    <span class="system-display-chip" [style.background-color]="system.displayColor">
+                                        {{system.displayName}}
+                                   </span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                </mat-grid-list>
+                <!-- <div>
+                    <app-task-configuration-validator [validate]="" (configValidate)="validateConfig($event)" ></app-task-configuration-validator>
+                </div> -->
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <mat-icon>settings</mat-icon><span style="margin-left: 10px;">Configuration</span>
+                </div>
+            </ng-template>
+            <div style="overflow-y: auto; height: 65rem; background-color: white; padding: 10px;">
+                <!-- INPUT TASKS -->
+                <app-file-watcher-configuration *ngIf="task.type=='FILE_WATCHER_LOCAL'" [config]="task.config" (configChange)="getConfig($event)"></app-file-watcher-configuration>
+                <app-mq-listner-configuration *ngIf="task.type=='MQ_LISTENER'" [config]="task.config" (configChange)="getConfig($event)"> </app-mq-listner-configuration>
+                <app-mq-listener-active-mq-configuration *ngIf="task.type=='MQ_LISTENER_ACTIVEMQ'" [config]="task.config" (configChange)="getConfig($event)"></app-mq-listener-active-mq-configuration>
+                <app-fix-listener *ngIf="task.type=='FIX_LISTENER'" [config]="task.config" (configChange)="getConfig($event)"></app-fix-listener>
+                <app-table-listner-configuration *ngIf="task.type=='TABLE_LISTENER'" [config]="task.config" (configChange)="getConfig($event)"></app-table-listner-configuration>
+                <app-router-configuration *ngIf="task.type=='ROUTER'" [config]="task.config" (configChange)="getConfig($event)"></app-router-configuration>
+                <app-file-watcher-md-configuration *ngIf="task.type=='FILE_WATCHER_MD_LOCAL'" [config]="task.config" (configChange)="getConfig($event)"></app-file-watcher-md-configuration>
+                <app-directory-watcher-configuration *ngIf="task.type=='DIRECTORY_WATCHER_LOCAL'" [config]="task.config" (configChange)="getConfig($event)"></app-directory-watcher-configuration>
+                <app-file-watcher-sftp-configuration *ngIf="task.type=='FILE_WATCHER_SFTP'" [config]="task.config" (configChange)="getConfig($event)"></app-file-watcher-sftp-configuration>
+                <app-rabbit-mq-listener-configuration *ngIf="task.type=='MQ_LISTENER_RABBITMQ'" [config]="task.config" (configChange)="getConfig($event)"></app-rabbit-mq-listener-configuration>
+                <!-- PROCESSING TASKS -->
+                <app-field-mapper-configuration *ngIf="task.type=='FIELD_MAPPER'" [config]="task.config" (configChange)="getConfig($event)"></app-field-mapper-configuration>
+                <app-aggregator-configuration *ngIf="task.type=='AGGREGATOR'" [config]="task.config" (configChange)="getConfig($event)"></app-aggregator-configuration>
+                <app-matcher-configuration *ngIf="task.type=='MATCHER'" [config]="task.config" (configChange)="getConfig($event)"></app-matcher-configuration>
+                <app-data-filter-configuration *ngIf="task.type=='DATA_FILTER'" [config]="task.config" (configChange)="getConfig($event)"></app-data-filter-configuration>
+                <app-splitter-configuration *ngIf="task.type=='SPLITTER'" [config]="task.config" [parentSelectedIndex]="selectedTabIndex" (configChange)="getConfig($event)"></app-splitter-configuration>
+                <app-plsdata-injector-configuration *ngIf="task.type=='DATA_INJECTOR_PLS'" [config]="task.config" (configChange)="getConfig($event)"></app-plsdata-injector-configuration>
+                <app-hold-release-configuration *ngIf="task.type=='HOLD_RELEASE'" [config]="task.config" (configChange)="getConfig($event)"></app-hold-release-configuration>
+                <app-trades-deal-processor-configuration *ngIf="task.type=='DEAL_PROCESSOR_TRADES'" [config]="task.config" (configChange)="getConfig($event)"></app-trades-deal-processor-configuration>
+                <app-decision-engine-job-configuration *ngIf="task.type=='DECISION_FLOW_CREATE_JOB'" [config]="task.config" (configChange)="getConfig($event)"></app-decision-engine-job-configuration>
+                <app-alert-assessment-mapper-configuration *ngIf="task.type=='ALERT_ASSESSMENT_MAPPER'" [config]="task.config" (configChange)="getConfig($event)"></app-alert-assessment-mapper-configuration>
+                <app-collector-configration *ngIf="task.type=='COLLECTOR'" [config]="task.config" (configChange)="getConfig($event)"></app-collector-configration>
+                <!-- OUTPUT TASKS -->
+                <app-file-writer-configuration *ngIf="task.type=='FILE_WRITER_LOCAL'" [config]="task.config" (configChange)="getConfig($event)"></app-file-writer-configuration>
+                <app-mq-sender-configuration *ngIf="task.type=='MQ_SENDER'" [config]="task.config" (configChange)="getConfig($event)"></app-mq-sender-configuration>
+                <app-mq-sender-active-mq-configuration *ngIf="task.type=='MQ_SENDER_ACTIVEMQ'" [config]="task.config" (configChange)="getConfig($event)"></app-mq-sender-active-mq-configuration>
+                <app-fix-sender-configuration *ngIf="task.type=='FIX_SENDER'" [config]="task.config" (configChange)="getConfig($event)"></app-fix-sender-configuration>
+                <app-mail-sender-configuration *ngIf="task.type=='MAIL_SENDER'" [config]="task.config" (configChange)="getConfig($event)"></app-mail-sender-configuration>
+                <app-table-inserter-configuration *ngIf="task.type=='TABLE_INSERTER'" [config]="task.config" (configChange)="getConfig($event)"></app-table-inserter-configuration>
+                <app-rest-api-handler-configuration *ngIf="task.type=='REST_API_HANDLER'" [config]="task.config" (configChange)="getConfig($event)"></app-rest-api-handler-configuration>
+                <app-data-injector-trades-configuration *ngIf="task.type=='DATA_INJECTOR_TRADES'" [config]="task.config" (configChange)="getConfig($event)"></app-data-injector-trades-configuration>
+                <app-rabbit-mq-sender-configuration *ngIf="task.type=='MQ_SENDER_RABBITMQ'" [config]="task.config" (configChange)="getConfig($event)"></app-rabbit-mq-sender-configuration>
+                <app-multiple-database-configuration *ngIf="task.type=='MULTIPLE_DATABASE'" [config]="task.config" (configChange)="getConfig($event)"></app-multiple-database-configuration>
+                <app-etl-task-configuration *ngIf="task.type=='DATA_LOADER_ETL'" [config]="task.config" (configChange)="getConfig($event)"> </app-etl-task-configuration>
+                <!-- CUSTOM TASKS -->
+                <app-scfdata-injector-configuration *ngIf="task.type=='DATA_INJECTOR_SCF'" [config]="task.config" (configChange)="getConfig($event)"></app-scfdata-injector-configuration>
+                <app-scfdeal-processor-configuration *ngIf="task.type=='DEAL_PROCESSOR_SCF'" [config]="task.config" (configChange)="getConfig($event)"></app-scfdeal-processor-configuration>
+                <app-fxdeal-processor-configuration *ngIf="task.type=='DEAL_PROCESSOR_FX'" [config]="task.config" (configChange)="getConfig($event)"></app-fxdeal-processor-configuration>
+                <app-plsdeal-processor-configuration *ngIf="task.type=='DEAL_PROCESSOR_PLS'" [config]="task.config" (configChange)="getConfig($event)"></app-plsdeal-processor-configuration>
+
+                <app-fxdata-injector-configuration *ngIf="task.type=='DATA_INJECTOR_FX'" [config]="task.config" (configChange)="getConfig($event)"></app-fxdata-injector-configuration>
+                <app-static-data-processor *ngIf="task.type=='STATIC_DATA_PROCESSOR'" [config]="task.config" (configChange)="getConfig($event)"> </app-static-data-processor>
+                <app-file-batch-listener-configuration *ngIf="task.type=='FILE_BATCH_LISTENER'" [config]="task.config" (configChange)="getConfig($event)"> </app-file-batch-listener-configuration>
+                <app-xslt-processor-configuration *ngIf="task.type=='XSLT_PROCESSOR'" [config]="task.config" (configChange)="getConfig($event)"> </app-xslt-processor-configuration>
+                <app-command-executor-configuration *ngIf="task.type=='COMMAND_EXECUTOR'" [config]="task.config" (configChange)="getConfig($event)"> </app-command-executor-configuration>
+                <app-hold-release-configurationversion2 *ngIf="task.type=='HOLD_RELEASE2'" [config]="task.config" (configChange)="getConfig($event)"></app-hold-release-configurationversion2>
+                <app-dynamic-data-injector-configuration *ngIf="task.type=='DATA_INJECTOR_DYNAMIC'" [config]="task.config" (configChange)="getConfig($event)"></app-dynamic-data-injector-configuration>
+
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <div class="actions-container">
+        <!-- <mat-spinner *ngIf="creating" [diameter]="20" style="float: left;"></mat-spinner> -->
+        <div *ngIf="task.id == null" style="float: right; margin-left: 10px;" class="button-container">
+            <div class="spinner-container" *ngIf="creating || validating">
+                <mat-spinner diameter="24"></mat-spinner>
+            </div>
+            <button mat-raised-button style="background-color: royalblue; color: white;" (click)="yourCreatefunc()" [disabled]="!task.name || creating" [class.button-disabled]="!task.name || creating || validating">
+                <mat-icon>add</mat-icon>
+                <span style="padding-left: 10px;">Create</span>
+            </button>
+        </div>
+        <div *ngIf="task.id != null" style="float: right; margin-left: 10px;" class="button-container">
+            <div class="spinner-container" *ngIf="creating || validating">
+                <mat-spinner diameter="24"></mat-spinner>
+            </div>
+            <button mat-raised-button style="background-color: rgb(0, 155, 155); color: white;" (click)="yourUpdatefunc()" [disabled]="!task.name || creating" [class.button-disabled]="!task.name || creating || validating">
+                <mat-icon>save</mat-icon>
+                <span style="padding-left: 10px;">Update</span>
+            </button>
+        </div>
+        <button mat-stroked-button cdkFocusInitial color="primary" style="float: right;" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <div *ngIf="task.id == null" style="margin-left: 10px;">
+            <div class="spinner-container" *ngIf="creating || validating">
+                <mat-spinner diameter="24"></mat-spinner>
+            </div>
+            <mat-checkbox class="example-margin" [(ngModel)]="valiDation">Force Create</mat-checkbox>
+        </div>
+        <div *ngIf="task.id != null" style="margin-left: 10px;">
+            <div class="spinner-container" *ngIf="creating || validating">
+                <mat-spinner diameter="24"></mat-spinner>
+            </div>
+            <mat-checkbox class="example-margin" [(ngModel)]="valiDation">Force Update</mat-checkbox>
+        </div>
+    </div>
+</div>

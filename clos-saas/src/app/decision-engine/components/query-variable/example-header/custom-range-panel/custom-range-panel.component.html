@@ -1,0 +1,13 @@
+<div style=" position: sticky; top: 0;color: rgb(0, 0, 0);text-align: center;background-color: whitesmoke;padding: 1rem;border-radius: 0.5px;box-shadow: inset 0 0 20px #c4c4c4;">Quick ranges</div>
+  
+<mat-card class="mat-elevation-z3" style="height: 160%;overflow-y: auto;width:150px;overflow-x: hidden">
+ <button
+   *ngFor="let item of customPresets"
+   mat-button
+   color="primary"
+   (click)="selectRange(item)"
+ >
+   {{ item }}
+ </button>
+</mat-card>
+

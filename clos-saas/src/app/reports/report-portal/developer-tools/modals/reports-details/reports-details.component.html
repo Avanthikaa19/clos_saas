@@ -1,0 +1,318 @@
+<div class="report-detail-container">
+    <div class="report-title">
+        <span>Report Details</span>
+    </div>
+    <div class="report-details">
+        <span class="min-label">Name:</span><input [(ngModel)]="report.name" class="min-input field-name">
+        <span class="min-label">Nick Name:</span><input [(ngModel)]="report.nickname" class="min-input field-name">
+        <span class="min-label">Visible To:</span>
+        <mat-select [(ngModel)]="report.visibleTo" class="min-select" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'">Everyone</mat-option>
+        </mat-select>
+        <span class="min-label">Editable By:</span>
+        <mat-select [(ngModel)]="report.editableBy" class="min-select" style="width: 120px;">
+            <mat-option [value]="'OWNER_ONLY'">Myself Only</mat-option>
+            <mat-option [value]="'EVERYONE'" [disabled]="report.visibleTo === 'OWNER_ONLY'">Everyone</mat-option>
+        </mat-select>
+    </div>
+    <div class="report-details">
+        <span class="min-label">Description:</span><input [(ngModel)]="report.description"
+            class="min-input field-description" style="width: 70%">
+        <span class="min-label">Report Folder Name:</span><input [(ngModel)]="report.reportFolder" class="min-input"
+            style="width: 20%">
+    </div>
+    <div class="report-details">
+        <span class="min-label">Output Folder:</span><input [(ngModel)]="report.outputFolder" class="min-input"
+            style="width:550px">
+        <span class="min-label">Output File Name:</span><input [(ngModel)]="report.outputFileName" class="min-input"
+            style="width:245px">
+        <span class="min-label">Default Output Format:</span>
+        <mat-select *ngIf="!customFormat" [(ngModel)]="report.outputFormat" class="min-select" style="width: 120px;">
+            <mat-option [value]="'csv'">CSV</mat-option>
+            <mat-option [value]="'xls'">XLS</mat-option>
+            <mat-option [value]="'xlsx'">XLSX</mat-option>
+            <mat-option [value]="'pdf'">PDF</mat-option>
+            <mat-option [value]="'txt'">TXT</mat-option>
+            <mat-option (click)="customFormat=true">Custom</mat-option>
+        </mat-select>
+        <input *ngIf="customFormat" placeholder="Custom Format" [(ngModel)]="report.outputFormat" class="min-input"
+            style="width:110px">
+        <mat-icon *ngIf="customFormat" (click)="customFormat=false" matTooltip="Revert to default chooser">rotate_left
+        </mat-icon>
+        <button class="formats-btn" matRipple (click)="showSupportedFormatsPopup=true;">
+            <span>Available Formats</span>
+        </button>
+        <div class="selected-formats-container" [@fadeInOut] *ngIf="showSupportedFormatsPopup">
+            <mat-checkbox color="primary" [(ngModel)]="spCSV">CSV</mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="spXLS">XLS</mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="spXLSX">XLSX</mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="spPDF">PDF</mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="spTXT">TXT</mat-checkbox>
+            <button mat-raised-button color="primary" (click)="showSupportedFormatsPopup=false;">
+                <mat-icon>done</mat-icon>
+                <span>Done</span>
+            </button>
+        </div>
+    </div>
+    <div class="reports-main-tab-group-container">
+        <mat-tab-group [(selectedIndex)]="selectedMainTabIndex">
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="noselect custom-mat-tab-label"
+                        [class.custom-mat-tab-label-selected]="selectedMainTabIndex === 0">
+                        <mat-icon>filter_none</mat-icon>
+                        <span>Sheets</span>
+                    </div>
+                </ng-template>
+                <div class="reports-sheets-tab-group-container">
+                    <mat-tab-group [(selectedIndex)]="selectedSheetsTabIndex" headerPosition="below" disableRipple>
+                        <mat-tab *ngFor="let sheet of report.sheets; let i = index">
+                            <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                                <div class="noselect custom-mat-tab-label"
+                                    [class.custom-mat-tab-label-selected]="selectedSheetsTabIndex === i"
+                                    [id]="'list-'+i" cdkDropList (cdkDropListDropped)="drop($event, report.sheets)"
+                                    [cdkDropListConnectedTo]="getAllListConnections(i)">
+                                    <mat-icon>view_carousel</mat-icon>
+                                    <span *ngIf="!editingSheetName[i]" class="sheetDrag" style="margin-left: 10px;"
+                                        cdkDrag>{{sheet.name}}</span>
+                                    <input *ngIf="editingSheetName[i]" maxlength="255" [(ngModel)]="sheet.name"
+                                        class="min-input">
+                                    <button mat-icon-button (click)="editingSheetName[i] = !editingSheetName[i]">
+                                        <mat-icon [@fadeInOut] *ngIf="!editingSheetName[i]"
+                                            style="color: black;font-size:20px;"
+                                            matTooltip="Click here to edit this sheet's name.">edit</mat-icon>
+                                        <mat-icon [@fadeInOut] *ngIf="editingSheetName[i]" style="color: crimson;">done
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                            </ng-template>
+                            <div class="layout-preview-container">
+                                <div class="layout-chooser-large-placeholder" [@fadeInOut]
+                                    *ngIf="!sheet.selectedLayout && !loadingItems">
+                                    <div class="layout-chooser-inner-container noselect" matRipple
+                                        (click)="openLayoutChooserComponent(i)">
+                                        <mat-icon>add_circle</mat-icon>
+                                        <span>Choose A Layout</span>
+                                    </div>
+                                </div>
+                                <app-layout-single-card *ngIf="sheet.selectedLayout" [layout]="sheet.selectedLayout"
+                                    matTooltip="Click here to change layout." (click)="openLayoutChooserComponent(i)">
+                                </app-layout-single-card>
+                                <button mat-raised-button class="delete-sheet-btn" color="warn" (click)="removeSheet(i)"
+                                    matTooltip="Click here to remove this sheet."
+                                    [disabled]="report.sheets?.length == 1">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </mat-tab>
+                        <mat-tab disabled>
+                            <ng-template mat-tab-label>
+                                <button mat-icon-button style="color: royalblue"
+                                    (click)="addSheet(report.sheets.length-1)"
+                                    matTooltip="Click here to add a new sheet.">
+                                    <mat-icon>add_circle</mat-icon>
+                                </button>
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="noselect custom-mat-tab-label"
+                        [class.custom-mat-tab-label-selected]="selectedMainTabIndex === 1">
+                        <mat-icon>input</mat-icon>
+                        <span>Parameters</span>
+                    </div>
+                </ng-template>
+                <div class="param-field">
+                    <ng-container *ngIf="report.parameters">
+                        <ng-container *ngFor="let param of report.parameters; let i = index">
+                            <div class="sheet-number">
+                                <span>Parameter {{i+1}}</span>
+                            </div>
+                            <div class="divider">
+                                <div class="paramForm">
+                                    <span>Name: </span>
+                                    <input type="text" class="min-input" [(ngModel)]="param.name"
+                                        oninput="this.value = this.value.replace(/^\s+/g, '');">
+                                </div>
+                                <div class="paramForm">
+                                    <span>Formula Name: </span>
+                                    <input type="text" class="min-input" [(ngModel)]="param.formulaName" readonly>
+                                </div>
+                                <div class="paramForm">
+                                    <span>Formula Type: </span>
+                                    <input type="text" class="min-input" [(ngModel)]="param.formulaType">
+                                </div>
+                                <div class="paramForm">
+                                    <span>Formula Value: </span>
+                                    <input type="text" class="min-input" [(ngModel)]="param.formulaValue">
+                                </div>
+                                <div class="paramForm">
+                                    <span>Mandatory: </span>
+                                    <mat-checkbox class="example-margin" [(ngModel)]="param.mandatory"></mat-checkbox>
+                                </div>
+                                <div class="paramForm">
+                                    <span>UserEditable: </span>
+                                    <mat-checkbox class="example-margin" [(ngModel)]="param.userEditable"> </mat-checkbox>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="false">
+                        <ng-container *ngIf="report.sheets">
+                            <ng-container *ngFor="let sheet of report.sheets; let i = index">
+                                <ng-container *ngIf="sheet.selectedLayout">
+                                    <div class="sheet-number">
+                                        <span>{{sheet.selectedLayout.name}}</span>
+                                    </div>
+                                    <ng-container *ngIf="sheet.selectedLayout.specification">
+                                        <ng-container *ngIf="sheet.selectedLayout.specification.extractionBands">
+                                            <ng-container
+                                                *ngFor="let extractionBand of sheet.selectedLayout.specification.extractionBands">
+                                                <ng-container *ngIf="extractionBand.parameters">
+                                                    <ng-container *ngFor="let param of extractionBand.parameters">
+                                                        <div class="divider">
+                                                            <div class="paramForm">
+                                                                <span>Name: </span>
+                                                                <input type="text" class="min-input"
+                                                                    oninput="this.value = this.value.replace(/^\s+/g, '');">
+                                                            </div>
+                                                            <div class="paramForm">
+                                                                <span>Formula Name: </span>
+                                                                <input type="text" class="min-input">
+                                                            </div>
+                                                            <div class="paramForm">
+                                                                <span>Formula Type: </span>
+                                                                <input type="text" class="min-input">
+                                                            </div>
+                                                            <div class="paramForm">
+                                                                <span>Formula Value: </span>
+                                                                <input type="text" class="min-input">
+                                                            </div>
+                                                            <div class="paramForm">
+                                                                <span>Mandatory: </span>
+                                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                                            </div>
+                                                            <div class="paramForm">
+                                                                <span>UserEditable: </span>
+                                                                <mat-checkbox class="example-margin"> </mat-checkbox>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+
+                </div>
+
+                <!-- <div *ngFor="let sheet of report.sheets; let i = index">
+                    <div>
+                           Sheet Name {{sheet.name}}
+                    </div>
+                </div> -->
+            </mat-tab>
+            <mat-tab *ngIf="false">
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="noselect custom-mat-tab-label"
+                        [class.custom-mat-tab-label-selected]="selectedMainTabIndex === 2">
+                        <mat-icon>code</mat-icon>
+                        <span>Pre-Processing</span>
+                    </div>
+                </ng-template>
+                <div *ngIf="report.computationStages?.length==0 || !report.computationStages" class="layout-chooser"
+                    style="left:40%;">
+                    <mat-icon class="sheet-icon" style="margin:50px;" [@fadeInOut]
+                        (click)="OpenComputationStageDetail(null, 0);">add_circle</mat-icon>
+                    <div class="display"> Add Computation Stage</div>
+                </div>
+                <div *ngIf="report.computationStages?.length > 0" style="height:540px; overflow:auto;">
+                    <div class="computation-card noselect" *ngFor="let stage of report.computationStages; let i=index;"
+                        [@fadeInOut] (click)="OpenComputationStageDetail(stage, i)" matRipple>
+                        <div class="computation-details1">
+                            <div class="computation-card-name">
+                                {{stage.name}}
+                                <div class="computation-card-description">
+                                    {{stage.description}}
+                                </div>
+                                <button mat-raised-button color="warn" [disabled]="saving"
+                                    (click)="$event.stopPropagation();spliceStages(stage);">
+                                    <mat-icon>delete</mat-icon>
+                                    <span style="padding-left: 10px;">Delete Stage</span>
+                                </button>
+                            </div>
+                            <div class="computation-card-separator"></div>
+                            <div style=" width: 100%;margin-left: 10px;">
+                                <ng-container *ngFor="let computation of stage.computationQueries; let i = index;">
+                                    <div *ngIf="i < 3" style="display: flex;background:#ebeaea;margin:5px;padding:4px;">
+                                        <div style="width: 20%;">{{computation.name}}</div>
+                                        <div style="width: 20%;">{{computation.description}}</div>
+                                        <div style="width: 60%;">{{computation.sql}}</div>
+                                    </div>
+                                </ng-container>
+                                <div class="text-right" style="color: #d01d22;"
+                                    *ngIf="stage.computationQueries.length > 3">
+                                    +{{stage.computationQueries.length - 3}} more...
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="stage.parallelize" id="ribbon-container">
+                            <span id="ribbon">Parallelize</span>
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: flex-end;margin-top:1rem;">
+                        <button class="tb-btn noselect"
+                            (click)="OpenComputationStageDetail(null,report.computationStages.length )">
+                            <mat-icon class="mr-2">add_circle</mat-icon> Add Stages
+                        </button>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="report-details-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <div class="spacer"></div>
+        <span class="save-validation-error">
+            {{
+            !report.name ? 'Report name is required.' :
+            (
+            !report.outputFolder ? 'Report output folder is required.' :
+            (
+            !report.outputFileName ? 'Report output file name is required.' : ''
+            )
+            )
+            }}
+        </span>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="!report.id"
+            [disabled]="saving || !report.name || !report.outputFolder || !report.outputFileName"
+            (click)="createReport()">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Creating...' : 'Create'}}</span>
+        </button>
+        <button mat-raised-button color="warn" class="item-right" *ngIf="report.id" [disabled]="saving"
+            (click)="deleteReport()">
+            <mat-icon>delete</mat-icon>
+            <span style="padding-left: 10px;">Delete Report</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" *ngIf="report.id"
+            [disabled]="saving || !report.name || !report.outputFolder || !report.outputFileName"
+            (click)="updateReport()">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">{{saving ? 'Saving Changes...' : 'Save Changes'}}</span>
+        </button>
+        <div style="text-align: end;color: red;" *ngIf="deleteStageId.length > 0 && report.id">{{deleteStageId.length}}
+            stages will be deleted on saving.</div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="main-container">
+    <div class="header-container">
+        <span style="font-size: 120%; background: inherit;">Create Query Params</span>
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="inner-container">
+        <div class="sub-header">
+            <span>General</span>
+        </div>
+        <div class="node-detail">
+            <div class="label">
+                <span>Name :</span>
+            </div>
+            <div class="value">
+                <input class="min-input" style="width:200px;" placeholder="query param name" [(ngModel)]="queryParams.name" name="name">
+            </div>
+        </div>
+
+        <div class="node-detail">
+            <div class="label">
+                <span>Type :</span>
+            </div>
+            <div class="value">
+                <mat-select class="min-select" style="width:100px;" [(ngModel)]="queryParams.type">
+
+                    <mat-option *ngFor="let type of types" [value]="type" name="types">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="node-detail">
+            <div class="label">
+                <span>Columns :</span>
+            </div>
+            <div class="value">
+                <mat-select class="min-select" style="width:260px;" [(ngModel)]="queryParams.columns">
+                    <mat-option>
+                        <ngx-mat-select-search placeholderLabel="Find column..." ngModel (ngModelChange)="filterColumns($event)" noEntriesFoundLabel='No columns match search criteria.'>
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let columns of filteredColumns" [value]="columns.name" name="columns">
+                        {{columns.name}}
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <div class="spacer">
+
+        </div>
+        <div class="sub-header" style="position: relative; bottom: 25px;">
+            <span>{{queryParams.type=="query"?"Query(options)":"Filter(Optional)"}}</span>
+        </div>
+
+        <div class="node-detail" *ngIf="queryParams.type=='query'" style="height: 170px;width: 700px;">
+            <div class="label">
+                <span>Query :</span>
+            </div>
+            <div class="value">
+                <textarea class="min-input" style="width:600px;height: 150px;" placeholder="Enter query" [(ngModel)]="queryParams.query" name="name"> </textarea>
+            </div>
+        </div>
+        <div class="node-detail" style="margin-bottom: 18px;">
+
+            <div class="value" style="vertical-align: top;" *ngIf="queryParams.type=='filter'">
+                <button mat-flat-button color="primary" style="float:right;" class="button-cls" (click)="addFilterData()" matTooltip="button to add filter">
+                    <mat-icon>add</mat-icon>add
+                </button>
+
+                <div style="height: 160px;width: 734px;background-color: whitesmoke;overflow:auto;padding:5px;">
+                    <div class='default' *ngIf="!queryParams.filter">Click the add button to include filters</div>
+
+                    <div *ngFor="let filter of queryParams.filter;let i=index" style="padding:2px;display:inline;">
+                        <div style="    margin-bottom: 17px;display: inline-block;">
+                            <div style="display: inline;padding:10px 5px; background: #fff;top: 10px;position: relative;box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;">
+                                <mat-select matTooltip="Select Value" style="font-size: 13px;width: 89px;padding: 0 6px;background-color: white;border: 2px solid #cdcdcda1;" placeholder="Select Value" [(ngModel)]="filter.columns">
+                                    <!-- <mat-option>
+                                        <ngx-mat-select-search placeholderLabel="Find column..." ngModel (ngModelChange)="filterColumns($event)" noEntriesFoundLabel='No columns match search criteria.'>
+                                        </ngx-mat-select-search>
+                                    </mat-option> -->
+                                    <mat-option *ngFor="let columns of filteredColumns" [value]="columns.name" name="columns">
+                                        {{columns.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <span style="padding: 4px;"></span>
+                                <mat-select [(ngModel)]="filter.operator" matTooltip="Select Condition" placeholder="condition" style="border: 2px solid #cdcdcda1;font-size: 13px;width: 54px;padding:0 7px;background-color: white;">
+                                    <mat-option *ngFor="let symbol of symbols" [value]="symbol.value">
+                                        <span style="text-transform: capitalize;">
+                            {{symbol.value}}
+                        </span>
+                                    </mat-option>
+                                </mat-select>
+                                <span style="padding: 4px;"></span>
+                                <input type="text" matTooltip="Enter the value" placeholder="Enter the value" [(ngModel)]="filter.operand" class="min-input" style="font-size: 13px;width: 77px;padding: 2px 6px;background-color: white">
+                                <mat-icon matTooltip="Remove" style="color:red;width: 26px; font-size: 13px;text-align: center;cursor: pointer;" (click)="removeFilterData(i)">clear</mat-icon>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="(i+1)!=queryParams.filter.length">
+                            <div class="arthemetic_condition">
+                                <mat-slide-toggle color="primary" [(ngModel)]="queryParams.filter[i+1].choosen" class="button-class"></mat-slide-toggle>
+                                <span style="font-size: smaller;">
+                          {{queryParams.filter[i+1].choosen===true ?"AND":"OR"}}
+                          </span>
+                            </div>
+                        </ng-container>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="button-container">
+            <mat-dialog-actions align="end">
+                <button class="create" mat-flat-button class="clos-submit-btn" (click)="onCreateClick()" [class.disabled]="!queryParams.name" [disabled]="!queryParams.name">
+                <mat-icon *ngIf="!data">add</mat-icon>
+                <mat-icon *ngIf="data">edit</mat-icon>
+                <span *ngIf="!data">Create</span>
+                <span *ngIf="data">Edit</span>
+
+            </button>
+                <button mat-flat-button (click)="onCloseClick()" class="clos-btn">
+                <mat-icon>close</mat-icon>
+                <span>Close</span>
+            </button>
+
+            </mat-dialog-actions>
+
+        </div>
+
+    </div>
+</div>

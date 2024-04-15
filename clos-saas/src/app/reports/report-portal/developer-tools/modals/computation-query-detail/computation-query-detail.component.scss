@@ -1,0 +1,66 @@
+.computation-detail-container {
+    width: 100%;
+    max-height: 80%;
+    font-size: 14px;
+    > .computation-title {
+        width: 100%;
+        height: 50px;
+        line-height: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+        border-bottom: solid gainsboro 1px;
+        > span {
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+    > .computation-details {
+        width: 100%;
+        height: 24px;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        > .field-name {
+            flex: 1;
+        }
+        > .field-description {
+            flex: 1;
+        }
+    }
+    > .computation-spec-title {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        display: flow-root;
+        > .float-right {
+            float: right;
+        }
+        > .info-icon {
+            color: silver;
+            transition: color linear 100ms;
+        }
+        > .info-icon:hover {
+            color: dimgray;
+        }
+    }
+    > .computation-spec-container {
+        margin-top: 10px;
+        border: solic gainsboro 1px;
+        // max-height: 60vh;
+        // overflow-y: auto;
+        // position: relative;
+    }
+    > .computation-details-action {
+        margin-top: 10px;
+        clear: both;
+        > .item-left {
+            float: left;
+            margin-right: 10px;
+        }
+        > .item-right {
+            float: right;
+            margin-left: 10px;
+        }
+    }
+}

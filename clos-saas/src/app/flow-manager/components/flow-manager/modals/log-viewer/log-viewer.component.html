@@ -1,0 +1,74 @@
+<div style="height: 730px; position: relative">
+    <div style="height: 50px; position: relative;">
+        <h5>Logs for worksheet {{worksheet.id}}</h5>
+        <button mat-button color="accent" style="position: absolute; top: 0px; right: 10px;" (click)="refreshLogs()">Click To Refresh</button>
+    </div>
+    <div class="content-container" style="height: calc(100% - 100px); position: absolute; top: 50px; overflow-y: auto;">
+        <div id="tableContainer" class="tableContainer">
+            <table cellpadding="0" cellspacing="0" width="100%">
+                <thead class="fixedHeader">
+                    <tr>
+                        <th><a>Timestamp</a></th>
+                        <th><a>Task ID</a></th>
+                        <th><a>Severity</a></th>
+                        <th><a>Source</a></th>
+                        <th><a>Message</a></th>
+                        <th><a>View</a></th>
+                    </tr>
+                </thead>
+                <tbody class="scrollContent">
+                    <tr *ngFor="let log of logs; let i = index">
+                        <td style="text-align: center;">
+                            {{log.timestamp | date: 'dd MM yyyy HH:mm:ss'}}
+                        </td>
+                        <td style="text-align: center;">
+                            {{log.taskId}}
+                        </td>
+                        <td style="text-align: center;">
+                            {{log.logType}}
+                        </td>
+                        <td style="text-align: center;">
+                            {{log.source}}
+                        </td>
+                        <td style="display: block; width: 500px; height: 32px;line-height: 23px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{log.message}}
+                        </td>
+                        <td>
+                            <button mat-button style="width: 100%; font-size: 12px; line-height: 18px; height: auto;"
+                                (click)="selectedLogMessage=log.message">
+                                <mat-icon *ngIf="log.logType!='ERROR'" color="accent">more</mat-icon>
+                                <mat-icon *ngIf="log.logType=='ERROR'" color="warn">more</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="selectedLogMessage" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: rgba(255, 255, 255, 0.4);">
+    </div>
+    <mat-card style="position: absolute; width: 90%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 19;" *ngIf="selectedLogMessage">
+        <mat-card-content>
+            <h5 style="padding: 20px 0 10px 0;">Message:</h5>
+            <div style="max-height: 500px; width: 100%; overflow-y: auto; overflow-wrap: break-word;">
+                <p>
+                    {{selectedLogMessage}}
+                </p>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="warn" (click)="selectedLogMessage=''" style="float: right;">Close</button>
+        </mat-card-actions>
+    </mat-card>
+    <mat-card style="position: absolute; width: 90%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20;" *ngIf="loading">
+        <mat-card-content>
+            <div style="text-align: center;">
+                Loading logs..
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div style="position: absolute; bottom: 0; width: 100%; z-index: 18;">
+        <button mat-stroked-button color="warn" (click)="onClose()" style="float: right;">
+        <mat-icon>close</mat-icon>    Close</button>
+    </div>
+</div>

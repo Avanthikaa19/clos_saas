@@ -1,0 +1,244 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        AGGREGATES:
+    </div>
+    <table style="width: 100%; margin-left: 0px;">
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <div *ngFor="let element of config.aggregate; let i = index"
+                        style="position: relative; margin-bottom: 10px;">
+                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                            (click)="config.aggregate.splice(i, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                    <td>
+                                        <span class="min-label">Output Name</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.aggregate[i].outputName" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Input Field</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.aggregate[i].inputField" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Operation</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.aggregate[i].operation" class="min-input">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="config.aggregate.length > 1"
+                            style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                    </div>
+                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                        <span class="add-items-text">Click the + icon to add items.</span>
+                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.aggregate.push({outputName: '', inputField: '', operation:'SUM'});">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        GROUP BY FIELDS:
+    </div>
+    <table style="width: calc(100% - 20px);">
+        <tbody>
+            <tr *ngFor="let element of config.group_by; let index = index; trackBy: trackByIndex;">
+                <td>
+                    <span>{{index + 1}}.</span>
+                </td>
+                <td>
+                    <div style="margin-bottom: 1px; position: relative;">
+                        <input [(ngModel)]="config.group_by[index]" class="min-input">
+                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                            (click)="config.group_by.splice(index, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="height: 26px; position: relative; padding-left: 40px;">
+        <span class="add-items-text">Click the + icon to add items.</span>
+        <button mat-icon-button color="primary" class="min-button min-add-button"
+            (click)="config.group_by.push('');">
+            <mat-icon style="font-size: 14px;">add</mat-icon>
+        </button>
+    </div>
+    <div class="category-sub-header">
+        BUCKET RULES:
+    </div>
+    <table *ngIf="config.buckets" style="width: 100%; margin-left: 0px;" >
+        <tbody>
+            <tr>
+                <td>
+                    <div *ngFor="let element of config.buckets; let i = index"
+                        style="position: relative; margin-bottom: 10px;">
+                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                            (click)="config.buckets.splice(i, 1);">
+                            <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <table style="margin-right: 30px;">
+                            <tbody>
+                                <tr>
+                                    <td><span>{{i+1}}.</span></td>
+                                    <td>
+                                        <span class="min-label">Field Name</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <div style="position: relative;">
+                                            <input [(ngModel)]="config.buckets[i].field" class="min-input">
+                                            <div style="color: red; position: absolute; right: 5px; top: 4px; font-style: italic; opacity: 0.5;"
+                                                class="noselect" matTooltip="Both time & quantity limits are 0. Entries falling under this rule will NOT be aggregated."
+                                                *ngIf="(config.buckets[i].rule.time_limit_sec == null ? 0 : config.buckets[i].rule.time_limit_sec) == 0 && 
+                                                (config.buckets[i].rule.bucket_limit == null ? 0 : config.buckets[i].rule.bucket_limit) == 0">
+                                                EXCLUSION RULE
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Field Value</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.buckets[i].rule.field_value" class="min-input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Output Field</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <mat-select [(ngModel)]="config.buckets[i].rule.aggregate_output" class="min-select" style="width: 100%;">
+                                            <mat-option *ngFor="let aggregate of getAggregateOutputs()" [value]="aggregate">{{aggregate}}</mat-option>
+                                        </mat-select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Time Limit (sec)</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <div style="position: relative;">
+                                            <input [(ngModel)]="config.buckets[i].rule.time_limit_sec" class="min-input" type="number" min="0">
+                                            <div style="color: orangered; position: absolute; right: 20px; top: 4px; font-style: italic; opacity: 0.5;"
+                                                class="noselect" matTooltip="Global time limit is lesser than this rule's time limit. Global time limit will override this value."
+                                                *ngIf="config.buckets[i].rule.time_limit_sec != null && config.buckets[i].rule.time_limit_sec > 
+                                                config.time_limit_sec">
+                                                IGNORED
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span class="min-label">Quantity Limit</span>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        <input [(ngModel)]="config.buckets[i].rule.bucket_limit" class="min-input" type="number" min="0">
+                                    </td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                        <div *ngIf="config.buckets.length > 1" style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                    </div>
+                    <div style="height: 26px; position: relative; padding-left: 20px;">
+                        <span class="add-items-text">Click the + icon to add items.</span>
+                        <button mat-icon-button color="primary" class="min-button min-add-button"
+                            (click)="config.buckets.push({field: '', rule: {time_limit_sec: 0, aggregate_output: '',bucket_limit:0, field_value: ''}});">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        GLOBAL OPTIONS
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Retain first of other fields</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="config.retain_first_of_other_fields" class="min-input" style="width: 10%;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Time limit (sec)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.time_limit_sec" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        
+        </tbody>
+    </table>
+    <br>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+           
+        </tbody>
+    </table><br>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

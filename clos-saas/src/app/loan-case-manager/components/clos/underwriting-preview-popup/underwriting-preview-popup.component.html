@@ -1,0 +1,261 @@
+<div class="popup-container" style="overflow: hidden;">
+    <div class="summary-container">
+        <mat-icon>description</mat-icon>
+        UNDERWRITING PREVIEW       
+    </div>
+    <div class="row mb-4 pt-4">
+        <div class="col-md-10">
+            <div class="application-list">
+                <ul>
+                    <li>
+                        <span style="font-weight: bold;">APPLICATION ID:</span>
+                        <span style="color: royalblue; margin-left: 5px;">{{appDetails?.ID}}</span>
+                    </li>
+                    <li>
+                        <span style="font-weight: bold;padding-left: 30px;">ENTITY NAME:</span>
+                        <span style="color: royalblue; margin-left: 5px;">{{appDetails?.LEGAL_NAME_OF_THE_COMPANY}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <mat-tab-group [(selectedIndex)]="activeStepIndex">
+        <mat-tab class="tabsName" label="Underwriting Results">
+            <div class="content-container">
+                <div class="table-container">
+                    <span style="font-weight:bold;font-size:16px;color:#012970;">Collateral Check :-</span>
+                    <ng-template #noDataFound>
+                        <div class="header-banner">
+                            <div class="no-data-message">No Data Found</div>
+                        </div>
+                    </ng-template>
+                    <div class="header-banner" *ngIf="collateralCheck; else noDataFound">
+                        <table>
+                            <tr>
+                                <td>Loan To Value Ratio</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="collateralCheck['LoanToValueRatio']"></td>
+                                <td>Range</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="collateralCheck['Range']"></td>
+                                <td>Decision</td>
+                                <td>:</td>
+                                <td><input readonly [style.color]="collateralCheck['LoanToValueRatioDecision'] === 'Accept' || collateralCheck['LoanToValueRatioDecision'] === 'Pass'  ? 'green' : (collateralCheck['LoanToValueRatioDecision'] === 'Reject' || collateralCheck['LoanToValueRatioDecision'] === 'Fail'? 'red' : 'black')"
+                                    [style.font-weight]="(collateralCheck['LoanToValueRatioDecision'] === 'Accept' || collateralCheck['LoanToValueRatioDecision'] === 'Fail' || collateralCheck['LoanToValueRatioDecision'] === 'Pass' || collateralCheck['LoanToValueRatioDecision'] === 'Reject') ? 'bold' : 'normal'" [(ngModel)]="collateralCheck['LoanToValueRatioDecision']"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <span style="font-weight:bold;font-size:16px;color:#012970;">Ratio Check :-</span>
+                    <ng-template #noDataFound>
+                        <div class="header-banner">
+                            <div class="no-data-message">No Data Found</div>
+                        </div>
+                    </ng-template>
+                    <div class="header-banner" *ngIf="ratioCheckList.length; else noDataFound">
+                        <table>
+                            <ng-container *ngFor="let item of ratioCheckList">
+                                <tr>
+                                    <ng-container *ngFor="let key of getObjectKeys(item)">
+                                        <td>{{ key }}</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input
+                                                [style.color]="item[key] === 'Accept' ? 'green' : (item[key] === 'Reject' ? 'red' : 'black')"
+                                                [style.font-weight]="(item[key] === 'Accept' || item[key] === 'Reject') ? 'bold' : 'normal'"
+                                                readonly [value]="item[key]">
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                    <span style="font-weight:bold;font-size:16px;color:#012970;">Credit Rating:-</span>
+                    <ng-template #noDataFound>
+                        <div class="header-banner">
+                            <div class="no-data-message">No Data Found</div>
+                        </div>
+                    </ng-template>
+                    <div class="header-banner" *ngIf="creditRate; else noDataFound">
+                        <table>
+                            <tr>
+                                <td>Credit Rate</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="creditRate['CreditRate']"></td>
+                                <td>Range</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="creditRate['Range']"></td>
+                                <td>Credit Risk</td>
+                                <td>:</td>
+                                <td><input readonly [style.color]="creditRate['CreditRisk'] === 'Low Risk' ? 'green' : (creditRate['CreditRisk'] === 'Medium Risk' ? 'orange' : (creditRate['CreditRisk'] === 'High Risk' ? 'red' : 'black'))"
+                                    [style.font-weight]="(creditRate['CreditRisk'] === 'Low Risk' || creditRate['CreditRisk'] == 'Medium Risk' || creditRate['CreditRisk'] == 'High Risk') ? 'bold' : 'normal'" [(ngModel)]="creditRate['CreditRisk']"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <ng-container *ngIf="creditLimit">
+                        <span style="font-weight:bold;font-size:16px;color:#012970;">Credit Limit:-</span>
+                        <ng-template #noDataFound>
+                            <div class="header-banner">
+                                <div class="no-data-message">No Data Found</div>
+                            </div>
+                        </ng-template>
+                        <div class="header-banner" *ngIf="creditLimitValue; else noDataFound" >
+                            <table>
+                                <tr>
+                                    <td>Credit Limit</td>
+                                    <td>:</td>
+                                    <td><input readonly [style.color]="creditLimitValue['creditLimit'] === 'Accept' || creditLimitValue['creditLimit'] === 'Pass' ? 'green' : (creditLimitValue['creditLimit'] === 'Reject' || creditLimitValue['creditLimit'] === 'Fail' ? 'red' : 'black')"
+                                        [style.font-weight]="(creditLimitValue['creditLimit'] === 'Accept' || creditLimitValue['creditLimit'] === 'Pass' || creditLimitValue['creditLimit'] === 'Fail' || creditLimitValue['creditLimit'] === 'Reject') ? 'bold' : 'normal'" readonly [(ngModel)]="creditLimitValue['creditLimit']"></td>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </table>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </mat-tab>
+        <ng-container *ngIf="loanStatus === 'ROLL_OVER' || loanStatus === 'EXTENSION_OF_LOAN'">
+        <mat-tab class="tabsName" label="Loan Transaction Log">
+            <div class="content-container">
+                <div class="second-header-banner">
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <td>Borrower Information</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.borrowerInformation"></td>
+                                <td>Loan Amount</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.loanAmount"></td>
+                                <td>Interest Rate</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.interestRate"></td>
+                            </tr>
+                            <tr>
+                                <td>Interest Paid</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.interestPaid"></td>
+                                <td>Interest Pending</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.installmentsPending"></td>
+                                <td>Payment Schedule</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.paymentSchedule"></td>
+                            </tr>
+                            <tr>
+                                <td>No Of Installments</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.noOfInstallments"></td>
+                                <td>Installments Paid/td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.installmentsPaid"></td>
+                                <td>Installments Pending</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.installmentsPending"></td>
+                            </tr>
+                            <tr>
+                                <td>Payment Dates</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.paymentDates"></td>
+                                <td>Payment Amounts</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.paymentAmounts"></td>
+                                <td>Late Payments</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.latePayments"></td>
+                            </tr>
+                            <tr>
+                                <td>Principal Paid</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.principalPaid"></td>
+                                <td>Principal Pending</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.principalPending"></td>
+                                <td>Current Status</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.currentStatus"></td>
+                            </tr>
+                            <tr>
+                                <td>Delinquency Status</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.delinquencyStatus"></td>
+                                <td>LatePayment Status</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.latePaymentStatus"></td>
+                                <td>Other Fees</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.otherFees"></td>
+                            </tr>
+                            <tr>
+                                <td>Loan Agreements</td>
+                                <td>:</td>
+                                <td><input readonly [(ngModel)]="loanTransactionLog.loanAgreements"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </ng-container>
+    </mat-tab-group>
+    <div class="action__btn-container" *ngIf="!actionOpen">
+        <div class="bottom-row">
+            <button mat-raised-button class="clos-btn" (click)="onClose()" matTooltip="Close">
+                <mat-icon>close</mat-icon>
+                Close
+            </button>
+            <ng-container>
+                <div class="buttons-container">
+                    <ng-container>
+                        <button mat-raised-button class="clos-btn" matTooltip="Get Credit Limit"
+                            (click)="onGetCreditLimitClick()">
+                            <mat-icon>credit_card</mat-icon>
+                            Get Credit Limit
+                        </button>
+                    </ng-container>
+                    <ng-container>
+                        <button mat-raised-button class="clos-submit-btn" matTooltip="Info Req"
+                            (click)="onPendingClick()">
+                            <mat-icon>assignment</mat-icon>
+                            Info Req
+                        </button>
+                    </ng-container>
+                    <ng-container>
+                        <button mat-raised-button class="clos-submit-btn" matTooltip="Accept" (click)="onAcceptClick()">
+                            <mat-icon>done_all</mat-icon>
+                            Accept
+                        </button>
+                    </ng-container>
+                    <ng-container>
+                        <button mat-raised-button class="clos-btn" matTooltip="Reject"
+                            (click)="denyApproveClick(false)">
+                            <mat-icon>clear</mat-icon>
+                            Reject
+                        </button>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="action-remarks" *ngIf="actionOpen">
+        <div class="close-action-header">
+            <div class="close-action-content">
+                <textarea prohibitedChars style="width: 111%;resize: none;" placeholder="Remarks.." rows="2"
+                    [(ngModel)]="actionRemark"></textarea>
+            </div>
+        </div>
+        <div class="close-action-actions-container" *ngIf="actionMode==false || actionMode==true">
+            <div class="btn-container">
+                <button mat-raised-button class="clos-btn" matTooltip="Close" (click)="actionOpen=false">
+                    <mat-icon>close</mat-icon>Close
+                </button>
+            </div>
+            <div class="spacer"></div>
+            <button style="margin-top:1rem" mat-raised-button
+                (click)="actionMode === true ? onPendingClick():onRejectClick()" class="clos-submit-btn">
+                <mat-icon>{{actionMode === true ? 'assignment' : 'close'}}</mat-icon>
+                <span>{{actionMode === true ? 'Info Req' : 'Reject'}}</span>
+            </button>
+        </div>
+    </div>
+</div>

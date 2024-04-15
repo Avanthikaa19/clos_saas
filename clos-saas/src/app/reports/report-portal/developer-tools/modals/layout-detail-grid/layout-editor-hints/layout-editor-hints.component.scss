@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+    border: none;
+    thead tr {
+        border-bottom: solid whitesmoke 2px;
+    }
+    tbody tr {
+        border-bottom: solid whitesmoke 1px;
+    }
+    th {
+        height: 40px;
+        line-height: 40px;
+        vertical-align: middle;
+        text-align: center;
+        font-weight: bold;
+        color: royalblue;
+    }
+    td {
+        > div {
+            background: linear-gradient(to bottom, whitesmoke 0%, white 100%);
+            text-align: center;
+            color: dimgray;
+            font-weight: bold;
+        }
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        padding: 5px 0;
+    }
+    td:last-child {
+        text-align: left;
+    }
+}

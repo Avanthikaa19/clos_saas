@@ -1,0 +1,26 @@
+<div style="height: 100%; width: 100%; background-color: white; font-size: 14px; padding-top: 10px; overflow: hidden;">
+    <div class="category-header" style="margin-bottom: 5px;">
+        TEST DOWNLOAD FILE
+    </div>
+    <table style="width: 100%;">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">File Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="downloadFileName" class="min-input" style="width: calc(100% - 50px);"
+                        type="text" placeholder="File Name">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ng-container *ngIf="ac.super || ac.items?.DFM004B_FILES_DOWNLOAD">
+        <button mat-raised-button style="margin-left: 30px;margin-top: 15px; width: 150px;" color="primary"
+            (click)="exportFile()">
+            <mat-icon>cloud_download</mat-icon>
+            <span style="padding-left: 10px;">download</span>
+        </button>
+    </ng-container>
+</div>

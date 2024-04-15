@@ -1,0 +1,58 @@
+<div style="font-size: 14px;" *ngIf="worksheet">
+    <div style="height: 40px; line-height: 40px; font-size: 16px; font-weight: 500; font-style: italic; margin-bottom: 20px;">
+        {{workflow.name}} <span style="color: royalblue;"> &#8226;</span> <span style="color: silver;"> 
+            {{worksheet.id == null ? 'CREATE':'UPDATE'}} WORKSHEET {{worksheet.id == null ? '' : 'DETAILS'}}
+        </span>
+        <span *ngIf="worksheet.id" style="float: right; color: silver; font-style: italic;">ID: {{worksheet.id}}</span>
+    </div>
+    <mat-grid-list cols="1" rowHeight="50px" [gutterSize]="'5px'">
+        <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>NAME</mat-label>
+                <input matInput placeholder="Worksheet Name" [(ngModel)]="worksheet.name" #name="ngModel" 
+                autocomplete="off" spellcheck="false" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>DESCRIPTION</mat-label>
+                <input matInput placeholder="Worksheet Description" [(ngModel)]="worksheet.description" autocomplete="off">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>TAG</mat-label>
+                <input matInput placeholder="Category Tag" [(ngModel)]="worksheet.tag" autocomplete="off">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <div style="padding-top: 20px;">
+        <mat-checkbox [(ngModel)]="worksheet.alertEnabled" color="primary">
+          Enable Alerts
+        </mat-checkbox>
+        <button *ngIf="worksheet.id == null" mat-raised-button style="float: right; color: white; margin-left: 10px;" 
+        (click)="createWorksheet()" [disabled]="worksheet.name.length == 0" [style.background-color]="worksheet.name.length == 0 ? 'silver': 'rgba(14, 41, 84, 1)'">
+            <mat-icon>add</mat-icon>
+            <span style="padding-left: 10px;">Create</span>
+        </button>
+        <button *ngIf="worksheet.id != null" mat-raised-button style="float: right; color: white; margin-left: 10px;" 
+        (click)="updateWorksheet()" [disabled]="worksheet.name.length == 0" [style.background-color]="worksheet.name.length == 0 ? 'silver': 'rgba(14, 41, 84, 1)'">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">Update</span>
+        </button>
+        <button mat-stroked-button class="clos-btn" style="float: right;" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span>Close</span>
+        </button>
+        <div style="min-height: 20px; text-align: justify;">
+            <span *ngIf="worksheet.name.length == 0" style="color:red">
+                Worksheet name is a mandatory field.
+            </span>
+        </div>
+        <div *ngIf="errMessage" style="min-height: 20px; text-align: justify;">
+            <span style="color: red;">
+                Error: {{errMessage}}
+            </span>
+        </div>
+    </div>
+</div>

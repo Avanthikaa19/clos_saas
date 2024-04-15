@@ -1,0 +1,317 @@
+<div class="main-container">
+    <!-- HEADER CONTAINER -->
+    <div class="header-container">
+        <div class="left-header-container">
+            <h3 style="color: darkblue;">Data Monitoring</h3>
+        </div>
+        <div class="right-date-container">
+            <span>Date Range :</span>
+            <input type="date" [(ngModel)]="fromDate"> to
+            <input type="date" [(ngModel)]="toDate">
+            <mat-icon style="cursor: pointer;" matTooltip="Search" (click)="dateChangeEvent()">search</mat-icon>
+        </div>
+    </div>
+    <!-- SUMMARY VIEW CONTAINER -->
+    <div class="summary-view-container">
+        <span style="font-weight: bold;">Summary View :-</span>
+        <!-- CARDS CONTAINER -->
+        <div class="cards-container">
+            <!-- EACH CARDS -->
+            <div class="card" *ngFor="let card of Summarycards">
+                <div class="card-content">
+                    <span class="card-interpolation">{{ card }}</span>
+                    <span class="dots">...</span>
+                </div>
+                <div class="card-details">
+                    <table>
+                        <!-- APPLICATION CARD -->
+                        <tr *ngIf="card === 'Applications'">
+                            <td style="padding-bottom: 1rem;"><b>Received</b></td>
+                            <td style="padding-bottom: 1rem;">:</td>
+                            <td style="margin-left: 1rem;padding-bottom: 1rem;">{{ summaryView?.fileReceived }}</td>
+                        </tr>
+                        <tr *ngIf="card === 'Applications'">
+                            <td><b>Loaded</b></td>
+                            <td>:</td>
+                            <td style="margin-left: 1rem;">{{ summaryView?.fileLoaded }}</td>
+                        </tr>
+                        <!-- DATA BASE CARD -->
+                        <tr *ngIf="card === 'Data Base'">
+                            <td style="padding-bottom: 1rem;"><b>Received</b></td>
+                            <td style="padding-bottom: 1rem;">:</td>
+                            <td style="margin-left: 1rem;padding-bottom: 1rem;">{{ summaryView?.dbReceived }}</td>
+                        </tr>
+                        <tr *ngIf="card === 'Data Base'">
+                            <td><b>Loaded</b></td>
+                            <td>:</td>
+                            <td style="margin-left: 1rem;">{{ summaryView?.dbLoaded }}</td>
+                        </tr>
+                        <!-- API CARD -->
+                        <tr *ngIf="card === 'API'">
+                            <td style="padding-bottom: 1rem;"><b>Received</b></td>
+                            <td style="padding-bottom: 1rem;">:</td>
+                            <td style="margin-left: 1rem;padding-bottom: 1rem;">{{ summaryView?.apiReceived }}</td>
+                        </tr>
+                        <tr *ngIf="card === 'API'">
+                            <td><b>Loaded</b></td>
+                            <td>:</td>
+                            <td style="margin-left: 1rem;">{{ summaryView?.apiLoaded }}</td>
+                        </tr>
+                    </table>
+                    <img style="background-color: lightseagreen;" *ngIf="card === 'Applications'"
+                        src="assets/Icons/csv.png" width="35" height="35">
+                    <img style="background-color: lightcoral;" *ngIf="card === 'Data Base'"
+                        src="assets/Icons/database.png" width="35" height="35">
+                    <img style="background-color: lightgreen;" *ngIf="card === 'API'" src="assets/Icons/api.png"
+                        width="35" height="35">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DATA TRACING CONTAINER -->
+    <div class="data-tracing-container">
+        <span style="font-weight: bold;">Data Tracing :-</span>
+        <mat-tab-group (selectedTabChange)="onTabChange($event)">
+            <mat-tab>
+                <div class="tab-label-container">
+                    <ng-template mat-tab-label>
+                        <img src="assets/Icons/csv.png" width="20" height="20" class="tab-icon">
+                        {{ 'Application (.CSV)' }}
+                    </ng-template>
+                </div>
+                <!-- <div class="details-container"> -->
+                <!-- Details content goes here -->
+                <!-- </div> -->
+            </mat-tab>
+            <mat-tab>
+                <div class="tab-label-container">
+                    <ng-template mat-tab-label>
+                        <img src="assets/Icons/database.png" width="20" height="20" class="tab-icon">
+                        {{ 'Databases (Azure)' }}
+                    </ng-template>
+                </div>
+                <!-- <div class="details-container"> -->
+                <!-- Details content goes here -->
+                <!-- </div> -->
+            </mat-tab>
+            <mat-tab>
+                <div class="tab-label-container">
+                    <ng-template mat-tab-label>
+                        <img src="assets/Icons/api.png" width="20" height="20" class="tab-icon">
+                        {{ "API's" }}
+                    </ng-template>
+                </div>
+                <!-- <div class="details-container"> -->
+                <!-- Details content goes here -->
+                <!-- </div> -->
+            </mat-tab>
+        </mat-tab-group>
+        <!-- WRAPPING DETAILS AND CHART -->
+        <div class="container-wrapper">
+            <!-- DETAILS CONTENT CONTAINER -->
+            <div class="details-container" *ngIf="selectedTab === 1">
+                <!-- Details container content for Tab 1 goes here -->
+                <div class="details-content-container" [@listAnimation]="summaryView?.file.length">
+                    <div class="file-container" *ngFor="let file of summaryView?.file">
+                        <div class="details-header-container">
+                            <div class="details-header">
+                                <span><b>{{ file?.FileName }}</b></span>
+                                <!-- <span class="path">Path: {{'/apps/los/application_files'}}</span> -->
+                            </div>
+                        </div>
+                        <div class="header-line"></div>
+                        <div class="details-body-container">
+                            <table>
+                                <tr>
+                                    <td><b>Total record received</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{ file?.RecordsReceived }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total record loaded</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{ file?.RecordsLoaded }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Time taken for data loading</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{ formatTimeDuration(file?.TimeTaken) }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Start Time</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{ formatTime(file?.StartTime) }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>End Time</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{ formatTime(file?.EndTime) }}</td>
+                                </tr>
+                            </table>
+                            <div class="colored-circle-container">
+                                <div *ngIf="file.Status === 'SUCCESS'" class="colored-circle-green"></div>
+                                <div *ngIf="file.Status === 'ERROR'" class="colored-circle-red"></div>
+                                <button *ngIf="file.Status === 'ERROR'" class="error-button"
+                                    (click)="openErrorLogModal(file)">View Error Log</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isDataComing" class="no-items-card">
+                    No items found.
+                </div>
+                <!-- <div class="paginator-container"> -->
+                <mat-paginator [pageIndex]="pageNum - 1"
+                    [pageSize]="pageSize" [length]="summaryView?.totalItems" [pageSize]="10"
+                    [pageSizeOptions]="getPageSizeOptions()" (page)="onPageChange($event)"
+                    [hidePageSize]="!isDataComing"></mat-paginator>
+                <!-- </div> -->
+            </div>
+            <div class="details-container" *ngIf="selectedTab === 2">
+                <!-- Details container content for Tab 2 goes here -->
+                <div class="details-content-container">
+                    <div class="file-container" *ngFor="let file of summaryView?.file">
+                        <div class="details-header-container">
+                            <div class="details-header">
+                                <span><b>{{file?.TableName}}</b></span>
+                                <!-- <span class="path">Path: {{'/apps/los/application_files'}}</span> -->
+                            </div>
+                        </div>
+                        <div class="header-line"></div>
+                        <div class="details-body-container">
+                            <table>
+                                <tr>
+                                    <td><b>Total record received</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{file?.RecordsReceived}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total record loaded</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{file?.RecordsLoaded}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Time taken for data loading</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{formatTimeDuration(file?.TimeTaken)}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Start Time</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{formatTime(file?.StartTime)}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>End Time</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{formatTime(file?.EndTime)}}</td>
+                                </tr>
+                            </table>
+                            <div class="colored-circle-container">
+                                <div *ngIf="file.Status === 'SUCCESS'" class="colored-circle-green"></div>
+                                <div *ngIf="file.Status === 'ERROR'" class="colored-circle-red"></div>
+                                <button *ngIf="file.Status === 'ERROR'" class="error-button"
+                                    (click)="openErrorLogModal(file)">View Error Log</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isDataComing" class="no-items-card">
+                    No items found.
+                </div>
+                <!-- <div class="paginator-container"> -->
+                <mat-paginator style="position: absolute;bottom: 0;width: 100%;" [pageIndex]="pageNum - 1"
+                    [pageSize]="pageSize" [length]="summaryView?.totalItems" [pageSize]="10"
+                    [pageSizeOptions]="getPageSizeOptions()" (page)="onPageChange($event)"
+                    [hidePageSize]="!isDataComing"></mat-paginator>
+            </div>
+            <div class="details-container" *ngIf="selectedTab === 3">
+                <!-- Details container content for Tab 3 goes here -->
+                <div class="details-content-container">
+                    <div class="file-container" *ngFor="let file of summaryView?.file">
+                        <div class="details-header-container">
+                            <div class="details-header">
+                                <span><b>{{file?.UploadFileType}}</b></span>
+                                <!-- <span class="path">Path: {{'/apps/los/application_files'}}</span> -->
+                            </div>
+                        </div>
+                        <div class="header-line"></div>
+                        <div class="details-body-container">
+                            <table>
+                                <tr>
+                                    <td><b>Total record received</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{file?.RecordsReceived}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total record loaded</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{file?.RecordsLoaded}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Time taken for data loading</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{formatTimeDuration(file?.TimeTaken)}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Start Time</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{formatTime(file?.StartTime)}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>End Time</b></td>
+                                    <td class="details-value">:</td>
+                                    <td class="details-value">{{formatTime(file?.EndTime)}}</td>
+                                </tr>
+                            </table>
+                            <div class="colored-circle-container">
+                                <div *ngIf="file.Status === 'SUCCESS'" class="colored-circle-green"></div>
+                                <div *ngIf="file.Status === 'ERROR'" class="colored-circle-red"></div>
+                                <button *ngIf="file.Status === 'ERROR'" class="error-button"
+                                    (click)="openErrorLogModal(file)">View Error Log</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isDataComing" class="no-items-card">
+                    No items found.
+                </div>
+                <!-- <div class="paginator-container"> -->
+                <mat-paginator style="position: absolute;bottom: 0;width: 100%;" [pageIndex]="pageNum - 1"
+                    [pageSize]="pageSize" [length]="summaryView?.totalItems" [pageSize]="10"
+                    [pageSizeOptions]="getPageSizeOptions()" (page)="onPageChange($event)"
+                    [hidePageSize]="!isDataComing"></mat-paginator>
+            </div>
+            <!-- CHART CONTAINER -->
+            <div class="chart-container" *ngIf="selectedTab === 1">
+                <!-- Chart container content for Tab 1 goes here -->
+                <span style="color: darkblue;font-weight: bold;">Reports</span>
+                <div *ngIf="isGraphDataAvailable" style="display: flex; align-items: center;width: 100%;height: 95%;" echarts [options]="option"></div>
+                <!-- <div *ngIf="true" id="chartContainer" style="display: flex; align-items: center;width: 100%;height: 85%;margin-top: 2rem;"> -->
+                <!-- </div> -->
+                <!-- <div class="loading-container" *ngIf="chartLoading">
+                    <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+                    <span>Loading... Please wait...</span>
+                </div> -->
+                <div *ngIf="!isGraphDataAvailable" class="no-items-card-two">
+                    No items found.
+                </div>
+            </div>
+            <div class="chart-container" *ngIf="selectedTab === 2">
+                <span style="color: darkblue;font-weight: bold;">Reports</span>
+                <!-- Chart container content for Tab 2 goes here -->
+                <div *ngIf="isGraphDataAvailable" style="display: flex; align-items: center;width: 100%;height: 95%;" echarts [options]="option"></div>
+                <div *ngIf="!isGraphDataAvailable" class="no-items-card-two">
+                    No items found.
+                </div>
+            </div>
+            <div class="chart-container" *ngIf="selectedTab === 3">
+                <span style="color: darkblue;font-weight: bold;">Reports</span>
+                <div *ngIf="isGraphDataAvailable" style="display: flex; align-items: center;width: 100%;height: 95%;" echarts [options]="option"></div>
+                <!-- Chart container content for Tab 3 goes here -->
+                <div *ngIf="!isGraphDataAvailable" class="no-items-card-two">
+                    No items found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

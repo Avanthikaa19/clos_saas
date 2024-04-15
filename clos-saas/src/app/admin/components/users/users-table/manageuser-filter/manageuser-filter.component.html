@@ -1,0 +1,183 @@
+
+<section>
+    <div  style="background:whitesmoke;border-radius:10px;">
+      <div style="margin-right: auto;" class="p-3">
+        <p class="mb-1 ml-3" style="font-weight:600;font-size:20px;">Search Filter</p>
+        <!-- <div class="at-separator-thick"></div> -->
+      </div>
+      <div style="overflow-y: scroll;height:600px;width:600px" class="content-container ml-4">
+  
+   <div  class="matChipselect">
+    <mat-hint style="margin:6px;" align="start"><strong>User Name</strong> </mat-hint>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let fruit of fruits"
+          (removed)="remove(fruit)">
+          {{fruit}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input 
+          #fruitInput (click)="getDropdownChip('username','')"
+          [matAutocomplete]="auto" [formControl]="fruitCtrl"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let list of drpdown" [value]="list" (click)="getDropdownChip('username',list)">
+          {{list}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div  class="matChipselect">
+    <mat-hint style="margin:6px;" align="start"><strong>User Initial</strong> </mat-hint>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-chip-list #chipList1 aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let fruit1 of fruits1"
+          (removed)="remove1(fruit1)">
+          {{fruit1}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input 
+          #fruitInput1 (click)="getDropdownChip('initial','')"
+          [matAutocomplete]="auto" [formControl]="fruitCtrl1"
+          [matChipInputFor]="chipList1"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add1($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected1($event)">
+        <mat-option *ngFor="let list of drpdown" [value]="list" (click)="getDropdownChip('initial',list)">
+          {{list}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+    <div  class="matChipselect">
+    <mat-hint style="margin:6px;" align="start"><strong>First Name</strong> </mat-hint>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-chip-list #chipList2 aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let fruit2 of fruits2"
+          (removed)="remove(fruit2)">
+          {{fruit2}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input  
+          #fruitInput2  (click)="getDropdownChip('firstName','')"
+          [matAutocomplete]="auto" [formControl]="fruitCtrl"
+          [matChipInputFor]="chipList2"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add2($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected2($event)">
+        <mat-option *ngFor="let list of drpdown" [value]="list" (click)="getDropdownChip('firstName',list)">
+          {{list}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div  class="matChipselect">
+    <mat-hint style="margin:6px;" align="start"><strong>Last Name</strong> </mat-hint>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-chip-list #chipList3 aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let fruit3 of fruits3"
+          (removed)="remove(fruit3)">
+          {{fruit3}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input  
+          #fruitInput3 (click)="getDropdownChip('lastName','')"
+          [matAutocomplete]="auto" [formControl]="fruitCtrl"
+          [matChipInputFor]="chipList3"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add3($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected3($event)">
+        <mat-option *ngFor="let list of drpdown" [value]="list" (click)="getDropdownChip('lastName',list)">
+          {{list}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+    <div  class="matChipselect">
+    <mat-hint style="margin:6px;" align="start"><strong>SupervisingUser</strong> </mat-hint>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-chip-list #chipList4 aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let fruit4 of fruits4"
+          (removed)="remove(fruit4)">
+          {{fruit4}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input  
+          #fruitInput4  (click)="getDropdownChip('supervisingUser','')"
+          [matAutocomplete]="auto" [formControl]="fruitCtrl"
+          [matChipInputFor]="chipList4"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add4($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected4($event)">
+        <mat-option *ngFor="let list of drpdown" [value]="list" (click)="getDropdownChip('supervisingUser',list)">
+          {{list}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field> 
+     </div>
+
+     <div class="matChipselect">
+    <mat-hint style="margin:6px;" align="start"><strong>Roles</strong> </mat-hint>
+      <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-chip-list #chipList5 aria-label="Fruit selection">
+          <mat-chip
+            *ngFor="let fruit5 of fruits5"
+            (removed)="remove(fruit5)">
+            {{fruit5}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input  
+            #fruitInput5 (click)="getRoles('')"
+            [matAutocomplete]="auto" [formControl]="fruitCtrl"
+            [matChipInputFor]="chipList5"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add5($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected5($event)">
+          <mat-option *ngFor="let list of drpdown" [value]="list" (click)="getRoles(list)">
+            {{list}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div> 
+
+     </div>
+     <div class="mt-4 d-flex " style="float:left;">
+      <button mat-button style="color: white;background: red;font-size: 15px;" mat-dialog-close>
+          <mat-icon style="margin-right: 10px;">close</mat-icon>close</button>    
+      </div>
+     <div class="mt-4 d-flex " style="float:right;">
+      <button mat-button style="color: white;background: blue;font-size: 15px;" 
+        (click)="postDropdownChip()" mat-dialog-close>
+          <mat-icon style="margin-right: 10px;">done_all</mat-icon>Apply</button>    
+      </div>
+    </div>
+</section>   

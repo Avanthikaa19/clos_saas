@@ -1,0 +1,243 @@
+<div [style.height]="!mobile?'700px':'580px'" style=" font-size: 14px; position: relative;" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <mat-card [@fadeInOut] *ngIf="loadingEntry" class="mid-tab-card mat-elevation-z2">
+        <div class="spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
+        <div class="text">
+            <span>Loading entry.. Please wait.. </span>
+        </div>
+    </mat-card>
+    <div class="title-container" cdkDragHandle matTooltip="Hold and drag to move.">
+        ENTRY {{entryId}}
+        <span *ngIf="entry" style="float: right; color: silver; font-weight: 400;">ROOT
+      {{entry.rootEntryId==null?entry.id:entry.rootEntryId}}.{{entry.version}}</span>
+    </div>
+    <mat-tab-group [style.min-height]="!mobile? 'calc(100% - 90px)':'calc(100% - 63px)'" class="mat-tab-fill-height" *ngIf="!loadingEntry" [(selectedIndex)]="selectedTabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="tab-label-container noselect">
+                    <mat-icon>details</mat-icon>
+                    <span>Details</span>
+                </div>
+            </ng-template>
+            <ng-container>
+                <div style="overflow-y: auto; padding: 10px;height: 60rem;">
+                    <mat-grid-list *ngIf="entry" cols="4" rowHeight="50px" [gutterSize]="'5px'">
+                        <mat-grid-tile colspan="1">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>ENTRY ID</mat-label>
+                                <input matInput placeholder="ID" [value]="entry.id" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="1">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>BATCH ID</mat-label>
+                                <input matInput style="color: rgb(0, 155, 155);" [value]="entry.batchId==null?' ':entry.batchId" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="1">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>VERSION</mat-label>
+                                <input matInput [value]="entry.version==null?' ':entry.version" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="1">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>ORIGIN TASK ID</mat-label>
+                                <input matInput [value]="entry.sourceId==null?' ':entry.sourceId" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="2">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>SEARCH KEY</mat-label>
+                                <input matInput style="color: crimson;" [value]="entry.searchKey==null?' ':entry.searchKey" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="1">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>PRODUCED BY TASK ID</mat-label>
+                                <input matInput [value]="entry.queueId==null?' ':entry.queueId" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="1">
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>TAKEN BY NEXT TASK</mat-label>
+                                <input matInput [class.color-green]="entry?.processed=='Y'" [value]="entry.processed==null?' ':(entry.processed=='Y'?'Yes':'No')" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="3">
+                            <div style="width: 100%; height: 100%; line-height: 50px;" class="noselect">
+                                <span style="font-weight: 500; padding-left: 10px; padding-right: 5px;">Contribution: </span>
+                                <span>{{entry.bucketId == null ? 'None. This entry has not contributed to any aggregation bucket.' :
+                  'This entry has contributed to the aggregation bucket with ID ' + entry.bucketId + '.'}}</span>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan="1">
+                            <button *ngIf="entry.bucketId!=null" mat-button color="accent" (click)="openBucket(entry.bucketId)" style="position: absolute; right: 5px; z-index: 9;">
+                View Bucket
+              </button>
+                            <mat-form-field style="width: 100%;" appearance="fill">
+                                <mat-label>BUCKET ID</mat-label>
+                                <input matInput [value]="entry.bucketId==null?' ':entry.bucketId" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                    <div style="padding: 10px; position: relative;" *ngIf="entry && entry.error">
+                        <div style="font-weight: 500;">
+                            Error Attachment Found:
+                        </div>
+                        <div style="height: 330px; overflow-y: auto; overflow-wrap: break-word;" *ngIf="entry.error!=null">
+                            <p style="color: red; white-space: pre-line">
+                                {{entry.error.error}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="tab-label-container noselect">
+                    <mat-icon>format_list_bulleted</mat-icon>
+                    <span>Entry Data</span>
+                </div>
+            </ng-template>
+            <ng-container>
+                <div class="tableContainer" id="tableContainer" style=" overflow: auto; border: solid whitesmoke 1px;">
+                    <div class="filter-container">
+                        <button mat-button color="primary" disabled>
+              <mat-icon>search</mat-icon>
+              <span>Search</span>
+            </button>
+                        <input class="min-input" [(ngModel)]="entryFieldSearch" placeholder="Field Name">
+                    </div>
+                    <div class="entry-data-container" *ngIf="entry && entry.payloadJson">
+                        <ng-container *ngFor="let item of objectKeys(entry.payloadJson.data); let index = index;">
+                            <div class="entry-data-row-wrapper" *ngIf="item.toLowerCase().includes(entryFieldSearch.toLowerCase())" [@fadeInOut]>
+                                <div class="entry-data-row">
+                                    <div class="entry-data-field-name">
+                                        {{item}}
+                                    </div>
+                                    <div class="entry-data-field-type monospace">
+                                        <div [class.type-string]="entry.payloadJson.dataType[item]=='STRING'" [class.type-date]="entry.payloadJson.dataType[item]=='DATE'" [class.type-bigdecimal]="entry.payloadJson.dataType[item]=='BIG_DECIMAL'" [class.type-long]="entry.payloadJson.dataType[item]=='LONG'">
+                                            {{entry.payloadJson.dataType[item]}}
+                                        </div>
+                                    </div>
+                                    <div class="entry-data-field-value monospace">
+                                        <a [class.color-date]="entry.payloadJson.dataType[item]=='DATE'" [class.color-bd]="entry.payloadJson.dataType[item]=='BIG_DECIMAL'" [class.color-long]="entry.payloadJson.dataType[item]=='LONG'" [class.color-null]="entry.payloadJson.data[item]==null" [class.copied-key]="copiedKey === item">
+                      {{entry.payloadJson.data[item]==null ? 'null' : entry.payloadJson.data[item]}}
+                    </a>
+                                    </div>
+                                    <div class="entry-data-field-value-copy">
+                                        <div matRipple (click)="copyValueToClipboard(item, entry.payloadJson.data[item], $event)">
+                                            <a>Copy</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+        <ng-container *ngIf="ac.super || ac.items.DFM003B_ENTRIES_TRACK">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label-container noselect">
+                        <mat-icon>timeline</mat-icon>
+                        <span>Track Changes</span>
+                    </div>
+                </ng-template>
+                <ng-container *ngIf="selectedTabIndex===2">
+                    <mat-card [@fadeInOut] *ngIf="trackingEntry" class="mid-tab-card mat-elevation-z2">
+                        <div class="spinner">
+                            <mat-spinner [diameter]="20"></mat-spinner>
+                        </div>
+                        <div class="text">
+                            <span>Tracking entry.. Please wait.. </span>
+                        </div>
+                    </mat-card>
+                    <div style=" background-color: whitesmoke; border: solid whitesmoke 1px;">
+                        <div class="filter-container">
+                            <button mat-button color="primary" disabled>
+                  <mat-icon>search</mat-icon>
+                  <span>Search</span>
+                </button>
+                            <input class="min-input" [(ngModel)]="entryTrackFieldSearch" placeholder="Field Name">
+                        </div>
+                        <div class="entry-track-rows-container">
+                            <ng-container *ngFor="let key of allFieldKeys; let i = index;">
+                                <div class="entry-track-row" *ngIf="key.toLowerCase().includes(entryTrackFieldSearch.toLowerCase())" [@fadeInOut]>
+                                    <div class="key-name">
+                                        <span class="key-label">Field: </span><span class="key-name">{{key}}</span>
+                                    </div>
+                                    <div class="steps-container">
+                                        <div class="step-label-container" *ngFor="let trackedEntry of entryTrack; let i = index;">
+                                            <div class="step-version-number noselect" matTooltip="Entry ID:{{trackedEntry.id}}">
+                                                ver.{{trackedEntry.version}}
+                                            </div>
+                                            <div class="step-task-name noselect" matTooltip="{{trackedEntry.queueTask?.description}}">
+                                                <div>
+                                                    {{trackedEntry.queueTask?.name}}
+                                                </div>
+                                            </div>
+                                            <div class="step-field-value monospace" [class.undefined]="trackedEntry.payloadJson.data[key]===undefined">
+                                                <a *ngIf="trackedEntry.payloadJson.data[key] === undefined">Undefined</a>
+                                                <a *ngIf="trackedEntry.payloadJson.data[key] !== undefined" [class.color-date]="trackedEntry.payloadJson.dataType[key]=='DATE'" [class.color-bd]="trackedEntry.payloadJson.dataType[key]=='BIG_DECIMAL'" [class.color-long]="trackedEntry.payloadJson.dataType[key]=='LONG'"
+                                                    [class.color-null]="trackedEntry.payloadJson.data[key]==null" [class.copied-key]="copiedKey === (i+key)">
+                            {{trackedEntry.payloadJson.data[key]==null ? 'null' : trackedEntry.payloadJson.data[key]}}
+                          </a>
+                                            </div>
+                                            <div class="entry-data-field-value-copy">
+                                                <div matRipple (click)="copyValueToClipboard(i+key, trackedEntry.payloadJson.data[key], $event)">
+                                                    <a>Copy</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+            </mat-tab>
+        </ng-container>
+    </mat-tab-group>
+    <div style="height: 50px; line-height: 40px; padding-top: 10px; position: relative;">
+        <ng-container *ngIf="entry && entry.error!=null">
+            <button mat-button style="position: absolute; left: 0; bottom: 0;" (click)="showDoubleClickMessage()" (dblclick)="forceResolveError(entry.id, 'MANUAL RESOLVE')" [disabled]="resolving || entry.processed == 'Y'" color="warn">
+        <mat-icon>done_all</mat-icon>
+        <span style="padding-left: 5px;">Force Resolve *</span>
+      </button>
+            <button mat-button style="position: absolute; left: 150px; bottom: 0;" (click)="showDoubleClickMessage()" (dblclick)="resendEntry(entry.id, ' ')" [disabled]="resolving || entry.processed == 'Y'">
+        <mat-icon>replay</mat-icon>
+        <span style="padding-left: 5px;">Resend *</span>
+      </button>
+            <button mat-button style="position: absolute; left: 260px; bottom: 0;" (click)="openEditEntryWindow()" [disabled]="resolving || entry.processed == 'Y'">
+        <mat-icon>create</mat-icon>
+        <span style="padding-left: 5px;">Edit & Resend</span>
+      </button>
+            <span style="position: absolute; left: 15px; bottom: 40px; color: silver;">* - Double click to activate.</span>
+        </ng-container>
+        <button cdkFocusInitial mat-stroked-button color="warn" style="float: right;" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+      <span style="padding-left: 10px;">Close</span>
+    </button>
+    </div>
+    <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.4);" *ngIf="editableBody"></div>
+    <div class="edit-entry-container" *ngIf="editableBody">
+        <div style="height: 30px;">
+            Edit Data:
+        </div>
+        <div style="height: calc(100% - 80px)">
+            <json-editor #editor [options]="options" [(ngModel)]="editableBody" (change)="changeLog($event)"></json-editor>
+        </div>
+        <div style="height: 30px; margin-top: 10px;">
+            <button mat-raised-button color="primary" (click)="resendEntry(entry.id, editableBody)" [disabled]="resolving || entry.processed == 'Y'">
+        <mat-icon>create</mat-icon>
+        <span style="padding-left: 5px;">Save & Resend</span>
+      </button>
+            <button mat-stroked-button style="float: right;" color="warn" (click)="closeEditEntryWindow()">Close</button>
+        </div>
+    </div>
+</div>

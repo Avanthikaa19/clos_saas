@@ -1,0 +1,152 @@
+::ng-deep {
+
+    .mat-step-header .mat-step-icon-selected,
+    .mat-step-header .mat-step-icon-state-done,
+    .mat-step-header .mat-step-icon-state-edit {
+        background-color: blue !important;
+        color: white !important;
+    }
+}
+
+::ng-deep .input-field .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgb(251 251 251 / 70%);
+}
+
+input {
+    font-size: 12px;
+}
+
+.next-btn {
+    background: blue;
+    color: white;
+    font-weight: 700;
+}
+
+.add-btn {
+    color: #ffff;
+    font-size: 12px;
+    font-weight: 700;
+    background: darkblue;
+    border-radius: 5px;
+    border: 1px solid #ebe9e9;
+
+    &:hover {
+        color: aliceblue;
+        box-shadow: 0 1px 9px 1px rgb(44 42 42 / 39%) !important;
+    }
+}
+
+::ng-deep {
+
+    .mat-step-header.cdk-keyboard-focused,
+    .mat-step-header.cdk-program-focused,
+    .mat-step-header:hover:not([aria-disabled]),
+    .mat-step-header:hover[aria-disabled=false] {
+        background-color: aliceblue;
+        font-weight: 700;
+        height: 30px;
+        border-radius: 20px;
+    }
+
+    .mat-horizontal-content-container {
+        overflow: hidden;
+        padding: 0 24px 0px 24px !important;
+    }
+
+    .mat-horizontal-stepper-header {
+        height: 62px !important;
+    }
+
+    .mat-tab-label {
+        font-weight: 700;
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+        color: blue;
+    }
+}
+
+td,
+th {
+    border: none;
+    text-align: left;
+    padding: 0px 8px;
+    font-size: 13px;
+}
+
+::ng-deep {
+    .filter-field.mat-form-field {
+        display: inline;
+        font-size: 12px;
+
+        input {
+            font-size: 12px;
+        }
+    }
+
+    .mat-optgroup-label {
+        height: 520px !important;
+        padding: 25px !important;
+    }
+
+    .mat-autocomplete-panel {
+        max-height: 570px !important;
+    }
+
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+    .mat-radio-outer-circle {
+        border-color: blue !important;
+    }
+
+    .mat-radio-button.mat-accent .mat-radio-inner-circle {
+        background-color: blue !important;
+    }
+}
+
+.font-weight-bold {
+    font-weight: 700;
+}
+
+::ng-deep .mat-radio-button~.mat-radio-button {
+    margin-left: 20px;
+}
+
+/* Hide number up/down arrow */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.content-container {
+    background-color: white;
+    overflow: auto;
+    max-height: 60vh;
+    padding: 10px;
+    .loading-spinner {
+        display: flex;
+        padding: 15px;
+        position: absolute;
+        top: 50%;
+        left: 45%;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+        > span {
+            padding-top: 2px;
+            margin-left: 15px;
+        }
+    }
+    .no-content {
+        margin-top: 25rem;
+        left: 50%;
+        opacity: 0.2;
+        text-align: center;
+    }
+}

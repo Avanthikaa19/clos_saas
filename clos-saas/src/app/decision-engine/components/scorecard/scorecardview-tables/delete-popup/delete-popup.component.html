@@ -1,0 +1,12 @@
+<div>
+    <p style="font-weight: bold;font-size:larger;margin-left: 20px;">Are you sure want to delete Variables?</p>
+</div>
+<div style="margin-top: 30px;">
+    <button mat-stroked-button style="background-color: #3445b4;color: white;border-radius: 1.5rem;" mat-dialog-close>
+        <mat-icon class="delete-button-icon">close</mat-icon>CLOSE
+    </button>
+    <button mat-stroked-button style="background-color: #ff0000c2;color: white;border-radius: 1.5rem;float: right;" 
+    [matTooltip]="'Delete Variables'" (click)="deleteVariables();" mat-dialog-close>
+        <mat-icon class="delete-button-icon">delete</mat-icon>DELETE
+    </button>
+</div>

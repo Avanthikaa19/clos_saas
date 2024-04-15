@@ -1,0 +1,102 @@
+.text_align {
+    font-weight: bold;
+    color: #012970;
+    font-size: 2rem;
+    margin-left: 3rem;
+}
+
+.content-container {
+    width: 100%;
+    height: 100%;
+    .grid-container {
+        padding: 5rem;
+        .select-field {
+            input {
+                padding: 4rem
+            }
+        }
+    }
+}
+
+.next_button {
+    background-color: #3445b4;
+    color: white;
+    float: right;
+    margin-right: 8%;
+}
+
+.upload_button {
+    background-color: #3445b4;
+}
+
+.mandatory-icon {
+    color: red;
+    margin-left: 3px;
+}
+
+.upload_Section {
+    width: 60%;
+    height: 40%;
+    margin: 0 auto;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3rem;
+    border: 5px dotted rgb(172, 172, 172);
+}
+
+.delete_button {
+    background-color: red;
+}
+
+.button_container {
+    margin-top: 15%;
+    width: 100%;
+    height: 5%
+}
+
+.click_text {
+    text-align: center;
+    margin: 0;
+    font-size: 1.7rem
+}
+
+.here_text {
+    cursor: pointer;
+    color: #012970;
+    font-size: 2.2rem
+}
+
+.input_Field {
+    display: none
+}
+
+.file_Name {
+    cursor: pointer;
+    color: #012970;
+    font-size: 2rem
+}
+
+.delete-container {
+    margin-left: 70%;
+    margin-top: 2rem
+}
+
+.delete_btn_text {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white
+}
+
+.progress_Bar {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 2%
+}
+
+.save_btn_span {
+    padding-left: 1rem;
+    padding-right: 1rem
+}

@@ -1,0 +1,139 @@
+<div style="height: 600px; font-size: 14px;">
+    <mat-card [@fadeInOut] *ngIf="loadingBucket" class="mid-tab-card mat-elevation-z2">
+        <div class="spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
+        <div class="text">
+            <span>Loading aggregation bucket.. Please wait.. </span>
+        </div>
+    </mat-card>
+    <div style="height: 40px; line-height: 40px; font-size: 16px; font-weight: 500; font-style: italic;">
+        AGGREGATION BUCKET {{bucketId}}
+    </div>
+    <mat-tab-group style="min-height: calc(100% - 90px);" class="mat-tab-fill-height">
+        <mat-tab label="Details">
+            <div  [@fadeInOut] *ngIf="bucket" style="position: absolute; height: 100%; width: 100%; overflow-y: auto; padding-top: 10px;">
+                <mat-grid-list cols="4" rowHeight="50px" [gutterSize]="'5px'">
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>BUCKET ID</mat-label>
+                            <input matInput placeholder="ID" [value]="bucket.id" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>CREATED ON</mat-label>
+                            <input matInput [value]="bucket.seconds*1000 | date: 'yyyy-MM-dd HH:mm:ss' : 'UTC'" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="2">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>GROUPING KEY</mat-label>
+                            <input matInput style="color: crimson;" [value]="bucket.groupKey" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>AGGREGATION TASK ID</mat-label>
+                            <input matInput placeholder="ID" [value]="bucket.queueId" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>RELEASED</mat-label>
+                            <input matInput [class.color-green]="bucket.released == 'Y'" 
+                                [value]="bucket.released == 'Y' ? 'Yes' : 'No'" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>RELEASED ENTRY ID</mat-label>
+                            <input matInput [value]="bucket.releasedEntryId != null ? bucket.releasedEntryId : ' '" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>RELEASED ON</mat-label>
+                            <input matInput [value]="bucket.releasedOn | date: 'yyyy-MM-dd HH:mm:ss' : 'UTC'" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="4" rowspan="2">
+                        <mat-form-field style="width: 100%;" appearance="fill">
+                            <mat-label>RELEASE REASON | RULE</mat-label>
+                            <input matInput [value]="bucket.releaseReason" readonly>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                </mat-grid-list>
+                <div style="height: 40px; padding-top: 10px;">
+                    <span style="font-weight: 500;">Aggregation Result From {{bucket.aggregateCount}} Contributors: </span>
+                </div>
+                <div style="height: calc(100%-190px);">
+                    <!-- <ngx-json-viewer [json]="bucket?.aggregatesJson"></ngx-json-viewer> -->
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Rules">
+            <div style="position: absolute; height: 100%; width: 100%; overflow-y: auto;">
+                <!-- <ngx-json-viewer [@fadeInOut] *ngIf="bucket" [json]="bucket?.rulesJson"></ngx-json-viewer> -->
+            </div>
+        </mat-tab>
+        <mat-tab label="Release Data">
+            <div style="position: absolute; height: 100%; width: 100%; overflow-y: auto;">
+                <!-- <ngx-json-viewer [@fadeInOut] *ngIf="bucket" [json]="bucket?.releasePayloadJson"></ngx-json-viewer> -->
+            </div>
+        </mat-tab>
+        <mat-tab label="Contributors">
+            <mat-card [@fadeInOut] *ngIf="loadingContributors" class="mid-tab-card mat-elevation-z2">
+                <div class="spinner">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                </div>
+                <div class="text">
+                    <span>Loading contributors.. Please wait.. </span>
+                </div>
+            </mat-card>
+            <div style="position: absolute; height: 100%; width: 100%; overflow-y: auto;">
+                <div [@fadeInOut] *ngIf="!loadingContributors" id="tableContainer" class="tableContainer">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <thead class="fixedHeader">
+                            <tr>
+                                <th><a>S.No.</a></th>
+                                <th><a>Entry ID</a></th>
+                                <th><a>Entry Search Key</a></th>
+                                <th><a>Action</a></th>
+                            </tr>
+                        </thead>
+                        <tbody class="scrollContent">
+                            <tr *ngFor="let row of contributors; let i = index">
+                                <td>
+                                    {{i + 1}}
+                                </td>
+                                <td>
+                                    {{row.id}}
+                                </td>
+                                <td>
+                                    {{row.searchKey}}
+                                </td>
+                                <td>
+                                    <button mat-button color="accent" style="width: 100%; font-size: 12px; line-height: 18px; height: auto;"
+                                        (click)="openEntry(row.id)">
+                                        OPEN
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <div style="height: 50px; line-height: 40px; padding-top: 10px; position: relative;">
+        <span style="color: silver; position: absolute; left: 0; bottom: 0;" class="noselect">
+            Note: {{bucket?.released == 'N' ? 'This bucket has not been released (yet).' : 
+            'This bucket has released the aggregated entry.'}}
+        </span>
+        <button cdkFocusInitial mat-stroked-button color="warn" style="float: right;" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+    </div>
+</div>

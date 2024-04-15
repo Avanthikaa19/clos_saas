@@ -1,0 +1,112 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        Mapping
+    </div>
+    <ng-container *ngIf="config.assessmentMapping">
+        <div class="inputs-section-container">
+            <p></p>
+            <table class="inputs-table">
+                <thead style="text-align: center;">
+                    <tr>
+                        <th class="sno-column">#</th>
+                        <th class="selection-column">Scenario</th>
+                        <th class="selection-column">Template</th>
+                        <th class="remove-column"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container
+                        *ngFor="let inp of config.assessmentMapping.mappings; let index = index; trackBy: trackByIndex;">
+                        <tr>
+                            <td class="sno-column">{{index+1}}.</td>
+
+                            <td class="instance-column">
+                                <div>
+                                    <input [(ngModel)]="config.assessmentMapping.mappings[index].scenario"
+                                        class="min-input">
+                                </div>
+                            </td>
+                            <td class="instance-column">
+                                <div>
+                                    <input [(ngModel)]="config.assessmentMapping.mappings[index].template"
+                                        class="min-input">
+                                </div>
+                            </td>
+                            <td class="remove-column">
+                                <div>
+                                    <button mat-icon-button color="warn" (click)="removeInput(index)">
+                                        <mat-icon>remove</mat-icon>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <div style="padding: 5px 0 20px 0;">
+                <button mat-raised-button color="primary" (click)="addInput()">
+                    <mat-icon>add</mat-icon>
+                    <span>Add Input</span>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <table *ngIf="config.assessmentMapping">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Overwrite</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="config.assessmentMapping.overwrite" style="margin-left: 1rem;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Decision Engine Job</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.assessmentMapping.decisionEngineJobId" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Processing Window</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="number" [(ngModel)]="config.task.processingWindow" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threading</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="number" name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

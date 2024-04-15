@@ -1,0 +1,118 @@
+<div>
+    <mat-icon class="icon-hov2" style="cursor: pointer;float: right; font-size: 18px; font-weight: bolder;" (click)="dialogRef.close();">close</mat-icon>
+    <p style=" padding:3px 20px 39px 20px;margin: 0px;font-size: 22px;font-weight: 700; text-align: center;"
+       [style.color]="' rgba(0, 0, 0, 0.87)'"
+       [class]="'hdr'">
+       EXISTING WIDGET </p>
+
+       <div [style.backgroundColor]="'white'">
+                  <!------------------------------------------- SEARCH ------------------------------------------->
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Select your widget type</mat-label>
+                    <mat-select [(ngModel)]="keyword" name="fieldName" (ngModelChange)="onKeyup($event)">
+                      <mat-option [value]="'pieChart'">Pie Chart</mat-option>
+                      <mat-option [value]="'barChart'">Bar Chart</mat-option>
+                      <mat-option [value]="'lineChart'">Line Chart</mat-option>
+                      <mat-option [value]="'gaugeChart'">Gauge</mat-option>
+                      <mat-option [value]="'table'">Table</mat-option>
+                      <mat-option [value]="'funnelChart'">Funnel Chart</mat-option>
+                      <mat-option [value]="'donutChart'">Donut Chart</mat-option>
+                      <mat-option [value]="'card'">Card</mat-option>
+                      <mat-option [value]="'multipleChart'">Multiple Y Axis Chart</mat-option>
+                      <mat-option [value]="'candleStick'">Candle Stick Chart</mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix class="search-icon">search</mat-icon>
+                    <button mat-icon-button matSuffix class="clear-icon" [hidden]="!keyword" (click)="keyword='';page=0;getAllWidgets()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>                  
+               </div>
+       <div class="row row-height" style="min-height: 490px; height: 490px; overflow-y: auto;overflow-x: hidden;" [style.opacity]="loading == true? '0.5': ''" [style.pointer-events]="loading == true? 'none':''">
+        <div class="col-lg-6 col-md-6" [class]="'graph-light'" *ngFor="let widget of allWidgets; let index = index"  [id]="index" (click)="chooser = index;console(index)" >
+            <div class="box" [class.active-widget]="chooser == index" *ngIf="allWidgets[index].type != 'card' && allWidgets[index].type != 'table' && allWidgets[index].type!=='cardChart'">
+                <div id="container" echarts [options]="option[index]" class="demo-chart" [style.height]="allWidgets[index].type==='candleStick'?'550px':'200px'"></div>
+            </div> 
+            <div class="box" style="padding: 30px;" [class.active-widget]="chooser == index" *ngIf="allWidgets[index].type == 'card' || allWidgets[index].type=='cardChart'">
+                <div class="card label" [style.background-color]="allWidgets[index].graphSettings.cardColor" [style.border-top]="allWidgets[index].graphSettings.topThickness + 'px solid' + allWidgets[index].graphSettings.borderTopColor" [style.border-bottom]="allWidgets[index].graphSettings.bottomThickness + 'px solid' + allWidgets[index].graphSettings.borderBottomColor" 
+                [style.border-left]="allWidgets[index].graphSettings.leftThickness + 'px solid' + allWidgets[index].graphSettings.borderLeftColor" [style.border-right]="allWidgets[index].graphSettings.rightThickness + 'px solid' + allWidgets[index].graphSettings.borderRightColor">
+                    <span class="hdr" style="font-size: 16px;margin-top: 8%;" [style.color]="allWidgets[index].graphSettings.cardTextColor">{{this.allWidgets[index].graphSettings.labelName}}</span>
+                    <span class="hdr" style="height: 100px;margin-top: 10px;" [style.color]="allWidgets[index].graphSettings.cardTextColor">{{this.allWidgets[index].actualData.value}}</span>
+                </div>
+            </div>
+            <div class="box" [class.active-widget]="chooser == index" *ngIf="allWidgets[index].type == 'table'">
+                <div style="height: 200px;overflow: auto;">
+                    <span class="hdr" style="font-size: 20px;display: flex;margin:-5px 20px 10px 20px;
+                    font-weight: bold;" [style.justify-content]="allWidgets[index].graphSettings.titleAlign">{{allWidgets[index].graphSettings.tableName}}</span>
+                    <div class="table-container" style="margin: 0 20px;overflow: auto;height: 150px;">
+                        <table id="table" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th [style.background-color]="allWidgets[index].graphSettings.headerBg"
+                                    [style.color]="allWidgets[index].graphSettings.headerColor"
+                                    [style.border]="allWidgets[index].graphSettings.headerBorder + 'px solid' + allWidgets[index].graphSettings.headerBorderColor"
+                                    *ngFor="let list of tableArrayIndex[index]"><span
+                                            *ngIf="list !== '_id'">{{list?.replaceAll('_',' ')}}</span></th>
+                            </thead>
+                            <tbody>
+                                <tr class="row-hov" *ngFor="let list of tableDataIndex[index]">
+                                    <td [style.background-color]="allWidgets[index].graphSettings.bodyBg"
+                                    [style.color]="allWidgets[index].graphSettings.bodyColor"
+                                    [style.text-align]="allWidgets[index].graphSettings.textAlign"
+                                    [style.border]="allWidgets[index].graphSettings.bodyBorder + 'px solid' + allWidgets[index].graphSettings.bodyBorderColor" 
+                                    *ngFor="let val of tableArrayIndex[index];let i = index">
+                                        <span *ngIf="val !== '_id'">{{list[val]}}</span>
+    
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+         <!-- NO DATA MSG -->
+        <div class="loading-container" *ngIf="loading" style="position: absolute;top:50%;left:48%;font-style:italic">
+            <mat-progress-spinner style="right:32px;top:20px" color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading... Please wait...</span>
+        </div>
+       </div>
+
+       <!-- PAGE CONTROLS -->
+       <div class="d-flex justify-content-center align-items-center p-2">
+        <div class="paginator-container"  *ngIf="!loading">
+            <div class="middle-container">
+                <button class="page-links" style="height:30px" (click)="page=page-1;getAllWidgets()" [disabled]="page===0"><mat-icon style="display: flex;
+                    align-items: center;
+                    justify-content: center;margin-top:-12px">&laquo;</mat-icon></button>
+            </div>
+            <div class="left-container" *ngFor="let pageNum of getPageNumbers()">
+                <button class="page-links" (click)="page = pageNum - 1; getAllWidgets()" [class.active]="pageNum === page+1">{{ pageNum }}</button>
+            </div>
+            <div class="middle-container">
+                <button class="page-links" style="height:30px" (click)="nextPage(); getAllWidgets()" [disabled]="isLastPage()||totalCount<4"><mat-icon style="display: flex;
+                    align-items: center;
+                    justify-content: center;margin-top:-12px">&raquo;</mat-icon></button>
+            </div>
+        </div>    
+        </div>
+        <div class="right-container" style="position:absolute;right:25%;bottom:20%"  *ngIf="!loading">
+            Total Items: <span style="font-weight: bold">{{totalCount}}</span>
+        </div>  
+        <div class="d-flex justify-content-center align-items-center flex-wrap p-2">
+        <button mat-button style="font-weight: 600;" class="btn-primary-admin" [disabled]="chooser == null "
+        [ngClass]="chooser == null ?'btn-disabled':'btn-primary-admin'" (click)="saveNewWidget(chooser)">
+            APPLY
+        </button>
+        </div>
+        <!-- SPINNER -->
+
+       <!-- <div class="d-flex justify-content-center align-items-center flex-wrap p-2">
+        <div *ngFor="let widget of allWidgets; let index = index" style="margin:10px">
+            <div echarts   "option[index]" class="demo-chart" style="height: 100px;width:100px"></div>
+        </div>
+    </div> -->
+    <div class="placeholder-container" style="position: absolute;top:50%;left:48%;font-style:italic;color:black" *ngIf="!loading && allWidgets?.length==0">
+        <span>No widgets found!</span>
+    </div>
+ </div>

@@ -1,0 +1,239 @@
+<div class="col-lg-12 col-md-12"
+    [class]="'graph-light'" style="height: 100%;" [style.background-color]="getuserColor(layoutid)">
+    <!--------------------------------------- HEADER -------------------------------------------------->
+    <div class="d-flex flex-wrap bg" style="position: sticky; top: 0px; width: 100%;z-index: 22;justify-content: end;">
+        <!--------------------------------------- CLOSE BUTTON -------------------------------------------------->
+        <span class="float-right" style="cursor: pointer;padding-top: 10px;padding-right:10px;color:black" [style.color]="gettextColor(layoutid)">
+            <span class="load-more-container" *ngIf="widget">
+                <span style="margin-top:9px" [hidden]="isLoading" [hidden]="widget.actualData?.data?.length==0" *ngIf="widget">
+                    <span *ngIf="widget.actualData?.data?.length>10 || widget.actualData?.length>10"><mat-icon class="load-more-icon" *ngIf="widget?.type!=='table' && widget?.type!=='card' && widget?.type!=='gaugeChart' && widget?.type!=='cardChart'" style="font-size: 18px; font-weight: bolder;" matTooltip="Previous page"
+                    (click)="loadPrevPage=true;loadMoreGraph()">
+                    keyboard_arrow_left</mat-icon></span>
+                    <span><mat-icon [hidden]="fieldValueCount==0" class="load-more-icon" *ngIf="widget?.type!=='table' && widget?.type!=='card' && widget?.type!=='gaugeChart' && widget?.type!=='cardChart'" style="font-size: 18px; font-weight: bolder;" matTooltip="Next page"
+                    (click)="loadMore=true;loadMoreGraph()">
+                    keyboard_arrow_right</mat-icon></span>
+                </span>                                      
+                <span class="spinner-container">
+                  <span *ngIf="widget?.type=='card'||widget?.type=='cardChart'||widget.type=='gaugeChart'"> <span  *ngIf="isLoading" style="position: absolute;left: 47%;top: 1%;font-style: italic;color: silver;"  >Loading...</span></span>
+                </span>
+            </span>
+            <mat-icon style="padding-right:30px;font-size: 18px; font-weight: bolder;" matTooltip="Apply filters"
+                (click)="applyFilter();">filter_list</mat-icon>
+            <mat-icon *ngIf="filterapply" style="padding-right:30px;font-size: 18px; font-weight: bolder;" matTooltip="clear filters"
+                (click)="clearFilter();filterapply=false;">clear</mat-icon>
+                <mat-icon [matMenuTriggerFor]="menu"
+                    style="padding-right:30px;font-size: 18px; font-weight: bolder;"
+                    [matTooltip]="'Export'">
+                    <mat-menu #menu="matMenu"
+                        style="color: black;font-family: sans-serif;font-size:14px;width:80px">
+                        <button mat-menu-item (click)="downloadLayout('xlsx')"><i
+                                class="fas fa-file-excel"
+                                style="color: green;font-size:14px"></i><span>
+                                XLSX</span></button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item (click)="downloadLayout('csv')"><i
+                                class="fas fa-file-csv"
+                                style="color:blue;font-size:14px"></i><span>
+                                CSV</span></button>
+                    </mat-menu>
+                    get_app
+                </mat-icon>
+                <!-- <mat-icon *ngIf="widget?.type!=='table' && widget?.type!=='cardChart' && widget?.type!=='gaugeChart' && threeDim == false"
+                    style="padding-right:30px;font-size: 18px; font-weight: bolder;"
+                    [matTooltip]="'Show in 3d'" (click)="preview3dOptions(widget?.type)">
+                    3d_rotation
+                </mat-icon>
+                <mat-icon style="font-size: 18px; font-weight: bolder; padding-right: 30px;"  matTooltip="Default chart" *ngIf="threeDim == true" (click)="threeDim=false;previewOptions()">refresh</mat-icon> -->
+                <!-- <mat-icon *ngIf="widget?.type!=='table' && widget.type!=='cardChart' && widget.type!=='gaugeChart'" [matMenuTriggerFor]="menu1"
+                    style="padding-right:30px;font-size: 18px; font-weight: bolder;margin-bottom: 1px;"
+                    [matTooltip]="'3d view'">
+                    <mat-menu #menu1="matMenu"
+                        style="color: black;font-family: sans-serif;font-size:14px;width:80px">
+                        <button mat-button (click)="give3dCharts('bar3D')" style="width:inherit">
+                            <i class="fa fa-bar-chart"></i> 
+                            <span>
+                            Bar 3D Chart</span></button>
+                            <mat-divider></mat-divider>
+                            <button mat-button (click)="give3dCharts('line3D');" style="width:inherit">
+                                <i class="fa fa-line-chart"></i> 
+                                <span>
+                                Line 3D Chart</span>
+                            </button>
+                            <mat-divider></mat-divider>
+                            <button mat-button (click)="preview3dOptions('pieChart');" style="width:inherit">
+                                <i class="fa fa-pie-chart"></i> 
+                                <span>
+                                Pie 3D Chart</span></button>
+                                <mat-divider></mat-divider>
+                            <button mat-button (click)="preview3dOptions('donutChart')" style="width:inherit">
+                                <i class="fa fa-circle-o"></i> 
+                                <span>
+                                Donut 3D Chart</span></button>
+                            <mat-divider></mat-divider>
+                            <button mat-button (click)="preview3dOptions('funnelChart');" style="width:inherit">
+                                <i class="fa fa-filter"></i> 
+                                <span>
+                                Funnel 3D Chart</span></button>
+                            <mat-divider></mat-divider>
+                            <button mat-button (click)="preview3dOptions('timeline');">
+                                <mat-icon>assessment</mat-icon>
+                                <span>
+                                Timeline Chart</span></button>
+                            <mat-divider></mat-divider>
+                            <button mat-button (click)="giveMultipleCharts()">
+                                <mat-icon>assessment</mat-icon>
+                                <span>
+                                Multiple Y-Axis Chart</span></button>
+                            <mat-divider></mat-divider>
+                            <button mat-button (click)="previewOptions();">
+                                <i class="fa fa-undo"></i> 
+                                <span>
+                                Default Chart</span>
+                            </button>
+                    </mat-menu>
+                    3d_rotation
+                </mat-icon> -->
+            <mat-icon style="position: absolute;top:6px" (click)="onClose();" matTooltip="Minimize">fullscreen_exit</mat-icon>
+        </span>
+    </div>
+    <div class="box" *ngIf="widget.type != 'card' && widget.type != 'table' && widget.type!='cardChart'">
+              <div id="container" echarts [options]="previewOption" class="demo-chart" style="height: 670px;"></div>
+              <div *ngIf="widget.type=='gaugeChart'" class="container" style="position: relative;width: 100%;height: 50px;top:-144px">
+              <!-- <span style="position: absolute;top: 50%;left: 50%;text-align: center;display: flex;align-items: center;justify-content: center;transform: translate(-50%,-50%);">{{widget.query.columnName1}}</span> -->
+              </div>
+    </div>
+    <div class="box" [style.height.px]="component_height - 240" style="padding: 30px;" *ngIf="widget.type == 'card'||widget.type=='cardChart'">
+        <div *ngIf="filterapply==true" style="display: flex;overflow-x: auto;padding: 2px 2px 20px 25px;">
+            <span style="color: rgb(114, 114, 114);font-style:italic;white-space: nowrap;">Filter Applied For:</span>
+        <span *ngFor="let val of filterVal">
+            <span *ngIf="val.operandField!==''">
+            <span [style.background-color]="widget.graphSettings.cardColor ? widget.graphSettings.cardColor : '#c1f2f2' "
+            style="
+            margin: 5px;
+            border-radius: 13px;
+            padding: 6px;
+            font-size: 12px;white-space: nowrap;">{{val.operandField}} {{val.operator}} {{val.value}}</span>
+        </span>
+        </span>
+        </div>
+        <div class="card label"
+            [style.background-color]="widget.graphSettings.cardColor ? widget.graphSettings.cardColor : cardcolor "
+            [style.border-top-color]="widget.graphSettings.borderTopColor ? widget.graphSettings.borderTopColor :cardtop"
+            [style.border-top-width.px]="widget.graphSettings.topThickness"
+            [style.border-bottom-color]="widget.graphSettings.borderBottomColor ? widget.graphSettings.borderBottomColor :cardbottom"
+            [style.border-bottom-width.px]="widget.graphSettings.bottomThickness"
+            [style.border-left-color]="widget.graphSettings.borderLeftColor ? widget.graphSettings.borderLeftColor :cardleft"
+            [style.border-left-width.px]="widget.graphSettings.leftThickness"
+            [style.border-right-color]=" widget.graphSettings.borderRightColor ?  widget.graphSettings.borderRightColor : cardright"
+            [style.border-right-width.px]="widget.graphSettings.rightThickness">
+            <span class="hdr" style="font-size: 16px;"
+                [style.color]="widget.graphSettings.cardTextColor ? widget.graphSettings.cardTextColor: cardtxt">{{this.widget.graphSettings.labelName}}</span>
+            <span class="hdr" [style.color]="widget.graphSettings.cardTextColor ? widget.graphSettings.cardTextColor: cardtxt">{{this.graphDataGauge.value}}</span>
+        </div>
+    </div>
+    <div class="box" *ngIf="widget.type == 'table'">
+        <span class="hdr" style="font-size: 20px;display: flex;margin:10px 0px;
+     font-weight: bold;"
+            [style.justify-content]="widget.graphSettings.titleAlign" [style.color]="gettextColor(layoutid)">{{widget.graphSettings.tableName}}</span>
+            <div *ngIf="filterapply==true" style="display: flex;overflow-x: auto;padding: 2px 2px 20px 0px;margin-top: -90px;width: 50%;">
+                <span style="color: rgb(114, 114, 114);font-style:italic;white-space: nowrap;">Filter:</span>
+            <span *ngFor="let val of filterVal">
+                <span *ngIf="val.operandField!==''">
+                <span [style.background-color]="widget.graphSettings.cardColor ? widget.graphSettings.cardColor : '#c1f2f2' "
+                style="
+                margin: 5px;
+                border-radius: 13px;
+                padding: 6px;
+                font-size: 12px;white-space: nowrap;">{{val.operandField}} {{val.operator}} {{val.value}}</span>
+            </span>
+            </span>
+            <span *ngIf="filterVal2">
+            <span *ngFor="let val of filterVal2">
+                <span *ngIf="val.operandField!==''">
+                <span 
+                [style.background-color]="widget.graphSettings.cardColor ? widget.graphSettings.cardColor : '#c1f2f2' "
+                style="
+                margin: 5px;
+                border-radius: 13px;
+                padding: 6px;
+                font-size: 12px;white-space: nowrap;">T2-{{val.operandField}} {{val.operator}} {{val.value}}</span>
+            </span>
+            </span>
+            </span>
+            </div>
+            <div>
+        <div class="table-container" style="overflow: auto;width: 100%;" [style.height.px]="component_height - 330">
+            <table id="table" style="width:100%;">
+                <thead>
+                    <tr [style.background-color]="widget.graphSettings.headerBg ? widget.graphSettings.headerBg : darkBkcolor">
+                        <th
+                            [style.color]="widget.graphSettings.headerColor"
+                            [style.border]="widget.graphSettings.headerBorder + 'px solid' + widget.graphSettings.headerBorderColor"
+                            *ngFor="let list of tableArray"><span *ngIf="list !== '_id' && list!=='FILE_NAME'">{{list?.replaceAll('_',' ')}}</span></th>
+                            </tr>
+                </thead>
+                <tbody>
+                    <tr [style.background-color]="widget.graphSettings.bodyBg ? widget.graphSettings.bodyBg : lightBkcolor" *ngFor="let list of tableData" [style.color]="gettextColor(layoutid)">
+                        <td 
+                            [style.color]="widget.graphSettings.bodyColor"
+                            [style.text-align]="widget.graphSettings.textAlign"
+                            [style.border]="widget.graphSettings.bodyBorder + 'px solid' + widget.graphSettings.bodyBorderColor"
+                            *ngFor="let val of tableArray">
+                            <span *ngIf="val !== '_id' && val!=='FILE_NAME'">{{list[val]}}</span>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="position: absolute;left: 47%;top: 30%;font-style: italic;color: silver;"
+            *ngIf="tableArray.length == 0">No entries found.</div>
+            <div style="position: absolute;left: 47%;top: 13%;font-style: italic;color: silver;" *ngIf="tabLoading">Loading...</div>
+            <div class="paginator-container" style="position:absolute;bottom:2%;right:45%" *ngIf="!tabLoading">
+                <div class="middle-container">
+                    <button class="page-links" style="height:30px" (click)="page=page-1;showQueryData(queryText)" [disabled]="page===0"><mat-icon style="display: flex;
+                        align-items: center;
+                        justify-content: center;margin-top:-12px" [style.color]="gettextColor(layoutid)">&laquo;</mat-icon></button>
+                </div>
+                <div class="left-container" *ngFor="let pageNum of getPageNumbers()">
+                    <button class="page-links" [class.active]="pageNum === currentPage" (click)="page = pageNum - 1; showQueryData(queryText)" [style.color]="gettextColor(layoutid)">{{ pageNum }}</button>
+                </div>
+                <div class="middle-container">
+                    <button class="page-links" style="height:30px" (click)="nextPage(); showQueryData(queryText)" [disabled]="isLastPage()||totalCount<10"><mat-icon style="display: flex;
+                        align-items: center;
+                        justify-content: center;margin-top:-12px" [style.color]="gettextColor(layoutid)">&raquo;</mat-icon></button>
+                </div>
+            </div>    
+            <div class="right-container" style="position:absolute;right:5%;bottom:3%" *ngIf="!tabLoading" [style.color]="gettextColor(layoutid)">
+                Total Items: <span style="font-weight: bold">{{totalCount}}</span>
+            </div>  
+    </div>
+</div>
+<div class="download-readiness-indicator" *ngIf="popup == true" [style.opacity]="currentJob ? 1: 0">
+    <div class="det">
+        <div class="heading">
+            Preparing download..
+        </div>
+        <div>
+            <div style="margin-top: 10px;" *ngIf="currentJob">
+                {{ currentJob?.progress == 100 ? 'Finalizing..' : (currentJob?.progressStage ?
+                ( currentJob?.progressStage === 'FETCH_ITEMS' ? 'Querying..' : 'Writing file..' )
+                : 'Requesting..')}}</div>
+            <div style="margin-top: 10px;display: flex;gap:20px" *ngIf="currentJob">
+                <mat-progress-spinner color="primary" [mode]="currentJob ? 'indeterminate': 'determinate'"
+                    [value]="currentJob ? 0 : 100" diameter="30" strokeWidth="2">
+                </mat-progress-spinner>
+                {{currentJob.progressStage === 'FETCH_ITEMS' ? '' : currentJob.progress +
+                '%'}}
+            </div>
+            <div style="margin-top: 10px;" *ngIf="currentJob">
+                Items:
+                <span>{{currentJob?.itemsProcessed}}</span>/<span>{{currentJob?.itemsTotal}}</span>
+            </div>
+            <div style="float: right;margin-top: 5px;">
+                <button mat-button class="btn-primary-admin ml-3"
+                    style="background-color: #db3a12;color:#fff; line-height: 25px;font-size: 11px; width: 12%;"
+                    (click)="popup = false;cancelExport();deleteExport(currentJob?.id)">Cancel</button>
+            </div>
+        </div>
+    </div>

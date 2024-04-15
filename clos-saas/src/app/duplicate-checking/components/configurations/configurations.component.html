@@ -1,0 +1,77 @@
+<div class="main-container">
+    <div class="header-container flex-row-parent">
+        <div class="left-align flex-stetch">
+
+        </div>
+        <div class="center-right-align flex-unstetch flex-column-parent">
+            <div class="flex-stetch header-container">
+                Welcome to duplicate check rules configuration
+            </div>
+            <div class="flex-unstetch sub-header-container">
+                Module to configure the rules required to check the duplicate applications
+            </div>
+        </div>
+        <div class="right-align flex-stetch">
+
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="db-list-container flex-row-parent">
+            <div class="left-align flex-stetch">
+
+            </div>
+            <div class="center-align flex-unstetch">
+                <div class="search-container flex-row-parent">
+                    <div class="flex-unstetch">
+
+                    </div>
+                    <div class="flex-stetch">
+                        <!-- <button mat-stroked-button style="margin-top: 0.5rem; margin-right: 1rem;"
+                            (click)="onBackClick()">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            Go Back
+                        </button> -->
+                        <button mat-raised-button (click)="onSelectClick()" style="background-color: #394eb4; color: white; margin-top: 0.5rem;">
+                            <mat-icon>add</mat-icon>
+                            Add Rules
+                        </button>
+                    </div>
+                </div>
+                <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+                <div class="card-container" *ngIf="!loading">
+                    <div class="card flex-row-parent" *ngFor="let dataSource of rulesList" matRipple>
+                        <div class="center-contain flex-unstetch flex-column-parent">
+                            <div class="flex-stetch header-container">
+                                {{dataSource.name}}
+                            </div>
+                            <div class="flex-unstetch sub-header-container">
+                                {{dataSource.description}}
+                            </div>
+                            <div class="flex-unstetch sub-header-container">
+                                <mat-slide-toggle [(ngModel)]="dataSource.activeStatus" (change)="getActiveStatus(dataSource.id,$event)">Activate/Inactivate</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div class="right-contain flex-stetch" style="padding-left: 1rem;">
+                            <button mat-stroked-button #tooltip="matTooltip" style="margin: 3rem;color: white;background-color: green;" matTooltip="Click here to edit" class="class-btn" (click)="onDataSourceSelect(dataSource)">
+                                <mat-icon class="edit-button-icon">edit</mat-icon><span style="margin-left: 1rem;">Edit </span>
+                            </button>
+                            <button mat-stroked-button #tooltip="matTooltip" style="margin: 3rem;color: white;background-color: red;" matTooltip="Click here to delete" class="class-btn" (click)="deleteRules(dataSource.id)">
+                                <mat-icon class="edit-button-icon">delete</mat-icon><span style="margin-left: 1rem;">Delete </span>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="!loading && rulesList.length==0">
+                        <p class="no-content" >No database found!</p>
+                    </ng-container>
+                    <div *ngIf="loading" class="loading-spinner">
+                        <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                        <span>Loading.. Please wait..</span>
+                    </div>
+                </div>
+            </div>
+            <div class="right-align flex-stetch">
+
+            </div>
+        </div>
+    </div>
+</div>

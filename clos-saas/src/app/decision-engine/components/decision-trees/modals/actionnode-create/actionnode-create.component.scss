@@ -1,0 +1,308 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/commonstyles.scss);
+@import url(../../../decision-tables/modals/table-value/branch-tree-design.scss);
+* {
+    font-size: 1.5rem;
+}
+
+.main-container {
+    height: 59.8rem;
+    >.header-container {
+        height: 4rem;
+        background-color: whitesmoke;
+        position: relative;
+        span {
+            position: absolute;
+            font-size: 1.5rem;
+            top: 10%;
+            left: 0.5%;
+        }
+    }
+    >.body-container {
+        height: calc(100% - 6rem);
+        >.select-container {
+            height: 6rem;
+            width: calc(100% - 30rem);
+            .node-data {
+                padding-top: 15px;
+                padding-bottom: 10px;
+                .node-detail {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    margin-left: 20px;
+                    .label {
+                        flex-grow: 0;
+                        flex-shrink: 0;
+                        width: 150px;
+                        text-align: left;
+                    }
+                    .colen {
+                        flex-grow: 0;
+                        flex-shrink: 0;
+                        width: 50px;
+                        text-align: center;
+                    }
+                    .value {
+                        flex-grow: 0;
+                        flex-shrink: 0;
+                        width: 300px;
+                        input {
+                            width: 100%;
+                        }
+                    }
+                    .node-id {
+                        width: 100px;
+                    }
+                    .value-hint {
+                        padding-left: 10px;
+                        text-align: left;
+                        color: silver;
+                    }
+                }
+            }
+        }
+        >.tree-container {
+            height: calc(100% - 9rem);
+            border: 0.5px solid rgb(218, 218, 218);
+            border-radius: 10px;
+            overflow: auto;
+            padding: 2rem;
+        }
+    }
+}
+
+.mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.mat-dialog-container {
+    overflow: hidden !important;
+}
+
+.first-tab {
+    height: 560px;
+    // overflow: auto;
+}
+
+.second-tab {
+    height: 580px;
+}
+
+.third-tab {
+    height: 560px;
+    overflow: auto;
+}
+
+.card-container {
+    margin: 1.5rem;
+    padding: 1rem;
+    height: 8rem;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1rem;
+    display: flex;
+    direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    >.card-content-container {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 1rem 1rem;
+        border-left: 0.2rem solid royalblue;
+        // background-color: whitesmoke;
+        // width: 90%;
+        >.title {
+            flex: 1 1 auto;
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+        >.sub-title {
+            flex: 1 1 auto;
+            margin: 1rem 0rem;
+            font-size: 1.2rem;
+            color: gray;
+        }
+    }
+    div.spacer {
+        flex: 1 1 auto;
+    }
+    *:not(spacer) {
+        flex: 0 0 auto;
+    }
+    >.right-align {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        >.up-split-container {
+            font-size: 12px;
+            color: lightgray;
+            font-style: italic;
+            font-family: Arial, Helvetica, sans-serif;
+            flex: 1 1 auto;
+        }
+        >.split-container {
+            width: 100%;
+            flex: 0 0 auto;
+        }
+    }
+}
+
+.card-container:hover {
+    border: 0.1rem solid #394eb4;
+}
+
+.selected-node {
+    border-left: solid 2px #394eb4;
+}
+
+.select-container1 {
+    margin-top: 20px;
+    height: 6rem;
+    width: calc(100% - 30rem);
+    .node-data {
+        margin-top: 15px;
+        padding-bottom: 10px;
+        .node-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            margin-left: 20px;
+            .label {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: 150px;
+                text-align: left;
+            }
+            .colen {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: 50px;
+                text-align: center;
+            }
+            .value {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: 300px;
+                input {
+                    width: 100%;
+                }
+            }
+            .node-id {
+                width: 100px;
+            }
+            .value-hint {
+                padding-left: 10px;
+                text-align: left;
+                color: silver;
+            }
+        }
+    }
+}
+
+.string-con {
+    height: 35px;
+    margin-top: 20px;
+    // overflow: hidden;
+    margin-left: 40px;
+}
+
+mat-form-field {
+    width: 470px;
+}
+
+// .split-container{
+//     overflow: auto;
+// }
+.title {
+    flex: 1 1 auto;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.sub-title {
+    flex: 1 1 auto;
+    margin: 1rem 0rem;
+    font-size: 1.2rem;
+    color: gray;
+}
+
+.category-sub-header1 {
+    padding-top: 1rem;
+    font-size: 1.6rem;
+    padding-left: 5px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.main-container1 {
+    height: 60rem;
+    // background-color:red;
+}
+
+.header-container1 {
+    height: 20px;
+    border-bottom: 1px solid gainsboro;
+    font-size: 16px;
+    font-weight: 500;
+    justify-content: center;
+    padding: 10px;
+    // height: 450px;
+}
+
+.body-container1 {
+    // height: calc(100% - 50px);
+    padding: 10px;
+    // background-color:rgb(48, 206, 145);
+    height: 53rem;
+}
+
+// .mat-tab-body-content {
+//     height: 50rem !important;
+//     overflow: hidden !important;
+// }
+.node-data {
+    margin-top: 5rem;
+    padding-bottom: 10px;
+    .node-detail {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        .label {
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 150px;
+            font-weight: 500;
+            text-align: left;
+        }
+        .colen {
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 50px;
+            text-align: center;
+        }
+        .value {
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 40rem;
+            input {
+                width: 100%;
+                height: 1rem;
+            }
+        }
+        .node-id {
+            width: 100px;
+        }
+        .value-hint {
+            padding-left: 10px;
+            text-align: left;
+            color: silver;
+        }
+    }
+}

@@ -1,0 +1,61 @@
+.dialog-container {
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: -5rem;
+    right: 1px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .circle {
+    background-color: black;
+    width: 20px; /* Adjust the size of the circle */
+    height: 20px; /* Adjust the size of the circle */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .close-icon {
+    font-size: 24px; /* Adjust the size of the close icon */
+    color: #ffffff; /* Adjust the color of the close icon */
+    font-weight: bold; /* Make the icon bold for better visibility */
+  }
+  .centered-text {
+    margin-top: 5rem;
+    text-align: center;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5rem;
+    padding: 1rem;
+  }
+  
+  .reject-button {
+    background-color: black;
+    color: white;
+    width: 100px;
+    padding: 4px; /* Add padding to all sides of the button */
+    border-radius: .5rem;
+  }
+  
+  .reject-info-button {
+    background-color: rgba(14, 41, 84, 1);
+    color: white;
+    width: 180px;
+    padding: 4px; /* Add padding to all sides of the button */
+    border-radius: .5rem;
+  }
+  
+  .mat-icon {
+    margin-right: 5px;
+    margin-left: -5px;
+  }
+  

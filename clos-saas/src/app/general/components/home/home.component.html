@@ -1,0 +1,400 @@
+<!-- <section class="dashboard-container">
+    <div class="dashboard-bg">
+        <div class="welcome-box">
+            <p style="letter-spacing: 2px">Corporate Loan Origination Solution</p>
+            <span style="font-size:20px;letter-spacing: 3px;">Dashboard Main Screen</span>
+        </div>
+        <div class="cardS-container mx-auto mt-5 pt-5">
+            <div style="background-color:white" class="card-grid" [routerLink]="['/application-entry/application-details']">
+                <div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color:  rgba(14, 41, 84, 1);">Application Entry
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Application Data Entry</span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">Assignment</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="background-color:white" class="card-grid"  [routerLink]="['/administrator']">
+                <div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: rgba(14, 41, 84, 1);">Admin</h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Administrator</span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: indianred;font-size: 5rem;">Person</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <ng-container *ngIf="ac.super || ac.items?.DFM000_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/flows']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Flows
+                                        </h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Data Flow Manager</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: darkcyan; font-size:5rem">Account_Tree</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.DATA_ENTRY_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/data-entry']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Data Entry
+                                        </h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Intial Screening Data Entry</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">dataset</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.DECISION_ENGINE_HAS_ACCESS">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/desicion-engine']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Decision
+                                        </h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Decision Engine</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: deeppink; font-size:5rem">directions_alt</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.CONFIGURATION_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/loan-application-matching']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 style="font-variant: all-small-caps; letter-spacing: 2px;font-size: 32px;color: #3445b4;">
+                                            Configurations
+                                        </h3>
+                                        <span style="font-variant: petite-caps; font-size: large; letter-spacing: 1px;color: gray;">Configuration Manager</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: royalblue;font-size: 5rem;">join_inner</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.CASE_MANAGEMENT_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/loan-case-manager']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Manage
+                                        </h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Case Manager</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: darkorchid;font-size: 5rem;">Cases</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.ADMIN_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/admin']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Admin</h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: grey;">Administrator</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: indianred;font-size: 5rem;">Person</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.REPORT_PORTAL_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/reports']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Reports
+                                        </h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: gray;">Generate Reports</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: deepskyblue;font-size: 5rem;">Assignment</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="ac.super || ac.items?.MONITOR_MODULE">
+                <div style="background-color:white" class="card-grid" [routerLink]="['/loan-monitor']">
+                    <div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #3445b4;">Monitor
+                                        </h3>
+                                        <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: gray;">Monitoring Tools</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <span class="material-symbols-outlined" style="color: deepskyblue;font-size: 5rem;">Monitoring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container> -->
+        <!-- </div>
+    </div>
+</section> -->
+
+<section class="home-container" style="background-image: url(assets/C-LOS%20Images/Home_Cover.jpg);">
+    <div class="dashboard-bg">
+        <p style="letter-spacing: 2px" >Corporate Origination System</p>
+        <span style="font-size:20px;letter-spacing: 3px;" >Dashboard Main Screen</span>
+    </div>
+    <div class="card-container pt-5" >
+        <div class="row-container">
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/application-entry/application-details']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color:  #fff;">
+                                        Application Entry
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Application Data Entry
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">Assignment</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/flows']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Flow
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Data Flow Manager
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        Account_Tree
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/desicion-engine']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Decision
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Decision Engine
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        directions_alt
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/loan-case-manager']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Manage
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Case Manager
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        Cases
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-container">
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/loan-application-matching']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Configurations
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Configuration Manager
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        join_inner
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/reports']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Reports
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Generate Reports
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        Assignment
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/dynamic/dynamic/landingPage']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        BI Tools
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Dashboard
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        dashboard_customize
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/admin/admin/users']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Admin
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Administrator
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        admin_panel_settings
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

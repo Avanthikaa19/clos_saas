@@ -1,0 +1,123 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header" style="margin-bottom: 5px;">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        FIELD RE/MAPPING:
+    </div>
+    <app-field-mapper-fragment [config]="config.fieldMapping" (configChange)="getFieldMapperConfig($event)"></app-field-mapper-fragment>
+    <div class="category-sub-header">
+        AUTO-RELEASE RULE (JS):
+    </div>
+    <div class="my-code-editor-wrapper" style="border: solid silver 1px; margin-left: 30px; width: calc(100% - 30px); margin-bottom: 10px;">
+        <ngx-monaco-editor 
+            class="my-code-editor" 
+            [options]="editorOptions"
+            [(ngModel)]="config.autoReleaseWhen"></ngx-monaco-editor>
+    </div>
+    <!-- <div style="border: solid silver 1px; margin-left: 30px; width: calc(100% - 30px); margin-bottom: 10px;">
+        <ace-editor 
+            [(ngModel)]="config.autoReleaseWhen" 
+            [mode]="'javascript'"
+            [theme]="'eclipse'"
+            [options]="options"
+            [autoUpdateContent]="true"
+            id="editorAutoRelease" style="height:100%; width:100%; overflow: auto;"></ace-editor>
+    </div> -->
+    <div class="category-sub-header">
+        ADDITIONAL DATA (JS):
+    </div>
+    <table *ngIf="config">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Comment</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;">
+                        <ngx-monaco-editor 
+                            class="my-code-editor" 
+                            [options]="editorOptions"
+                            [(ngModel)]="config.comment"></ngx-monaco-editor>
+                    </div>
+                    <!-- <div style="border: solid silver 1px; width: 100%;">
+                        <ace-editor 
+                            [(ngModel)]="config.comment" 
+                            [mode]="'javascript'"
+                            [theme]="'eclipse'"
+                            [options]="options"
+                            [autoUpdateContent]="true"
+                            id="editorComment" style="height:100%; width:100%; overflow: auto;"></ace-editor>
+                    </div> -->
+                    <!-- <input [(ngModel)]="config.comment" class="min-input" > -->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Purpose</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;">
+                        <ngx-monaco-editor 
+                            class="my-code-editor" 
+                            [options]="editorOptions"
+                            [(ngModel)]="config.purpose"></ngx-monaco-editor>
+                    </div>
+                    <!-- <div style="border: solid silver 1px; width: 100%;">
+                        <ace-editor 
+                            [(ngModel)]="config.purpose" 
+                            [mode]="'javascript'"
+                            [theme]="'eclipse'"
+                            [options]="options"
+                            [autoUpdateContent]="true"
+                            id="editorComment" style="height:100%; width:100%; overflow: auto;"></ace-editor>
+                    </div> -->
+                    <!-- <input [(ngModel)]="config.purpose" class="min-input"> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-header" style="margin-bottom: 5px;">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Insert Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Max Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.maxThreads" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table><br>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

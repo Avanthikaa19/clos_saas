@@ -1,0 +1,66 @@
+<app-side-nav></app-side-nav>
+<div style="position: relative">
+    <div style="position: sticky;top:0;">
+        <!-------------------INITIAL CARD------------------------------>
+       <div>
+           <mat-card>
+               <mat-card-content>
+                   <!-------------LEFT SIDE HEADER-------------------->
+                   <span>
+                   <span class="main-header" style="color: #0d203e;font-size: 20px;margin-left:5px">
+                    DEMO VIDEOS (SUPERUSER)
+                   </span>
+                </span>
+                <!-----------RIGHT SIDE HEADER------------------------>
+                <span style="position: absolute;right:5px">
+                    <span style="margin-right:20px;font-size: 20px;color: #0d203e;margin-top:2px">
+                        <span>
+                            <i class="fa fa-phone">
+                            </i>
+                            <span> +654321890</span>
+                        </span>
+                    </span>
+                </span>
+               </mat-card-content>
+           </mat-card>
+       </div> 
+      </div>
+      <!---Videos-->
+      <div class="container" style="padding: 1%;overflow: auto;"  [style.height.px]="component_height - 60">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">BASICS OF CLOS</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/BasicsofCLOS.mp4" type="video/mp4">
+                </video>
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">APPLICATION ENTRY</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/ApplicationEntry.mp4" type="video/mp4">
+                </video>
+                </p>
+            </div>
+            <!-- <div class="col-lg-6 col-md-12">
+                <span class="video-title">REPORTS</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/Reports.mp4" type="video/mp4">
+                </video>
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <span class="video-title">BI TOOLS</span>
+                <p>
+                <video width="500" height="400" controls>
+                    <source src="/assets/BITools.mp4" type="video/mp4">
+                </video>
+                </p>
+            </div> -->
+
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,151 @@
+.ico-add-column {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-add-column:before {
+    content: '';
+    background: url('../../../../../assets/Icons/insert-column-01.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-remove-column {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-remove-column:before {
+    content: '';
+    background: url('../../../../../assets/Icons/remove-column-01.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-add-row {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-add-row:before {
+    content: '';
+    background: url('../../../../../assets/Icons/add-row-01.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-remove-row {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-remove-row:before {
+    content: '';
+    background: url('../../../../../assets/Icons/delete-row-01.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-save-table {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-save-table:before {
+    content: '';
+    background: url('../../../../../assets/Icons/save.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-edit-table {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-edit-table:before {
+    content: '';
+    background: url('../../../../../assets/Icons/editing.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-remove-rowselect {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-remove-rowselect:before {
+    content: '';
+    background: url('../../../../../assets/Icons/deleterow.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}
+
+.ico-remove-columnselect {
+    display: block;
+    height: 35px;
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.ico-remove-columnselect:before {
+    content: '';
+    background: url('../../../../../assets/Icons/delete.png');
+    background-size: cover;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -20px;
+}

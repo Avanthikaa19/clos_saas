@@ -1,0 +1,10 @@
+<div style="visibility: hidden; position: fixed"  [style.left]="contextMenuPositionWorkflow.x"
+[style.top]="contextMenuPositionWorkflow.y" [matMenuTriggerFor]="contextMenu">
+<mat-menu #contextMenu="matMenu">
+    <span>
+        <button mat-menu-item (click) = "cloneWorkflow()"> <mat-icon style="margin-left: 0px; margin-right: 0px;" >content_copy</mat-icon>Clone</button>
+        <!-- <button mat-menu-item>Item 5</button> -->
+    </span>
+ </mat-menu>
+</div>
+

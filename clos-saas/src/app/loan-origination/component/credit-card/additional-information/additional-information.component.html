@@ -1,0 +1,111 @@
+<!-- MAIN CONTAINER -->
+<section class="mt-2" style="margin-left: 10px;">
+    <div class="row row-shadow">
+        <div class="col-lg-12 p-4" style="background: white;
+        border-top-right-radius: 10px;">
+            <p class="mb-1" style="font-weight: 600;">ADDITIONAL INFORMATION</p>
+            <div class="at-separator-thick"></div>
+            <div class="pt-4">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Are you a Director, Officer, or Shareholder, or any subsidiary and/or affiliate? <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <div>
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of optionValue1" [value]="option.option">
+                                        {{option.option}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Are you a 1st degree relative of a Director, Officer, or Shareholder, Rural Bank or any subsidiary and/or affiliate of the Filinvest Group of Companies? <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <div>
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of optionValue2" [value]="option.option">
+                                        {{option.option}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Are you an existing Client? <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <div>
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of optionValue3" [value]="option.option">
+                                        {{option.option}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Are you an existing Principal credit cardholder? <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <div>
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of optionValue4" [value]="option.option">
+                                        {{option.option}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Are you a Politically Exposed Person (PEP)? <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <div>
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of optionValue5" [value]="option.option">
+                                        {{option.option}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-hint style="margin: 6px;" align="start">
+                                <strong>Are you a relative of a Politically Exposed Person (PEP)? <span style="color:red;margin-left: 5px;">*</span>
+                                </strong>
+                            </mat-hint>
+                            <div>
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button style="font-size: 14px;padding: 10px;" *ngFor="let option of optionValue6" [value]="option.option">
+                                        {{option.option}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <div class="d-flex" style="margin-top: 15px;">
+                            <div style="margin-right: auto;">
+                                <button mat-button class="go-back-btn" style="color:white;background:blue" [routerLink]="'/loan-org/loan/credit-card/workandfinance'">
+                                    <span class="material-symbols-outlined" style="margin-right: 10px;font-size: 12px;"> arrow_back_ios_new </span>Go Back to Works and Finances </button>
+                            </div>
+                            <div style="margin-right: auto;"></div>
+                            <button mat-button class="next-btn" [routerLink]="'/loan-org/loan/credit-card/additional'">
+                                <span class="material-symbols-outlined" style="margin-right: 10px;color: white;"> save </span>Save & Proceed </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

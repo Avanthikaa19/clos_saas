@@ -1,0 +1,205 @@
+<!-- <div class="main-container">
+    <div class="nav-container">
+        <div class="side-nav-container">
+            <div class="side-nav-header-container">
+                Navigation
+            </div>
+            <div class="side-nav-content-container">
+                <ng-container *ngFor="let panel of sideNav">
+                    <ng-container *ngIf="ac.super || panel.access">
+                        <div class="panel-container" routerLink="{{panel.routerLink}}" routerLinkActive="active"
+                            (click)="onPanelClick(panel.name)" matRipple>
+                            <div class="icon">
+                                <mat-icon>{{panel.iconName}}</mat-icon>
+                            </div>
+                            <div class="text">
+                                <span style="margin-top: 0.3rem;">{{panel.name}}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="main-nav-container">
+            <mat-toolbar class="tool-bar">
+                <div *ngFor="let breadCrumb of breadCrumbList" class="tool-bar">
+                    <span style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                        (click)="navToUrl(breadCrumb.url)">{{breadCrumb.name}}</span>
+                    <span class="separator-div">
+                        <div class="separator"></div>
+                    </span>
+                </div>
+            </mat-toolbar>
+            <div class="content-container">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+<!-- <mat-drawer-container class="admin-container">
+    <mat-drawer mode="side" opened>
+      <div (mouseover)="isExpanded=true;" (mouseleave)="isExpanded=false;" style="margin-top: 10px;">
+        <mat-list class="list-item" *ngIf="isExpanded">
+            <ng-container *ngFor="let item of sideNav">
+            <mat-list-item  style="border-bottom: 4px dotted #f2f2f2;" *ngIf="ac.super || item.access" >
+              <div class="d-flex align-items-center"  routerLink="{{item.routerLink}}" routerLinkActive="active">
+                  <span class="material-symbols-outlined side-nav-icon mr-4">
+                    {{item.iconName}}
+                    </span>
+                  <span>{{item.name}}</span></div>
+            </mat-list-item></ng-container>
+            </mat-list>
+            <mat-list class="list-item" *ngIf="!isExpanded">
+                <ng-container *ngFor="let item of sideNav">
+              <mat-list-item *ngIf="ac.super || item.access" >
+                <div   routerLink="{{item.routerLink}}" routerLinkActive="active">
+                    <span mat-line class="material-symbols-outlined side-nav-icon" >
+                      {{item.iconName}}
+                      </span>
+                    </div>
+              </mat-list-item>
+              </ng-container>
+              </mat-list>
+          </div>
+    </mat-drawer>
+    <mat-drawer-content style="margin-left: 85px;">
+        <div *ngIf="!router.url.includes('/admin/admin/dashboard')" class="d-flex pl-3" style="font-weight: 500;
+        background: ghostwhite;
+        box-shadow: rgb(0 0 0 / 4%) 0px 3px 8px;">
+        <span *ngFor="let breadCrumb of breadCrumbList">
+            <div style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                (click)="navToUrl(breadCrumb.url)">
+                <div class="d-flex">{{breadCrumb.name}}
+                <span class="material-symbols-outlined ml-2">
+                    chevron_right
+                    </span></div></div>
+                </span></div>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container> -->
+
+
+  <!-- <div class="main-container">
+    <div class="side_nav-container">
+        <div class="nav_content-container" *ngFor="let navElement of navigationElements">
+            <ng-container>
+                <div class="list-container" (click)="onNavClick(navElement);" routerLinkActive="active" [ngClass]="{'active-container': activeNavItem === navElement.navName}">
+                    <div class="flex-element">
+                        <div class="icon-container">
+                            <span class="material-symbols-outlined">
+                                {{navElement.navIcon}}
+                            </span>
+                        </div>
+                        <div class="name-container">
+                            {{navElement.navName}}
+                        </div>
+                    </div>
+                </div>
+            </ng-container> -->
+            <!-- <ng-container *ngIf="navElement.subNav">
+                <mat-expansion-panel class="expansion-container" [expanded]="true">
+                    <mat-expansion-panel-header>
+                            <div class="flex-element-expansion">
+                                <div class="icon-container">
+                                    <span class="material-symbols-outlined">
+                                        {{navElement.navIcon}}
+                                    </span>
+                                </div>
+                                <div class="name-container">
+                                    {{navElement.navName}}
+                                </div>
+                            </div>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngFor="let subNav of navElement.subNav">
+                        <div class="list-container" (click)="onNavClick(subNav);" [class.active-container]="subNav.navName == currentPanel">
+                            <div class="flex-element">
+                                <div class="icon-container">
+                                    <span class="material-symbols-outlined">
+                                        {{subNav.navIcon}}
+                                    </span>
+                                </div>
+                                <div class="name-container">
+                                    {{subNav.navName}}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </mat-expansion-panel>
+            </ng-container> -->
+        <!-- </div> -->
+    <!-- </div> -->
+    <!-- <div class="main_nav-container">
+        <div *ngIf="!router.url.includes('/admin/admin/dashboard')" class="d-flex pl-3 p-3" style="font-weight: 500;
+            background: ghostwhite;
+            box-shadow: rgb(0 0 0 / 4%) 0px 3px 8px;">
+            <span *ngFor="let breadCrumb of breadCrumbList">
+                <div style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                    (click)="navToUrl(breadCrumb.url)">
+                    <div class="d-flex">{{breadCrumb.name}}
+                    <span class="material-symbols-outlined ml-2">
+                        chevron_right
+                        </span></div></div>
+                    </span></div>
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div> -->
+<!-- </div> -->
+<div class="main-container">
+    <div class="side-nav-container">
+        <div class="nav-container">
+            <ng-container *ngFor="let item of sideNavigationList">
+                <div class="nav-item" (click)="onNavClick(item);" routerLinkActive="active">
+                    <mat-icon class="icon">{{ item.iconName }}</mat-icon>
+                    <span class="name">{{ item.name }}</span>
+                </div>
+            </ng-container>
+            <mat-accordion style="width: 100%;">
+                <ng-container *ngFor="let item of navigationElements">
+                    <span *ngIf="screenList.includes('Admin')" (click)="getMapping('Admin')" >
+                    <mat-expansion-panel [expanded]="item.isExpanded">
+                        <mat-expansion-panel-header class="header-class" style="color: white !important;padding-left: 10px;" (click)="$event.stopPropagation">
+                            <mat-icon class="icon">{{ item.navIcon }}</mat-icon>
+                            <span class="name">{{ item.navName }}</span>
+                            <button class="icon-hov1" matTooltip="Load more" style="border:none;color:white;background-color: transparent;margin-top: 15px;margin-left:69px;z-index: 2;" [hidden]="allTemplate?.length==0||allTemplate?.length<10" (click)="$event.stopPropagation();pageNumber=pageNumber+1;getMapping('Admin')">
+                                <mat-icon style="font-size: 12px;margin-top: 7px;margin-left: 2px;">arrow_forward_ios</mat-icon>
+                            </button>
+                        </mat-expansion-panel-header>
+                        <div style="max-height: 160px;overflow: auto;margin-top: 10px;">
+                        <ng-container *ngFor="let item of allTemplate">
+                            <div class="sub-nav-item" style="padding: 20px;border-radius: 8px;" (click)="viewDashboard(item.id)">
+                                <span class="sub-name">{{ item.dashboardName }}</span>
+                            </div>
+                        </ng-container>
+                        </div>
+                    </mat-expansion-panel>
+                    </span>
+                </ng-container>
+            </mat-accordion>
+                        
+        </div>
+        <div class="main-nav-container">
+            <mat-toolbar class="tool-bar">
+                <div class="tool-bar">
+                    <span *ngFor="let breadCrumb of breadCrumbList">
+                        <div style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                            (click)="navToUrl(breadCrumb.url)">
+                            <div class="d-flex">{{breadCrumb.name}}
+                                <span class="separator-div">
+                                    <div class="separator"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </mat-toolbar>
+            <div class="content-container">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

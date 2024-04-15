@@ -1,0 +1,330 @@
+<div class="main-container">
+    <div class="content-container">
+        <div class="table-container" style="overflow-y: auto;overflow-x: hidden;height: 50rem;">
+            <div>
+                <button style="margin:1rem;float:right;position: relative; margin-top:0rem; margin-right: 1.5rem;" class="clos-submit-btn" mat-raised-button
+                    (click)="addCollateralHeader()">
+                    <mat-icon style="font-size: 2.5rem;">add</mat-icon>
+                    <span>Add</span>
+                </button>
+            </div><br><br>
+            <div class="header-container">
+            <div class="header" *ngFor="let header of collateralheaders;let i = index">
+                <table>
+                    <tr>
+                        <td> 
+                            <mat-icon class="remove-mat_icon" (click)="removeCollateral(i)">clear</mat-icon>
+                        </td>
+                    </tr>
+                </table>
+            <table>
+                <tr>
+                    <td>Collateral Category
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="header.collateralCategory" (ngModelChange)="saveShareHoldersDetails();getCollateralCategory(header.collateralCategory,i) ">
+                            <mat-option *ngFor="let type of collateralCategory"  [value]="type" >
+                                {{type}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+
+                    <td>Collateral Type
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <mat-select class="min-select" [(ngModel)]="header.collateralType" (ngModelChange)="saveShareHoldersDetails() ">
+                            <mat-option *ngFor="let type of collateralType[i]"  [value]="type" >
+                                {{type}}
+                            </mat-option>
+                        </mat-select>                   
+                     </td>
+                    <!-- <td>Proxy Company</td>
+                    <td>:</td>
+                    <td>
+                        <mat-select [(ngModel)]="applicationDetails.proxyCompany" (ngModelChange)="saveApplicationData()" class="min-select" [value]="'No'">
+                            <mat-option value="No">No</mat-option>
+                            <mat-option value="Yes">Yes</mat-option>
+                        </mat-select>
+                    </td> -->
+                    <td>Collateral Amount
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="header.collateralAmount" (ngModelChange)="saveShareHoldersDetails() "(keydown)="preventLetterE($event)" appInputseperatecomma >
+                    </td>
+                </tr>
+                <tr>
+                    <td>Collateral Currency
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="header.collateralCurrency" (ngModelChange)="saveShareHoldersDetails() " appPreventSpace>
+                    </td>
+                    <td>Collateral Value
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="header.collateralValue" (ngModelChange)="saveShareHoldersDetails() "  (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                    <td>Market Value <span style="color:red;">*</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="header.marketValue" (ngModelChange)="saveShareHoldersDetails();toCalculateRatio(i) " (keydown)="preventLetterE($event)" appInputseperatecomma>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Collateral Asset
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="header.collateralAsset" (ngModelChange)="saveShareHoldersDetails() " appPreventSpace>
+                    </td>
+                    <td>Collateral Description
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <textarea type="text" style="resize:none" class="min-select-textarea " [(ngModel)]="header.collateralDescription" (ngModelChange)="saveShareHoldersDetails() " appPreventSpace></textarea>
+                    </td>
+                    <td>Haircut (%)
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" class="min-select" [(ngModel)]="header.haircut" (ngModelChange)="saveShareHoldersDetails() " (keydown)="preventLetterE($event)" appCommaSeparatedInput>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Loan to Value Ratio
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input readonly type="text" class="min-select" [(ngModel)]="header.loanToValueRatio" (ngModelChange)="saveShareHoldersDetails() " (keydown)="preventLetterE($event)" appCommaSeparatedInput>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>Collateral Documents &nbsp;&nbsp;&nbsp; &nbsp;:</td>
+                    <!-- <td>:</td> -->
+                    <td class="d-flex" style="margin-left: -20rem;"><span>
+                        <input prohibitedChars  type="file" #uploadFile3
+                          accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                          (change)="onMultipleDetailsFileSelected($event, 'collateralDocuments', i);"
+                          style="display: none;" />
+                          <!-- (change)="onFilesSelected($event, 'collateralDocuments')" style="display: none;"/> -->
+                        <mat-icon (click)="uploadFile3.click();" class="inverted-icon mt-3 mr-5">attach_file</mat-icon>
+                      </span>
+                      <div class="scrollable-content">
+                        <label class="file-input-label">
+                          <div class="selected-files">
+                            <div *ngFor="let fileName of header.collateralDocuments; let j = index">
+                              <u  (click)="getAttachementFileDownload(fileName.attachmentId)" 
+                              style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                              <button mat-icon-button>
+                                <mat-icon (click)="removeAttachment('collateralDocuments',i,j)" class="remove-icon">clear</mat-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                      <textarea placeholder="Remarks" class="min-select ml-3" [(ngModel)]="header.collateralDocumentsRemarks" (ngModelChange)="saveApplicationData()" appPreventSpace></textarea>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            </div>
+            <div class="table-responsive mt-5 mb-4 mr-3">
+                <table class="table collateral_table">
+                    <thead>
+                        <tr>
+                            <ng-container *ngFor="let collateralHeader of collateralTableHeader">
+                                <th style="text-transform: capitalize;">{{ collateralHeader }}</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let header of collateralheaders;let i=index">
+                            <td>{{header.collateralAmount}}</td>
+                            <td>{{header.collateralValue}}</td>
+                            <td>{{header.collateralCurrency}}</td>
+                            <td>{{header.collateralType}}</td>
+                            <td>{{header.marketValue}}</td>
+                            <td>{{header.collateralAsset}}</td>
+                            <td>{{header.collateralDescription}}</td>
+                            <td>{{header.collateralCategory}}</td>
+                            <td>{{header.haircut}}</td>
+                            <td>{{header.loanToValueRatio}}</td>
+                            <td>
+                                <div *ngFor="let fileName of header.collateralDocuments; let j = index">
+                                    <u style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                                </div>
+                            </td>
+                            <td>{{header.collateralDocumentsRemarks}}</td>
+                        </tr>
+                      </tbody>
+                </table>
+              </div>
+            <mat-expansion-panel class="exp-pnl">
+                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            Supporting Security:-
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <td>Debenture
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.debenture" (ngModelChange)="saveApplicationData()" (input)="restrictNum($event,'debenture')">
+                        </td>
+                        <td>Corporate Guarantee
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.corporateGuarantee" (ngModelChange)="saveApplicationData()" (input)="restrictNum($event,'corporateGuarantee')">
+                        </td>
+                        <td>Guarantor Agreement
+                        </td>
+                        <td>:</td>
+                        <td class="d-flex"><span>
+                            <input prohibitedChars hidden type="file" #uploadFile3
+                              accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                              (change)="onFilesSelected($event, 'guarantorAgreement')" multiple/>
+                            <mat-icon (click)="uploadFile3.click();" class="inverted-icon mt-3 mr-3">attach_file</mat-icon>
+                          </span>
+                          <div class="scrollable-content">
+                            <label class="file-input-label">
+                              <div class="selected-files">
+                                <div *ngFor="let fileName of applicationDetails.guarantorAgreement; let i = index">
+                                  <u  (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                                  <button mat-icon-button>
+                                    <mat-icon (click)="removeAttachment('guarantorAgreement',i)" class="remove-icon">clear</mat-icon>
+                                  </button>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="exp-pnl">
+                <mat-expansion-panel-header style="background-color: whitesmoke;">
+                    <mat-panel-title class="header-banner">
+                        <b>
+                            Insurance:-
+                        </b>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <td>Company Name
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.companyName" (ngModelChange)="saveApplicationData()" (input)="restrictNum($event,'companyName')">
+                        </td>
+                        <td>Cover Type
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select  class="min-select" [(ngModel)]="applicationDetails.coverType" (ngModelChange)="saveApplicationData() ">
+                                <mat-option *ngFor="let type of coverType"  [value]="type" >
+                                    {{type}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Amount
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.amount" (ngModelChange)="saveApplicationData() "(keydown)="preventLetterE($event)"appCommaSeparatedInput>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Period
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" class="min-select" [(ngModel)]="applicationDetails.period" (ngModelChange)="saveApplicationData() " appPreventSpace>
+                        </td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
+            <div class="table-container" style="height: 20rem;">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="background-color: whitesmoke;">
+                        <mat-panel-title class="header-banner">
+                            <b>
+                                User Defined Fields
+                            </b>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>User Defined fields</td>
+                                <td>:</td>
+                                <td>
+                                    <mat-select class="min-select" [(ngModel)]="selectedUdfFieldName" style="width: 50rem;" (ngModelChange)="fieldValuechecking();">
+                                        <mat-option *ngFor="let udfFieldName of selectedField" [value]="udfFieldName">{{ udfFieldName }}</mat-option>
+                                    </mat-select>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="addInputField()" matTooltip="Add Fields" style="background-color:#0e2954;color: white;">
+                                    <mat-icon>add</mat-icon></button></td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table>
+                        <tr>
+                            <div *ngFor="let fieldName of selectedFieldNames;let i=index">
+                            <td style="max-width: 20rem; word-wrap: break-word;overflow-wrap: break-word;">{{ fieldName }}</td>
+                            <td>:</td>
+                            <td>
+                                <ng-container [ngSwitch]="getFieldType(fieldName)">
+                                    <input *ngSwitchCase="'ALPHA_NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="text" class="udf-input">
+                                    <input *ngSwitchCase="'DATE'" [max]="currentDate" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="date" class="udf-input">
+                                    <input *ngSwitchCase="'NUMERIC'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                    <input *ngSwitchCase="'DATE_TIME'"  [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="datetime-local" class="udf-input">
+                                    <input *ngSwitchCase="'DECIMAL'" [(ngModel)]="userCustomFields1[i].fieldValue" (ngModelChange)="fieldValuechecking()" type="number" class="udf-input">
+                                </ng-container>
+                            </td>
+                            <td>
+                                <button style="border-radius: 44%;background-color: aliceblue;border: none;" matTooltip="Remove">
+                                    <mat-icon (click)="removeInput(i)" style="color: red;">remove</mat-icon>
+                                </button>
+                            </td>
+                        </div>
+                        </tr>
+                    </table>
+               </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="loading-container" *ngIf="loading">
+            <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading... Please wait...</span>
+        </div>
+        <!-- <div class="placeholder-container" *ngIf="!loading && !collateralheaders?.length">
+            <span>No items found!</span>
+        </div> -->
+        <div class="button-container">
+            <span style="color: red;font-weight: bold;margin:2rem;">
+                {{errMsg()}}
+            </span>
+            <button mat-raised-button style="right: 10px;position: absolute;" [disabled]="!disable()" class="clos-submit-btn mt-4" (click)="nexttab()">
+                <mat-icon>forward</mat-icon>
+                <span>Next</span>
+            </button>
+            <button mat-raised-button style="right: 12rem;position: absolute;" class="clos-submit-btn mt-4" (click)="previoustab()">
+                <mat-icon style="transform: rotate(180deg)">forward</mat-icon>
+                <span>Previous</span>
+            </button>
+        </div>
+    </div>
+</div>

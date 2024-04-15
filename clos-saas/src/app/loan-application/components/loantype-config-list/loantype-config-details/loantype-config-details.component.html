@@ -1,0 +1,125 @@
+<div class="popup-container">
+    <div class="header-container">
+        <div class="title-container">
+            <span style="font-size:1.8rem;font-weight: bold;">
+                Create Loan Configuration
+            </span>
+        </div>
+    </div>
+    <hr>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table>
+                    <tr>
+                        <td>Types of Loan <span style="color:red;">*</span> </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="loanConfig.loanType"
+                                (ngModelChange)="productLoanDrpdown(loanConfig.loanType)">
+                                <mat-option *ngFor="let loan of loanType" [value]="loan">
+                                    {{loan}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <td>Product of Loan <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="loanConfig.product">
+                                <mat-option *ngFor="let product of productLoan" [value]="product">
+                                    {{product}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Minimum Value <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td><input type="number" class="min-select" [(ngModel)]="loanConfig.minLoanAmount"></td>
+                        <td>Maximum Value <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td><input type="number" class="min-select" [(ngModel)]="loanConfig.maxLoanAmount"></td>
+                    </tr>
+                    <ng-container *ngIf="loanConfig.product =='Variable-Rate Term Loan'">
+                        <tr>
+                            <td>Base Rate <span style="color:red;">*</span></td>
+                            <td>:</td>
+                            <td>
+                                <input class="min-select" [(ngModel)]="loanConfig.baseRate" type="number"
+                                    (change)="calculateInterBankRate()">
+                            </td>
+                            <td>Operator <span style="color:red;">*</span></td>
+                            <td>:</td>
+                            <td>
+                                <mat-select class="min-select" [(ngModel)]="loanConfig.operator"
+                                    (change)="calculateInterBankRate()">
+                                    <mat-option value="+">+</mat-option>
+                                    <mat-option value="-">-</mat-option>
+                                </mat-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Spread <span style="color:red;">*</span></td>
+                            <td>:</td>
+                            <td>
+                                <input class="min-select" [(ngModel)]="loanConfig.spread" type="number"
+                                    (change)="calculateInterBankRate()">
+                            </td>
+                            <td>Interest Rate <span style="color:red;">*</span></td>
+                            <td>:</td>
+                            <td><input type="number" class="min-select" [(ngModel)]="loanConfig.interestRate"></td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="loanConfig.product == 'Fixed-Rate Term Loan'">
+                        <tr>
+                            <td>Interest Rate <span style="color:red;">*</span></td>
+                            <td>:</td>
+                            <td><input type="number" class="min-select" [(ngModel)]="loanConfig.interestRate"></td>
+                        </tr>
+                    </ng-container>
+
+                </table>
+            </div>
+        </div>
+        <div class="btn_container">
+            <button mat-raised-button class="clos-submit-btn" (click)="onAddDocBtnClick()">
+                <mat-icon>add</mat-icon>
+                <span>Add Documents</span>
+            </button>
+        </div>
+        <div class="scrollable-table">
+            <table class="table collateral_table">
+                <thead>
+                    <tr>
+                        <th *ngFor="let header of tableHeaders">{{ header }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of tableData">
+                        <td>{{ row.documentType }}</td>
+                        <td>{{ row.documentDescription }}</td>
+                        <td><mat-checkbox [(ngModel)]="row.status"></mat-checkbox></td>
+                        <!-- <td><input type="text" [(ngModel)]="row.remarks"></td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="close-action-actions-container">
+        <span style="color: red;font-weight: bold;margin:2rem;">
+            {{errMsg()}}
+        </span>
+        <div class="btn-container">
+            <button style="margin-top:1rem;" [disabled]="disableButton()" mat-raised-button mat-dialog-close (click)="onSaveLoanConfig()"
+                class="clos-submit-btn">
+                <mat-icon>{{ data ? 'update' : 'save' }}</mat-icon>
+                <span>{{ data ? 'Update' : 'Save' }}</span>
+            </button>
+        </div>
+        <div class="spacer"></div>
+        <button mat-raised-button style="margin-top:1rem;float: left;" class="clos-btn" matTooltip="Close"
+            mat-dialog-close>
+            <mat-icon>close</mat-icon>Close
+        </button>
+    </div>
+</div>

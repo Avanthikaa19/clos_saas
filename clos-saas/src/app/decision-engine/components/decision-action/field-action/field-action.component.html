@@ -1,0 +1,4 @@
+<div class="main-container">
+    <app-generic-data-table [columns]="fieldColumns" [pageData]="pageData" [newFields]="true" [filterButton]="true" [clearButton]="true" (onAddNewFieldClick)="addNewFieldClick($event)" (onPageChange)="getFieldListingeData($event)" (onClick)="buttonClick($event)"
+        [filterInput]="true" [loading]="loadingItems" (onFilterChange)="onApplyFilter($event)" [exportButton]="true" (onExportChange)="rolesListDataExport($event)" [tableData]="fieldcolumnsData" (onChange)="columnChange($event)"></app-generic-data-table>
+</div>

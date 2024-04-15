@@ -1,0 +1,114 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height">
+  <div class="card1 col-lg-12 col-md-12 col-sm-12" style="position: relative;overflow-y: auto;overflow-x: hidden;width:100%" [style.height.px]="component_height-45"  [style.background-color]="bodybackgroundColor"> 
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12"  style="padding-left: 0px;padding-right: 0px;">
+            <div class="head-container">
+            <div class="head-abs" [style.background-color]="backgroundColor" [style.color]="fontColor">
+                <div class="float-left">
+                   <div>
+                      <p style="padding: 0px; margin-top: 55px; font-size: 27px;
+                      font-weight: 700;
+                      color: rgba(0, 0, 0, 0.87);
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;" [class]="'hdr underline-text'"
+                         [style.color]="fontColor">
+                         Layouts
+                         </p>
+                         <div style="font-size: 17px;font-weight: 600;">You can create your own layouts, widgets and templates in this section.</div>
+                   </div>
+                </div>
+                <div class="button-container">
+                    <button mat-flat-button class="clos-submit-btn" routerLink="/dynamic/dynamic/landingPage" style="position: relative;left:-13px;top:-18px;">
+                      <mat-icon class="icon">arrow_back</mat-icon>
+                      <span>BACK</span>
+                    </button>
+                  </div>
+             </div>
+             </div>
+            </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('0')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-100"></div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('1')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-50-1"></div>
+                <div class="box item-50-2"></div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('2')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-25-1"></div>
+                <div class="box item-25-2"></div>
+                <div class="box item-25-3"></div>
+                <div class="box item-25-4"></div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('3')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item1"></div>
+                <div class="box item2"></div>
+                <div class="box item3"></div>
+                <div class="box item4"></div>
+                <div class="box item5"></div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('4')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-custom-1"></div>
+                <div class="box item-custom-2"></div>
+                <div class="box item-custom-3"></div>
+                <div class="box item-custom-4"></div>
+              </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('5')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-custom-5"></div>
+                <div class="box item-custom-6"></div>
+                <div class="box item-custom-7"></div>
+                <div class="box item-custom-8"></div>
+                <div class="box item-custom-9"></div>              
+              </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('6')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-custom-10"></div>
+                <div class="box item-custom-11"></div>
+                <div class="box item-custom-12"></div>
+                <div class="box item-custom-13"></div>
+                <div class="box item-custom-14"></div>             
+              </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('7')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-custom-15"></div>
+                <div class="box item-custom-16"></div>
+                <div class="box item-custom-17"></div>
+                <div class="box item-custom-18"></div>
+                <div class="box item-custom-19"></div> 
+                <div class="box item-custom-20"></div>              
+              </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 card bg custom-col" style="padding: 10px" (click)="openNewDashboard('8')">
+            <div class="wrapper" matTooltip="Click here to Choose" matTooltipClass="tooltipclass">
+                <div class="box item-custom-21"></div>
+                <div class="box item-custom-22"></div>
+                <div class="box item-custom-23"></div>
+                <div class="box item-custom-24"></div>
+                <div class="box item-custom-25"></div> 
+                <div class="box item-custom-26"></div>              
+              </div>
+        </div>
+        </div>
+        </div>
+    <!-- LOADER -->
+    <div *ngIf="loading" class="load-wrapp" style="position:absolute;top: 40%;left: 50%;">
+        <div class="load-3">
+           <div class="line"></div>
+           <div class="line"></div>
+           <div class="line"></div>
+        </div>
+     </div>
+    </div>

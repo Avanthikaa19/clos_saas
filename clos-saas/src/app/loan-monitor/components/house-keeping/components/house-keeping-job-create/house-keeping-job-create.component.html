@@ -1,0 +1,86 @@
+<div class="job-create-main-container">
+    <div class="create-job-header">
+       <!-- <b>  Create New Job</b> -->
+    </div>
+    <div class="job-create-content-container">
+        <table class="job-create-table-container"> 
+        <tr class="job-create-row-container">
+         <td class="row-label" style="width: 20rem !important;"><b>House Keeping Job Name</b></td>
+         <td class="row-colon"> : </td>
+         <td class="row-input" >
+             <input style="min-width: 35rem;" [(ngModel)]="houseKeepingJobDetail.jobName">
+         </td>
+        </tr>
+    </table>
+        <table class="job-create-table-container">
+            
+            <tr class="job-create-row-container" *ngFor="let jobCreateField of jobCreateFields">
+                <ng-container *ngFor="let rowField of jobCreateField.houseKeepingJobFields">
+                    <ng-container *ngIf="rowField.isVisible">
+                    <td class="row-label">{{rowField.jobLabel}}</td>
+                    <td class="row-colon"> : </td>
+                    <td class="row-input" *ngIf="rowField.jobType=='string'">
+
+                        <input>
+                    </td>
+                    <td class="row-input" *ngIf="rowField.jobType=='select' && rowField.jobField!='tableName'">
+                        <mat-form-field matInput class="select-field" >
+                            <mat-select   [(ngModel)]="houseKeepingJobDetail[rowField.jobField]" (selectionChange)="dropDownChange(rowField)">
+                                <mat-option [value]="process" *ngFor="let process of dropDownList[rowField?.jobField]">
+                                    {{process}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                       
+                    </td>
+                    <td class="row-input" *ngIf="rowField.jobType=='select' && rowField.jobField=='tableName'">
+                        <mat-form-field matInput class="select-field" >
+                    <mat-select   class="min-select" [(ngModel)]="houseKeepingJobDetail[rowField.jobField]"  >
+                        <div style="position: sticky;padding: 10px;border-bottom: 1px solid #ccc;z-index: 1;background-color: whitesmoke;top: 0">
+                            <input placeholder="Search.."   class="tableFieldSearch" [(ngModel)]="tableSearchKey" (input)="tableOptions()">
+                        </div>
+                        <mat-option *ngFor="let process of dropDownList[rowField?.jobField]" [value]="process">{{process}}</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                    </td>
+                    <td class="row-input" *ngIf="rowField.jobType=='date'">
+                        <input class="row-input" type="date" [(ngModel)]="houseKeepingJobDetail[rowField.jobField]">
+
+                    </td>
+                    <td class="row-input" *ngIf="rowField.jobType=='time'">
+                        <input class="row-input" type="time" [(ngModel)]="houseKeepingJobDetail[rowField.jobField]">
+                    </td>
+                </ng-container>
+            </ng-container>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="job-create-button-container">
+        <div class="button-container">
+            <button mat-raised-button mat-dialog-close class="black_button" matTooltip="Close">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+                <span style="margin-left: 1rem;">
+                    Close
+                </span>
+            </button>
+        </div>
+        <div class="button-container" >
+            <button mat-raised-button class="apply_filter" [disabled]="!houseKeepingJobDetail?.jobName || !houseKeepingJobDetail.databaseName || !houseKeepingJobDetail.tableName" (click)="saveJobDetails()" matTooltip=" {{!houseKeepingJob?.id ?  'Save' : 'Update ' }}">
+                <span class="material-symbols-outlined" *ngIf="!houseKeepingJob?.id">
+                    save 
+                </span>
+                <span class="material-symbols-outlined" *ngIf="houseKeepingJob?.id">
+                    update 
+                </span>
+                <span style="margin-left: 1rem;">
+                    {{!houseKeepingJob?.id ?  'Save' : 'Update ' }}
+                </span>
+            </button>
+        </div>
+
+    </div>
+</div>

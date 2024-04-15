@@ -1,0 +1,65 @@
+<div class="main-containers">
+    <div class="heading_Section">
+        <div class="header-conatiner">
+            <div class="header-content">
+                <span class="material-symbols-outlined" style="color:#012970">list_alt</span>
+                <h2>APPLICANT DETAILS</h2>
+            </div>
+        </div>
+    </div>
+    <div class="content_Section">
+        <div class="content-container">
+            <mat-tab-group [(selectedIndex)]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+                <ng-container *ngFor="let categoryName of categoryList?.category; let i=index">
+                    <mat-tab label="{{categoryName}}">
+                        <ng-container *ngIf="categoryName != 'Supplementary Information'">
+                            <ng-container *ngIf="categoryList?.category[i]==categoryName">
+                                <div class="input_container">
+                                    <div class="input_Fields" *ngFor="let fieldName of fieldkeyList;let index=index">
+                                        <div class="field_name" style="margin-left: 20px;">
+                                            <span>{{fieldName}}:</span>
+                                        </div>
+                                        <div>
+                                            <mat-form-field class="select-field" matInput>
+                                                <input type="text" matInput value=" {{fieldList[fieldName]}}" readonly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="categoryName == 'Supplementary Information'">
+                            <mat-tab-group [(selectedIndex)]="activesubtabIndex" (selectedTabChange)="onSelectsubCategory($event)">
+                                <ng-container *ngFor="let subCategoryName of categoryList?.subCategory; let j=index">
+                                    <mat-tab label="{{subCategoryName}}">
+                                        <ng-container *ngIf="categoryList?.subCategory[j]==subCategoryName">
+                                            <div class="input_container">
+                                                <div class="input_Fields" *ngFor="let fieldName of supfieldKeyList;let index=index">
+                                                    <div class="field_name" style="margin-left: 20px;">
+                                                        <span>{{fieldName}}:</span>
+                                                    </div>
+                                                    <div>
+                                                        <mat-form-field class="select-field" matInput>
+                                                            <input type="text" matInput value=" {{supplymentryFieldList[fieldName]}}" readonly>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </mat-tab>
+                                </ng-container>
+                            </mat-tab-group>
+                        </ng-container>
+                    </mat-tab>
+                </ng-container>
+            </mat-tab-group>
+        </div>
+
+    </div>
+    <div class="button_Section">
+        <button mat-raised-button class="close-button" matTooltip="Close" (click)="onCloseClick()">
+                <span class="material-symbols-outlined">close</span>
+                <span>&nbsp;Close</span>
+            </button>
+    </div>
+</div>

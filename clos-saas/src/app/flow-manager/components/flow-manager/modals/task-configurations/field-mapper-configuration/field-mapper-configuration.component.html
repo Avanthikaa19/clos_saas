@@ -1,0 +1,75 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        FIELD MAPPING:
+    </div>
+    <app-field-mapper-fragment [(config)]="config.fieldMapping"></app-field-mapper-fragment>
+  
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threading</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>
+
+<mat-menu #menu="matMenu">
+    <div (click)="$event.stopPropagation();">
+        <div class="my-code-editor-wrapper" style="border: solid silver 1px; width: 100%;" (click)="$event.stopPropagation();">
+            <ngx-monaco-editor 
+                class="my-code-editor" 
+                [options]="jsEditorOptions"
+                [(ngModel)]="text"></ngx-monaco-editor>
+        </div>
+        <div>
+            <span
+                style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-top:5px; color: orangered; font-weight: bold;">
+                Output :
+                <span
+                    style="padding-bottom: 2px; padding-top: 10px; padding-right: 20px; color:black;font-weight:medium;">
+                    {{content}}
+                </span>
+            </span>
+        </div>
+        <span style="margin-left : 100px;" (click)="$event.stopPropagation();">
+            <button mat-raised-button color="primary" (click)=evaluateclick() style="height: 33px;"> Verify </button>
+        </span>
+    </div>
+</mat-menu>

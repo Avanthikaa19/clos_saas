@@ -1,0 +1,77 @@
+<div class="p-3" *ngIf="widgetSettings == false">
+    <div>
+        <mat-icon class="icon-hov2" style="cursor: pointer;float: right; font-size: 18px; font-weight: bolder;" (click)="this.dialogRef.close();">close</mat-icon>
+        <p style=" padding:3px 20px 39px 20px;margin: 0px;font-size: 22px;font-weight: 700; text-align: center;"
+           [style.color]="'rgba(0, 0, 0, 0.87)'"
+           [class]="'hdr'">
+           WIDGET CHOOSER</p>
+     </div>
+     <div class="row">
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('gaugeChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'gaugeChart'">
+                <div echarts [options]="gauge" matTooltip="Click to choose Gauge" class="demo-chart" style="height: 150px;"></div>
+            </div> 
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('pieChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'pieChart'">
+                <div echarts [options]="pie" matTooltip="Click to choose Pie" class="demo-chart" style="height: 150px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('donutChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'donutChart'">
+                <div echarts [options]="donut" matTooltip="Click to choose Donut" class="demo-chart" style="height: 150px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('funnelChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'funnelChart'">
+                <div echarts [options]="funnel" matTooltip="Click to choose Funnel" class="demo-chart" style="height: 150px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('barChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'barChart'">
+                <div echarts [options]="bar" matTooltip="Click to choose Bar" class="demo-chart" style="height: 170px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('multipleChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'multipleChart'">
+                <div echarts [options]="multiple" matTooltip="Click to choose multiple Y Axis" class="demo-chart" style="height: 170px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('lineChart')" >
+            <div class="box" [class.active-widget]="widgetType === 'lineChart'">
+                <div echarts [options]="line" matTooltip="Click to choose Line" class="demo-chart" style="height: 170px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('candleStick')" >
+            <div class="box" [class.active-widget]="widgetType === 'candleStick'">
+                <div echarts [options]="candleStick" matTooltip="Click to choose candlestick" class="demo-chart" style="height: 170px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6"></div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('card')" >
+            <div class="box" matTooltip="Click to choose Card" [class.active-widget]="widgetType === 'card'">
+                <p class="hdr" style="font-size: 16px; margin-bottom: 0px; margin-top: -9px;font-weight: 700; text-align: center;justify-content: center;" [style.color]="' rgba(0, 0, 0, 0.87)'">CARD</p>
+                <div class="card label" [style.background-color]="'lightgrey'" style="margin-bottom: 0px;height: 138px;margin-top: 6px;">
+                    <span class="hdr" style="font-size: 16px;" [style.color]="' rgba(0, 0, 0, 0.87)'">Label</span>
+                    <span class="hdr" [style.color]="' rgba(0, 0, 0, 0.87)'">Value</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6" [class]="'graph-light'" (click)="widgetChoose('table')">
+            <div class="box" [class.active-widget]="widgetType === 'table'" style="height: 200px;">
+                <p class="hdr" style="font-size: 16px; margin-bottom: 0px; margin-top: -9px;font-weight: 700; text-align: center;" [style.color]="' rgba(0, 0, 0, 0.87)'">TABLE</p>
+                <img class="img-fluid" style="max-width: 100%;height: 90%;" src="assets/table-dashboard.png">
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-3" style="text-align: center;">
+            <button mat-button class="ml-2" style="font-weight: 600;" (click)="widgetSettings = true" 
+                [disabled]="widgetType == null || widgetType == ''"
+                [ngClass]="widgetType == null || widgetType == ''?'btn-disabled':'btn-primary-admin'">NEXT 
+                <mat-icon style="color: black;">navigate_next</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="widgetSettings">
+    <app-widgets-settings [type]="widgetType"></app-widgets-settings>
+</div>

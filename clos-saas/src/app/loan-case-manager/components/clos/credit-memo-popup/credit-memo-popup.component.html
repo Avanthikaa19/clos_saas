@@ -1,0 +1,612 @@
+<div class="main-containers">
+    <div class="heading_Section">
+        <div class="header-conatiner">
+            <div class="header-content">
+                <span class="material-symbols-outlined" style="color:#012970">list_alt</span>
+                <h2>CREDIT MEMO</h2>
+            </div>
+            <div class="row mb-4 pt-4">
+                <div class="col-md-10">
+                    <div class="application-list">
+                        <ul>
+                            <li>
+                                <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                                <span style="color: royalblue;">{{applicationDetails?.id}}</span>
+                            </li>
+                            <li>
+                                <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                                <span style="color: royalblue;">{{applicationDetails?.legalNameOfTheCompany}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content_Section">
+        <div class="content-container">
+            <mat-tab-group [(selectedIndex)]="activeStepIndex">
+                <ng-container *ngFor="let categoryName of categoryList let i=index">
+                    <mat-tab class="tabsName" label="{{categoryName}}">
+                        <ng-container *ngIf="categoryName == 'Corporate Details'">
+                            <br>
+                            <span class="header-span">Business and Operation Information :-</span>
+                            <div class="table-container">
+                                <div class="header-banner">
+                                    <table>
+                                        <tr>
+                                            <td>Registered Name of the Company
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" readonly class="min-select"
+                                                    [(ngModel)]="applicationDetails.legalNameOfTheCompany">
+                                            </td>
+                                            <td>Type of Business
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" readonly class="min-select"
+                                                    [(ngModel)]="applicationDetails.typeOfBusiness">
+                                            </td>
+                                            <td>Organization Type
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" readonly class="min-select"
+                                                    [(ngModel)]="applicationDetails.organizationType">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Types of Loan
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" readonly class="min-select"
+                                                    [(ngModel)]="applicationDetails.typesOfLoan">
+                                            </td>
+                                            <td>Business Registration Number
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input readonly type="text" class="min-select"
+                                                    [(ngModel)]="applicationDetails.businessRegistrationNumber">
+                                            </td>
+                                            <td>Country of Registration
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input readonly type="text" class="min-select"
+                                                    [(ngModel)]="applicationDetails.countryOfRegistration">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Annual Turnover
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="number" readonly class="min-select"
+                                                    [(ngModel)]="applicationDetails.annualTurnover">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <span class="header-span">Shareholders / Board of Directors :-</span>
+                            <div class="header" *ngIf="headers.length; else noDataFound">
+                                <div class="header" *ngFor="let header of headers ;let i = index">
+                                    <div class="table-container">
+                                        <div class="header-banner">
+                                            <table>
+                                                <tr>
+                                                    <td>Name
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholderName">
+                                                    </td>
+                                                    <td>Designation
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersDesignation">
+                                                    </td>
+                                                    <td>Contact Number
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="number" class="min-select"
+                                                            [(ngModel)]="header.shareholdersContactNumber">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Office Address
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersOfficeAddress">
+                                                    </td>
+                                                    <td>Home Address
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersHomeAddress">
+                                                    </td>
+                                                    <td>Mail ID
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersMailId">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Passport Number
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersPassportNumber">
+                                                    </td>
+                                                    <td>DOB
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersDob">
+                                                    </td>
+                                                    <td>Age
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersAge">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nation ID
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersNationId">
+                                                    </td>
+                                                    <td>TIN
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.shareholdersTin">
+                                                    </td>
+                                                    <td>Authorized Signature
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            *ngFor="let fileName of header.shareholdersAuthorizedSignatures; let j = index"
+                                                            [(ngModel)]="fileName.attachmentName">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #noDataFound>
+                                <div class="table-container">
+                                    <div class="header-banner">
+                                        <div class="no-data-message">No data found</div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <span class="header-span">Partnership :-</span>
+                            <div class="header" *ngIf="partnerHeaders.length; else noDataFound">
+                                <div class="header" *ngFor="let header of partnerHeaders ;let i = index">
+                                    <div class="table-container">
+                                        <div class="header-banner">
+                                            <table>
+                                                <tr>
+                                                    <td>Entity Name
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.partnershipEntityName">
+                                                    </td>
+                                                    <td>Director Name
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.partnershipDirectorName">
+                                                    </td>
+                                                    <td>Office Address
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.partnershipOfficeAddress">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Contact number
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="number" class="min-select"
+                                                            [(ngModel)]="header.partnershipContactNumber">
+                                                    </td>
+                                                    <td>Mail ID
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.partnershipMailId">
+
+                                                    </td>
+                                                    <td>Ultimate Beneficial Owner (UBO)
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.ultimateBeneficialOwner">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>KYC Document Number
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.kycdocumentNumber">
+                                                    </td>
+                                                    <td>Unique Identifier
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.uniqueIdentifier">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="header-span">Suppliers :-</span>
+                            <div class="header" *ngIf="supplierheaders.length; else noDataFound">
+                                <div class="header" *ngFor="let header of supplierheaders ;let i = index">
+                                    <div class="table-container">
+                                        <div class="header-banner">                                            
+                                                <table>
+                                                    <tr>
+                                                        <td>Company Name
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="text" class="min-select"
+                                                                [(ngModel)]="header.supplierCompanyName">
+                                                        </td>
+                                                        <td>Company Contact Number
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="number" class="min-select"
+                                                                [(ngModel)]="header.supplierCompanyContactNumber">
+                                                        </td>
+                                                        <td>Contact Person
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="text" class="min-select"
+                                                                [(ngModel)]="header.supplierContactPerson">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Contact Phone
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="number" class="min-select"
+                                                                [(ngModel)]="header.supplierContactNumber">
+                                                        </td>
+                                                        <td>Contact Email
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="text" class="min-select"
+                                                                [(ngModel)]="header.supplierContactEmail">
+                                                        </td>
+                                                        <td>Company Address
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="text" class="min-select"
+                                                                [(ngModel)]="header.supplierCompanyAddress">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Supplier Company Registration Number
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="number" class="min-select"
+                                                                [(ngModel)]="header.supplierCompanyRegistrationNumber">
+                                                        </td>
+                                                        <td>Supplier Agreement
+                                                        </td>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <input readonly type="text" class="min-select"
+                                                                *ngFor="let fileName of header.supplierAgreement; let j = index"
+                                                                [(ngModel)]="fileName.attachmentName">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            <!-- <span class="header-span">Statements :-</span>
+                            <div class="table-container">
+                                <div class="header-banner">
+                                <table>
+                                    <tr>
+                                        <td>Debts
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.debts">
+                                        </td>
+                                        <td>Total Liabilities
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.totalLiabilities">
+                                        </td>
+                                        <td>Current Liabilities
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.currentLiabilities">
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Total Assets
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.totalAssets">
+                                        </td>
+                                        <td>Current Assets
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.currentAssets">
+                                        </td>
+                                        <td>Inventory
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.inventory">
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Shareholders Equity
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.financialShareholdersEquity">
+                                        </td>
+                                        <td>EBITDA
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.ebitda">
+                                        </td>
+                                        <td>Total Equity
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.totalEquity">
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+                            </div>
+                            <span class="header-span">Ratios :-</span>
+                            <div class="table-container">
+                                <div class="header-banner">
+                                <table>
+                                    <tr>
+                                        <td>Current Ratio
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="number" readonly class="min-select"
+                                                [(ngModel)]="applicationDetails.liquidityCurrentRatio">
+                                        </td>
+                                        <td>Quick Ratio
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="number" readonly class="min-select"
+                                                [(ngModel)]="applicationDetails.liquidityQuickRatio">
+                                        </td>
+                                        <td>Debt to Equity Ratio (D/E)
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input [(ngModel)]="applicationDetails.debtToEquityRatio" readonly
+                                                type="number" class="min-select">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Interest Coverage Ratio
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.interestCoverageRatio">
+                                        </td>
+                                        <td>Debt Service Coverage Ratio (DSCR)
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.debtServiceCoverageRatio">
+                                        </td>
+                                        <td>Fixed Charge Coverage Ratio
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.fixedChargeCoverageRatio">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Long term debt equity capital ratio
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input readonly type="number" class="min-select"
+                                                [(ngModel)]="applicationDetails.longTermDebtToEquityRatio">
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+                            </div> -->
+                        </ng-container>
+                        <ng-container *ngIf="categoryName == 'Collateral Details'">
+                            <div class="header" *ngIf="collateralheaders && collateralheaders.length; else noDataFound">
+                                <div class="header" *ngFor="let header of collateralheaders ;let i = index">
+                                    <div class="table-container">
+                                        <div class="header-banner">
+                                            <table>
+                                                <tr>
+                                                    <td>Collateral Category
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.collateralCategory">
+                                                    </td>
+                                                    <td>Collateral Type
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.collateralType">
+                                                    </td>
+                                                    <td>Collateral Amount
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.collateralAmount">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Collateral Currency
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.collateralCurrency">
+                                                    </td>
+                                                    <td>Collateral Value
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.collateralValue">
+                                                    </td>
+                                                    <td>Market Value
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.marketValue">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Collateral Asset
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.collateralAsset">
+                                                    </td>
+                                                    <td>Collateral Description
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <textarea readonly type="text" style="resize:none"
+                                                            class="min-select-textarea "
+                                                            [(ngModel)]="header.collateralDescription"></textarea>
+                                                    </td>
+
+                                                    <td>Haircut
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.haircut">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Loan to Value Ratio
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="text" class="min-select"
+                                                            [(ngModel)]="header.loanToValueRatio">
+                                                    </td>
+                                                    <td>Collateral Documents
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input readonly type="number" class="min-select"
+                                                            *ngFor="let fileName of header.collateralDocuments; let j = index"
+                                                            [(ngModel)]="fileName.attachmentName">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #noDataFound>
+                                <div class="no-data-message">
+                                    No data found
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </mat-tab>
+                </ng-container>
+            </mat-tab-group>
+        </div>
+
+    </div>
+    <div class="button_Section">
+        <button mat-raised-button class="close-button" matTooltip="Close" (click)="onCloseClick()">
+            <mat-icon>close</mat-icon>
+                Close
+        </button>
+    </div>
+</div>

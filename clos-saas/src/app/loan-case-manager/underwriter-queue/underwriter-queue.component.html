@@ -1,0 +1,61 @@
+<mat-tab-group [selectedIndex]="selectedTabIndex">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">bookmark</mat-icon>
+            Underwriter Queue
+        </ng-template>
+        <div>
+           <app-underwriter-queue-open></app-underwriter-queue-open>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">label_important</mat-icon>
+            Underwriter Inprogress
+        </ng-template>
+        <div>
+           <app-underwriter-queue-inprogress></app-underwriter-queue-inprogress>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">arrow_right_alt</mat-icon>
+            Requested Document
+        </ng-template>
+        <div>
+          <app-underwriter-queue-document></app-underwriter-queue-document>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">done_all</mat-icon>
+            Accepted
+        </ng-template>
+        <div>
+         <app-underwriter-queue-accepted></app-underwriter-queue-accepted>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">close</mat-icon>
+            Declined
+        </ng-template>
+        <div>
+           <app-underwriter-queue-declined></app-underwriter-queue-declined>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">last_page</mat-icon>
+            Esclated
+        </ng-template>
+        <div>
+            <app-underwriter-queue-esclated></app-underwriter-queue-esclated>
+        </div>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,26 @@
+.custom-dialog-content {
+    padding-bottom: 0px;
+    padding-top: 10px;
+    height:80px;
+}
+::ng-deep .input-field .mat-mdc-text-field-wrapper{
+    background-color: white;
+    height: 40px;
+    margin-top: 10px;
+    width:290px;
+}
+::ng-deep .input-field .mat-mdc-form-field-subscript-wrapper{
+    height: 0px;
+}
+.mat-mdc-dialog-title{
+    margin-bottom: 0px;
+}
+::ng-deep .input-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+    top: 25px;
+  }
+  ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 28px;
+  }
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0em 0;
+  }

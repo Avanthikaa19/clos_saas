@@ -1,0 +1,153 @@
+.label{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 900;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .chart-container {
+    display: flex; /* Use flexbox to control size */
+    flex-direction: column; /* Stack chart vertically, adjust as needed */
+    width: 100%; /* Container takes full width of its parent */
+    height: 100%; /* Container takes full height of its parent */
+  }
+  highcharts-chart {
+    flex: 1; /* Allow the chart to grow to fill available space */
+    width: 95%; /* Chart takes full width of its parent */
+    height: 100%; /* Chart takes full height of its parent */
+  }
+  ::ng-deep #cdk-overlay-0 {
+     top:53% !important;
+     left:47% !important;
+  }
+  ::ng-deep #cdk-overlay-3 {
+    right:9% !important;
+  }
+  ::ng-deep #cdk-overlay-3 {
+    right:1% !important;
+  }
+  
+  highcharts-chart {
+    flex: 1; /* Allow the chart to grow to fill available space */
+    width: 95%; /* Chart takes full width of its parent */
+    height: 100%; /* Chart takes full height of its parent */
+  }
+
+  .table-container {
+    flex: 1 1 auto;
+    // border: 1px solid gainsboro;
+    border-radius: 0.5rem;
+    overflow: auto;
+    height: 0;
+    position: relative;
+    table-layout: fixed;
+    margin:0.5rem;
+    #table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: max-content;
+       
+        td>div.content {
+            white-space: nowrap;
+            overflow: hidden;
+            padding-left: 1rem;
+            // padding: 0.5rem 1rem 0.5rem 1rem;
+        }
+        th>div.content {
+            padding-top: 0.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        th>div.content_check {
+            padding-top: 0.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+            padding-left: 0.6rem;
+        }
+    }
+    #table td {
+        border-top: 4px solid #ffffff;
+        line-height: 35px;
+        color:black;
+    }
+    #table tbody tr:hover td {
+        background-color: #ddd
+    }
+    #table tr {
+        background-color: #f8f8f8;
+  
+    }
+    #table tr:hover {
+        background-color: #ddd;
+    }
+    #table tbody {
+        overflow-y: auto;
+        height: auto
+    }
+    th {
+        position: sticky;
+        top: 0;
+    }
+    #table thead{
+      background-color: #0e2954;
+      color: white;
+    }
+    #table th {
+        text-align: middle;
+        z-index: 15;
+        padding: 3px 30px 3px 0px;
+        // min-width: 21rem;
+        max-height: 2rem;
+         ::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+            border-color: white !important;
+            background-color: #adadad !important;
+        }
+         ::ng-deep mat-checkbox .mat-checkbox-checkmark-path {
+            stroke: blue !important;
+        }
+         ::ng-deep .mat-checkbox .mat-checkbox-frame {
+            border-color: white !important;
+        }
+         ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+            background-color: white !important;
+            border-color: white !important;
+        }
+    }
+  }
+  .total-items {
+    position: absolute;
+    top: 0;
+    right: -300px;
+    background-color: transparent;
+    padding: 5px;
+  }
+  .paginator-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 1rem;
+    >.left-container {
+        flex: 0 0 auto;
+    }
+    >.middle-container {
+        flex: 0 0 auto;
+    }
+    >.right-container {
+        margin-top: 1rem;
+        flex: 0 0 auto;
+    }
+  }
+  .page-links {
+    position: relative;
+      display: block;
+      padding: .5rem .75rem;
+      margin-left: -1px;
+      line-height: 1.25;
+      // color: #007bff;
+      background-color: transparent;
+      border: 0px solid #dee2e6;
+    }

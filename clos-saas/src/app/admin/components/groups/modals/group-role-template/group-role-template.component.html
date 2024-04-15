@@ -1,0 +1,87 @@
+<div class="module-buttons-container">
+    <div class="aed__btn-container">
+        <button class="tl-btn" (click)="openAccessTemplate()">
+            <mat-icon>add</mat-icon>
+            Create Role Template
+        </button>
+    </div>
+    <div class="cde__btn-container">
+        <button class="tl-btn" (click)="getRoleTemplateByMultiSortFilter()"
+            [class.edit]="groupRoleTemplate.length==0" [disabled]="groupRoleTemplate.length==0">
+            <mat-icon>filter_list</mat-icon>
+            Apply All Filters / Sort
+        </button>
+        <button class="tl-btn" (click)="onClearBtnClick()">
+            <mat-icon>close</mat-icon>
+            Clear All Filter / Sort
+        </button>
+        <button  *ngIf="this.ac.items?.AD003E_GROUPS_EXPORT" class="tl-btn">
+            <mat-icon>get_app</mat-icon>
+            Export
+        </button>
+    </div>
+</div>
+<div class="content-container">
+    <div class="table-container">
+        <div *ngIf="loading" class="loading-spinner">
+            <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading.. Please wait..</span>
+        </div>
+        <table class="table">
+            <thead>
+                <tr style="text-transform: capitalize;">
+                    <th *ngFor="let header of roleTemplateHeaders">{{header.name}}
+                        <mat-icon class="flex-shrink table-head-icon" (click)="onSortBtnClick(header)">
+                            {{header.order === 'ASC' ? 'arrow_upward' : 'arrow_downward'}}
+                        </mat-icon>
+                    </th>
+                </tr>
+            </thead>
+            <thead>
+                <tr style="top: 5.5%; text-transform: capitalize;">
+                    <th *ngFor="let header of roleTemplateHeaders">
+                        <div class="parent__row-flex" *ngIf="filterColumns.includes(header.name)">
+                            <input class="min-input flex-grow" placeholder="{{header.name}}"
+                                style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;"
+                                [(ngModel)]="header.filter"
+                                (ngModelChange)="filterChangeEvent(header.name,header.filter)">
+                            <mat-icon class="flex-shrink table-head-icon" (click)="getRoleTemplateByMultiSortFilter()">
+                                filter_list
+                            </mat-icon>
+                        </div>
+                        <div class="parent__row-flex" *ngIf="!filterColumns.includes(header.name)">
+                            <input [disabled]="!filterColumns.includes(header.name)" class="min-input flex-grow"
+                                placeholder="{{header.name}}"
+                                style="background-color: white;min-width: 15rem; padding-left: 1rem; text-transform: capitalize;">
+                            <mat-icon class="flex-shrink table-head-icon">filter_list
+                            </mat-icon>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="!loading && groupRoleTemplate.length==0">
+                    <span class="no-content"></span>
+                </ng-container>
+                <ng-container *ngIf="!loading">
+                    <tr *ngFor="let groupRole of groupRoleTemplate">
+                        <td *ngFor="let header of roleTemplateHeaders">{{getValues(groupRole[header.name])}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="paginator-container">
+    <div class="fetch-container">
+        <!-- <span>
+            Fetched 469 datas in 0.05 seconds
+        </span> -->
+    </div>
+    <div class="pg-container">
+        <mat-paginator [length]="entryCount" [pageIndex]="pageNum" [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="getRoleTemplates($event)">
+        </mat-paginator>
+    </div>
+</div>
+<notifier-container></notifier-container>

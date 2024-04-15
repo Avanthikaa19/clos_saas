@@ -1,0 +1,43 @@
+<div class="main-container">
+    <div class="userdropdown-contaniner">
+        <span class="span">Assign To :</span>
+        <mat-form-field class="dropdownlist">
+            <mat-select [(ngModel)]="this.sefAssign.userName">
+                <mat-option *ngFor="let user of users" [value]="user">
+                    {{user}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+    <div class="assignbtn">
+        <button mat-raised-button class="claim_btnn" matTooltip="Self Assign" (click)="selfAssign()">
+            <span class="material-symbols-outlined" style="color: white;font-size: 2.5rem;">
+                autorenew
+            </span>
+            <span style="margin-left: 1rem;">
+                SelfAssign
+            </span>
+        </button>
+
+    </div>
+
+
+</div>
+<div class="btn-container">
+    <button mat-raised-button class="clear_btnn" matTooltip="close" (click)="onCloseClick()">
+        <mat-icon style="font-size: 2rem;">clear</mat-icon>
+        <span style="margin-left: 1rem;">
+            Close
+        </span>
+    </button>
+
+    <button mat-raised-button class="apply_btnn" matTooltip="Apply" (click)=" selfAssignApply()">
+        <span class="material-symbols-outlined" style="color: white;font-size: 2.5rem;">
+            done_all
+        </span>
+        <span style="margin-left: 1rem;">
+            Apply
+        </span>
+    </button>
+</div>

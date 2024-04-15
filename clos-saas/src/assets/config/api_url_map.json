@@ -1,0 +1,27 @@
+{
+    "gateway": "http://192.168.19.193:8765",
+    "idleTimeoutSeconds": 7200,
+    "services": {
+        "auth_service": "[gateway]/clos-auth-service",
+        "domain_data_service": "[gateway]/clos-domain-data-service",
+        "flow_manager_data_service": "[gateway]/clos-flow-manager-data-service",
+        "clos_data_service": "[gateway]/clos-data-entry-service",
+        "report_data_service": "[gateway]/clos-reports-data-service",
+        "audit_data_service": "[gateway]/clos-audit-data-service",
+        "attachment_data_service": "[gateway]/clos-attachments-data-service",
+        "user_data_service": "[gateway]/tl-user-data-service",
+        "flow_manager_execution_service": "[gateway]/tl-flow-manager-execution-service",
+        "case_management_service": "[gateway]/tl-case-management-service",
+        "dashboards_data_service": "[gateway]/tl-dashboard-data-service",
+        "alert_configuration_data_service": "[gateway]/clos-df-data-service/api/",
+        "decision_flow_execution_service": "[gateway]/clos-df-execution-service",
+        "notification_data_service": "[gateway]/tl-notification-data-service",
+        "trades_data_service": "[gateway]/tl-trades-data-service",
+        "alerts_data_service": "[gateway]/tl-alerts-data-service",
+        "market_data_service": "[gateway]/tl-market-data-service",
+        "lo_monitor_service": "[gateway]/lo-monitor-service",
+        "loan_data_service": "[gateway]/lo-data-entry-service",
+        "dynamic_dashboard_service":"[gateway]/clos-bi-tools-service",
+        "saas_service":"[gateway]/saas-service"
+    }
+}

@@ -1,0 +1,195 @@
+@import url(../../../common-styles/form-style.scss);
+
+.main-container {
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > .side-nav {
+        height: 100%;
+        width: 30%;
+        border-right: 1px solid lightgray;
+        flex: 0 0 auto;
+        padding: 1rem;
+        > .side-nav-inner {
+            height: 99%;
+            border: 1px solid whitesmoke;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            padding: 1rem;
+            overflow: auto;
+            > .info-header {
+                font-size: 16px;
+                color: royalblue;
+                margin: 1rem 0rem 1rem 0rem;
+                font-weight: bold;
+            }
+        }
+    }
+    > .main-nav {
+        height: 98%;
+        overflow: auto;
+        width: calc(100% - 20%);
+        flex: 1 1 auto;
+        .evaluation {
+            height: calc(80rem - 3rem);
+            overflow: auto;
+            > .card-container {
+                height: 15rem;
+                // border-bottom: 1px solid gray;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > .card-area {
+                    flex: 1 1 auto;
+                    height: 100%;
+                    padding: 1rem;
+                    > .card {
+                        background-color: white;
+                        height: 100%;
+
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                        > .card-header {
+                            flex: 0 0 auto;
+                            width: 100%;
+                        }
+                        > .card-content {
+                            flex: 1 1 auto;
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: row;
+                            > .icon {
+                                flex: 0 0 auto;
+                                padding-right: 0.5rem;
+                            }
+                            >.cnt{
+                                flex: 0 0 auto;
+                            }
+                        }
+                    }
+                }
+            }
+            > .section-container {
+                // height: calc(100% - 20%);
+                overflow: auto;
+                > .section-header {
+                    width: calc(100% - 2%);
+                    height: 4rem;
+                    background-color: rgb(52 69 180);
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 0.5rem;
+                    margin: 2rem 1rem 0rem 1rem;
+                    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                    > .section-name {
+                        padding: 1rem;
+                    }
+                }
+                .deviation-container {
+                    padding: 1rem;
+                    > .deviation-card {
+                        height: 5rem;
+                        border-radius: 0.5rem;
+                        background-color: whitesmoke;
+                        margin-bottom: 1rem;
+                        border-left: 0.5rem solid royalblue;
+                        padding: 1rem;
+                    }
+                }
+            }
+            > .document-container {
+                > .section-header {
+                    width: calc(100% - 2%);
+                    height: 4rem;
+                    background-color: rgb(52 69 180);
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 0.5rem;
+                    margin: 2rem 1rem 0rem 1rem;
+                    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                    > .section-name {
+                        padding: 1rem;
+                    }
+                }
+            }
+        }
+        .decision {
+            // height: 80rem;
+            height: calc(80rem - 3rem);
+            overflow: auto;
+            .add-section {
+                margin: 1rem 0rem 0rem 1rem;
+                right: 0;
+            }
+            .section-container {
+                > .section-header {
+                    width: calc(100% - 2%);
+                    height: 4rem;
+                    background-color: rgb(52 69 180);
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 0.5rem;
+                    margin: 2rem 1rem 0rem 1rem;
+                    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                    > .section-name {
+                        padding: 1rem;
+                    }
+                }
+                // .deviation-container{
+                //     >.deviation-card-container{
+
+                //     }
+                // }
+            }
+        }
+    }
+}
+
+.section-container {
+    > .section-header {
+        width: calc(100% - 2%);
+        height: 4rem;
+        background-color: rgb(52 69 180);
+        color: white;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        margin: 2rem 1rem 0rem 1rem;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        > .section-name {
+            padding: 1rem;
+        }
+    }
+
+    > .section-content {
+        padding: 1rem 0rem 0rem 2rem;
+
+        .field-name {
+            // padding-bottom: 0.4rem;
+        }
+        .input-type {
+            // margin-top: 1rem;
+            // >input{
+            //     margin-top: 1rem;
+            // }
+        }
+    }
+}
+.field {
+    float: right;
+    margin-right: 2%;
+    margin-top: 2%;
+}
+
+.table-container {
+    // flex: 1 1 auto;
+    height: 50rem;
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem;
+}

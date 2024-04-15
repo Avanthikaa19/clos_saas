@@ -1,0 +1,76 @@
+<div class="selected-job-details">
+    <div class="job-detail">
+        <span>Jobs Details : ID 12588</span>
+        <div class="job-status">
+            <span *ngIf="!selectedJobDetail.ended">Job is <span>RUNNING</span></span>
+            <button mat-raised-button color="warn" class="mr-2">Force Stop</button>
+            <button mat-raised-button (click)="refreshData()">Refresh</button>
+        </div>
+    </div>
+    <div class="report-details">
+        <div class="report-field">
+            <div style="width:30%">Report Name : </div>
+            <span style="width:70%">{{selectedJobDetail.reportName}}</span>
+        </div>
+        <div class="report-field">
+            <div style="width:30%">Report Owner : </div>
+            <span style="width:70%">{{selectedJobDetail.username}}</span>
+        </div>
+        <div class="report-field">
+            <div style="width:30%">Report Output Path : </div>
+            <span style="width:70%">{{selectedJobDetail.outputFileName}}</span>
+        </div>
+        <div class="report-field">
+            <div style="width:30%">Run Parameters : </div>
+        </div>
+    </div>
+
+    <div class="report-param">
+        <span class="mb-2" style="width:30%">Parameter Name</span>
+        <span class="mb-2" style="width:30%">Formula Name</span>
+        <span class="mb-2" style="width:37%">Parameter Final Value</span>
+        <div class="report-param-value">
+            <!-- <div *ngFor="let param of selectedJobDetail.paramData">
+                <span style="width:30%">{{param.name}}</span>
+                <span style="width:30%">{{param.formulaName}}</span>
+                <span style="width:37%">{{param.formulaValue}}</span>
+            </div> -->
+            <div *ngIf="selectedJobDetail.paramData.length == 0" style="height:100%;">
+                No parameters found
+            </div>
+        </div>
+    </div>
+
+    <div class="logs">
+        <div style="width:10%">Logs:</div>
+        <div style="width:90%;text-align:right;margin-top: -18px;font-size:14px;">
+            <mat-slide-toggle [(ngModel)]="autoRefresh"
+                (change)="autoRefreshOnChange($event)">Auto Refresh</mat-slide-toggle>
+            <mat-form-field style="width: 40px; margin: 0 10px 0;">
+                <input matInput name="refreshFreq" min="10" [(ngModel)]="autoRefreshIntervalSeconds"
+                    required [disabled]="autoRefresh" type="number">
+            </mat-form-field>
+            <span style="margin: 0px 10px 0 0;">seconds.</span>
+        </div>
+        <div class="logs-detail" [style.display]="loadingItems?'flex':''">
+            <div [@fadeInOut] *ngIf="loadingItems" class="mid-tab-card mat-elevation-z2">
+                <div class="spinner" style="margin-left:35%">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                </div>
+                <div class="text noselect">
+                    <span>Please wait.. </span>
+                </div>
+            </div>
+            <ng-container *ngIf="!loadingItems">
+                <div *ngFor="let log of jobExecutionLogs">
+                    <span> {{log.timestamp | date: 'yyyy-MM-dd HH:mm:ss' }} </span>
+                    <span> {{log.logType}} </span>
+                    <span> {{log.jobId}} </span>
+                    <span> [read: {{log.read}}] </span>
+                    <span> ----{{log.source}} :</span>
+                    <span> {{log.message}} </span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

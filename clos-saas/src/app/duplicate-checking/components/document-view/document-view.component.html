@@ -1,0 +1,59 @@
+<div class="tl-main-container">
+    <div class="component-title" style="border-bottom:none">
+        <div class="header-container">
+            <span>DOCUMENT DETAILS</span>
+        </div>
+        <div class="row mb-4 pt-4">
+            <div class="col-md-10">
+                <div class="application-list">
+                    <ul>
+                        <li>
+                            <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                            <span style="color: royalblue;">{{applicationDetails?.id}}</span>
+                        </li>
+                        <li>
+                            <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                            <span style="color: royalblue;">{{applicationDetails?.legalNameOfTheCompany}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-container mt-3" style="height: 50%;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;">
+        <table *ngFor="let data of docData;" class="mb-5">
+            <tr style="color:#012970;position: sticky;top: -10px;">
+                <th style="width:40%">DOCUMENT ID</th>
+                <th style="width:40%">DOCUMENT NAME</th>
+                <th style="width:20%">ACTION</th>
+            </tr>
+            <tr style="top: 5.5%; text-transform: capitalize;">
+                <td>{{data.attachmentId}}</td>
+                <td (click)="getAttachementFileDownload(data.attachmentId)" [matTooltip]="'Download'" style="cursor: pointer;">{{data.attachmentName}}
+                <td>
+                    <mat-icon style="margin-left: 2rem;font-size: 20px; color:rgb(119, 119, 119);cursor: pointer;" [matTooltip]="'Preview'" (click)="preview(data);">
+                        visibility</mat-icon>
+                    <!-- <button mat-button class="tl-btn py-0 mr-3" style="background: chocolate;" [matTooltip]="'Preview'" (click)="preview(data);">
+                        <span class="material-symbols-outlined"style="margin-right: 10px;">
+                            visibility
+                        </span>Preview
+                    </button> -->
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="button-container mt-3">
+        <div style='float: left;'>
+            <button class="clos-btn" mat-raised-button mat-dialog-close style="margin-top: 10px;position: relative;bottom: 16px;left: 13px;">
+                <mat-icon>clear</mat-icon>Close
+            </button>
+        </div>
+    </div>
+    <div class="loading-container" *ngIf="loading">
+        <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+        <span>Loading... Please wait...</span>
+    </div>
+    <div class="placeholder-container" *ngIf="!loading && !docData?.length">
+        <span>No items found!</span>
+    </div>
+</div>

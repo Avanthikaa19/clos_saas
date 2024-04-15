@@ -1,0 +1,75 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../decision-tables/modals/table-value/branch-tree-design.scss);
+@import url(../../../decision-tables/modals/table-value/table-value.component.scss);
+@import url(../../../../common-css/commonstyles.scss);
+.whole {
+    display: flex;
+    flex-direction: row;
+}
+
+.first-card {
+    width: 320px;
+    height: 500px;
+    margin: 12px;
+    padding: 10px;
+}
+
+.center-box {
+    width: 100px;
+    margin-top: 200px;
+    margin: 10px;
+    padding: 10px;
+}
+
+mat-card {
+    overflow: auto;
+    font-family: sans-serif;
+}
+
+.radio-header {
+    font-family: sans-serif;
+    margin-top: 15px;
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    padding-left: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.radio-button {
+    margin: 5px;
+    height: 2 rem;
+    width: 2 rem;
+}
+
+.radio-head {
+    font-size: 17px;
+    color: #394eb4;
+    font-family: sans-serif;
+}
+
+.head-1 {
+    margin-left: 10px;
+    margin-top: 30px;
+}
+
+.seleced-label {
+    font: size 16px;
+    color: whitesmoke;
+    width: 300px;
+    height: 30px;
+    text-align: center;
+    margin-left: 38px;
+    margin-top: 28px;
+    background-color: #394eb4;
+}
+
+.selectlabel {
+    color: #394eb4;
+}

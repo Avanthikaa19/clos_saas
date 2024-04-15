@@ -1,0 +1,36 @@
+<div class="main-container">
+    <div class="header-conatiner">
+        <div class="header-content">
+            <span class="material-symbols-outlined" style="color:#012970">list_alt</span>
+            <h2>APPLICANT DETAILS</h2>
+        </div>
+        <div class="button_container">
+            <mat-form-field matInput class="select-field">
+                <mat-select [(value)]="selectedOption" (selectionChange)="selectEntryOption()">
+                    <mat-option [value]="option" *ngFor="let option of selectOption">
+                        {{option}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="content-container">
+        <mat-tab-group [selectedIndex]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+            <mat-tab label="{{matHead.matInfo}}" *ngFor="let matHead of matTabHeaders">
+                <ng-template mat-tab-label>
+                    <span [class.tabColor]="activeTabName === matHead.matInfo" style="font-weight: 600"> {{matHead.matInfo}}</span>
+                </ng-template>
+                <mat-tab-group [selectedIndex]="activeSubStepIndex" (selectedTabChange)="onSubStepSelectionChange($event)" *ngIf="matHead.matInfo === 'Supplementary Information'">
+                    <mat-tab label="{{matHeadSub.matInfoSub}}" *ngFor="let matHeadSub of matInfoSubFields">
+                        <ng-template mat-tab-label>
+                            <span [class.tabColor]="activeSubTabName === matHeadSub.matInfoSub" style="font-weight: 600"> {{matHeadSub.matInfoSub}}</span>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="main_nav-container">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+</div>

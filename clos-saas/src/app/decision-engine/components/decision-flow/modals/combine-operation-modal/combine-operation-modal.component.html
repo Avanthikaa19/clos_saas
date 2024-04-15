@@ -1,0 +1,130 @@
+<div class="main-nav-container">
+    <div class="example-container">
+        <div class="right-header">
+            Combine Operation
+        </div>
+
+        <div class="list-checkeditems">
+            <div class="list-containeritems" style="height:92%;overflow-y: auto;">
+                <mat-list role="list">
+                    <div>
+                        <mat-list-item role="listitem" style="font-size: 1.4rem;height:60px;background-color: white;border-radius: 5px;">
+                            <div class="label">
+                                Source Branch
+                            </div>
+                            <div class="colon">:</div>
+                            <div class="value">
+                                <input [(ngModel)]="sourceData.name" style="color:grey" class="min-input" readonly>
+                            </div>
+
+                        </mat-list-item>
+
+                    </div>
+                </mat-list>
+                <mat-list role="list">
+                    <div>
+                        <mat-list-item role="listitem" style="font-size: 1.4rem;height:60px;background-color: white;border-radius: 5px;">
+                            <div class="label">
+                                Destination Branch
+                            </div>
+                            <div class="colon">:</div>
+
+                            <div class="value" style="padding-right: 20px;">
+                                <mat-select class="min-select" style="text-transform: capitalize;background-color: whitesmoke;" [(ngModel)]="combineData.destination">
+                                    <div *ngFor="let symbol of branchData">
+                                        <mat-option [value]="{'id':symbol.id,'type':symbol.flow_type,'name':symbol.name}">
+                                            <span style="text-transform: capitalize;">
+                            {{symbol.name}}
+                        </span>
+                                        </mat-option>
+                                    </div>
+                                </mat-select>
+                            </div>
+                            <!-- <div style="padding-right: 20px;">
+                    <input type="number" placeholder="Enter the value"  class="min-input" >
+                </div>
+                <div style="padding-right: 20px;" >
+                    <input type="text" placeholder="Enter the value" class="min-input">
+                </div> -->
+                        </mat-list-item>
+
+                    </div>
+                </mat-list>
+
+                <mat-list role="list">
+                    <div>
+                        <mat-list-item role="listitem" style="font-size: 1.4rem;height:60px;background-color: white;border-radius: 5px;">
+                            <div class="label">
+                                Operation:
+                            </div>
+                            <div class="colon">:</div>
+
+                            <div class="value" style="padding-right: 20px;">
+                                <mat-select class="min-select" style="text-transform: capitalize;background-color: whitesmoke;" [(ngModel)]="combineData.operaton">
+                                    <div *ngFor="let op of options">
+                                        <mat-option [value]="op">
+                                            <span style="text-transform: capitalize;">
+                            {{op}}
+                        </span>
+                                        </mat-option>
+                                    </div>
+                                </mat-select>
+                            </div>
+
+                        </mat-list-item>
+
+                    </div>
+                </mat-list>
+                <mat-list role="list">
+                    <div>
+                        <mat-list-item role="listitem" style="font-size: 1.4rem;height:60px;background-color: white;border-radius: 5px;">
+                            <div class="label">
+                                How
+                            </div>
+                            <div class="colon">:</div>
+
+                            <div class="value" style="padding-right: 20px;">
+                                <mat-select class="min-select" style=" text-transform: capitalize;background-color: whitesmoke;" [(ngModel)]="combineData.how">
+                                    <div *ngFor="let how of howData">
+                                        <mat-option [value]="how">
+                                            <span style="text-transform: capitalize;">
+                            {{how}}
+                        </span>
+                                        </mat-option>
+                                    </div>
+                                </mat-select>
+                            </div>
+
+                        </mat-list-item>
+
+                    </div>
+                </mat-list>
+                <mat-list role="list">
+                    <div>
+                        <mat-list-item role="listitem" style="font-size: 1.4rem;background-color: white;border-radius: 5px;height:100px;overflow:auto">
+                            <div class="label">
+                                On
+                            </div>
+                            <div class="colon">:</div>
+
+                            <div class="value" style="padding-right: 20px;">
+                                <input [(ngModel)]="combineData.on" style="color:grey" class="min-input">
+
+                            </div>
+
+                        </mat-list-item>
+
+                    </div>
+                </mat-list>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" style="margin-top:10rem">
+        <button mat-stroked-button mat-dialog-close style="color: red;">
+            <mat-icon>close</mat-icon>Close
+        </button>
+        <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="clicke()" cdkFocusInitial>
+            <mat-icon>add</mat-icon>Combine Branches
+        </button>
+    </mat-dialog-actions>
+</div>

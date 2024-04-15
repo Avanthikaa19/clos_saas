@@ -1,0 +1,193 @@
+<div class="main-container">
+    <div class="module-header-container" *ngIf="false">
+        <span class="role__dtl__txt-container">
+            <!-- <a style="color: black;"><u>Roles list</u></a> >
+            <span class="role__name__txt-container">
+                {{roleDetail.name ? roleDetail.name : 'New role'}}
+            </span> -->
+        </span>
+        <span class="go__back-container">
+            <button (click)="onGoBackClick()" mat-stroked-button
+                style="font-weight: 600;background-color: rgb(248, 248, 248);box-shadow: 3px 3px rgb(238, 236, 236);margin-right: 1rem;">
+                <mat-icon>arrow_circle_left</mat-icon>
+                Go back
+            </button>
+        </span>
+    </div>
+    <div class="tab-container">
+        <div class="main-tabs-container">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="tab-icon">how_to_reg</mat-icon>
+                        <span style="font-weight: 600;">
+                            Role
+                        </span>
+                    </ng-template>
+                    <div class="name-container">
+                        <span>
+                            {{roleDetail.name ? roleDetail.name : 'New role'}}
+                        </span>
+                    </div>
+                    <div class="crtd-date-container">
+                        <span>
+                            Created on {{currentDate}}
+                        </span>
+                    </div>
+                    <div class="form-content-container">
+                        <div class="table-content-container">
+                            <div class="role-detail-container">
+                            <table>
+                                <tr>
+                                    <td class="required">Role Name</td>
+                                    <td>:</td>
+                                    <td>
+                                        <mat-select [(ngModel)]="roleDetail.name" required class="min-input min-select detail-item-input">
+                                            <mat-option *ngFor="let country of rolesList" [value]="country">{{country}}
+                                            </mat-option>
+                                        </mat-select>
+                                        </td>
+                                        <td> <div *ngIf="!roleDetail.name">
+                                            <span style="color:red;">Role is required field.</span>
+                                        </div>
+                                        <div *ngIf="message">
+                                            <span style="color:red;">{{message}}</span>
+                                        </div></td>
+                                </tr>
+                                <tr>
+                                    <td class="required">Description</td>
+                                    <td>:</td>
+                                    <td><textarea class="min-input" rows="5" cols="50" style="background-color: F4F4F4; resize: none;" [(ngModel)]="roleDetail.description" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="500"></textarea></td>
+                                    <td>
+                                        <div *ngIf="roleDetail.name && !roleDetail.description">
+                                            <span style="color:red;">Description is required field.</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: top; padding-top: 1rem;">Default Access Template</td>
+                                    <td style="vertical-align: top; padding-top: 1rem;">:</td>
+                                    <div class="parent__row-flex" style="max-width: fit-content; ">
+                                        <div style="line-height: 3rem;" class="access-container parent__row-flex flex-grow">
+                                            <div class="flex-shrink">
+                                                <mat-icon style="font-size: 1.8rem; margin-top: 1rem; text-align: center;">
+                                                    security</mat-icon>
+                                            </div>
+                                            <div *ngIf="roleDetail.defaultAccessTemplate" class="flex-grow" style="margin-right: 0.5rem;">
+                                                <span>{{changeTemplateNamesText ? templateNamesFull :
+                                                    templateNamesShort}}</span>
+                                            </div>
+                                        </div>
+                                        <div *ngFor="let data of [0]" class="rat__edit-container flex-grow" (click)="getTemplatesDetail()" style="cursor: pointer;">
+                                            <span>
+                                                <u> {{roleDetail.id ? 'Edit Template' : 'Add Template'}}</u>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="cdu__btn__container">
+                        <div class="delete__btn-container">
+                            <ng-container> 
+                            <button  mat-raised-button *ngIf="roleDetail.id " (click)=" onDeleteBtnClick()">
+                                <mat-icon style="margin-right: 1rem;">delete</mat-icon>
+                                <span>
+                                    Delete Role
+                                </span>
+                            </button>
+                        </ng-container>
+                        </div>
+                        <div class="create__btn-container">
+                            <button class="save_btn" mat-raised-button (click)="saveRole()" [disabled]="disable()">
+                                <mat-icon style="margin-right: 1rem;">{{roleDetail.id ? 'refresh' : 'save'}}</mat-icon>
+                                <span>
+                                    {{roleDetail.id ? 'Update Role' : 'Save Role'}}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab class="input" *ngIf="false">
+                    <ng-template mat-tab-label>
+                        <mat-icon style="padding: 1rem;" class="example-tab-icon">admin_panel_settings</mat-icon>
+                        <span style="font-weight: 600;">Assigned Users</span>
+                    </ng-template>
+                    <div>
+                        <app-role-users></app-role-users>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <!-- <mat-tab-group>
+            <mat-tab style="color: rgb(37, 75, 77);" class="input" checked>
+                <ng-template mat-tab-label>
+                    <mat-icon style="padding: 1rem;" class="example-tab-icon">how_to_reg
+                    </mat-icon>
+                    <span style="font-weight: 600;">Role</span>
+                </ng-template>
+                <div class="tab__content__one-container">
+                    <div class="one__main__header-container">
+                        <span>
+                            Trader
+                        </span>
+                    </div>
+                    <div class="one__sub__header-container">
+                        <span>
+                            Created:01-jan-2022
+                        </span> 
+                    </div>
+                    <div class="one__content-container">
+                        <div class="role__detail-container">
+                            <div class="text-container">
+                                <p>Role Name</p>
+                                <p>Description</p>
+                                <p style="padding-top: 5rem;">Default Access Templates</p>
+                            </div>
+                            <div class="colen-container">
+                                <p>:</p>
+                                <p>:</p>
+                                <p style="padding-top: 5rem;">:</p>
+                            </div>
+                            <div class="value-container">
+                                <p><input type="text" class="min-input"
+                                        style="background-color: F4F4F4"  [(ngModel)]="roleDetail.name"></p>
+                                <p><textarea class="min-input" rows="5" cols="50"
+                                        style="background-color: F4F4F4;padding-top: 1rem;"  [(ngModel)]="roleDetail.description"></textarea></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cdu__btn__container">
+                        <div class="delete__btn-container">
+                            <button mat-raised-button>
+                                <mat-icon style="margin-right: 1rem;">delete</mat-icon>
+                                <span>
+                                    Delete Role
+                                </span>
+                            </button>
+                        </div>
+                        <div class="create__btn-container">
+                            <button mat-raised-button (click)="saveRole()">
+                                <mat-icon style="margin-right: 1rem;">{{roleDetail.id  ? 'edit' : 'save'}}</mat-icon>
+                                <span>
+                                    {{roleDetail.id  ? 'Edit Role' : 'Save Role'}}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab class="input">
+                <ng-template mat-tab-label>
+                    <mat-icon style="padding: 1rem;" class="example-tab-icon">admin_panel_settings</mat-icon>
+                    <span style="font-weight: 600;">Assigned Users</span>
+                </ng-template>
+                <div>
+                    <app-role-users></app-role-users>
+                </div>
+            </mat-tab>
+        </mat-tab-group> -->
+    </div>
+    <notifier-container></notifier-container>

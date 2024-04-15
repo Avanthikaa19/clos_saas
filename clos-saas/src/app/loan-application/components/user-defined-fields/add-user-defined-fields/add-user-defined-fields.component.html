@@ -1,0 +1,86 @@
+<div class="popup-container">
+    <div class="summary-container">
+        <mat-icon>add</mat-icon>
+        Create Fields
+    </div>
+    <hr>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table>
+                    <tr>
+                        <td>Field Name <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <input [(ngModel)]="fields.fieldName" class="min-select" type="text">
+                        </td>
+                        <td>Field Type <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="fields.fieldType">
+                                <mat-option *ngFor="let type of fieldType" [value]="type">
+                                    {{type}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tab Name</td>
+                        <td>:</td>
+                        <td>
+                            <mat-select class="min-select" [(ngModel)]="fields.tab">
+                                <mat-option *ngFor="let tab of tabNames" [value]="tab">
+                                    {{tab}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                        <ng-container *ngIf="fields.tab == 'Corporate Details'">
+                            <td>Sub Tab Name <span style="color:red;">*</span></td>
+                            <td>:</td>
+                            <td>
+                                <mat-select class="min-select" [(ngModel)]="fields.subTab">
+                                    <mat-option *ngFor="let subtab of subTabNames" [value]="subtab">
+                                        {{subtab}}
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <td>Module Name <span style="color:red;">*</span></td>
+                        <td>:</td>
+                        <td>
+                            <input [(ngModel)]="fields.module" class="min-select" type="text">
+
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <ng-container *ngIf="fields.fieldType == 'Date'">
+                            <td>Date Format</td>
+                            <td>:</td><td>
+                            <input class="min-select" type="text" [(ngModel)]="fields.dateFormat"></td>
+                        </ng-container>
+                    </tr> -->
+                </table>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="close-action-actions-container">
+        <span style="color: red;font-weight: bold;margin:2rem;">
+            {{errMsg()}}
+        </span>
+        <div class="btn-container">
+            <button style="margin-top:1rem;" [disabled]="disable()" (click)="onSaveUserFields(fields.module)"  mat-raised-button mat-dialog-close
+                class="clos-submit-btn">
+                <mat-icon>{{ data ? 'update' : 'save' }}</mat-icon>
+                <span>{{ data ? 'Update' : 'Save' }}</span>
+            </button>
+        </div>
+        <div class="spacer"></div>
+        <button mat-raised-button style="margin-top:1rem;float: left;" class="clos-btn"
+            matTooltip="Close" mat-dialog-close>
+            <mat-icon>close</mat-icon>Close
+        </button>
+    </div>
+</div>

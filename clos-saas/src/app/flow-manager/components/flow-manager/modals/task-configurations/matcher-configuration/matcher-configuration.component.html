@@ -1,0 +1,513 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        MATCHER:
+    </div>
+    <table *ngIf="config.matcher">
+      <tbody>
+        <tr>
+          <td>
+            <span class="min-label">Match Key Type</span>
+          </td>
+          <td>:</td>
+          <td>
+            <mat-select [(ngModel)]="config.matcher.matchKeyType" class="min-select">
+              <mat-option [value]="'BDONE_FX_DUMMY_TRSRY_REF'">Dummy Trade - Treasury Reference</mat-option>
+            </mat-select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="min-label">Match Key</span>
+          </td>
+          <td>:</td>
+          <td>
+            <input [(ngModel)]="config.matcher.matchKey" class="min-input">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="min-label">Match Parent Name</span>
+          </td>
+          <td>:</td>
+          <td>
+            <input [(ngModel)]="config.matcher.matchParentName" class="min-input">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="min-label">Process Reversals</span>
+          </td>
+          <td>:</td>
+          <td>
+            <div style="display: flex; height: 24px; line-height: 24px;">
+              <input type="checkbox" name="processReversals" id="processReversals" [(ngModel)]="config.matcher.processReversals"
+                style="margin-top: 5px; cursor: pointer;">
+              <label for="processReversals" style="margin-left: 10px; cursor: pointer;">During Matching</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="min-label"></span>
+          </td>
+          <td></td>
+          <td>
+            <div style="display: flex; height: 24px; line-height: 24px;">
+              <input type="checkbox" name="processReversalsPostMatching" id="processReversalsPostMatching" [(ngModel)]="config.matcher.processReversalsPostMatching"
+                style="margin-top: 5px; cursor: pointer;">
+              <label for="processReversalsPostMatching" style="margin-left: 10px; cursor: pointer;">Post Matching</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <span class="min-label">Perform Cleanup</span>
+          </td>
+          <td valign="top">:</td>
+          <td>
+            <div style="display: flex; height: 24px; line-height: 24px;">
+              <input type="checkbox" name="bdoneCleanup" id="bdoneCleanup" [(ngModel)]="config.matcher.bdoneCleanup"
+                style="margin-top: 5px; cursor: pointer;">
+              <label for="bdoneCleanup" style="margin-left: 10px; cursor: pointer;">Deals with trade date older than FO date.</label>
+            </div>
+            <div>
+              <span style="color: silver; font-style: italic;">Cleaned up entries will be moved to queue instance 2.</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div class="category-sub-header">
+              MATCH VARIABLES:
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="position: relative; margin-bottom: 10px;">
+              <table style="width: calc(100% - 50px);">
+                <ng-container *ngFor="let element of config.matcher.matchAggregationVars; let i = index; trackBy: trackByIndex;">
+                  <tr>
+                    <td valign="top"><span>{{i+1}}.</span></td>
+                    <td valign="top">:</td>
+                    <td>
+                      <div style="position: relative;">
+                        <button mat-icon-button color="warn" class="min-button min-add-button"
+                          (click)="config.matcher.matchAggregationVars.splice(i, 1);" style="right: -30px;">
+                          <mat-icon style="font-size: 14px;">remove</mat-icon>
+                        </button>
+                        <mat-select [(ngModel)]="config.matcher.matchAggregationVars[i].fieldType" class="min-select">
+                          <mat-option [value]="'FIELD_SINGLE'">Single Field</mat-option>
+                          <mat-option [value]="'FIELD_PATTERN'">Fields Pattern</mat-option>
+                        </mat-select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"></td>
+                    <td valign="top"></td>
+                    <td>
+                      <input [(ngModel)]="config.matcher.matchAggregationVars[i].outputFieldName" class="min-input" type="text">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"></td>
+                    <td valign="top"></td>
+                    <td>
+                      <input [(ngModel)]="config.matcher.matchAggregationVars[i].inputFieldName" class="min-input" type="text">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      <div style="height: 10px;"></div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+              <div style="height: 26px; position: relative; padding-left: 50px;">
+                <span class="add-items-text">Click the + icon to add items.</span>
+                <button mat-icon-button color="primary" class="min-button min-add-button"
+                        (click)="config.matcher.matchAggregationVars.push({
+                          fieldType: 'FIELD_SINGLE',
+                          outputFieldName: '',
+                          inputFieldName: ''
+                        });">
+                  <mat-icon style="font-size: 14px;">add</mat-icon>
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div class="category-sub-header">
+              MATCH RULES:
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div *ngFor="let element of config.matcher.matchRules; let i = index; trackBy: trackByIndex;" style="position: relative; margin-bottom: 10px;">
+              <button mat-icon-button color="warn" class="min-button min-add-button"
+                      (click)="config.matcher.matchRules.splice(i, 1);">
+                <mat-icon style="font-size: 14px;">remove</mat-icon>
+              </button>
+              <table style="width: calc(100% - 50px);">
+                <tbody>
+                  <tr>
+                    <td colspan="4">
+                      <span>{{i+1}}.</span>
+                      <mat-select [(ngModel)]="config.matcher.matchRules[i].type" class="min-select" style="font-weight: 500; width: 250px;">
+                        <mat-option [value]="'EVALUATE_ANY'">Any Of The Rules</mat-option>
+                        <mat-option [value]="'EVALUATE_ALL'">All Of The Rules</mat-option>
+                        <mat-option [value]="'CONDITIONAL_TOLERANCE'">Conditional Tolerance (Per.)</mat-option>
+                        <mat-option [value]="'CONDITIONAL_THRESHOLD'">Conditional Threshold (Abs.)</mat-option>
+                      </mat-select>
+                    </td>
+                  </tr>
+                  <ng-container *ngIf="['EVALUATE_ANY', 'EVALUATE_ALL'].includes(config.matcher.matchRules[i].type)">
+                    <tr>
+                      <td colspan="4">
+                        <div>
+                          <table style="width: calc(100% - 20px);">
+                            <tbody>
+                              <tr *ngFor="let item of config.matcher.matchRules[i].conditions; let j = index; trackBy: trackByIndex;">
+                                <td>
+                                  <div style="position: relative; width: 100%;">
+                                    <button mat-icon-button color="warn" class="min-button min-add-button"
+                                            (click)="config.matcher.matchRules[i].conditions.splice(j, 1);">
+                                      <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                    </button>
+                                    <input [(ngModel)]="config.matcher.matchRules[i].conditions[j]" class="min-input" type="text">
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                          <span class="add-items-text">Click the + icon to add items.</span>
+                          <button mat-icon-button color="primary" class="min-button min-add-button"
+                                  (click)="config.matcher.matchRules[i].conditions.push('');">
+                            <mat-icon style="font-size: 14px;">add</mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="config.matcher.matchRules[i].type==='CONDITIONAL_TOLERANCE'">
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span class="min-label">Match Using</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <mat-select [(ngModel)]="config.matcher.matchRules[i].fieldType" class="min-select">
+                          <mat-option [value]="'FIELD_SINGLE'">Single Field</mat-option>
+                          <mat-option [value]="'FIELD_PATTERN'">Fields Pattern</mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span class="min-label">Match</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <input [(ngModel)]="config.matcher.matchRules[i].variableField" class="min-input" type="text">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span class="min-label">With</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <input [(ngModel)]="config.matcher.matchRules[i].parentField" class="min-input" type="text">
+                      </td>
+                    </tr>
+                    <tr *ngIf="config.matcher.matchRules[i].fieldType === 'FIELD_PATTERN'">
+                      <td></td>
+                      <td>
+                        <span class="min-label">Ignore Key</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <input [(ngModel)]="config.matcher.matchRules[i].ignoreIfKeyIs" class="min-input" type="text">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                        <div>
+                          <table style="width: calc(100% - 20px);">
+                            <tbody>
+                              <tr>
+                                <td valign="top">
+                                  <span class="min-label">Tolerance</span>
+                                </td>
+                                <td valign="top">:</td>
+                                <td>
+                                  <div>
+                                    <table style="width: calc(100% - 20px);">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label">Condition</span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input [(ngModel)]="config.matcher.matchRules[i].tolerance.if" class="min-input" type="text">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label">When True</span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input [(ngModel)]="config.matcher.matchRules[i].tolerance.then" class="min-input" type="text">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label">When False</span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input [(ngModel)]="config.matcher.matchRules[i].tolerance.else" class="min-input" type="text">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label" matTooltip="The above conditional values can be overriden by configuration files in the server if this is checked.">
+                                              Overridable
+                                            </span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input type="checkbox" [(ngModel)]="config.matcher.matchRules[i].overridable"
+                                              style="margin-top: 7px;">
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="config.matcher.matchRules[i].type==='CONDITIONAL_THRESHOLD'">
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span class="min-label">Match Using</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <mat-select [(ngModel)]="config.matcher.matchRules[i].fieldType" class="min-select">
+                          <mat-option [value]="'FIELD_SINGLE'">Single Field</mat-option>
+                          <mat-option [value]="'FIELD_PATTERN'">Fields Pattern</mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span class="min-label">Match</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <input [(ngModel)]="config.matcher.matchRules[i].variableField" class="min-input" type="text">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span class="min-label">With</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <input [(ngModel)]="config.matcher.matchRules[i].parentField" class="min-input" type="text">
+                      </td>
+                    </tr>
+                    <tr *ngIf="config.matcher.matchRules[i].fieldType === 'FIELD_PATTERN'">
+                      <td></td>
+                      <td>
+                        <span class="min-label">Ignore Key</span>
+                      </td>
+                      <td>:</td>
+                      <td>
+                        <input [(ngModel)]="config.matcher.matchRules[i].ignoreIfKeyIs" class="min-input" type="text">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                        <div>
+                          <table style="width: calc(100% - 20px);">
+                            <tbody>
+                              <tr>
+                                <td valign="top">
+                                  <span class="min-label">Threshold</span>
+                                </td>
+                                <td valign="top">:</td>
+                                <td>
+                                  <div>
+                                    <table style="width: calc(100% - 20px);">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label">Condition</span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input [(ngModel)]="config.matcher.matchRules[i].threshold.if" class="min-input" type="text">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label">When True</span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input [(ngModel)]="config.matcher.matchRules[i].threshold.then" class="min-input" type="text">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label">When False</span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input [(ngModel)]="config.matcher.matchRules[i].threshold.else" class="min-input" type="text">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <span class="min-label" matTooltip="The above conditional values can be overriden by configuration files in the server if this is checked.">
+                                              Overridable
+                                            </span>
+                                          </td>
+                                          <td>:</td>
+                                          <td>
+                                            <input type="checkbox" [(ngModel)]="config.matcher.matchRules[i].overridable"
+                                              style="margin-top: 7px;">
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <div *ngIf="config.matcher.matchRules.length > 1"
+                   style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+            </div>
+            <div style="height: 26px; position: relative; padding-left: 20px;">
+              <span class="add-items-text">Click the + icon to add items.</span>
+              <button mat-icon-button color="primary" class="min-button min-add-button"
+                      (click)="config.matcher.matchRules.push(
+                      {
+                        type: 'EVALUATE_ALL',
+                        fieldType: 'FIELD_SINGLE',
+                        conditions: [],
+                        variableField: '',
+                        parentField: '',
+                        tolerance: {
+                          if: '',
+                          then: '',
+                          else: ''
+                        },
+                        threshold: {
+                          if: '',
+                          then: '',
+                          else: ''
+                        },
+                        ignoreIfKeyIs: '',
+                        overridable: true
+                      });">
+                <mat-icon style="font-size: 14px;">add</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div class="category-sub-header">
+              POST MATCH:
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="min-label">Release Matched Parent</span>
+          </td>
+          <td>:</td>
+          <td>
+            <input type="checkbox" name="releaseMatchedParent" [(ngModel)]="config.matcher.onFullMatch.releaseMatchedParent"
+                   style="margin-top: 7px;">
+          </td>
+        </tr>
+        <tr *ngIf="config.matcher.onFullMatch.releaseMatchedParent">
+          <td>
+            <span class="min-label">And Use New Values</span>
+          </td>
+          <td>:</td>
+          <td>
+            <input type="checkbox" name="appendFinalAggregationValues" [(ngModel)]="config.matcher.onFullMatch.appendFinalAggregationValues"
+                   style="margin-top: 7px;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="min-label">Release Matched Children</span>
+          </td>
+          <td>:</td>
+          <td>
+            <input type="checkbox" name="releaseMatchedChildren" [(ngModel)]="config.matcher.onFullMatch.releaseMatchedChildren"
+                   style="margin-top: 7px;">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

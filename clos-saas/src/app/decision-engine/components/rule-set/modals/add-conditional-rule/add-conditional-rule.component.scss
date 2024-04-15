@@ -1,0 +1,221 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/modern-table/modern-table.component.scss);
+@import url(../../../../common-css/commonstyles.scss);
+
+.main-container {
+    height: 60vh;
+    width: 100%;
+
+    >.top-container {
+        display: flex;
+        flex-direction: column;
+
+        >.header-container {
+            font-style: normal;
+            font-weight: bold;
+            height: 4rem;
+            border-bottom: 1px solid gainsboro;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            span {
+                font-size: 1.6rem;
+            }
+        }
+
+        >.search-obj-model {
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+    }
+
+    >.body-container {
+        height: calc(100% - 6rem);
+        width: 100%;
+        overflow-x: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+
+        >.side-nav-container {
+            height: 100%;
+            flex: 0 0 auto;
+            width: 25%;
+            min-width: 40rem;
+            border-right: 1px solid gainsboro;
+        }
+
+        >.main-nav-container {
+            width: 60%;
+            flex: 1 1 auto;
+            height: 100%;
+            overflow: auto;
+
+            >.example-container {
+                background-color: rgb(236, 236, 236);
+
+                >.right-header {
+                    padding: 10px;
+                    color: #343030;
+                    font-size: 1.6rem;
+                    font-style: normal;
+                    font-weight: bold;
+                    // position: fixed;
+                    // z-index: 1;
+                    // width: 100%;
+                    background-color: white;
+                }
+
+                >.list-checkeditems {
+                    background-color: whitesmoke;
+                    height: 80%;
+
+                    >.list-containeritems {
+                        padding: 1rem 1rem 1rem 1rem;
+                        // padding: 10px;
+                        border: 10px solid rgb(255, 255, 255);
+                        border-radius: 10px;
+
+                        &:last-child {
+                            padding-bottom: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.param-main-container {
+    height: 64vh;
+    width: 100%;
+
+    >.inner-container {
+        height: 60vh;
+        width: 100%;
+        background-color: whitesmoke;
+
+        >.check-card-container {
+            background-color: white;
+            height: 4rem;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+
+/*Tree*/
+
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.example-tree .mat-nested-tree-node div[role="group"] {
+    padding-left: 40px;
+}
+/*
+   * Padding for leaf nodes.
+   * Leaf nodes need to have padding so as to align with other non-leaf nodes
+   * under the same parent.
+   */
+.example-tree div[role="group"]>.mat-tree-node {
+    padding-left: 40px;
+}
+
+/*Drag card container*/
+
+.drage-card-container {
+    height: 5rem;
+    background-color: whitesmoke;
+    width: 99%;
+    margin-bottom: 0.5rem;
+    border: 1px solid lightgray;
+    border-radius: 1rem;
+    margin-left: 0.5rem;
+}
+
+li {
+    list-style: none;
+}
+
+.left-align {
+    margin-top: 20px;
+    height: 480px;
+    overflow: auto;
+}
+
+mat-slide-toggle {
+    transform: scale(1);
+}
+
+:host ::ng-deep .mat-slide-toggle:not(.mat-checked):not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #0e2954;
+}
+
+:host ::ng-deep .mat-slide-toggle:not(.mat-checked):not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: rgb(207, 181, 231);
+    /* set your color here */
+}
+
+.togg-condition {
+    margin-left: auto;
+}
+
+// .min-Select,
+// .Min-select {
+//     background-color: whitesmoke;
+//     padding-left: 2px;
+//     max-height: 21px;
+//     line-height: 24px;
+//     border-radius: 3px;
+//     transition: all linear 100ms;
+// }
+// .Min-select {
+//     border: solid 0.5px lightgrey;
+// }
+// .min-Select:hover,
+// .Min-select:hover {
+//     border: solid rgb(218, 218, 218) 1px;
+// }
+.seprate-columns {
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px;
+
+    >.choose-mode {
+        flex: 0 1 35%;
+
+        mat-select {
+            width: 200px;
+            margin-left: 10px;
+        }
+    }
+
+    >.database {
+        flex: 0 1 35%;
+        margin-left: 30px;
+
+        mat-select {
+            width: 200px;
+            margin-left: 10px;
+        }
+    }
+
+    >.search-field {
+        flex: 0 1 30%;
+        margin-left: 30px;
+
+        mat-select {
+            width: 200px;
+            margin-left: 10px;
+        }
+    }
+}

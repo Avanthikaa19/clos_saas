@@ -1,0 +1,67 @@
+@import url(../../../../../common-css/common.scss);
+@import url(../../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 86%;
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: hidden;
+    >.header-container {
+        padding: 1rem 1rem;
+        background-color: white;
+        height: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        font-weight: 500;
+    }
+    >.content-container {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(100% - 4rem);
+        >.card-container {
+            min-height: 3rem;
+            background-color: white;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            >.card-inner-container {
+                text-transform: capitalize;
+                background-color: whitesmoke;
+                height: 2.5rem;
+                width: 20%;
+                padding-top: 0.5rem;
+                border-radius: 0.5rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                >span {
+                    padding-left: 1rem;
+                    // padding-top: 0.5rem;
+                    min-width: 35px;
+                }
+                &:nth-child(even) {
+                    margin-bottom: 0.5rem;
+                }
+            }
+            &:hover {
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
+            &:first-child {
+                margin-top: 2rem;
+            }
+        }
+        >.header-container {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+    }
+}
+
+.flex-property-parent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

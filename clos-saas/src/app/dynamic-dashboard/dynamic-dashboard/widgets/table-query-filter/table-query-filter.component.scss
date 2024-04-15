@@ -1,0 +1,294 @@
+::ng-deep.expansion-theme-dark .mat-expansion-panel {
+    background: #00000021 !important;
+}
+
+.select-panel-theme-dark.mat-select-panel {
+    background: #16191d;
+  }
+.select-panel-theme-light.mat-select-panel {
+    background: #fff;
+	font-size: 12px;
+  }
+  .select-panel-theme-dark .mat-option{
+      color: #ffffffab;
+  }
+
+::ng-deep.select-panel-theme-dark .mat-option:hover:not(.mat-option-disabled){
+    background: rgba(255, 255, 255, 0.19) !important;
+    color: #fff;
+}
+// selected field highlight
+::ng-deep .select-panel-theme-dark.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple){
+	background: rgb(255 255 255 / 19%) !important;
+  }
+  ::ng-deep .mat-option.mat-active {
+    background: rgb(255 255 255 / 19%) !important;
+    // color: rgba(0, 0, 0, 0.87);
+}
+::ng-deep .dbFeild-dark .mat-select-arrow{
+	color: #ffffffab !important;
+  }
+  
+  ::ng-deep.select-panel-theme-light .mat-pseudo-checkbox-checked {
+    background: #d01d22 !important; 
+  }
+
+  .btn.focus, .btn:focus {
+    box-shadow: none !important;
+}
+::ng-deep.query-filter-mat-select {
+height: 35px; 
+width: 100%; 
+font-size: 12px;
+padding: 12px;
+border-radius: 0.4rem;
+border: solid #e6e6e6 0.1rem;
+background-color: #fafafa;
+box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+transition: all linear 70ms;
+outline: solid transparent 0.2rem;
+resize: none;
+}
+
+::-webkit-scrollbar{
+  width: 5px;
+}
+
+  	//Export and Clear Btn
+	.download-btn{
+	  border-radius: 6px;
+	  padding: 5px;
+	  font-size: 13px;
+	  letter-spacing: 0.05em;
+	  line-height: 1.25;
+	  font-weight: 500;
+	  text-transform: uppercase;
+	  text-decoration: none;
+	  white-space: nowrap;
+	  width: 100%;
+	}
+	
+	.download-btn:hover{
+	  background: transparent;
+	  
+	}
+	.download-btn:hover:disabled{
+	  color: #686363;
+	  border-color: #c2bfbf70;
+	  pointer-events: none;
+	}
+  
+	.download-btn .btn:focus{
+	  box-shadow: none;
+	}
+  
+.dropdown-item:hover{
+	// background-color: #afeffd52;
+	transform:scaleX(1);
+	opacity:1;
+	z-index: 22px;
+	
+	}
+	.dropdown-menu-light .dropdown-hover:hover{
+		background:#afeffd52;
+		cursor: pointer;
+	}
+	.dropdown-menu-dark .dropdown-hover:hover{
+		background: #16191d;
+		cursor: pointer;
+	}
+  
+  .dropdown-item{
+	display: block;
+	width: 80%;
+	padding: .25rem 1.5rem;
+	clear: both;
+	font-weight: 400;
+	color: #111213;
+	text-align: inherit;
+	white-space: nowrap;
+	background-color: transparent;
+	border: 0;
+	cursor: pointer;
+  }
+.btn-color-light{
+  // background-color: #fff;
+  color: #757e8a;
+}
+
+.btn-color-light:hover{
+  color: #d01d22;
+  background: transparent;
+}
+::ng-deep .btn-color-light .mat-button-focus-overlay {
+  background-color:transparent;
+}
+
+.btn-color-dark{
+border-color: #80808070;
+  color: #ffffff;
+}
+
+.btn-color-dark:hover{
+  color: #13c2d3;
+}
+.mat-stroked-button:not(.mat-button-disabled) {
+  border-color: #80808070;
+}
+
+
+.dialog-theme-light .dbFeild-light .mat-button.mat-primary.mat-button-disabled, .mat-button.mat-accent.mat-button-disabled, .mat-button.mat-warn.mat-button-disabled, .mat-button.mat-button-disabled.mat-button-disabled, .mat-icon-button.mat-primary.mat-button-disabled, .mat-icon-button.mat-accent.mat-button-disabled, .mat-icon-button.mat-warn.mat-button-disabled, .mat-icon-button.mat-button-disabled.mat-button-disabled, .mat-stroked-button.mat-primary.mat-button-disabled, .mat-stroked-button.mat-accent.mat-button-disabled, .mat-stroked-button.mat-warn.mat-button-disabled, .mat-stroked-button.mat-button-disabled.mat-button-disabled {
+	background-color: #b8b8b89e;
+}
+
+.line {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 15px;
+    margin-left: 10px;
+    background-color: #f32d32;
+}
+
+.line-theme-light {
+    background-color: #f32d32;
+}
+
+.line-theme-dark {
+    background-color: #4b9cdb;
+}
+.icon-hov1{
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	// background-color: gray;
+	border-radius: 9px;
+	width: 18px !important;
+	height: 18px;
+  }
+  .icon-hov1:hover{
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(207, 204, 204);
+	border-radius: 9px;
+	width: 18px !important;
+	height: 18px;
+  }
+  .icon-hov2{
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	// background-color: gray;
+	border-radius: 16px;
+	width: 28px !important;
+	height: 28px;
+  }
+  .icon-hov2:hover{
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(207, 204, 204);
+	border-radius: 16px;
+	width:28px !important;
+	height: 28px;
+  }
+  /* Styles for the search container */
+  .search-container {
+	position: sticky;
+	display: flex;
+	align-items: center;
+	height:30px;
+	top: 0;
+	z-index: 2;
+  }
+  
+  /* Styles for the mat-form-field */
+  .search-input-field {
+	width: 100%;
+  }
+  ::ng-deep .search-input-field .mat-mdc-form-field-subscript-wrapper{
+	height: 0px;
+  }
+  ::ng-deep .search-input-field .mat-mdc-text-field-wrapper .mdc-text-field{
+	padding: 1px 20px 1px 20px;
+  }
+  ::ng-deep .search-input-field .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+	padding-top: 0px;
+	padding-bottom: 0px;
+  }
+  ::ng-deep .search-input-field .mat-mdc-form-field-infix{
+	height: 40px;
+  }
+  .search-input-field {
+	width: 100%;
+	height: 40px;
+	margin-top: 5px;border:5px solid #8080955c;background-color: whitesmoke;
+  }
+  ::ng-deep .search-input-field .mat-mdc-input-element{
+  margin-top: 20px;
+  }
+  ::ng-deep .mdc-menu-surface.mat-mdc-select-panel{
+	padding-top:2px ;
+  }
+  ::ng-deep .mat-mdc-form-field-flex{
+	margin-top: -10px;
+  }
+  /* Styles for the input element */
+//   .mat-input-element {
+// 	height: 40px;
+// 	border: 1px solid #ccc;
+// 	border-radius: 4px;
+// 	padding: 8px;
+// 	font-size: 16px;
+// 	transition: border-color 0.2s ease-in-out;
+//   }
+  
+  .mat-input-element:focus {
+	outline: none;
+	border-color: #007bff;
+  }
+  
+  /* Styles for the clear icon */
+  .clear-icon {
+	font-size: 20px;
+	color: #777;
+	cursor: pointer;
+	transition: color 0.2s ease-in-out;
+  }
+  
+  .clear-icon:hover {
+	color: #333;
+  }
+  
+  /* Styles for the no data found message */
+  .no-data-found-message {
+	margin: 10px 0;
+	pointer-events: none;
+	font-size: 12px;
+	color: gray;
+	font-style: italic;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  /* Styles for the clear selection button */
+  .mat-icon-button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+  }
+  
+  .clear-selection-icon {
+	font-size: 13px;
+	color: #777;
+  }
+  ::ng-deep .mat-mdc-option{
+    font-size: 13px;
+	min-height: 36px;
+  }

@@ -1,0 +1,58 @@
+<div class="d-flex" style="margin-top: 15px;">
+    <div style="margin-top: 3.5px;">
+        <p class="mb-1" style="font-weight: 600;margin-left: 35px;width:260px">CREDIT SCORE CARD</p>
+        <div class="at-separator-thick" style="margin-left: 35px;"></div>
+    </div>
+    <button mat-button class="save-btn" style="margin-left: 48%" (click)="openDialog()"><span class="material-symbols-outlined" style="margin-right: 10px;color: green;cursor: pointer;">add</span>CREATE NEW SCORECARD</button>
+    <button mat-button class="save-btn" style="margin-left: 1%"><span class="material-symbols-outlined" style="margin-right: 10px;cursor: pointer;color:blue">cloud_upload</span>IMPORT NEW PMML</button>
+</div>
+<section class="p-4">
+<div style="margin-left: 40px;margin-top: 10px;">
+    <table>
+        <tr>
+            <th>S.No</th>
+            <th>MAIN PAGE NAME</th>
+            <th>CREATED DATE</th>
+            <th>CREATED BY</th>
+            <th>LAST UPDATED</th>
+            <th>IN USE</th>
+            <th>COPY</th>
+            <th>EDIT</th>
+            <th>DELETE</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>scorecard 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>N</td>
+            <td><span class="material-symbols-outlined" style="margin-right: 10px;color: blue;cursor: pointer;">content_copy</span></td>
+            <td><span class="material-symbols-outlined" style="margin-right: 10px;color: green;cursor: pointer;" (click)="openDialog()">Edit</span></td>
+            <td><span class="material-symbols-outlined" style="margin-right: 10px;color: red;cursor: pointer;">Delete</span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>scorecard 2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Y</td>
+            <td><span class="material-symbols-outlined" style="margin-right: 10px;color: blue;cursor: pointer;">content_copy</span></td>
+            <td><span class="material-symbols-outlined" style="margin-right: 10px;color: green;cursor: pointer;" (click)="openDialog()">Edit</span></td>
+            <td><span class="material-symbols-outlined" style="margin-right: 10px;color: red;cursor: pointer;">Delete</span></td>
+        </tr>
+        <tr *ngFor="let list of loanService.loanScoreCard">
+             <td>{{list.SNo}}</td>
+             <td>{{list.name}}</td>
+             <td>{{list.createdDate}}</td>
+             <td>{{list.createdBy}}</td>
+             <td>{{list.lastUpdated}}</td>
+             <td>{{list.inUse}}</td>
+             <td><span class="material-symbols-outlined" style="margin-right: 10px;color: blue;cursor: pointer;">content_copy</span></td>
+             <td><span class="material-symbols-outlined" style="margin-right: 10px;color: green;cursor: pointer;" (click)="openDialog()">Edit</span></td>
+             <td><span class="material-symbols-outlined" style="margin-right: 10px;color: red;cursor: pointer;">Delete</span></td>
+        </tr>
+    </table>
+</div>
+</section>

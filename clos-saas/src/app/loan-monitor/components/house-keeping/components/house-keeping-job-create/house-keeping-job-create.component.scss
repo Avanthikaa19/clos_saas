@@ -1,0 +1,62 @@
+.job-create-main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  > .job-create-content-container {
+    flex: 1 1 auto;
+    background-color: whitesmoke;
+    border: 0.1rem solid rgb(231, 229, 229);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    >.job-create-table-container{
+        >.job-create-row-container{
+            padding: 1rem;
+            margin-left: 1.5rem;
+            >.row-label{
+                padding-top: 0.5rem;
+                font-weight: bold;
+
+            }
+            >.row-colon{
+                padding: 1rem 0.5rem 0.5rem 0rem; 
+                font-weight: bold;
+                
+            }
+            >.row-input{
+                font-weight: bold; 
+                padding-top: 0.5rem;
+            }
+        }
+    }
+   
+  }
+  > .job-create-button-container {
+    flex: 0 0 auto;
+    margin: 1rem;
+    min-height: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    > .button-container {
+      margin-left: 1rem;
+    }
+  }
+}
+mat-select {
+    padding: 1rem;
+    box-shadow: inset 0 0 5px 2px rgba(136, 136, 136, 0.3);
+}
+
+ ::ng-deep .mat-select-value-text {
+    font-size: 1.4rem;
+}
+
+::ng-deep .select-field .mat-form-field-underline {
+    display: none;
+}

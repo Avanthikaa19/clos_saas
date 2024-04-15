@@ -1,0 +1,142 @@
+.registration-container {
+    padding: 2rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 10rem);
+}
+
+.tabs {
+    display: flex;
+    width: 7%;
+    margin-bottom: 2rem;
+    position: fixed;
+}
+
+.tab {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.tab.selected {
+    background-color: #ffffff;
+    border-bottom: 0.2rem solid #007bff;
+}
+
+.tab-content {
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.new-user {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.divider {
+    background: #d4d4d4;
+    height: 4px;
+    width: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.created-date {
+    font-size: 1rem;
+    color: #888;
+}
+
+.registration-form {
+    flex: 0 0 auto;
+    overflow: auto;
+    border: 2px dotted #ccc;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-field label {
+    flex: 0 0 auto;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    min-width: 120px;
+}
+
+.required-symbol {
+    color: red;
+    margin-left: 0.3rem;
+    flex: 0 0 auto;
+}
+
+.colon {
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+.checkbox-label {
+    margin-left: 4rem;
+    padding: 0.5rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    max-width: 400px;
+    min-width: 400px;
+    overflow: auto;
+}
+
+.form-field input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.save-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    margin-right: 1rem;
+    padding-bottom: 2rem;
+}
+
+.save-button button {
+    display: flex;
+    align-items: center;
+    background-color: rgb(52 69 180);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 1rem 2rem;
+    box-shadow: 3px 3px rgb(230, 230, 230);
+}
+
+.save-button mat-icon {
+    margin-right: 0.5rem;
+}
+.user__role-container {
+    background-color: whitesmoke;
+    padding-top: 0.5rem;
+    height: 3rem;
+    min-width: 10rem;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}

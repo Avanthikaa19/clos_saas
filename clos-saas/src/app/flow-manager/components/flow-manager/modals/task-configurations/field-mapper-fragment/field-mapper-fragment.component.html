@@ -1,0 +1,169 @@
+<table *ngIf="config" style="width: 100%;">
+    <tbody>
+        <tr *ngIf="hideInputField">
+            <td>
+                <span class="min-label">Import Template</span>
+            </td>
+            <td>:</td>
+
+            <td>
+                <mat-select class="min-select" [(ngModel)]="fileName" (ngModelChange)="getXMLFileFieldsData()" style="width: 100%;">
+                    <mat-option style="text-transform: capitalize;" *ngFor="let filename of xmlFilesList" [value]="filename">
+                        {{filename}}</mat-option>
+                </mat-select>
+            </td>
+
+
+        </tr>
+
+        <tr *ngIf="hideInputField">
+            <td>
+                <span class="min-label">Data Fill Mode</span></td>
+            <td>:</td>
+            <td>
+                <mat-select [(ngModel)]="config.fill" class="min-select" style="width: 100%;">
+                    <mat-option [value]="'ALWAYS'">Overwrite</mat-option>
+                    <mat-option [value]="'WHEN_MISSING'">Only When Missing</mat-option>
+                </mat-select>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div class="category-sub-header" style="font-size: 13px;">
+                    FIELD DEFINITIONS:
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div class="search-container">
+                    <mat-icon>search</mat-icon>
+                    <input [(ngModel)]="fieldSearch" class="min-input" placeholder="Search Field">
+                </div>
+                <div [@fadeInOut] *ngIf="loading" class="loading-container">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                    <span>Loading..</span>
+                </div>
+                <div cdkDropList class="item-list noselect" cdkDropListOrientation="vertical" [cdkDropListData]="config.definedBy" (cdkDropListDropped)="drop($event)">
+                    <div *ngFor="let element of config.definedBy; let i = index" class="item updateable-item" cdkDrag [class.updated-item]="updatedIndexes.includes(i)">
+                        <div [@fadeInOut] *ngIf="config.definedBy[i].name.toLowerCase().includes(fieldSearch.toLowerCase())">
+                            <table style="width: calc(100% - 10px); margin-left: 10px;">
+                                <tbody>
+                                    <tr>
+                                        <td cdkDragHandle>
+                                            <div class="drag-handle" matTooltip="Hold and drag to reorder.">
+                                                <span>{{i+1}}.</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="min-label">Field Name</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input [(ngModel)]="config.definedBy[i].name" class="min-input" style="width: calc(100% - 30px)">
+                                            <button mat-icon-button color="warn" class="min-button min-add-button" (click)="config.definedBy.splice(i, 1);">
+                                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <span class="min-label">Give As Type</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input [(ngModel)]="config.definedBy[i].giveAs" class="min-input">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <span class="min-label">Formula</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="config.definedBy[i].formula" class="min-select" style="width: 100%;">
+                                                <mat-option *ngFor="let formula of formulas" [value]="formula">
+                                                    {{formula}}</mat-option>
+                                            </mat-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td valign="top">
+                                            <div class="input-wrapper">
+                                                <span class="min-label formula-type-text" [class.formula-type-js]="config.definedBy[i].formula=='EVALUATE'" [class.formula-type-sql]="config.definedBy[i].formula?.includes('SQL')" [class.formula-type-xml]="config.definedBy[i]?.formula=='X_PATH'">
+                                                    {{config.definedBy[i].formula=='EVALUATE'?'JS':(config.definedBy[i].formula=='X_PATH'?'XML':(config.definedBy[i].formula?.includes('SQL')
+                                                    ? 'SQL':'Text'))}}</span>
+                                                <button mat-icon-button (click)="editFormula(i, config.definedBy[i].formula, config.definedBy[i].value)" class="input-toggle-button" matTooltip="Edit" matTooltipPosition="below">
+                                                    <mat-icon color="primary">edit</mat-icon>
+                                                </button>
+                                            </div>
+                                            <!-- <div style="padding-left: 5px;">
+                                                <button mat-button color="primary" style="background-color: rgb(250, 250, 250);"
+                                                    >
+                                                    <span style="padding-right: 10px; color: crimson;">Edit</span>
+                                                    <mat-icon style="color: crimson;">edit</mat-icon>
+                                                </button>
+                                            </div> -->
+                                        </td>
+                                        <td valign="top">
+                                            <div style="height: 30px; display: flex; align-items: center;">:</div>
+                                        </td>
+                                        <td>
+                                            <textarea rows="1" spellcheck="false" matTooltip="Click to expand." onclick='this.style.height = ""; this.style.height = (this.scrollHeight + 3) + "px";' class="min-input formula-preview" readonly [(ngModel)]="config.definedBy[i].value">
+                                            </textarea>
+                                            <!-- <div class="my-code-editor-wrapper" [style.height.px]="expanded || config.definedBy[i].expanded ? 150 : 70">
+                                                <ngx-monaco-editor class="my-code-editor" id="editor{{i}}" (onInit)="initEditor('editor' + i, $event)" [options]="{
+                                                        theme: 'vs', 
+                                                        language: config.definedBy[i].formula=='EVALUATE'?'javascript':(config.definedBy[i].formula=='X_PATH'?'xml':(config.definedBy[i].formula.includes('SQL') ? 'sql':'text')), 
+                                                        suggestOnTriggerCharacters: false,
+                                                        roundedSelection: true,
+                                                        scrollBeyondLastLine: false,
+                                                        autoIndent: 'full',
+                                                        automaticLayout: true
+                                                    }" [(ngModel)]="config.definedBy[i].value"></ngx-monaco-editor>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <div *ngIf="config.definedBy.length > 1"
+                                style="border-bottom: gainsboro solid 1px; padding-top: 5px; margin-left: 10px;"></div> -->
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 26px; position: relative; padding-left: 20px;">
+                    <span class="add-items-text">Click the + icon to add items.</span>
+                    <button mat-icon-button color="primary" class="min-button min-add-button" (click)="config.definedBy.push({name: '', giveAs: 'string', formula: 'NONE', value: ''});">
+                        <mat-icon style="font-size: 14px;">add</mat-icon>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!--  popup -->
+<!-- <mat-menu #menu="matMenu">
+    <div (click)="$event.stopPropagation();">
+        <div style="border: solid silver 1px; width: 100%;" class="card" (click)="$event.stopPropagation();">
+            <ace-editor [(ngModel)]="text" [mode]="'javascript'" [theme]="'eclipse'" [options]="options"
+                [autoUpdateContent]="true" style="height:100%; width:100%; overflow: auto;"></ace-editor>
+        </div>
+        <div>
+            <span
+                style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-top:5px; color: orangered; font-weight: bold;">
+                Output :
+                <span
+                    style="padding-bottom: 2px; padding-top: 10px; padding-right: 20px; color:black;font-weight:medium;">
+                    {{content}}
+                </span>
+            </span>
+        </div>
+        <span style="margin-left : 100px;" (click)="$event.stopPropagation();">
+            <button mat-raised-button color="primary" (click)=testEvaluateOnClickTest() style="height: 33px;"> Verify </button>
+        </span>
+    </div>
+</mat-menu> -->

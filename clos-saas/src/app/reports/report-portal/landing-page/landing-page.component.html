@@ -1,0 +1,47 @@
+<div class="report-portal-container" [style.height.px]="component_height">
+    <div class="welcome-container">
+        <mat-card class="mat-elevation-z2">
+            <mat-card-title>
+                <h6>Welcome to the Reports Portal!</h6>
+            </mat-card-title>
+            <mat-card-content>
+                <p>
+                    You can develop your own reports, edit existing ones.
+                    <br>or<br>
+                    You can generate and download your reports here.
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="choice-container">
+        <div class="choice-item choice-developer mat-elevation-z2" matRipple routerLink="/reports/developer">
+            <div class="choice-bg"></div>
+            <div class="choice-title">
+                DEVELOP REPORTS
+                <div class="choice-title-sub">
+                    Create, design, modify or delete reports.
+                </div>
+            </div>
+            <div class="choice-alpha-overlay"></div>
+        </div>
+        <div class="choice-item choice-user mat-elevation-z2" matRipple routerLink="/reports/generate">
+            <div class="choice-bg"></div>
+            <div class="choice-title">
+                GENERATE REPORTS
+                <div class="choice-title-sub">
+                    Preview, generate and download reports.
+                </div>
+            </div>
+            <div class="choice-alpha-overlay"></div>
+        </div>
+    </div>
+    <div class="view-jobs-container mat-elevation-z2" matRipple routerLink="/reports/view_generated_jobs">
+        <div class="view-jobs-bg"></div>
+        <div class="view-jobs-title">
+            VIEW GENERATION JOBS
+            <div class="view-jobs-title-sub">
+                Monitor the progress of report generations.
+            </div>
+        </div>
+    </div>
+</div>

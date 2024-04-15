@@ -1,0 +1,293 @@
+@import url(../../../../common-css/common.scss);
+@import url(../../../../common-css/commonstyles.scss);
+// .header-container{
+//     height: 40px;
+//     border-bottom: 1px solid lightgray;
+//     padding: 10px 0px 0px 10px;
+//     .header{
+//         // margin-top: 10px;
+//         font-style: italic;
+//         font-weight: 500;
+//         font-size: 16px;
+//     }
+// }
+// .content-container{
+//     height: calc(100% - 150px);
+//     background-color: whitesmoke;
+//     padding: 20px;
+//     overflow: auto;
+//     .body-container{
+//         display: flex;
+//         flex-direction: row;
+//         flex-wrap: wrap;
+//         .card-container{
+//             height: 80px;
+//             width: 260px;
+//             background-color: white;
+//             margin: 10px 10px 10px 10px;
+//             padding: 10px;
+//             border-radius: 10px;
+//             .card-body-container{
+//                 height: 100%;
+//                 width: 100%;
+//                 border: 1px solid whitesmoke;
+//                 display: flex;
+//                 border-radius: 10px;
+//                 .card-image-container{
+//                     background-color: whitesmoke;
+//                     width: 25%;
+//                     height: 100%;
+//                      border-radius: 10px 0px 0px 10px;
+//                     // background: url(../../../../../../assets/Icons/decision_tree_02.png);
+//                     img{
+//                         width: 100%;
+//                         height: 100%;
+//                     }
+//                 }
+//                 .card-content-container{
+//                     width: 75%;
+//                     padding: 30px;
+//                     text-align: center;
+//                     .card_body-content{
+//                         font-weight: 100;
+//                     }
+//                 }
+//             }
+//         }
+//         .card-container:hover{
+//             // border: 0.25px solid #394eb4;
+//             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//         }
+//         .selected-card, .selected-card:hover {
+//             border: 2px solid #394eb4;
+//            }
+//     }
+// }
+// .selectButton{
+//     background-color: #394eb4; 
+//     color: white;
+// }
+// .selectButton:disabled{
+//     background-color: lightgray;
+// }
+// //SEARCH
+// .search-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     padding: 5px;
+//     position: sticky;
+//     top: 0;
+//     z-index: 20;
+//     height: 30px;
+//     // background-color: whitesmoke;
+//     > div {
+//         width: 80%;
+//         position: relative;
+//         // .mat-icon {
+//         //     position: absolute;
+//         //     // left: 10px;
+//         //     top: 50%;
+//         //     transform: translateY(-50%);
+//         // }
+//         .icon-search{
+//             position: absolute;
+//             left: 10px;
+//             top: 50%;
+//             color: rgb(80, 80, 80);
+//             transform: translateY(-50%);
+//         }
+//          .icon-cancel{
+//            right: 10px;
+//            position: absolute;
+//            top: 50%;
+//            color: rgb(80, 80, 80);
+//            transform: translateY(-50%);
+//            font-size: 18px;
+//            margin-top: 3px;
+//            cursor: pointer;
+//            position: absolute;
+//         }
+//         .icon-cancel:hover{
+//             height: 21px;
+//             width: 21px;
+//             background-color: #e4e0e0;
+//             border-radius: 50%;
+//             padding-bottom: 18px;
+//             padding-left: 1px;
+//             padding-right: 13px;
+//             padding-top: 1px;
+//             top: 12px;
+//             right: 15px;
+//         }
+//         .min-input {
+//             border: solid silver 0.5px;
+//             background-color: white;
+//             height: 30px;
+//             width: 100%;
+//             border-radius: 5px;
+//             padding-left: 40px;
+//             -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+//             -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+//             box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+//         }
+//         .min-input:focus:focus-visible {
+//             border: solid silver 0.5px;
+//             outline: none;
+//             box-shadow: none;
+//         }
+//     }
+// }
+.header-container {
+    height: 40px;
+    // border-bottom: 1px solid lightgray;
+    padding: 10px 0px 25px 10px;
+    // overflow-x: hidden;
+    .header {
+        // margin-top: 10px;
+        font-style: italic;
+        font-weight: 500;
+        font-size: 16px;
+    }
+    .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        height: 30px;
+        // background-color: whitesmoke;
+        >div {
+            width: 80%;
+            position: relative;
+            .mat-icon {
+                position: absolute;
+                left: 10px;
+                top: 40%;
+                transform: translateY(-50%);
+            }
+            .min-input {
+                border: solid silver 0.5px;
+                background-color: white;
+                height: 30px;
+                width: 100%;
+                border-radius: 5px;
+                padding-left: 40px;
+                -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+                -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+                box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+            }
+            .min-input:focus:focus-visible {
+                border: solid silver 0.5px;
+                outline: none;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.mat-divider {
+    display: block;
+    margin: 0;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.content-container {
+    //height: calc(100% - 150px);
+    height: 570px;
+    background-color: whitesmoke;
+    padding: 10px 0px 10px 15px;
+    overflow: auto;
+    .body-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .card-container {
+            height: 100px;
+            width: 260px;
+            background-color: white;
+            margin: 10px 10px 10px 10px;
+            padding: 10px 10px 10px 10px;
+            border-radius: 10px;
+            .card-body-container {
+                height: 100%;
+                width: 100%;
+                border: 1px solid whitesmoke;
+                display: flex;
+                border-radius: 10px;
+                .card-image-container {
+                    background-color: whitesmoke;
+                    width: 30%;
+                    min-width: 30%;
+                    height: 100%;
+                    border-radius: 10px 0px 0px 10px;
+                    // background: url(../../../../../../assets/Icons/decision_tree_02.png);
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .card-content-container {
+                    width: 70%;
+                    padding: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .card_body-content {
+                        font-weight: 100;
+                        text-align: left;
+                        // height: 4300px;
+                        width: 90%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-transform: lowercase;
+                        // position: absolute;
+                        // top: 50%;
+                        // left: 50%;
+                        // transform: translate(-50%, -50%);
+                        // margin: 0;
+                        // p::first-line{
+                        //     text-transform: capitalize;
+                        // }
+                    }
+                    .card_body-content::first-line {
+                        text-transform: capitalize;
+                    }
+                }
+            }
+        }
+        .card-container:hover {
+            // border: 0.25px solid #394eb4;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+        .selected-card,
+        .selected-card:hover {
+            border: 2px solid #394eb4;
+        }
+    }
+}
+
+.selectButton {
+    background-color: #394eb4;
+    color: white;
+}
+
+.selectButton:disabled {
+    background-color: lightgray;
+}
+
+ ::ng-deep .my-tooltip {
+    text-transform: capitalize;
+}
+
+.no-record-found {
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // height: 90%;
+    margin-top: 20%;
+}

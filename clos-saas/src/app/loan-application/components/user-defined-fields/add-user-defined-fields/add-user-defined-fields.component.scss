@@ -1,0 +1,99 @@
+.popup-container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 100%;
+}
+
+.summary-container {
+    font-weight: bold;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #012970;
+}
+
+.summary-container mat-icon {
+    margin-right: 8px;
+    color: #012970;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.table-container {
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container td {
+    padding: 30px 5px;
+    vertical-align: middle;
+}
+.table-container table tr td.wide-label {
+    width: 22rem;
+    white-space: nowrap;
+}
+
+.table-container table tr td.wide-input input {
+    width: 95%;
+}
+.table-container table tr td.mandatory-input input {
+    width: 71%;
+}
+
+.min-select {
+    width: 30rem;
+    padding: 5px;
+    border-radius: 0.4rem;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem;
+    resize: none;
+}
+.min-select:hover {
+    border: solid rgb(218, 218, 218) 1px;
+}
+
+::ng-deep .min-select .mat-select-value {
+    padding: 5px;
+}
+
+::ng-deep .mat-tooltip {
+    font-size: 14px;
+    max-width: 300px;
+}
+
+.header-banner {
+    border-radius: 0.5rem;
+    border: solid rgb(230, 230, 230) 0.1rem;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    margin: 1rem;
+    >table {
+        >tr {
+            >td {
+                padding: 2rem;
+            }
+        }
+    }
+}

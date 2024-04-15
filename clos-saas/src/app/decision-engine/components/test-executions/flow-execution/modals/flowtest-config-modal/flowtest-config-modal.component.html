@@ -1,0 +1,183 @@
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon style="color: blue">done_all</mat-icon>
+            <span style="color: blue;">
+                Input Config
+            </span>
+        </ng-template>
+        <div class="main-input-container">
+            <div class="header-container flex-row-parent">
+                <div class="category-sub-header flex-stetch" style="padding-top: 1rem; font-size: 1.5rem;">
+                    Input Configuration:
+                </div>
+                <div class="node-detail">
+                    <div class="label">
+                        <span style="font-style: italic;font-size: 15px;">Process Date</span>
+                    </div>
+                    <div class="colen">
+                        <span>:</span>
+                    </div>
+                    <div class="value">
+                        <mat-form-field>
+                            <mat-label>Enter a date range</mat-label>
+                            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                                <input matStartDate [(ngModel)]="startDate" formControlName="start" placeholder="Start date">
+                                <input matEndDate [(ngModel)]="endDate" formControlName="end" placeholder="End date">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker [calendarHeaderComponent]="ExampleHeaderComponent"></mat-date-range-picker>
+
+                            <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Invalid start date
+                            </mat-error>
+                            <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Invalid end date
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+                <div class="flex-unstetch">
+
+                </div>
+                <div class="flex-stetch">
+
+                </div>
+            </div>
+            <div class="date-container">
+
+            </div>
+            <div class="content-container flex-row-parent">
+                <div class="left-align flex-stetch">
+                    <!-- <p style="padding-left: 1rem;" class="category-sub-header"><u>Available properties</u></p> -->
+                    <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl">
+                        <mat-nested-tree-node *matTreeNodeDef="let node">
+                            <li>
+                                <div class="mat-tree-node list-container" [class.selected-node]="node.name == selectedNodeName">
+                                    <!-- <mat-icon>keyboard_arrow_right</mat-icon> -->
+                                    <mat-checkbox *ngIf="inputData.length!=0 " (change)="selectedInputNode(node.name,node.type,$event)" [disabled]="output_data.includes(node.name)" [checked]="inputData.includes(node.name)" class="example-margin">{{node.name}} - {{node.type}}
+                                    </mat-checkbox>
+
+                                    <mat-checkbox *ngIf="inputData.length==0" (change)="selectedInputNode(node.name,node.type,$event)" class="example-margin">
+                                        {{node.name}} - {{node.type}}</mat-checkbox>
+                                </div>
+                            </li>
+                        </mat-nested-tree-node>
+                        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                            <li class="example-tree-container ">
+                                <div class="mat-tree-node list-container">
+                                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                                        <mat-icon>
+                                            {{treeControl.isExpanded(node) ? 'indeterminate_check_box' : 'add_box'}}
+                                        </mat-icon>
+                                    </button>
+                                    <!-- <mat-checkbox class="example-margin"> {{node.name}}</mat-checkbox> -->
+                                    {{node.name}}
+                                </div>
+                                <ul class="example-tree-nested-node">
+                                    <div *ngIf="treeControl.isExpanded(node)">
+                                        <ng-container matTreeNodeOutlet></ng-container>
+                                    </div>
+                                </ul>
+                            </li>
+                        </mat-nested-tree-node>
+                    </mat-tree>
+                </div>
+                <div class="right-align flex-stetch">
+                    <mat-list role="list">
+                        <mat-list-item *ngFor="let input of inputData" role="listitem" style="font-size: 1.4rem;">
+                            <mat-icon>radio_button_checked</mat-icon>
+                            <span style="font-size: 1.2rem;">
+                                {{input |titlecase}}
+                            </span>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon style="color: blue;">done_all</mat-icon>
+            <span style="color: blue;">
+                Output Config
+            </span>
+        </ng-template>
+        <div class="main-output-container">
+            <div class="header-container flex-row-parent">
+                <div class="category-sub-header flex-stetch" style="padding-top: 1rem; font-size: 1.5rem;">
+                    Output Configuration:
+                </div>
+                <div class="flex-unstetch">
+
+                </div>
+                <div class="flex-stetch">
+
+                </div>
+            </div>
+            <div class="date-container">
+
+            </div>
+            <div class="content-container flex-row-parent">
+                <div class="left-align flex-stetch">
+                    <!-- <p style="padding-left: 1rem;" class="category-sub-header"><u>Available properties</u></p> -->
+                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                        <mat-nested-tree-node *matTreeNodeDef="let node">
+                            <li>
+                                <div class="mat-tree-node list-container" [class.selected-node]="node.name == selectedNodeName">
+                                    <!-- <mat-icon>keyboard_arrow_right</mat-icon> -->
+                                    <mat-checkbox *ngIf="output_data.length!=0" (change)="selectedOutputNode(node.name,$event)" [disabled]="inputData.includes(node.name)" [checked]="output_data.includes(node.name)" class="example-margin">{{node.name}} - {{node.type}}</mat-checkbox>
+                                    <mat-checkbox *ngIf="output_data.length==0" (change)="selectedOutputNode(node.name,$event)" [disabled]="inputData.includes(node.name)" class="example-margin">{{node.name}} - {{node.type}}</mat-checkbox>
+                                </div>
+                            </li>
+                        </mat-nested-tree-node>
+                        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                            <li class="example-tree-container ">
+                                <div class="mat-tree-node list-container">
+                                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                                        <mat-icon>
+                                            {{treeControl.isExpanded(node) ? 'indeterminate_check_box' : 'add_box'}}
+                                        </mat-icon>
+                                    </button>
+                                    <!-- <mat-checkbox class="example-margin"> {{node.name}}</mat-checkbox> -->
+                                    {{node.name}}
+                                </div>
+                                <ul class="example-tree-nested-node">
+                                    <div *ngIf="treeControl.isExpanded(node)">
+                                        <ng-container matTreeNodeOutlet></ng-container>
+                                    </div>
+                                </ul>
+                            </li>
+                        </mat-nested-tree-node>
+                    </mat-tree>
+                </div>
+                <div class="right-align flex-stetch">
+                    <mat-list *ngIf="outputconfigData.length!=0">
+
+                        <mat-list-item>
+                            <mat-checkbox [(ngModel)]="master_checked" [(indeterminate)]="master_indeterminate" (change)="master_change()"><b>Select All</b></mat-checkbox>
+                        </mat-list-item>
+                        <div style="margin-left: 20px;">
+                            <mat-list-item *ngFor="let item of outputconfigData">
+                                <mat-checkbox [(ngModel)]="item.checked" (change)="list_change();"> <span style="font-size:15px">Result:</span>
+                                    <span style="font-size:15px"> {{ item.name |titlecase }}</span>
+                                </mat-checkbox>
+                            </mat-list-item>
+                        </div>
+                    </mat-list>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close style="color: red;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+    <button mat-raised-button style="color: white;background-color: rgb(43, 42, 42);" (click)="applyConfigureData()" cdkFocusInitial>
+        <mat-icon>save</mat-icon>Save
+    </button>
+</mat-dialog-actions>
+<notifier-container></notifier-container>

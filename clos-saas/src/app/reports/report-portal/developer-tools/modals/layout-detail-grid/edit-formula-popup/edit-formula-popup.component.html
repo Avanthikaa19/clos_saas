@@ -1,0 +1,95 @@
+<div class="formula-editor-container" cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <div class="formula-title noselect" cdkDragHandle matTooltip="Hold and drag to move.">
+        <span class="formula-type">{{formulaType}}</span>
+        <span>Formula</span>
+    </div>
+    <div class="formula-spec-container">
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChanged($event)">
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="tab-label-container noselect">
+                        <mat-icon>edit</mat-icon><span style="margin-left: 10px;">Edit Formula</span>
+                    </div>
+                </ng-template>
+                <div class="my-code-editor-description noselect">
+                    <span>Use the editor below to set the formula. You can also use the <a class="highlight1">$[</a><a class="highlight2">field_name</a><a class="highlight1">]</a> notation for embedding other fields.</span>
+                    <button *ngIf="formulaParam.length > 0" mat-raised-button color="primary" style="float: right; margin-left: 10px; margin-right: 10px; margin-top: 5px;" [matMenuTriggerFor]="menu">
+                        Available Parameters
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item *ngFor="let param of formulaParam">
+                            {{param}}
+                        </button>
+                    </mat-menu>
+                </div>
+                <div class="my-code-editor-wrapper" [@fadeInOut] *ngIf="selectedTabIndex==0">
+                    <ngx-monaco-editor cdkFocusInitial class="my-code-editor" [options]="editorOptions" [(ngModel)]="formulaValue"
+                        (ngModelChange)="onCodeChange()"></ngx-monaco-editor>
+                </div>
+                <div class="formula-tester-container">
+                    <div class="formula-tester-title">
+                        <span>Tester:</span>
+                    </div>
+                    <div class="formula-tester-content">
+                        <div class="formula-params-container">
+                            <div class="inputs-title">
+                                <span>Inputs:</span>
+                                <button mat-button class="refresh-btn" color="accent" (click)="analyseFormula()">
+                                    <mat-icon>refresh</mat-icon>
+                                    <span>Refresh</span>
+                                </button>
+                            </div>
+                            <div class="inputs-list-container">
+                                <div *ngFor="let param of formulaParams" class="input-item">
+                                    <span>{{param.name}}</span>
+                                    <input [(ngModel)]="param.value" class="min-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formula-output-container">
+                            <div class="output-title">
+                                <span>Output:</span>
+                                <button mat-button class="run-btn" color="accent" (click)="testFormula()">
+                                    <mat-icon>play_arrow</mat-icon>
+                                    <span>Execute</span>
+                                </button>
+                            </div>
+                            <div class="output-data-container" [class.error-output]="formulaOutput && formulaOutput.isError">
+                                <div *ngIf="executingFormula" class="loading-card">
+                                    <mat-spinner diameter="20"></mat-spinner>
+                                    <span>Executing..</span>
+                                </div>
+                                <p *ngIf="!formulaOutput" class="placeholder">Execute the formula to see result here.</p>
+                                <p *ngIf="formulaOutput" >{{formulaOutput.result}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label style="padding: 0; margin: 0;">
+                    <div class="tab-label-container noselect">
+                        <mat-icon>compare</mat-icon><span style="margin-left: 10px;">View Differences</span>
+                    </div>
+                </ng-template>
+                <div class="my-code-editor-description noselect">
+                    <span>Use the screen below to view the differences of the original formula <a class="highlight1">(left side)</a> to the edited formula <a class="highlight1">(right side)</a>.</span>
+                </div>
+                <div class="my-code-diffeditor-wrapper" [@fadeInOut] *ngIf="selectedTabIndex==1">
+                    <ngx-monaco-diff-editor class="my-code-diffeditor" [options]="diffOptions" [originalModel]="originalModel" [modifiedModel]="modifiedModel"></ngx-monaco-diff-editor>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="formula-details-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>cancel</mat-icon>
+            <span style="padding-left: 10px;">Discard</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right"
+            (click)="apply()">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">Apply & Close</span>
+        </button>
+    </div>
+</div>

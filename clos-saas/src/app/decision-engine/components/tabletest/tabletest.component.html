@@ -1,0 +1,98 @@
+<div class="main-container ">
+    <mat-toolbar class="tool-bar">
+        <span [routerLink]="'/desicion-engine/home'" style="cursor: pointer;">Decision Engine</span>
+        <span class="separator-div">
+            <div class="separator"></div>
+        </span>
+        <span [routerLink]="'/desicion-engine/test'" style="cursor: pointer;">
+            Test
+        </span>
+        <span class="separator-div">
+          <div class="separator"></div>
+        </span>
+        <span>
+           Decision Table
+        </span>
+        <span class="spacing"></span>
+        <button mat-flat-button class="btn-toolbar" (click)="goBack()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            Go Back
+        </button>
+    </mat-toolbar>
+    <div class="content-container">
+        <div class="drawer-container ">
+            <div class="search ">
+                <mat-form-field class="input" appearance="fill">
+                    <mat-label>Search File...</mat-label>
+                    <input matInput type="text" autocomplete="off">
+                    <button matSuffix mat-icon-button aria-label="Clear">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="content-inner-container">
+                <div class="card" *ngFor="let table of tables" [class.selected-model]='table.is_selected' (click)="selectTable(table.id, table)" [class.selected-model]="table.id == selectedTableId">
+
+                    <span>  <mat-icon style="color: #394eb4;"> insert_drive_file</mat-icon> {{table.name}} </span>
+                </div>
+            </div>
+        </div>
+        <div class="drawer-content-container">
+            <div class="inner-container">
+                <!-- Inner container -->
+                <mat-card class="select-card" *ngIf="!show">
+                    <mat-icon>info</mat-icon>{{message}}
+                </mat-card>
+                <ng-container *ngIf="show">
+                    <div class="tree-view-container">
+                        <div class="tree-view-header">
+                            <div class="table-name">
+                                Table Name &nbsp;&nbsp;>&nbsp;&nbsp;{{selectedTable.name}}
+                            </div>
+                        </div>
+                        <div class="tree-view-data">
+                            <div class="table">
+                                <table>
+                                    <tr>
+                                        <th>RuleId</th>
+                                        <th *ngFor="let col of tablecol">{{col.name|titlecase}}</th>
+                                    </tr>
+                                    <tr *ngFor="let row of tablerow;let j=index">
+                                        <td>{{j+1}}</td>
+                                        <td *ngFor="let i of row">{{i['name']}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <ng-container *ngIf="output">
+                                <u><b>Executed output</b></u>
+                                <div class="table">
+                                    <table>
+                                        <tr>
+                                            <th *ngFor="let col of headers">{{col|titlecase}}</th>
+                                        </tr>
+                                        <tr *ngFor="let row of tablevalues;let j=index">
+                                            <td *ngFor="let i of row">{{i}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="tree-save-default">
+                            <div class="tree-save-align">
+                                <input hidden type="file" #uploadcsv accept=".csv" (input)="handleFileInput1($event)" multiple />
+                                <button style=" background-color: rgb(147, 32, 255);color:white;margin-left: 10px;" mat-raised-button (click)="uploadcsv.click();" [disabled]="uploading" id="btn">
+                                    <mat-icon> upload_file</mat-icon>
+                                    <span>{{uploading ? 'Uploading' : 'Upload'}}</span>
+                                </button>
+                                <button mat-raised-button style="background-color: rgb(39, 39, 39); color: white;margin-left: 10px;" (click)="exec()" [disabled]="executing">
+                                    <mat-icon>play_arrow</mat-icon>
+                                    <span>{{executing ? 'Executing' : 'Execute'}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

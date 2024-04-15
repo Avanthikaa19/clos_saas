@@ -1,0 +1,102 @@
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">groups</mat-icon>
+            <span style="font-weight: 600;">Groups</span>
+        </ng-template>
+        <div class="module-buttons-container">
+        </div>
+        <div class="content-container">
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr style="text-transform: capitalize;">
+                            <th *ngFor="let header of groupHeaders">{{header}}</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr style="top: 5.5%; text-transform: capitalize;">
+                            <th *ngFor="let header of groupHeaders">
+                                <div class="parent__row-flex">
+                                    <input class="min-input flex-grow"
+                                        style="background-color: white;min-width: 15rem;">
+                                    <mat-icon class="flex-shrink" style="font-size: 1.4rem; margin-top: 1rem;">
+                                        filter_list</mat-icon>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let groups of accessGroups">
+                                <td *ngFor="let header of groupHeaders">{{groups[header]}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="paginator-container">
+            <div class="fetch-container">
+                <span>
+                    Fetched 469 datas in 0.04 seconds
+                </span>
+            </div>
+            <div class="pg-container">
+                <mat-paginator [length]="entryCount" [pageIndex]="pageNum" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="getAccessTemplateRoles($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">how_to_reg</mat-icon>
+            <span style="font-weight: 600;">Roles</span>
+        </ng-template>
+        <div class="module-buttons-container">
+        </div>
+        <div class="content-container">
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr style="text-transform: capitalize;">
+                            <th *ngFor="let header of roleHeaders">{{header}}</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr style="top: 5.5%; text-transform: capitalize;">
+                            <th *ngFor="let header of roleHeaders">
+                                <div class="parent__row-flex">
+                                    <input class="min-input flex-grow"
+                                        style="background-color: white;min-width: 15rem;">
+                                    <mat-icon class="flex-shrink" style="font-size: 1.4rem; margin-top: 1rem;">
+                                        filter_list</mat-icon>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let groups of accessRoles">
+                                <td *ngFor="let header of roleHeaders">{{groups[header]}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="paginator-container">
+            <div class="fetch-container">
+                <span>
+                    Fetched 469 datas in 0.04 seconds
+                </span>
+            </div>
+            <div class="pg-container">
+                <mat-paginator [length]="entryCount" [pageIndex]="pageNum" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" (page)="getAccessTemplateGroups($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

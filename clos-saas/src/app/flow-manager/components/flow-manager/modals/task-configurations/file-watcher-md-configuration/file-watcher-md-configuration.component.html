@@ -1,0 +1,306 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    <div class="category-sub-header">
+        PATHS:
+    </div>
+    <table *ngIf="config.paths">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Watch Directory</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.paths.watch" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">History Directory</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.paths.history" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Reject Directory</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.paths.reject" class="min-input">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FILE NAME:
+    </div>
+    <table *ngIf="config.files">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Exact File Name</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.general.name" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <span class="min-label">Name Pattern</span>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <div>
+                        <div *ngFor="let element of config.files.general.namePattern; let index = index; trackBy: trackByIndex;"
+                            style="margin-bottom: 1px; position: relative;">
+                            <input [(ngModel)]="config.files.general.namePattern[index]" class="min-input" type="text">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                                (click)="config.files.general.namePattern.splice(index, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                        </div>
+                        <div style="height: 26px; position: relative;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.files.general.namePattern.push('');">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        FILE DATA:
+    </div>
+    <table *ngIf="config.files">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Market Data</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.files.tabularData.marketData" class="min-select">
+                        <mat-option [value]="'MD_SPOT'">MD_SPOT</mat-option>
+                        <mat-option [value]="'MD_FWD'">MD_FWD</mat-option>
+                        <mat-option [value]="'MD_MM'">MD_MM</mat-option>
+                        <mat-option [value]="'MD_FIELD'">MD_FIELD</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Assign Batch ID</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <mat-select [(ngModel)]="config.files.tabularData.batchId" class="min-select">
+                        <mat-option [value]="''">None</mat-option>
+                        <mat-option [value]="'$[createNew]'">Create New Batch For Each File</mat-option>
+                        <mat-option [value]="'$[baseFileName]'">File Name Without Extension</mat-option>
+                    </mat-select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="category-sub-header">
+                        DATA:
+                    </div>
+                </td>
+            </tr>
+            <ng-container *ngIf="config.files.tabularData.marketData !='MD_FIELD'">
+            <tr>
+                <td>
+                    <span class="min-label">Sample Minutes</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.tabularData.sampleMinutes" class="min-input" type="number">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Date Index</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.tabularData.dateIndex" class="min-input" type="number">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Time Index</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.tabularData.timeIndex" class="min-input" type="number">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Ask Index</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.tabularData.askIndex" class="min-input" type="number">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Bid Index</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.files.tabularData.bidIndex" class="min-input" type="number">
+                </td>
+            </tr>
+            </ng-container>
+            <ng-container *ngIf="config.files.tabularData.marketData =='MD_FIELD'">
+                <tr>
+                    <td>
+                        <span class="min-label">Maturity Date Index</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.maturityDateIndex" class="min-input" type="number">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="min-label">Start Date Index</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.startDateIndex" class="min-input" type="number">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="min-label">NB days Index</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.nbDaysIndex" class="min-input" type="number">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="min-label">Symbol Index</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.symbolIndex" class="min-input" type="number">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="min-label">Line Index(Position to start read fields)</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.lineIndex" class="min-input" type="number">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="min-label">Description Index(Position to start read fields)</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input [(ngModel)]="config.files.tabularData.descriptionIndex" class="min-input" type="number">
+                    </td>
+                </tr>
+            </ng-container>
+
+
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task && config.files">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">File Read Delay (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.fileReadDelayMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="min-label">Tag</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.tag" class="min-input">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Multithreading</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="multiThread" [(ngModel)]="config.task.multiThread"
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Audit Read Data</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="retainRawData" [(ngModel)]="config.task.retainRawData"
+                        style="margin-top: 7px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

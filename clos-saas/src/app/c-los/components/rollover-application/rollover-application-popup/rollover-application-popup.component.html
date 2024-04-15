@@ -1,0 +1,379 @@
+<ng-container *ngIf="correspondingButton === 'Rollover Details'">
+    <div class="popup-container">
+        <div class="summary-container">
+            <mat-icon>description</mat-icon>
+            ROLLOVER DETAILS
+        </div>        
+        <hr>
+        <div class="content-container">
+            <div class="table-container">
+                <div class="header-banner">
+                    <table style="width:100%">
+                        <tr>
+                            <td>Loan Approval Amount
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="application.loanApprovalAmount" readonly>
+                              </td>
+                            <td>Loan Term
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="application.termLoan" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Interest Rate
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="application.intrestRateType" readonly>
+                            </td>
+                            <td>Maturity Date
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="date" class="min-select" [(ngModel)]="application.maturityDate" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Installment Amount
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="application.downPaymentAmount" readonly>
+                            </td>
+                            <td>Frequency
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="string" class="min-select" [(ngModel)]="application.frequency" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>No of Instalment<br>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="application.instalments" readonly>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <span style="font-weight:bold;font-size:16px;color:#012970;padding:1rem">Rollover Data Entry:-</span>
+                <div class="table-container" style="margin: 0rem 2rem 2rem 2rem;">
+                    <table style="width:100%;">
+                        <tr>
+                            <td>Requested New Loan Term
+                            </td>
+                            <td>:</td>
+                            <td>
+                              <input type="text" class="min-select" [(ngModel)]="rolloverdetails.newLoanTerm" >
+                              </td>
+                            <td>Requested New Interest Rate
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="rolloverdetails.newInterestRate" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Reason for Roll-over
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="string" class="min-select" [(ngModel)]="rolloverdetails.reason">
+                            </td>
+                            <td>Proposed  Maturity  Date
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="date" class="min-select" [(ngModel)]="rolloverdetails.maturityDate">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Roll-over Fee <br>(If applicable)
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <input type="number" class="min-select" [(ngModel)]="rolloverdetails.rollOverFee">
+                            </td>
+                            <td>History of Rollover</td>
+                            <td>: 
+                                <span>
+                                <input prohibitedChars hidden type="file" #uploadFile1 
+                                accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                (change)="onFilesSelected($event, 'history')" multiple />
+                                <mat-icon (click)="uploadFile1.click();" class="inverted-icon">attach_file</mat-icon>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="scrollable-content">
+                                    <label class="file-input-label">
+                                    <div class="selected-files">
+                                        <div *ngFor="let fileName of rolloverdetails.history; let i = index">
+                                            <u (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                                            <button mat-icon-button>
+                                                <mat-icon (click)="removeAttachment('history',i)" class="remove-icon">clear</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Proposed Frequency
+                            </td>
+                            <td>:</td>
+                            <td>
+                                <mat-select  class="min-select" [(ngModel)]="rolloverdetails.proposedFrequency">
+                                    <mat-option *ngFor="let type of frequency"  [value]="type" >
+                                        {{type}}
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Additional Documents</td>
+                            <td>: 
+                                <span>
+                                <input prohibitedChars hidden type="file" #uploadFile2
+                                accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                                (change)="onFilesSelected($event, 'additional')" multiple />
+                                <mat-icon (click)="uploadFile2.click();"  class="inverted-icon" >attach_file</mat-icon>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="scrollable-content">
+                                    <label class="file-input-label">
+                                    <div class="selected-files">
+                                        <div *ngFor="let fileName of rolloverdetails.additionalDocuments; let i = index">
+                                            <u (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{fileName.attachmentName}}</u>
+                                            <button mat-icon-button>
+                                                <mat-icon (click)="removeAttachment('additional',i)" class="remove-icon">clear</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </label>
+                                </div>
+                            </td>
+                            <!-- <td>Remarks</td>
+                            <td>:  -->
+                            <td><textarea type="string"  [(ngModel)]="rolloverdetails.additionalDocumentsComments"></textarea></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="bottom-row">
+                <button mat-raised-button class="clos-btn" (click)="onCloseClick()" matTooltip="Close">
+                    <mat-icon>close</mat-icon>
+                    Close
+                </button>
+                <ng-container>
+                    <div class="buttons-container">
+                        <ng-container>
+                            <button mat-raised-button class="clos-submit-btn" matTooltip="save" (click)="saveRolloverDetails()" *ngIf="!dataLoaded">
+                                <mat-icon>save</mat-icon>
+                                Save
+                            </button>
+                            <button mat-raised-button class="clos-submit-btn" matTooltip="UPDATE" (click)="saveRolloverDetails()" *ngIf="dataLoaded">
+                                <mat-icon>update</mat-icon>
+                                Update
+                            </button>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="correspondingButton === 'View Rollover Details'">
+  <div class="popup-container">
+    <div class="summary-container">
+        <mat-icon>visibility</mat-icon>
+        VIEW ROLLOVER DETAILS        
+    </div>
+    <div class="row mb-3 pt-3">
+        <div class="col-md-10">
+            <div class="application-list">
+                <ul>
+                    <li>
+                        <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                        <span style="color: royalblue;">{{application?.id}}</span>
+                    </li>
+                    <li>
+                        <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                        <span style="color: royalblue;">{{application?.legalNameOfTheCompany}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="header-banner">
+                <table style="width:100%">
+                    <tr>
+                        <td>Loan Approval Amount
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="application.loanApprovalAmount" readonly>
+                          </td>
+                        <td>Loan Term
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="application.termLoan" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Interest Rate
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="application.interestRate" readonly>
+                        </td>
+                        <td>Maturity Date
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="date" class="min-select" [(ngModel)]="application.maturityDate" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Installment Amount
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="application.downPaymentAmount" readonly>
+                        </td>
+                        <td>Frequency
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="string" class="min-select" [(ngModel)]="application.frequency" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>No of Instalment<br>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="application.instalments" readonly>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <span style="font-weight:bold;font-size:16px;color:#012970;padding:1rem">Rollover Data Entry:-</span>
+            <div class="table-container" style="margin: 0rem 2rem 2rem 2rem;">
+                <table style="width:100%;">
+                    <tr>
+                        <td>Requested New Loan Term
+                        </td>
+                        <td>:</td>
+                        <td>
+                          <input type="text" class="min-select" [(ngModel)]="rolloverdetails.newLoanTerm" readonly>
+                          </td>
+                        <td>Requested New Interest Rate
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="rolloverdetails.newInterestRate" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Reason for Roll-over
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="string" class="min-select" [(ngModel)]="rolloverdetails.reason" readonly>
+                        </td>
+                        <td>Proposed  Maturity  Date
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="date" class="min-select" [(ngModel)]="rolloverdetails.maturityDate" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Roll-over Fee <br>(If applicable)
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="number" class="min-select" [(ngModel)]="rolloverdetails.rollOverFee" readonly>
+                        </td>
+                        <td>History of Rollover</td>
+                        <td>: 
+                            <span>
+                            <input prohibitedChars hidden type="file" #uploadFile1 
+                            accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                            (change)="onFilesSelected($event, 'history')" multiple  readonly />
+                            <mat-icon (click)="uploadFile1.click();" class="inverted-icon">attach_file</mat-icon>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="scrollable-content">
+                                <label class="file-input-label">
+                                <div class="selected-files">
+                                    <div *ngFor="let fileName of rolloverdetails.history; let i = index">
+                                        <u (click)="getAttachementFileDownload(fileName.attachmentId)" style="color:blue;margin:1rem;">{{ fileName.attachmentName }}</u>
+                                        <button mat-icon-button>
+                                            <mat-icon (click)="removeAttachment('history',i)" class="remove-icon" readonly>clear</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Proposed Frequency
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <mat-select  class="min-select" readonly>
+                                <mat-option *ngFor="let type of frequency"  [value]="type" >
+                                    {{type}}
+                                </mat-option>
+                            </mat-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Additional Documents</td>
+                        <td>: 
+                            <span>
+                            <input prohibitedChars hidden type="file" #uploadFile1 readonly
+                            accept=".xlsx, .xls, .csv, .pdf, .txt, .doc, .docx, .jpg, .jpeg, .png"
+                            (change)="onFilesSelected($event, 'history')" multiple />
+                            <mat-icon  class="inverted-icon" >attach_file</mat-icon>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="scrollable-content">
+                                <label class="file-input-label">
+                                </label>
+                            </div>
+                        </td>
+                        <td><textarea type="string"  readonly></textarea></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="bottom-row">
+            <button mat-raised-button class="clos-btn" (click)="onCloseClick()" matTooltip="Close">
+                <mat-icon>close</mat-icon>
+                Close
+            </button>
+        </div>
+    </div>
+ </div>
+</ng-container>
+

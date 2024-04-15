@@ -1,0 +1,40 @@
+<div class="no-access" *ngIf="!ac.super && !ac.items?.LOAN_ORIGINATION_MODULE">
+  <app-no-access></app-no-access>
+</div> 
+
+<section *ngIf="ac.super || ac.items?.LOAN_ORIGINATION_MODULE">
+  <mat-drawer-container class="main-container">
+      <mat-drawer mode="side" opened style="padding-right: 10px;border: none;">
+          <mat-list class="main-item" >
+              <div style="text-align: center;font-weight: 700;padding: 5px;text-transform: uppercase;letter-spacing: 1.2px;color: gray;" *ngIf="ac.super || ac.items?.LOAN_ORIGINATION_DASHBOARD ||  ac.items?.CREATE_APPS">MAIN</div>
+              <mat-list-item class="mt-2 text-center" routerLink="dashboard" routerLinkActive="active" *ngIf="ac.super || ac.items?.LOAN_ORIGINATION_DASHBOARD">
+                    <span class="material-symbols-outlined" style="font-size: 35px;" mat-line>
+                      dashboard
+                      </span>
+                    <p style="font-size: 10px;letter-spacing: 1.2px;" mat-line>DASHBOARD</p>
+              </mat-list-item>
+              <mat-list-item class="mt-2 text-center" routerLink="main-app-list" routerLinkActive="active" *ngIf="ac.super || ac.items?.CREATE_APPS">
+                  <span class="material-symbols-outlined" style="font-size: 35px;" mat-line>
+                    post_add
+                    </span>
+                <p style="font-size: 10px;letter-spacing: 1.2px;" mat-line>CREATE APPS</p>
+          </mat-list-item>
+          <mat-list-item class="mt-2 text-center" routerLink="duplicate" routerLinkActive="active" >
+              <span class="material-symbols-outlined" style="font-size: 35px;" mat-line> 
+                dangerous
+               </span>
+                <p style="font-size: 10px;letter-spacing: 1.2px;" mat-line>DUPLICATE APPS</p>
+          </mat-list-item>
+          <mat-list-item class="mt-2 text-center" routerLink="credit-card" routerLinkActive="active" >
+            <span class="material-symbols-outlined" style="font-size: 35px;" mat-line> 
+              credit_card
+             </span>
+              <p style="font-size: 10px;letter-spacing: 1.2px;" mat-line>CREDIT CARD</p>
+        </mat-list-item>
+              </mat-list>
+      </mat-drawer>
+      <mat-drawer-content style="background: #f8f9fa;margin-left: 118px;">
+          <router-outlet></router-outlet>
+      </mat-drawer-content>
+    </mat-drawer-container>
+</section>

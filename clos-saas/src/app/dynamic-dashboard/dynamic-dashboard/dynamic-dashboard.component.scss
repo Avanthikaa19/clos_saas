@@ -1,0 +1,17 @@
+.navbar-nav .nav-link {
+    color: white;
+  }
+    .navbar {
+    padding-top: 0px; /* Adjust the top padding as needed */
+    padding-bottom: 0px; /* Adjust the bottom padding as needed */
+  }
+
+  .navbar .navbar-brand,
+  .navbar .nav-link {
+    padding-top: 0px; /* Adjust the top padding as needed */
+    padding-bottom: 0px; /* Adjust the bottom padding as needed */
+    line-height: 1; /* Reset the line-height to reduce the height */
+  }
+  .navbar .nav-item{
+    cursor: pointer;
+  }

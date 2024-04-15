@@ -1,0 +1,514 @@
+// @import '../../../administrator/common-feature-styles.scss';
+@import url(../../../../../common-styles/form-style.scss);
+
+.systems-overview-container {
+    font-size: 14px;
+    min-height: calc(100vh - 220px);
+    max-height: calc(100vh - 220px);
+    width: 100%;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    > .header-container {
+        flex: 0 0 auto;
+        position: relative;
+        padding: 10px;
+        border-bottom: solid gainsboro 1px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        mat-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .min-input {
+            flex: 1 1 auto;
+            width: auto;
+            background-color: white;
+            padding: 5px 30px;
+        }
+        span {
+            flex: 0 0 auto;
+            margin-left: 10px;
+        }
+        mat-select {
+            flex: 0 0 auto;
+            width: 150px;
+            background-color: white;
+            padding: 4px 10px;
+            margin-left: 10px;
+        }
+    }
+    > .content-container-wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 0;
+        > .content-container {
+            flex: 1 1 auto;
+            height: 100%;
+            overflow-y: scroll;
+            position: relative;
+            > .placeholder {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                > .placeholder-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px;
+                    border-radius: 5px;
+                    background-color: rgba(255, 255, 255, 0.75);
+                    backdrop-filter: blur(5px);
+                    span {
+                        margin-left: 10px;
+                    }
+                }
+            }
+            > table {
+                width: 100%;
+                border-collapse: separate;
+                thead {
+                    top: 0;
+                    z-index: 100;
+                    position: sticky;
+                    background-color: rgba(255, 255, 255, 0.75);
+                    backdrop-filter: blur(5px);
+                    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
+                    tr {
+                        th {
+                            padding: 5px 10px;
+                        }
+                        th.center-align {
+                            text-align: center;
+                        }
+                    }
+                }
+                tbody {
+                    tr {
+                        transition: opacity linear 120ms;
+                        td {
+                            border-top: 5px solid transparent;
+                            background-color: white;
+                            padding: 10px;
+                            > .tl-system-wrapper {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                > .system-display-chip {
+                                    flex: 0 0 auto;
+                                }
+                                > .system-details {
+                                    flex: 0 0 auto;
+                                    margin-top: 5px;
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    justify-content: center;
+                                    padding: 10px;
+                                    background-color: whitesmoke;
+                                    border-radius: 5px;
+                                    span {
+                                        font-weight: 500;
+                                    }
+                                    p {
+                                        width: 100%;
+                                        color: dimgray;
+                                    }
+                                    a {
+                                        font-weight: 500;
+                                        display: inline-block;
+                                        min-width: 100px;
+                                    }
+                                }
+                            }
+                            > .tl-layer-status-wrapper {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                transition: all linear 200ms;
+                                > .tl-layer-status {
+                                    flex: 0 0 auto;
+                                    opacity: 0.3;
+                                    margin-right: 10px;
+                                    height: 40px;
+                                    width: 40px;
+                                    border-radius: 50%;
+                                    background-color: gray;
+                                    background-image: linear-gradient(rgb(145, 145, 145) 2px, transparent 2px),
+                                        linear-gradient(to right, rgb(145, 145, 145) 2px, transparent 2px);
+                                    background-size: 4px 4px;
+                                    position: relative;
+                                    outline-offset: -2px;
+                                    outline: solid rgb(100, 100, 100) 4px;
+                                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+                                    transition: all linear 200ms;
+                                }
+                                > .tl-layer-status:after {
+                                    background-image: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
+                                    content: "";
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                    position: absolute;
+                                    top: 0px;
+                                    left: 0px;
+                                    transition: all linear 200ms;
+                                }
+                                > .tl-layer-status.layer-down {
+                                    opacity: 1;
+                                    outline-offset: -2px;
+                                    outline: solid rgba(255, 0, 0, 0.7) 4px;
+                                    background-color: red;
+                                    background-image: linear-gradient(rgba(255, 91, 91, 0.8) 2px, transparent 2px),
+                                        linear-gradient(to right, rgba(255, 91, 91, 0.8) 2px, transparent 2px);
+                                    box-shadow: 0px 0px 8px 3px rgba(255, 0, 0, 1);
+                                }
+                                > .tl-layer-status.layer-down:after {
+                                    background-image: radial-gradient(rgba(255, 0, 0, 0), rgba(110, 0, 0, 0.75));
+                                }
+                                > .tl-layer-status.layer-partial-up {
+                                    opacity: 1;
+                                    outline-offset: -2px;
+                                    outline: solid rgba(255, 69, 0, 1) 4px;
+                                    background-color: rgb(255, 68, 0);
+                                    background-image: linear-gradient(rgb(255, 92, 32) 2px, transparent 2px),
+                                        linear-gradient(to right, rgb(255, 92, 32) 2px, transparent 2px);
+                                    box-shadow: 0px 0px 8px 3px rgba(255, 69, 0, 1);
+                                }
+                                > .tl-layer-status.layer-partial-up:after {
+                                    background-image: radial-gradient(rgba(255, 115, 64, 0), rgba(143, 38, 0, 1));
+                                }
+                                > .tl-layer-status.layer-up {
+                                    opacity: 1;
+                                    outline-offset: -2px;
+                                    outline: solid rgb(0, 204, 0) 4px;
+                                    background-color: limegreen;
+                                    background-image: linear-gradient(rgba(50, 255, 50, 0.7) 2px, transparent 2px),
+                                        linear-gradient(to right, rgba(50, 255, 50, 0.7) 2px, transparent 2px);
+                                    box-shadow: 0px 0px 8px 3px rgba(0, 255, 0, 1);
+                                }
+                                > .tl-layer-status.layer-up:after {
+                                    background-image: radial-gradient(rgba(0, 255, 0, 0), rgba(0, 110, 0, 0.75));
+                                }
+                                > .tl-layer-details {
+                                    flex: 0 0 auto;
+                                    padding: 0 10px;
+                                    background-color: whitesmoke;
+                                    border-radius: 5px;
+                                    > div {
+                                        > .label {
+                                            font-weight: 500;
+                                            color: dimgray;
+                                            display: inline-block;
+                                            min-width: 100px;
+                                        }
+                                        > .value {
+                                            margin-left: 5px;
+                                            font-weight: 500;
+                                            display: inline-block;
+                                            min-width: 10px;
+                                        }
+                                        > .value-red {
+                                            color: red;
+                                            text-shadow: 0px 0px 3px rgba(255, 0, 0, 0.3);
+                                        }
+                                    }
+                                    > .total-count {
+                                        opacity: 0.6;
+                                    }
+                                }
+                                > .tl-tasks {
+                                    margin-left: 10px;
+                                    > .tl-tasks-btn {
+                                        background-color: whitesmoke;
+                                        color: dimgray;
+                                    }
+                                    > .tl-tasks-btn-pressed {
+                                        background-color: gainsboro;
+                                        color: royalblue;
+                                    }
+                                    > .tl-tasks-btn:not(:disabled):hover {
+                                        color: royalblue;
+                                    }
+                                    > .tl-tasks-btn:disabled {
+                                        opacity: 0.1;
+                                    }
+                                }
+                                > .tl-layer-entries {
+                                    background-color: red;
+                                }
+                            }
+                            > .tl-layer-summary {
+                                margin-top: 5px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                span {
+                                    display: inline-block;
+                                    text-align: center;
+                                    background-color: whitesmoke;
+                                    padding: 3px 10px;
+                                    border-radius: 5px;
+                                    font-weight: 500;
+                                    color: dimgray;
+                                }
+                                span.layer-na {
+                                    color: lightgray;
+                                    font-weight: normal;
+                                    background-color: transparent;
+                                }
+                                span.layer-down {
+                                    a {
+                                        color: rgb(90, 0, 0);
+                                        // text-decoration: underline;
+                                        // text-decoration-color: red;
+                                    }
+                                }
+                                span.layer-partial-up {
+                                    a {
+                                        color: rgb(78, 21, 0);
+                                        // text-decoration: underline;
+                                        // text-decoration-color: orange;
+                                    }
+                                }
+                                span.layer-up {
+                                    a {
+                                        color: rgb(0, 63, 0);
+                                        // text-decoration: underline;
+                                        // text-decoration-color: limegreen;
+                                    }
+                                }
+                            }
+                        }
+                        td.center-align {
+                            text-align: center;
+                        }
+                    }
+                    tr:first-child td {
+                        border-top: 0;
+                    }
+                }
+            }
+        }
+        > .tl-tasks-details-container {
+            flex: 0 0 auto;
+            height: 100%;
+            min-width: 0px;
+            max-width: 0px;
+            opacity: 0;
+            transition: all ease 120ms;
+            > .tl-tasks-details {
+                height: 100%;
+                width: clamp(400px, 30vw, 1000px);
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: space-between;
+                padding: 10px;
+                > div {
+                    background-color: white;
+                    > .separator {
+                        border-bottom: solid gainsboro 1px;
+                    }
+                }
+                > .tl-tasks-details-header {
+                    flex: 0 0 auto;
+                    padding: 10px;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                    > span {
+                        font-weight: 500;
+                    }
+                    > .tl-t-d-h-title {
+                        color: dimgray;
+                    }
+                    > .tl-t-d-h-title-highlight {
+                        color: royalblue;
+                    }
+                    > .separator {
+                        margin-top: 10px;
+                    }
+                }
+                > .tl-tasks-details-content {
+                    flex: 1 1 auto;
+                    padding: 0 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    justify-content: stretch;
+                    .tl-tasks-details-list-container {
+                        flex: 1 1 auto;
+                        height: 0;
+                        overflow-y: scroll;
+                        background-color: whitesmoke;
+                        padding: 10px;
+                        > .tl-tasks-details-item-container {
+                            background-color: white;
+                            padding: 10px;
+                            border-radius: 5px;
+                            > .tl-tasks-details-item-header {
+                                > span {
+                                    color: dimgray;
+                                    font-weight: 500;
+                                    > a {
+                                        color: black;
+                                        padding-left: 5px;
+                                    }
+                                }
+                                > .error-icon {
+                                    margin-left: 10px;
+                                    color: red;
+                                }
+                                button {
+                                    color: royalblue;
+                                    background-color: whitesmoke;
+                                }
+                            }
+                            > .tl-tasks-details-item-status {
+                                margin-top: 5px;
+                                > div {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: flex-start;
+                                    > span {
+                                        padding-left: 10px;
+                                    }
+                                }
+                                > .running {
+                                    color: limegreen;
+                                }
+                                > .stopped {
+                                    color: red;
+                                }
+                            }
+                            > .tl-tasks-details-item-reason {
+                                margin-top: 5px;
+                                > div {
+                                    > span {
+                                        color: dimgray;
+                                        font-weight: 500;
+                                        > a {
+                                            color: black;
+                                            padding-left: 5px;
+                                            word-break: break-all;
+                                        }
+                                    }
+                                }
+                                > div:not(:last-child) {
+                                    margin-bottom: 5px;
+                                }
+                            }
+                        }
+                        > .tl-tasks-details-item-container:not(:last-child) {
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+                > .tl-tasks-details-separator {
+                    padding: 10px 10px 0 10px;
+                }
+                > .tl-tasks-details-actions {
+                    flex: 0 0 auto;
+                    padding: 10px;
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border-bottom: solid gainsboro 1px;
+                }
+            }
+        }
+        > .tl-tasks-details-container-open {
+            opacity: 1;
+            min-width: clamp(400px, 30vw, 1000px);
+            max-width: clamp(400px, 30vw, 1000px);
+        }
+    }
+    > .loading-spinner {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(5px);
+        padding: 5px;
+        border-radius: 5px;
+        * {
+            flex: 0 0 auto;
+        }
+        > .spinner-container {
+            position: relative;
+            .live-signal {
+                position: absolute;
+                height: 16px;
+                width: 16px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                outline: solid rgba(172, 255, 47, 0.5) 2px;
+                background-color: greenyellow;
+                animation-name: live-signal-animation;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+            }
+        }
+        span {
+            margin-left: 5px;
+        }
+    }
+}
+
+.system-display-chip {
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    width: fit-content;
+}
+
+@keyframes live-signal-animation {
+    0% {
+        background-color: limegreen;
+        outline: solid rgba(50, 205, 50, 0.5) 2px;
+    }
+    50% {
+        background-color: greenyellow;
+        outline: solid rgba(172, 255, 47, 0.5) 2px;
+    }
+    100% {
+        background-color: limegreen;
+        outline: solid rgba(50, 205, 50, 0.5) 2px;
+    }
+}
+
+.h-flex-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    > div.spacer {
+        flex: 1 1 auto;
+    }
+    > *:not(div.spacer) {
+        flex: 0 0 auto;
+    }
+}
+
+button {
+    span {
+        padding-left: 10px;
+    }
+}

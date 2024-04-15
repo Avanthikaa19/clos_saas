@@ -1,0 +1,152 @@
+@use "src/theme" as theme;
+
+@import url(../../../../../common-styles/form-style.scss);
+
+.main-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    > .module-header-container {
+        height: 2.5rem;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > .role__dtl__txt-container {
+            flex: 1 1 auto;
+            color: black;
+            > .role__name__txt-container {
+                color: #8b8b8b;
+            }
+        }
+        > .go__back-conntainer {
+            flex: 0 0 auto;
+        }
+    }
+    > .tab-container {
+        > .main-tabs-container {
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            .tab-icon {
+                margin-right: 8px;
+            }
+            .name-container {
+                padding: 1rem;
+                margin-top: 1rem;
+                span {
+                    font-size: 1.6rem;
+                    padding: 1rem;
+                    font-weight: 600;
+                }
+            }
+            .crtd-date-container {
+                padding: 0rem;
+                span {
+                    font-size: 1.2rem;
+                    padding: 0rem 1rem 1rem 2rem;
+                    color: map-get(theme.$primary-palette, 100);
+                }
+            }
+            .form-content-container {
+                // height: 65vh;
+                margin: 1rem 1rem 1rem 2rem;
+                border: 0.1rem solid lightgray;
+                border-radius: 0.5rem;
+                overflow: auto;
+                max-height: 50rem;
+                .table-content-container {
+                    padding: 1rem 1rem 5rem 2rem;
+                    font-weight: 600;
+                    // font-size: 3rem
+                    >.role-detail-container{
+                        .required::after{
+                            content: " *";
+                            color: red;
+                        }
+                    }
+                    .access-container {
+                        height: 3rem;
+                        min-width: 3rem;
+                        background-color: gainsboro;
+                        border-radius: 0.5rem;
+                        font-weight: 100;
+                        margin-left: 1rem;
+                    }
+                    .other {
+                        margin-top: 1rem;
+                        margin-left: 1rem;
+                        font-weight: 100;
+                    }
+                    .rat__edit-container {
+                        margin-left: 1rem;
+                        font-weight: 100;
+                    }
+                }
+            }
+            .cdu__btn__container {
+                height: 5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 3rem;
+                span {
+                    font-weight: 600;
+                }
+                > .delete__btn-container {
+                    flex: 1 1 auto;
+                    button {
+                        background-color: #000000;
+                        color: white;
+                        box-shadow: 3px 3px rgb(230, 230, 230);
+                        margin-left: 2rem;
+                    }
+                }
+                > .create__btn-container {
+                    flex: 0 0 auto;
+                    >.save_btn {
+                        background-color: rgba(14, 41, 84, 1);
+                        color: white;
+                        box-shadow: 3px 3px rgb(230, 230, 230);
+                        margin-right: 1rem;
+                    }
+                    >.save_btn:disabled{
+                        background-color: lightgray;
+                    }
+                }
+            }
+        }
+    }
+}
+
+:host ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+:host ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    color: #012970;
+    opacity: 1;
+}
+
+//table
+table {
+    // font-family: arial, sans-serif;
+    border-collapse: collapse;
+    // width: 100%;
+}
+
+td,
+th {
+    // font-weight: bold;
+    font-size: 1.2rem;
+    text-align: left;
+    padding: 8px;
+    :not(even) {
+        min-width: 35rem;
+    }
+}
+
+// tr:nth-child(even) {
+//     // background-color: #dddddd;
+// }

@@ -1,0 +1,17 @@
+.ng-calculator {
+    display: block;
+    background: #ccc;
+    padding: 10px;
+    width: 400px;
+   cursor:pointer; 
+   position: absolute;
+  }
+
+  .container {
+    position: relative;
+    z-index: 999999999999;
+  }
+
+.btn-block {
+  width: 90%;
+}

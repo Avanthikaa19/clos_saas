@@ -1,0 +1,248 @@
+<section class="container-fluid" style="background: #fff;">
+    <div class="row mb-5 pt-5">
+        <div class="col-md-7">
+            <div class="application-list">
+                <ul>
+                    <li>Application Id: <span style="color:royalblue">{{id}}</span></li>
+                    <li>Applicant Name: <span style="color:royalblue">{{appDetails?.APPMLNAME}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="goBack">
+                <button mat-raised-button class="back-btn" onclick="history.back()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>Go Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%;">
+        <div class="multiTable_tabs">
+            <mat-tab-group>
+                <mat-tab label="{{databaseDetail[i].tableName}}" *ngFor="let dataKey of databaseDetail; let i=index">
+
+                    <div class="matchedCategory">
+                        <span class="matched-status">Matched Status:&nbsp;&nbsp;</span><span [style.color]="(dataKey.matchedCategory ==='MATCHED') ? '#' + activeRule.highMatchCCode : '#' + activeRule.lowMatchCCode && (dataKey.matchedCategory ==='POSSIBLE MATCHES') ? '#' + activeRule.avgMatchCCode : '#' + activeRule.lowMatchCCode ">{{dataKey.matchedCategory}}</span>
+                        <span style="float: right;font-weight: 600;">Average Percentage:<span>{{dataKey.averagePercentage}}%</span></span>
+                    </div>
+
+                    <div class="matched-columns">
+                        <p class="mb-4 mt-5">Compared Columns :
+                            <ng-container *ngIf="dataKey.matchedColumns !=null">
+                                <span class="matched-columns-sub" *ngFor="let matchedList of dataKey.matchedColumns; let m=index">
+                                    <ul class="matching-list">
+                                        <li> &nbsp;<span [style.background-color]="'#' + matchedList.colorCode" class="TabField-Color"></span> &nbsp;&nbsp;&nbsp;
+                                <span style="position: relative;bottom: 4px;">{{matchedList.appFields}} - {{matchedList.tableFields}} - {{matchedList.percentage}}%&nbsp;&nbsp;</span>
+                                </li>
+                                </ul>
+                                </span>
+                            </ng-container>
+                            <ng-container *ngIf="dataKey.matchedColumns ==null"><span style="color: #016CB9;">Not
+                                    Found</span>
+                            </ng-container>
+                        </p>
+                    </div>
+
+                    <div class="matched-table">
+                        <div class="inquired-column">
+                            <!-- <span>Inquired Column</span> -->
+
+                            <table class="table table-bordered" style="margin: 0 auto;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" style="text-align: center;">Inquired Columns</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let inquiredData of dataKey.inquiredAppFields">
+                                        <td>{{inquiredData}}</td>
+                                        <td [style.color]="'#' + highLighter.get(inquiredData)">{{dataKey.inquiredRecordDetails[0][inquiredData]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="matched-columns">
+                            <!-- <span>Matched Columns</span> -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" style="text-align: center;">Matched Columns</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let matchedData of dataKey.matchedTableFields">
+                                        <td>{{matchedData}}</td>
+                                        <td [style.color]="'#' + highLighter.get(matchedData)">{{dataKey.matchedRecordDetails[0][matchedData]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <ng-container *ngFor="let entry of highLighter | keyvalue">
+                                Key: {{ entry.key }}, Value: {{ entry.value }}
+                            </ng-container> -->
+                        </div>
+                    </div>
+                    <!-- <div>
+                        <p class="mb-4 mt-4"> Application Details</p>
+                    </div> -->
+                    <!-- <div style="overflow-x:auto;padding: 0 14px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <ng-container *ngFor="let dbList of displaydbList[i]; let j = index">
+                                        <ng-container *ngFor="let dbList1 of dbList.applicationFields">
+                                            <ng-container *ngFor="let header of appDetails | keyvalue;let i = index">
+                                                <ng-container *ngIf="header.key == dbList1">
+                                                    <th> {{header.key}}</th>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <ng-container *ngFor="let dbList of displaydbList[i]; let j = index">
+                                        <ng-container *ngFor="let dbList1 of dbList.applicationFields">
+                                            <ng-container *ngFor="let appData of appDetails | keyvalue">
+                                                <ng-container *ngIf="appData.key == dbList1">
+                                                    <td [style.color]="(dbDetails[i].recordDetails==null) ? '' : '#' + dbList.chosenColor">
+                                                        {{appData.value}}</td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                    <!-- <div style="width:98%;background-color: white;padding: 0 14px;">
+                        <p class="mb-4 mt-5"> Table Details</p>
+                    </div> -->
+                    <!-- <div style="padding: 0 14px;">
+                        <table style="border: 1px solid rgb(233, 233, 233);" *ngIf="dbDetails[i].recordDetails!=null">
+                            <tr>
+                                <ng-container *ngFor="let dbList of dataKey.matchedColumns; let j = index">
+                                    <ng-container *ngFor="let dbTableList of dbList.tableFields">
+                                        <th>{{dbTableList}}</th>
+                                    </ng-container>
+                                </ng-container>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <ng-container *ngFor="let dbList of dataKey.recordDetails">
+                                        <ng-container *ngFor="let dbList1 of dataKey.matchedColumns">
+                                            <ng-container *ngFor="let dbtableValue of dbList1.tableFields">
+                                                <td [style.color]="(dbDetails[i].recordDetails==null) ? '' : '#' + dbList1.colorCode">
+                                                    {{dbList[dbtableValue]}}</td>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="not-found" *ngIf="dbDetails[i].recordDetails==null">
+                            <span class="not-match">No Match Found</span>
+                        </div>
+                    </div> -->
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+        <!-- <div class=" mb-5 databaseRow" *ngFor="let dataKey of databaseDetail; let i=index"> -->
+        <!-- <div class="overall-box-header">
+                <div class="" style="flex: 0 1 75%; padding-left: 15px;padding-top: 3px;">
+                    <p class="mb-2">Table Name: {{databaseDetail[i].tableName}}</p>
+                </div>
+                <div class="" style="flex: 0 1 25%;padding-right: 18px;padding-top: 1px;">
+                    <div class="float-right" style="width:100%;">
+                        <p class="mb-2">Average percentage : {{dataKey.averagePercentage}}% &nbsp;&nbsp;
+                            <span [style.color]="(dataKey.matchedCategory ==='MATCHED') ? '#' + activeRule.highMatchCCode : '#' + activeRule.lowMatchCCode && (dataKey.matchedCategory ==='POSSIBLE MATCHES') ? '#' + activeRule.avgMatchCCode : '#' + activeRule.lowMatchCCode ">{{dataKey.matchedCategory}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div> -->
+        <!-- <div class="matchedApplication"></div> -->
+        <!-- <div class="matched-columns">
+                <p class="mb-4 mt-5">Compared Columns :
+                    <ng-container *ngIf="dataKey.matchedColumns !=null">
+                        <span class="matched-columns-sub" *ngFor="let matchedList of dataKey.matchedColumns; let m=index">
+                            <ul class="matching-list">
+                                <li> &nbsp;<span [style.background-color]="'#' + matchedList.colorCode"
+                                        class="TabField-Color"></span> &nbsp;&nbsp;&nbsp;
+                        <span style="position: relative;bottom: 4px;">{{matchedList.appFields}} -
+                                        {{matchedList.tableFields}} - {{matchedList.percentage}}%&nbsp;&nbsp;</span>
+                        </li>
+                        </ul>
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="dataKey.matchedColumns ==null"><span style="color: #016CB9;">Not Found</span>
+                    </ng-container>
+                </p>
+                <div>
+                    <p class="mb-4 mt-4"> Application Details</p>
+                </div>
+            </div> -->
+        <!-- <div style="overflow-x:auto;padding: 0 14px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <ng-container *ngFor="let dbList of displaydbList[i]; let j = index">
+                                <ng-container *ngFor="let dbList1 of dbList.applicationFields">
+                                    <ng-container *ngFor="let header of appDetails | keyvalue;let i = index">
+                                        <ng-container *ngIf="header.key == dbList1">
+                                            <th> {{header.key}}</th>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <ng-container *ngFor="let dbList of displaydbList[i]; let j = index">
+                                <ng-container *ngFor="let dbList1 of dbList.applicationFields">
+                                    <ng-container *ngFor="let appData of appDetails | keyvalue">
+                                        <ng-container *ngIf="appData.key == dbList1">
+                                            <td [style.color]="(dbDetails[i].recordDetails==null) ? '' : '#' + dbList.chosenColor">
+                                                {{appData.value}}</td>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+        <!-- Database -->
+        <!-- <div style="width:98%;background-color: white;padding: 0 14px;">
+                <p class="mb-4 mt-5"> Table Details</p>
+            </div>
+            <div style="padding: 0 14px;">
+                <table style="border: 1px solid rgb(233, 233, 233);" *ngIf="dbDetails[i].recordDetails!=null">
+                    <tr>
+                        <ng-container *ngFor="let dbList of dataKey.matchedColumns; let j = index">
+                            <ng-container *ngFor="let dbTableList of dbList.tableFields">
+                                <th>{{dbTableList}}</th>
+                            </ng-container>
+                        </ng-container>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <ng-container *ngFor="let dbList of dataKey.recordDetails">
+                                <ng-container *ngFor="let dbList1 of dataKey.matchedColumns">
+                                    <ng-container *ngFor="let dbtableValue of dbList1.tableFields">
+                                        <td [style.color]="(dbDetails[i].recordDetails==null) ? '' : '#' + dbList1.colorCode">
+                                            {{dbList[dbtableValue]}}</td>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="not-found" *ngIf="dbDetails[i].recordDetails==null">
+                    <span class="not-match">No Match Found</span>
+                </div>
+            </div> -->
+        <!-- </div> -->
+    </div>
+</section>

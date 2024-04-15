@@ -1,0 +1,220 @@
+<div *ngIf="config" style="font-size: 14px; overflow: hidden;">
+    <div class="category-header">
+        GENERAL
+    </div>
+    
+    <div class="category-sub-header">
+        MATCH RULES:
+    </div>
+    <table *ngIf="config.rules">
+        <tbody>
+            <ng-container *ngFor="let rule of config.rules; let index = index;">
+                <tr>
+                    <td valign="top">
+                        <span class="min-label">Time Delay</span>
+                    </td>
+                    <td valign="top">:</td>
+                    <td>
+                        <div style="width: 100%;">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="min-label">Enabled</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="checkbox" name="strictMatch"
+                                                [(ngModel)]="config.timeTrigger.enabled" style="margin-top: 7px;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="min-label">Wait From</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="config.timeTrigger.waitFrom" class="min-select"
+                                                [disabled]="!config.timeTrigger.enabled">
+                                                <mat-option [value]="'mxPublishTimestamp'">Mx Published Time
+                                                </mat-option>
+                                                <mat-option [value]="'mxBookTimestamp'">Mx Booked Time</mat-option>
+                                                <mat-option [value]="'systemTimestamp'">Trade System Time</mat-option>
+                                            </mat-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="min-label">Wait For (sec)</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input [(ngModel)]="config.timeTrigger.waitForSec" class="min-input"
+                                                type="number" min="1" [disabled]="!config.timeTrigger.enabled"
+                                                [style.color]="config.timeTrigger.enabled? 'black' : 'silver'">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <span class="min-label">Match By</span>
+                    </td>
+                    <td valign="top">:</td>
+                    <td>
+                        <div style="width: 100%;" *ngFor="let rule of config.rules[index].match; let i = index;"
+                            style="position: relative; margin-bottom: 10px;">
+                            <button mat-icon-button color="warn" class="min-button min-add-button"
+                                (click)="config.rules[index].match.splice(i, 1);">
+                                <mat-icon style="font-size: 14px;">remove</mat-icon>
+                            </button>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="min-label">Field Name</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="config.rules[index].match[i].fieldName"
+                                                class="min-select">
+                                                <mat-option [value]="'id'">ID</mat-option>
+                                                <mat-option [value]="'gid'">Global ID</mat-option>
+                                                <mat-option [value]="'status'">Status</mat-option>
+                                            </mat-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="min-label">Field Value</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <input [(ngModel)]="config.rules[index].match[i].fieldValue"
+                                                class="min-input" type="text">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="config.rules[index].match.length > 1"
+                                style="border-bottom: gainsboro solid 1px; padding-top: 10px; margin-left: 20px;"></div>
+                        </div>
+                        <div style="height: 26px; position: relative; padding-left: 20px;">
+                            <span class="add-items-text">Click the + icon to add items.</span>
+                            <button mat-icon-button color="primary" class="min-button min-add-button"
+                                (click)="config.rules[index].match.push({fieldName: '', fieldValue: ''});">
+                                <mat-icon style="font-size: 14px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="min-label">Strict Match</span>
+                    </td>
+                    <td>:</td>
+                    <td>
+                        <input type="checkbox" name="strictMatch" [(ngModel)]="config.rules[index].strictMatch"
+                            style="margin-top: 7px;">
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="category-sub-header">
+        UPDATE:
+    </div>
+    <table *ngIf="config.update" style="margin-bottom: 5px;">
+        <tbody>
+            <tr *ngFor="let updateItem of config.update; let index = index; trackBy: trackByIndex;"
+                class="highlight-on-hover">
+                <td>
+                    <input type="checkbox" name="assign{{index}}" [(ngModel)]="config.update[index].assign"
+                        style="margin-top: 7px; margin-left: 5px; cursor: pointer;">
+                </td>
+                <td (click)="config.update[index].assign = !config.update[index].assign" style="cursor: pointer;">
+                    <span class="min-label">
+                        {{config.update[index].classField.name}}
+                    </span>
+                </td>
+                <td (click)="config.update[index].assign = !config.update[index].assign" style="cursor: pointer;">
+                    <span class="min-label" style="color: silver;">{{config.update[index].classField.dataType}}</span>
+                </td>
+                <td>:</td>
+                <ng-container
+                    *ngIf="config.update[index].classField.dataType == 'PLSTradeStatus'; then statusField; else nonStatusField">
+                </ng-container>
+                <ng-template #statusField>
+                    <td>
+                        <mat-select [(ngModel)]="config.update[index].assignValue" class="min-select"
+                            [disabled]="!config.update[index].assign">
+                            <mat-option [value]="''">Don't Update</mat-option>
+                            <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+                        </mat-select>
+                    </td>
+                </ng-template>
+                <ng-template #nonStatusField>
+                    <td>
+                        <input [(ngModel)]="config.update[index].assignValue" class="min-input" type="text"
+                            placeholder="{{config.update[index].classField.columnName}}"
+                            [disabled]="!config.update[index].assign">
+                    </td>
+                </ng-template>
+            </tr>
+        </tbody>
+    </table>
+    <div class="category-header">
+        ADVANCED
+    </div>
+    <table *ngIf="config.task">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="min-label">Entries Pass Through</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="checkbox" name="passThrough" [(ngModel)]="config.passThrough" style="margin-top: 7px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Batch Size</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.insertBatchSize" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Input Polling (ms)</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input [(ngModel)]="config.task.inputPollingMs" class="min-input" type="number" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="min-label">Maximum Threads</span>
+                </td>
+                <td>:</td>
+                <td>
+                    <input name="maxThread" [(ngModel)]="config.task.maxThreads" class="min-input" type="number"
+                        min="0">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="position: relative; height: 50px;">
+        <button mat-button (click)="debug()"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <mat-icon>bug_report</mat-icon>
+            <span style="padding-left: 10px;">Print Config To Console</span>
+        </button>
+    </div>
+</div>

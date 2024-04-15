@@ -1,0 +1,119 @@
+.main-container {
+    height: 90%;
+    width: 100%;
+
+    >.content-container {
+        height: 90%;
+
+        >.table-container {
+            height: 80%;
+            padding: 1rem;
+            margin: 1rem;
+            border: solid #e6e6e6 0.1rem;
+
+            table {
+                border-collapse: collapse;
+                font-size: 1.6rem;
+            }
+
+            td,
+            th {
+                font-size: 1.4rem;
+                text-align: left;
+                padding: 1.5rem;
+            }
+        }
+
+        .left__end-container {
+            flex: 1 1 auto;
+        }
+    }
+}
+
+.min-select {
+    width: 30rem;
+    padding: 5px;
+    border-radius: 0.4rem;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem
+}
+
+.min-select-textarea {
+    width: 30rem;
+    height: 10rem;
+    padding: 5px;
+    border-radius: 0.4rem;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem
+}
+
+.file-input-label {
+    position: relative;
+    cursor: pointer;
+    width: 28rem;
+    min-height: 4rem;
+    padding: 3px;
+    border-radius: 0.4rem;
+    border: solid #e6e6e6 0.1rem;
+    background-color: #fafafa;
+    box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%) inset;
+    transition: all linear 70ms;
+    outline: solid transparent 0.2rem
+}
+
+.file-input-label input[type="file"] {
+    display: none;
+}
+
+.scrollable-content {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.inverted-icon {
+    display: inline-block;
+    cursor: pointer;
+    transform: rotate(90deg) scaleY(-1);
+    color: #0e2954;
+    font-size: 24px;
+    margin-left: 0rem;
+}
+.error-message{
+    color: red;
+    font-size: 12px;
+}
+input[type="file"]::-webkit-file-upload-button {
+    display: none;
+  }
+  .udf-input{
+    width: 50rem;
+    margin-left: 30px;
+}
+
+
+.loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(0.5rem);
+    padding: 1rem 2rem;
+    -webkit-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+
+    span {
+        margin-left: 1rem;
+    }
+}

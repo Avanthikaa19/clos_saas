@@ -1,0 +1,335 @@
+<div class="content-container">
+    <form #personalInfoForm="ngForm">
+        <div class="content-section">
+            <div class="grid-container">
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Gender<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select style="font-size:16px" name="appmSex" required matInput #sex="ngModel" [(ngModel)]="listFieldName['appmSex']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': personalInfoForm.controls['appmSex']?.invalid && (errorBorderStatus) }">
+                                <mat-option *ngFor="let list of genderList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                            <div *ngIf="personalInfoForm.controls['appmSex']?.invalid && (sex.dirty || sex.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmSex']?.errors?.['required']">
+                                    Gender is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Marital Status</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmMatst']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of maritalList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Educational Attainment</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmQual']" (ngModelChange)="setInput()">
+                                <mat-option *ngFor="let list of educationList" [value]="list.value">{{list.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Birthdate</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmDob']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Mother's Maiden Name<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" name="appmMom" required matInput #motherMaidenName="ngModel" [(ngModel)]="listFieldName['appmMom']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': personalInfoForm.controls['appmMom']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="personalInfoForm.controls['appmMom']?.invalid && (motherMaidenName.dirty || motherMaidenName.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmMom']?.errors?.['required']">
+                                    Mother's Maiden Name is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Nationality</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmNatio']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Place of Birth</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPob']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Email Address<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input class="no-uppercase" type="mail" #EmailAdd="ngModel" matInput name="appmEmail" required [(ngModel)]="listFieldName['appmEmail']" (ngModelChange)="setInput()" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" [ngClass]="{ 'error-border': personalInfoForm.controls['appmEmail']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="personalInfoForm.controls['appmEmail']?.invalid && (EmailAdd.dirty || EmailAdd.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmEmail']?.errors?.['required']">
+                                    Email Address is required.
+                                </div>
+                                <div *ngIf="personalInfoForm.controls['appmEmail']?.errors?.['pattern']">
+                                    Invalid email format.
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Mobile Phone<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" appPhonenumberValidation matInput #mobileNumber="ngModel" name="appmMPhone" required [(ngModel)]="listFieldName['appmMPhone']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': personalInfoForm.controls['appmMPhone']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="personalInfoForm.controls['appmMPhone']?.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmMPhone']?.errors?.['required']">
+                                    Mobile Number is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">First Name<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput #firstName="ngModel" name="appmFstNm" required [(ngModel)]="listFieldName['appmFsTnm']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': personalInfoForm.controls['appmFstNm']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="personalInfoForm.controls['appmFstNm']?.invalid && (firstName.dirty || firstName.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmFstNm']?.errors?.['required']">
+                                    First Name is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Middle Name<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput #middleName="ngModel" name="appmMdlNm" required [(ngModel)]="listFieldName['appmMdlNm']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': personalInfoForm.controls['appmMdlNm']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="personalInfoForm.controls['appmMdlNm']?.invalid && (middleName.dirty || middleName.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmMdlNm']?.errors?.['required']">
+                                    Middle Name is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Last Name<span class="mandatory-icon">*</span></span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput #lastName="ngModel" name="appmLstNm" required [(ngModel)]="listFieldName['appmLstNm']" (ngModelChange)="setInput()" [ngClass]="{ 'error-border': personalInfoForm.controls['appmLstNm']?.invalid && (errorBorderStatus) }">
+                            <div *ngIf="personalInfoForm.controls['appmLstNm']?.invalid && (lastName.dirty || lastName.touched)" class="error-message">
+                                <div *ngIf="personalInfoForm.controls['appmLstNm']?.errors?.['required']">
+                                    Last Name is required
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">No of Dependent</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmDepEnd']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">No of Car</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmNbrCar']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">TIN ID</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmTin']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">SSS ID</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmsss']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Home Phone 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmPhone2']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Email Addr 2</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input class="no-uppercase" type="mail" #EmailAdd2="ngModel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxEmlad2']" (ngModelChange)="setInput()" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                            <div *ngIf="EmailAdd2.errors?.['pattern']" class="error-message">
+                                Invalid email format.
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Permanent Addr 1</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErAd1']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Permanent Addr 2</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErAd2']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Permanent Addr 3</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErAd3']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Permanent Addr 4</span>
+                    </div>
+                    <div>
+                        <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErAd4']" (ngModelChange)="setInput()"></textarea>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Perm Addr Zipcode</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErzip']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Perm Addr City</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErCty']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Perm Addr Province</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPErPrv']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input_Fields">
+                    <div style="margin-top: 2rem">
+                        <span class="field_name">Perm Phone Number</span>
+                    </div>
+                    <div>
+                        <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                            <input type="tel" appPhonenumberValidation matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appxPPhone']" (ngModelChange)="setInput()">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,114 @@
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+.main-container {
+    height: 100vh;
+    >.header-container {
+        height: 10rem;
+        border-bottom: 1px solid gainsboro;
+    }
+    >.search-container {
+        height: 5rem;
+        >.left-align {
+            width: 20rem;
+        }
+        >.center-align {
+            // background-color: whitesmoke;
+            height: 90%;
+            overflow-y: auto;
+            padding-left: 5rem;
+            // padding-top: 1rem;
+            vertical-align: middle;
+            padding-left: 1px;
+        }
+        >.right-align {
+            width: 20rem;
+        }
+    }
+    >.content-container {
+        height: calc(100% - 18rem);
+        // background-color: hotpink;
+        // width: 0%;
+        // margin-left: 10rem;
+        align-items: flex-start;
+        div {
+            width: 94%;
+        }
+        >.left-align {
+            width: 20rem;
+        }
+        >.center-align {
+            background-color: whitesmoke;
+            height: 90%;
+            overflow-y: auto;
+            padding-left: 5rem;
+        }
+        >.right-align {
+            width: 20rem;
+        }
+    }
+}
+
+body {
+    font-family: "Nunito", sans-serif;
+    padding: 50px;
+}
+
+.card {
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow, 0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+    padding: 14px 80px 18px 36px;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.card h3 {
+    font-weight: 600;
+}
+
+.card img {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    max-height: 120px;
+    padding-right: 1rem;
+}
+
+.card-1 {
+    // background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
+    background-image: url(../../../../../assets/Icons/tableimg.jpeg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+    margin-bottom: 1rem;
+    margin-top: 1rem
+}
+
+.card-2 {
+    // background-image: url(https://ionicframework.com/img/getting-started/components-card.png);
+    background-image: url(../../../../../assets/Icons/decision_tree_01.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+    margin-bottom: 1rem
+}
+
+.card-3 {
+    // background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
+    background-image: url(../../../../../assets/Icons/decision-making.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+    margin-bottom: 1rem
+}
+
+@media (max-width: 990px) {
+    .card {
+        margin: 20px;
+    }
+}

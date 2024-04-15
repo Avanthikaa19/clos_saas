@@ -1,0 +1,150 @@
+.main-house-keeping-container {
+  height: calc(100% - 5rem);
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  > .toolbar-house-keeping-container {
+    padding: 1rem;
+    min-height: 5rem;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    > .toolbar-search-container {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: row;
+      > .search-container-label {
+        flex: 0 0 auto;
+        font-weight: bold;
+      }
+      > .search-input-container {
+        flex: 1 1 auto;
+      }
+    }
+    > .toolbar-buttons-container {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: row;
+      min-width: 20rem;
+      > .button-container {
+        margin-left: 1rem;
+      }
+    }
+  }
+  > .jobs-house-keeping-container {
+    overflow: auto;
+    flex: 1 1 auto;
+    border: 1px solid rgb(236, 236, 236);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    background-color: white;
+
+    > .jobs-list-container {
+      flex: 0 0 auto;
+      min-height: 10rem;
+      width:45rem;
+      margin: 1rem 1rem 0.5rem 0.5rem;
+      border-radius: 1rem;
+      border: 1px solid rgb(111, 111, 226);
+      border-left: 5px solid blue;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+        rgba(0, 0, 0, 0.24) 0px 1px 2px;
+      > .jobs-card-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+        margin: 0.5rem;
+        > .image-container {
+          flex: 0 0 auto;
+          width: 22%;
+          height: 85%;
+          margin: 0.5rem;
+          background-color: rgb(244, 248, 248);
+          border-radius: 1rem;
+          > .image-content {
+            margin-top: 1rem;
+            img {
+              transform: rotate(90deg);
+              margin-left: 2.5rem;
+              margin-top: 1rem;
+            }
+          }
+        }
+        > .job-name-container {
+          flex: 1 1 auto;
+          margin-left: 0.5rem;
+          > .job-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            // font-style: italic;
+          }
+          > .job-details {
+            margin-top: 0.5rem;
+          }
+        }
+       
+      }
+      &:hover {
+        box-shadow:rgba(0, 0, 0, 0.12) 5px 5px 5px 3px, rgba(0, 0, 0, 0.24) 2px 1px 4px 2px;
+        transform: translateY(-4px);
+      }
+    }
+    
+  }
+
+  > .pagination-house-keeping-container {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 1rem;
+    > .left-container {
+      flex: 0 0 auto;
+    }
+    > .middle-container {
+      flex: 0 0 auto;
+    }
+    > .right-container {
+      margin-top: 1rem;
+      flex: 0 0 auto;
+    }
+  }
+}
+
+button.apply_filter {
+  background-color: #3445b4;
+  color: white;
+}
+
+button.export {
+  background-color: black;
+  color: white;
+}
+
+button.clear_filter {
+  background-color: orangered;
+  color: white;
+}
+
+.pagination-controls ::ng-deep .ngx-pagination .current {
+  background: white;
+  color: black;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.pagination {
+  text-align: center;
+  font-size: larger;
+  margin-top: 1rem;
+}

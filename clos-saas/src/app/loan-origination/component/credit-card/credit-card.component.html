@@ -1,0 +1,39 @@
+<section class="p-2">
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened style="border: none;">
+          <div (mouseover)="isExpanded=true;" (mouseleave)="isExpanded=false;" >
+            <mat-list class="list-item" *ngIf="isExpanded">
+                <div mat-subheader style="    margin-bottom: 10px;
+                border-bottom: 1px solid #ededed;text-transform: uppercase;">S T E P S</div>
+                <mat-list-item *ngFor="let item of loanOrigination;let i = index" [class.success]="item.step == 'success'" [routerLink]="loanOrigination[i].route" routerLinkActive="active">
+                  <div class="d-flex align-items-center"  >
+                      <div class="list-icon" [hidden]="item.step == 'success'">{{item.step}}</div>
+                      <span class="material-symbols-outlined" *ngIf="item.step == 'success'">
+                        verified
+                        </span>
+                      {{item.name}}</div>
+                </mat-list-item>
+                </mat-list>
+                <mat-list class="list-item" *ngIf="!isExpanded">
+                  <div mat-subheader style="    margin-bottom: 10px;
+                  border-bottom: 1px solid #ededed;text-transform: uppercase;font-weight: 700;">S T E P S</div>
+                  <mat-list-item *ngFor="let item of loanOrigination;let i = index" [class.success]="item.step == 'success'" [routerLink]="loanOrigination[i].route" routerLinkActive="active">
+                        <span mat-line class="material-symbols-outlined unexpanded-icon" style="color: blue;" >
+                          {{item.icon}}
+                          </span>
+                          <!-- <div mat-line>{{item.abbr}}</div> -->
+                  </mat-list-item>
+                  </mat-list>
+              </div>
+        </mat-drawer>
+        <mat-drawer-content style="    margin-left: 95px;">
+          <!-- <div class="d-flex py-3 px-4" style="background-color: whitesmoke;font-weight: 600;
+          font-size: 15px;
+          color: #808280;">
+            <i *ngIf="loanService.applicationObject.initialData.id" class="mr-4">Application ID: {{loanService.applicationObject.initialData.id}}</i>
+            <div class="ml-auto"><i *ngIf="loanService.applicationObject.initialData.createdTime" class="mr-4">Application Date: {{loanService.applicationObject.initialData.createdTime | date:'dd/MM/yyyy'}}</i></div>
+          </div> -->
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+      </mat-drawer-container>
+</section>

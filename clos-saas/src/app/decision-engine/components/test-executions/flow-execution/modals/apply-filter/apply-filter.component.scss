@@ -1,0 +1,31 @@
+@import url(../../../../../common-css/common.scss);
+@import url(../../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 93%;
+    width: 100%;
+    >div {
+        width: 100%;
+    }
+    >.header-container {
+        height: 4rem;
+        padding-bottom: 0.1rem;
+        border-bottom: 1px solid lightgray;
+    }
+    >.content-container {
+        height: calc(100% - 5rem);
+        width: 97%;
+        background-color: whitesmoke;
+        padding: 1rem;
+        overflow-y: auto;
+        >.card-container {
+            background-color: white;
+            height: 5rem;
+            width: 100%;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        >.card-container:hover {
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+    }
+}

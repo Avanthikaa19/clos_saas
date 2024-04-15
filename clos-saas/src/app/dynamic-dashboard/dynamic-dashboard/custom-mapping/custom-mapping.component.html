@@ -1,0 +1,53 @@
+<div [style.height.px]="component_height" [style.max-height.px]="component_height">
+    <!-- <section class="my-4 min-vh-100"> -->
+       <!-- <div> -->
+         <!-- <div class="row ml-1 noselect">
+            <div class="col-md-2 col-xl-2 col-sm-2 col-lg-2 mr-2" *ngFor="let value of menus">
+            
+               <div [routerLink]="value.path" [routerLinkActive]="'selected-wc-box'"
+                  class="wc-box rounded wc-box-primary bg rounded pt-2 row">
+                  <div class=" col-md-2 col-lg-2 col-sm-2">
+                     <mat-icon style="margin-top: -2px;
+                    font-size: 22px;">{{value.icon}}</mat-icon>
+                  </div>
+                  <p class="hdr col-md-9 col-lg-9 col-sm-9 pl-2 pr-0" style="font-size: 11px!important;">{{value.title}}
+                  </p>
+               </div>
+            </div>
+            <div style="margin-left: 70%;">
+            <button mat-stroked-button routerLink="/admin/dynamic"
+                    class="add-new-{{administratorToolsMainService.storedTheme}} float-right" style="height: 42px; margin-top: 0px;">
+                    <mat-icon style="margin-right: 5px;">arrow_back_ios</mat-icon>
+                    <span>Back</span>
+            </button>
+            </div>
+         </div> -->
+
+         <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="head-container">
+            <div class="head-abs">
+                <div class="float-left">
+                   <div>
+                      <p style="padding: 0px; margin: 0px;font-size: 27px;
+                      font-weight: 700;
+                      color: rgba(0, 0, 0, 0.87);
+                      align-items: center;
+                      margin-top: 23px;
+                      justify-content: center;display: flex;" [class]="'hdr underline-text-theme-light'"
+                         [style.color]="'rgba(0, 0, 0, 0.87)'">
+                         Dynamic Dashboard
+                         </p>
+                         <div style="font-size: 17px;font-weight: 600;padding-top: 10px;">You can develop your own dashboard, edit existing ones / You can map and download your dashboards here.</div>
+                   </div>
+                </div>
+             </div>
+             </div>
+            </div>
+   
+         <!-- NAV BAR CONTENT -->
+         <div>
+            <router-outlet></router-outlet>
+         </div>
+       <!-- </div> -->
+    <!-- </section> -->
+ </div>

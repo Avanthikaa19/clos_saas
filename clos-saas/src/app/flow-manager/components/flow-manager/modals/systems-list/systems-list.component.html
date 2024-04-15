@@ -1,0 +1,115 @@
+<div class="component-container">
+    <div class="header-wrapper">
+        <div class="icon noselect">
+            <mat-icon>devices</mat-icon>
+        </div>
+        <div class="header-container noselect">
+            <span class="title">Interface System Configurations</span>
+            <span class="description">All the configured Host Systems are listed here.</span>
+        </div>
+    </div>
+    <div class="search-container">
+        <input class="min-input" placeholder="Search by name." [(ngModel)]="nameSearch" (keyup)="onKey($event)">
+        <button mat-raised-button color="primary" (click)="refreshItems()">
+            <mat-icon>search</mat-icon>
+            <span>Search</span>
+        </button>
+        <div class="spacer"></div>
+        <button mat-raised-button style="background-color: crimson; color: white;" (click)="openItemDetails(null)">
+            <mat-icon>add</mat-icon>
+            <span>Create</span>
+        </button>
+    </div>
+    <div class="content-container">
+        <div *ngIf="loadingItems" [@fadeInOut] class="loading-spinner">
+            <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading.. Please wait..</span>
+        </div>
+        <div class="content-list-container">
+            <div [@fadeInOut] class="item-card item-card-header noselect">
+                <div class="field field-id">
+                    ID
+                </div>
+                <div class="field field-name">
+                    Name
+                </div>
+                <div class="field field-description">
+                    Description
+                </div>
+                <div class="field field-display-name">
+                    Display Name
+                </div>
+                <div class="field field-display-color">
+                    Display Color
+                </div>
+                <div class="field field-critical">
+                    Critical
+                </div>
+                <div class="field field-actions">
+                    Actions
+                </div>
+            </div>
+            <ng-container *ngIf="!loadingItems">
+                <div class="item-card item-card-data noselect" *ngFor="let system of systems; let i = index"
+                (click)="openItemDetails(system)" [style.opacity]="system.deleting ? 0.5 : 1">
+                    <div class="field field-id" [style.color]="system.id ? 'black' : 'dimgray'">
+                        {{system.id}}
+                    </div>
+                    <div class="field field-name">
+                        <div>
+                            {{system.systemName}}
+                        </div>
+                    </div>
+                    <div class="field field-description">
+                        <div>
+                            {{system.systemDescription}}
+                        </div>
+                    </div>
+                    <div class="field field-display-name">
+                        <span class="system-display-chip" [style.background-color]="system.displayColor">
+                            {{system.displayName}}
+                       </span>
+                    </div>
+                    <div class="field field-display-color">
+                        <div>
+                            {{system.displayColor}}
+                        </div>
+                    </div>
+                    <div class="field field-critical">
+                        <span>{{system.critical ? 'Yes' : 'No'}}</span>
+                    </div>
+                    <div class="field field-actions">
+                        <button mat-button class="delete-btn" (click)="deleteSystem(system, $event)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+            <div>
+                <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+            </div>
+            <div>
+                <span>Page {{currentPage}} of {{totalPages}}
+                </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of
+                <span>{{totalRecords}}</span>)
+            </div>
+            <div>
+                <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="actions-container">
+        <div class="spacer"></div>
+        <button mat-stroked-button color="warn" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span>Close</span>
+        </button>
+    </div>
+</div>  

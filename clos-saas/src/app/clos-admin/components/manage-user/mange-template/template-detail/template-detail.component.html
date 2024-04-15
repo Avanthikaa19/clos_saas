@@ -1,0 +1,104 @@
+<div class="registration-container">
+     <mat-tab-group [selectedIndex]="selectedTabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>assignment</mat-icon> Template
+            </ng-template>
+    <div class="tab-content">
+        <div class="new-user">Name</div>
+        <div class="created-date">Created on 24-08-2023</div>
+    </div>
+    <div class="registration-form">
+      <div class="form-field">
+          <label for="templatename">Template Name <span class="required-symbol">*</span></label>
+          <span class="colon">:</span>
+          <input type="text" id="templatename" required [(ngModel)]="templateName">
+      </div>
+      <div class="form-field">
+          <label for="description">Description<span class="required-symbol">*</span></label>
+          <span class="colon">:</span>
+          <textarea id="description" rows="4" required [(ngModel)]="description"></textarea>
+      </div>
+      <div class="form-field">
+          <label for="createdby">Created By</label>
+          <span class="colon">:</span>
+          <div class="custom-input">
+              <mat-icon>person_pin</mat-icon>
+              <span class="user-role">Super User</span>
+          </div>
+      </div>
+  </div>
+    <div class="save-button">
+        <button>
+            <mat-icon>save</mat-icon>
+            Save Template
+        </button>
+    </div>
+</mat-tab>
+
+
+<mat-tab >
+<ng-template mat-tab-label>
+    <mat-icon>aspect_ratio</mat-icon> Accessible Modules
+  </ng-template>
+    <mat-tab-group style="background-color: whitesmoke;">
+        <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>work</mat-icon> Administrator Panel
+          </ng-template>
+          <app-template-modules></app-template-modules>       
+            <!-- Content for Administrator Panel tab -->
+        </mat-tab>
+   
+      <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>device_hub</mat-icon> Data Flow Manager
+          </ng-template>
+        <!-- Content for Data Flow Manager tab -->
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>assignment</mat-icon> Report Portal
+          </ng-template>
+        <!-- Content for Report Portal tab -->
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+        <mat-icon>insert_drive_file</mat-icon> Data Entry
+        </ng-template>
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+        <mat-icon>folder_special</mat-icon> Case Management
+        </ng-template>
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+        <mat-icon>visibility</mat-icon> Monitor
+        </ng-template>
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+        <mat-icon>settings</mat-icon> Configuration
+        </ng-template>
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+        <mat-icon>check_circle</mat-icon> Decision Engine
+        </ng-template>
+        <app-template-modules></app-template-modules>
+      </mat-tab>
+    </mat-tab-group>
+  <!-- </div> -->
+  </mat-tab>
+ </mat-tab-group>
+</div>
+<router-outlet></router-outlet>

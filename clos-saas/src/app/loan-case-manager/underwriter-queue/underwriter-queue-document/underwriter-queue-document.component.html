@@ -1,0 +1,105 @@
+<div class="main-container">
+    <div class="table-container">
+        <section class="mt-3" style="margin-left: 10px;">
+            <div style="overflow: auto;height: 650px;">
+            <div class="row row-shadow" style="overflow:hidden">
+                <div *ngIf="loading" class="loading-spinner">
+                    <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"></mat-progress-spinner>
+                    <span>Loading.. Please wait..</span>
+                </div>
+                <table>
+                    <tr>
+                        <th *ngFor = "let item of queue" matSort [mat-sort-header]="item"
+                        (matSortChange)="sortAscDsc($event)">{{item}}</th>
+                    </tr>                   
+                     <tr *ngIf="queueData">
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.id" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.companyName" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.companyType" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.applicantName" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.contactNumber" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.loanType" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.secTDINo" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.loanAmount" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.loanPurpose" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" [(ngModel)]="LoanCase.filter.verificationStatus" style="width:80%">
+                            <span>
+                                <button style="border:none;width:20%;background-color: #f5f5f5;" (click)="getRequestedDocument();"><mat-icon>filter_list</mat-icon></button>
+                            </span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr *ngFor = "let element of queueData;">
+                        <td>{{element.id}}</td>
+                        <td>{{element.companyName}}</td>
+                        <td>{{element.companyType}}</td>
+                        <td>{{element.applicantName}}</td>
+                        <td>{{element.contactNumber}}</td>
+                        <td>{{element.loanType}}</td>
+                        <td>{{element.secTDINo}}</td>
+                        <td>{{element.loanAmount}}</td>
+                        <td>{{element.loanPurpose}}</td>
+                        <td>{{element.verificationStatus}}</td>
+                        <td>{{element.selfAssignee == null?element.autoAssignedTo:element.selfAssignee}}</td>
+                    </tr>
+                </table>
+                <ng-container *ngIf="!loading && queueData.length == 0">
+                    <span class="no-content text-secondary" style="position: absolute;margin-top: 400px;margin-left: 550px;font-size: 21px;font-weight: bolder;letter-spacing: 1px">No items found!</span>
+                </ng-container>
+        </div>
+        </div>
+        <div class="paginator-container" *ngIf="!loading">
+            <mat-paginator [length]="queueCount"
+                [pageIndex]="pageNum" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page" (page)="getRequestedDocument($event)">
+            </mat-paginator>
+        </div>
+        </section>
+    </div>
+</div>

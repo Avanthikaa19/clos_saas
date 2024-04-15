@@ -1,0 +1,260 @@
+<div class="main-container">
+    <div class="sub-main">
+        <div class="header-container">
+            <span class="header">
+        Profile Configuration  :
+    </span>
+        </div>
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>Input Data</ng-template>
+                <div class="node-data">
+
+                    <div class="node-detail">
+                        <div class="label">
+                            <span> Database Type</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <mat-select class="min-select" [(ngModel)]="inputTable.dbType">
+                                <div *ngFor="let list of db_typeList">
+                                    <mat-option [value]="list">
+                                        {{list}}
+                                    </mat-option>
+                                </div>
+
+                            </mat-select>
+                        </div>
+
+                    </div>
+                    <div class="node-detail">
+                        <div class="label">
+                            <span> Database</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <mat-select class="min-select" (selectionChange)="selectingDatabase()" [(ngModel)]="inputTable.db ">
+                                <div *ngFor="let db of databaseList">
+                                    <mat-option [value]="db">
+                                        {{db.name}}
+                                    </mat-option>
+                                </div>
+
+                            </mat-select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="node-detail">
+                        <div class="label">
+                            <span>Table</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <mat-select class="min-select" [(ngModel)]="inputTable.selectTable">
+                                <div *ngFor="let table of tableList">
+                                    <mat-option [value]="table">
+                                        {{table}}
+                                    </mat-option>
+                                </div>
+
+                            </mat-select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </mat-tab>
+            <mat-tab style="overflow: hidden;">
+                <ng-template mat-tab-label>Output Data</ng-template>
+                <div class="node-data">
+
+                    <div class="node-detail">
+                        <div class="label">
+                            <span> Database Type</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <mat-select class="min-select" [(ngModel)]="outputTable.dbType">
+                                <div *ngFor="let list of db_typeList">
+                                    <mat-option [value]="list">
+                                        {{list}}
+                                    </mat-option>
+                                </div>
+
+                            </mat-select>
+                        </div>
+
+                    </div>
+                    <div class="node-detail">
+                        <div class="label">
+                            <span> Database</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <mat-select class="min-select" (selectionChange)="selectingDatabase()" [(ngModel)]="outputTable.db ">
+                                <div *ngFor="let db of databaseList">
+                                    <mat-option [value]="db">
+                                        {{db.name}}
+                                    </mat-option>
+                                </div>
+
+                            </mat-select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="node-detail">
+                        <div class="label">
+                            <span>Table</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <mat-select class="min-select" [(ngModel)]="outputTable.selectTable">
+                                <div *ngFor="let table of tableList">
+                                    <mat-option [value]="table">
+                                        {{table}}
+                                    </mat-option>
+                                </div>
+
+                            </mat-select>
+                        </div>
+                        <!-- <div class="label" style="padding-left: 2rem;">
+            <span>Effective To</span>
+        </div> -->
+                        <div class="colen">
+                            <span></span>
+                        </div>
+                        <div class="value" *ngIf="!addTable">
+                            <button mat-stroked-button (click)="addTableClick()"><mat-icon>add</mat-icon>Create new Table</button>
+                        </div>
+                        <!-- <div class="value" >
+        <mat-slide-toggle  [(ngModel)]="toggleData">
+            {{toggleData===true ?"Configure":"Editor"}}  </mat-slide-toggle>
+    </div> -->
+
+                        <div class="value" *ngIf="addTable">
+                            <mat-slide-toggle style="margin-left: 2rem;" [(ngModel)]="toggleData">
+                                {{toggleData===false ?"Configure":"Query"}} </mat-slide-toggle>
+                        </div>
+                    </div>
+
+                    <div style="height:22rem;" class="node-detail" *ngIf="addTable && toggleData">
+                        <div class="label">
+                            <span>  Query</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <input style="width:83rem;height:5rem" class="min-input" [(ngModel)]="outputTable.tableQuery">
+                        </div>
+                        <!-- <div class="colen">
+            <span></span>
+        </div>
+        <div class="value" >
+        <button mat-stroked-button (click)="tableCreation(query)"><mat-icon>done</mat-icon>Create</button>
+    </div> -->
+                    </div>
+                    <div class="node-detail" *ngIf="addTable&& !toggleData">
+                        <div class="label">
+                            <span> Table Name</span>
+                        </div>
+                        <div class="colen">
+                            <span>:</span>
+                        </div>
+                        <div class="value">
+                            <input class="min-input" (ngModelChange)="createTableName()" [(ngModel)]="outputTable.tableName" type="text">
+                        </div>
+                        <div class="colen">
+                            <span></span>
+                        </div>
+                        <div class="value">
+                            <button mat-stroked-button (click)="pushTableConfig()"><mat-icon>add</mat-icon></button>
+                        </div>
+                    </div>
+
+
+                    <div style="width:102rem;height:15rem;overflow-x:hidden;overflow-y:scroll" *ngIf="addTable&& !toggleData">
+                        <div class="node-detail" *ngFor="let tabconfig of tableConfigArray;let i = index">
+                            <div class="label">
+                                <span> Column Name</span>
+                            </div>
+                            <div class="colen">
+                                <span>:</span>
+                            </div>
+                            <div class="value" style="width:13rem">
+                                <input class="min-input" [(ngModel)]="tableConfigArray[i].name">
+                            </div>
+                            <div class="colen">
+                                <span></span>
+                            </div>
+                            <div class="label">
+                                <span> Column Type</span>
+                            </div>
+                            <div class="colen">
+                                <span>:</span>
+                            </div>
+                            <div class="value" style="width:13rem">
+                                <mat-select class="min-select" [(ngModel)]="tableConfigArray[i].type">
+                                    <div *ngFor="let type of dataTypeList">
+                                        <mat-option [value]="type">
+                                            {{type}}
+                                        </mat-option>
+                                    </div>
+
+                                </mat-select>
+                            </div>
+                            <div class="colen">
+                                <span>:</span>
+                            </div>
+                            <div class="label">
+                                <span> Column Size</span>
+                            </div>
+                            <div class="colen">
+                                <span>:</span>
+                            </div>
+                            <div class="value" style="width:13rem">
+                                <input class="min-input" typr='number' [(ngModel)]="tableConfigArray[i].size">
+                            </div>
+                            <div class="value" style="margin-left:5px">
+                                <button mat-icon-button (click)="tableConfigArray.splice(i, 1);" #tooltip="matTooltip" matTooltip="Remove"><mat-icon style="color:rgb(158, 157, 157)">do_disturb_on</mat-icon></button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+    </div>
+
+    <mat-dialog-actions align="end">
+        <button mat-stroked-button mat-dialog-close style="color:red">
+        <mat-icon>close</mat-icon>
+        <span>Close</span>
+    </button>
+        <button mat-raised-button style="color:white;background-color:#394eb4;" class="selectButton" (click)="configureProflile()">
+        <mat-icon>done</mat-icon>
+        <span>Configure</span>
+    </button>
+    </mat-dialog-actions>
+</div>
+
+<notifier-container></notifier-container>

@@ -1,0 +1,818 @@
+@use "src/theme" as theme;
+
+button {
+  span {
+    /*to add a gap between icon and text in buttons */
+    padding-left: 10px;
+  }
+}
+
+.header-text {
+  width: 100%;
+  height: 100%;
+  font-weight: 500;
+  font-style: italic;
+  color: gray;
+}
+
+table,
+td,
+a {
+  color: #000;
+  font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+tr,
+td,
+a {
+  font-family: monospace, monospace;
+  font-size: 14px;
+  transition: all 0.1s ease;
+}
+
+tr {
+  height: 30px;
+}
+
+th,
+td {
+  white-space: nowrap;
+  height: 24px;
+}
+
+/* Reset overflow value to hidden for all non-IE browsers. */
+html>body div.tableContainer {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* define width of table. IE browsers only                 */
+div.tableContainer table {
+  float: left;
+  width: 100%;
+}
+
+/* define width of table. Add 16px to width for scrollbar.           */
+/* All other non-IE browsers.                                        */
+html>body div.tableContainer table {
+  width: 100%;
+}
+
+/* set table header to a fixed position. WinIE 6.x only                                       */
+/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
+/* an element that has an overflow property set, the relative value translates into fixed.    */
+/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
+thead.fixedHeader tr {
+  position: relative;
+}
+
+/* set THEAD element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+html>body thead.fixedHeader tr {
+  display: block;
+}
+
+/* make the TH elements pretty */
+thead.fixedHeader th {
+  background: rgb(100, 100, 100);
+  border-left: 1px solid rgb(194, 194, 194);
+  border-right: 1px solid rgb(170, 170, 170);
+  border-top: 1px solid rgb(194, 194, 194);
+  font-weight: normal;
+  padding: 4px 3px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+}
+
+thead.fixedHeader a {
+  text-align: center;
+  color: #fff;
+  display: block;
+  width: 100%;
+}
+
+/* define the table content to be scrollable                                              */
+/* set TBODY element to have block level attributes. All other non-IE browsers            */
+/* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
+/* induced side effect is that child TDs no longer accept width: auto                     */
+html>body tbody.scrollContent {
+  display: block;
+  height: 262px;
+  overflow: auto;
+  width: 100%;
+}
+
+/* make TD elements pretty. Provide alternating classes for striping the table */
+/* http://www.alistapart.com/articles/zebratables/                             */
+tbody.scrollContent td,
+tbody.scrollContent tr td {
+  text-align: left;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ddd;
+  padding: 2px 3px 3px 4px;
+  color: black;
+  text-shadow: 1px 4px 5px #aba8a88e;
+
+  .cancelled-deals {
+    color: rgb(150, 150, 150);
+    text-shadow: none;
+  }
+}
+
+tbody.scrollContent tr:nth-child(even) td {
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ddd;
+  padding: 2px 3px 3px 4px;
+  color: black;
+  text-shadow: 1px 4px 5px #aba8a88e;
+
+  .cancelled-deals {
+    color: rgb(150, 150, 150);
+    text-shadow: none;
+  }
+}
+
+tbody.scrollContent td,
+tbody.scrollContent tr:hover td {
+  background: rgb(245, 245, 245);
+  color: rgb(52 69 180);
+  cursor: pointer;
+
+  .cancelled-deals {
+    color: rgb(52 69 180);
+  }
+}
+
+tbody.scrollContent td,
+tbody.scrollContent tr:nth-child(even):hover td {
+  background: rgb(226, 226, 226);
+  color: rgb(52 69 180);
+  cursor: pointer;
+
+  .cancelled-deals {
+    color: rgb(52 69 180);
+  }
+}
+
+.configuration-container {
+  display: inline-block;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+::ng-deep .ngx-json-viewer {
+  overflow: auto !important;
+}
+
+.main-container {
+  height: 100%;
+
+  >mat-drawer {
+    width: 400px;
+    min-width: 300px;
+    border-right: none;
+    background-color: rgb(250, 250, 250);
+    background-image: linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.5) 50%);
+    background-size: 50px 50px;
+  }
+}
+
+.workflow-icon {
+  color: rgb(80, 80, 80);
+  border-bottom: transparent solid 2px;
+  transition: all linear 100ms;
+}
+
+.workflow-icon:hover {
+  color: rgb(0, 155, 155);
+  border-bottom: silver solid 2px;
+}
+
+.worksheet-icon {
+  padding-right: 15px;
+  color: rgb(80, 80, 80);
+  width: 25px;
+  border-bottom: transparent solid 2px;
+  transition: all linear 100ms;
+}
+
+.worksheet-icon:hover {
+  color: rgb(0, 155, 155);
+  border-bottom: silver solid 2px;
+}
+
+.nav-list-item-chip {
+  position: absolute;
+  right: 10px;
+  color: rgb(180, 180, 180);
+  overflow: visible;
+}
+
+.nav-list-item {
+  border: rgb(230, 230, 230) solid 1px;
+  margin-bottom: -1px;
+  font-size: 14px;
+  margin-left: -25px;
+  padding-left: 25px;
+  padding-left: 25px;
+  width: calc(100% + 50px);
+  overflow: hidden;
+  box-sizing: border-box;
+  border-right: dimgray solid 4px;
+  transition: all linear 50ms;
+}
+
+.nav-list-item:hover {
+  background-color: whitesmoke;
+}
+
+.nav-list-item-selected {
+  background-color: whitesmoke;
+  text-decoration: underline;
+  text-decoration-color: silver;
+  border-right: #394eb4 solid 6px;
+}
+
+.nav-list-item-selected:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.flm-inner-container {
+  height: 100%;
+}
+
+/*CHART CONTAINER */
+.flm-tasks-chart {
+  position: relative;
+  height: 40%;
+
+  /* overflow: hidden; */
+  >.flm-title {
+    position: absolute;
+    top: 0;
+    background-color: gainsboro;
+    color: black;
+    font-style: italic;
+    font-size: 16px;
+    overflow: hidden;
+    z-index: 3;
+    box-sizing: border-box;
+
+    /*title */
+    >.flm-title-workflow {
+      font-size: 15px;
+      padding-left: 30px;
+      padding-right: 20px;
+      margin-right: 20px;
+      overflow: hidden;
+    }
+
+    >.separator {
+      z-index: 1;
+      margin-left: -60px;
+      height: 60px;
+      width: 60px;
+      border-style: solid;
+      border-width: 2px 0 0 0;
+      border-radius: 0 1px 0 0;
+      border-top-color: rgba(122, 113, 113, 0.3);
+      -webkit-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+      box-shadow: 4px 0px 5px -3px rgba(0, 0, 0, 0.3);
+      transform: rotate(45deg);
+    }
+
+    >.flm-title-worksheet {
+      font-size: 15px;
+      padding-left: 30px;
+      padding-right: 30px;
+      overflow: hidden;
+    }
+
+    /*start / stop buttons */
+    >.control-buttons {
+      right: 0;
+      position: absolute;
+      padding-right: 10px;
+    }
+  }
+
+  /*worksheet status summary */
+  >.flm-worksheet-status {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 2;
+    /* width: 300px; */
+  }
+
+  >.flm-worksheet-flowchart {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.01) 4px, transparent 4px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.01) 4px, transparent 4px),
+      linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    -webkit-box-shadow: inset 0px 52px 5px 0px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: inset 0px 52px 5px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0px 52px 5px 0px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+
+    >.chart-container {
+      display: grid;
+      padding-top: 80px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    >.mid-graph-card {
+      padding-left: 50px;
+      padding-right: 50px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      align-items: center;
+      min-width: 250px;
+      max-width: 80%;
+      max-height: 30%;
+      display: flex;
+      overflow: auto;
+
+      >.spinner {
+        >mat-icon {
+          font-size: 22px;
+          padding-top: 4px;
+          padding-left: 2px;
+        }
+      }
+
+      >.text {
+        width: 100%;
+        margin-left: 10px;
+        font-size: 14px;
+        text-align: justify;
+        text-align-last: center;
+      }
+    }
+
+    >.create-task-button-container {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      width: auto;
+      height: 40px;
+      display: flex;
+
+      >button {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #394eb4;
+        margin-right: 10px;
+      }
+    }
+
+    >.graph-controls {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: auto;
+      height: 40px;
+      display: flex;
+
+      >button {
+        background-color: rgba(255, 255, 255, 0.5);
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+/*WORKSHEET TASK DETAILS */
+.flm-worksheet-tasks {
+  position: relative;
+  height: 60%;
+  border-left: rgba(0, 0, 0, 0.2) solid 1px;
+}
+
+.no-data-text {
+  text-align: center;
+  color: silver;
+  padding: 20px;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+/*edges */
+g.edge {
+  >path {
+    cursor: pointer;
+    transition-property: all, fill;
+    transition-timing-function: linear, linear;
+    transition-duration: 150ms, 150ms;
+  }
+}
+
+/*nodes */
+g.node {
+  fill: white;
+  cursor: pointer;
+  filter: url(#myShadow);
+
+  >rect {
+    transition-property: all, fill;
+    transition-timing-function: linear, linear;
+    transition-duration: 300ms, 80ms;
+  }
+}
+
+/*node icons */
+.svg-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #000000d8;
+}
+
+.svg-icon circle {
+  stroke: #ffffff00;
+  stroke-width: 1;
+}
+
+.icon-tick path,
+.icon-tick polygon,
+.icon-tick rect {
+  fill: rgb(0, 255, 0);
+}
+
+.icon-cross path,
+.icon-cross polygon,
+.icon-cross rect {
+  fill: red;
+}
+
+.icon-reload path,
+.icon-reload polygon,
+.icon-reload rect {
+  fill: rgba(255, 255, 255, 0.6);
+}
+
+/*node normal */
+g.node.input-task {
+  >rect {
+    /* fill: #008ae6; */
+    fill: gray;
+  }
+}
+
+g.node.processing-task {
+  >rect {
+    /* fill: #0020d8; */
+    fill: rgb(45, 45, 45);
+  }
+}
+
+g.node.output-task {
+  >rect {
+    /* fill: #008ae6;*/
+    fill: gray;
+  }
+}
+
+g.line:hover {
+  cursor: pointer;
+  background: rgb(245, 245, 245);
+  /* color: rgb(52 69 180); */
+}
+
+//node hover
+g.node:hover.input-task {
+  >rect {
+    /* fill: #0060a0; */
+    fill: dimgray;
+  }
+}
+
+g.node:hover.processing-task {
+  >rect {
+    /* fill: #00158d;*/
+    fill: rgb(35, 35, 35);
+  }
+}
+
+g.node:hover.output-task {
+  >rect {
+    /* fill: #0060a0; */
+    fill: dimgray;
+  }
+}
+
+.node-external-input {
+  fill: transparent;
+  /* stroke: rgb(0, 255, 191) !important; */
+  stroke: #4a5baf !important;
+}
+
+.node-highlight {
+  fill: transparent;
+  stroke: #394eb4 !important;
+  filter: brightness(120%);
+}
+
+.edge {
+  cursor: default;
+
+  .line {
+    stroke-width: 2.5px;
+    marker-end: url(#arrow);
+    stroke: rgb(0, 0, 0) !important;
+    opacity: 0.5;
+  }
+
+  .edge-label .text-path {
+    font-size: 14px;
+  }
+}
+
+.edge-highlight {
+  cursor: pointer;
+
+  .line {
+    stroke-width: 5px;
+    marker-end: none;
+    stroke: #394eb4 !important;
+    filter: brightness(120%);
+    opacity: 1;
+  }
+
+  .edge-label {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.edge-highlight:hover {
+  opacity: 0.5;
+}
+
+/*tab labels based on nodes */
+.input-task-tab-label {
+  color: #00395f;
+}
+
+.processing-task-tab-label {
+  color: #000e5e;
+}
+
+.output-task-tab-label {
+  color: #00395f;
+}
+
+/*queue tabs container */
+.task-entry-queue-container {
+  /* position: absolute;  */
+  height: calc(100vh - 56vh);
+  width: 100%;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.example-container1 {
+  height: 100%;
+  overflow: scroll;
+}
+
+.mat-cell {
+  padding: 1% !important;
+  height: 1% !important;
+}
+
+.mat-header-cell {
+  padding: 1% !important;
+  height: 1% !important;
+}
+
+.smallbox {
+  width: 280%;
+  margin-bottom: 0;
+}
+
+.title {
+  /* font-size: medium; */
+  font-weight: bolder;
+}
+
+.buttondown {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 7px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b0bdbb;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::ng-deep.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: 40px;
+  padding: 25px;
+}
+
+.node-menu {
+  cursor: default;
+  background: whitesmoke;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+}
+
+.node-menu-item {
+  cursor: pointer;
+  font-size: 14px;
+  background: white;
+  padding: 10px;
+  margin-bottom: 1px;
+}
+
+.node-menu-item:hover {
+  background: silver;
+}
+
+.error-notification-card {
+  width: 900px;
+  background-color: white;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px;
+  padding-top: 0;
+  font-size: 14px;
+  z-index: 12;
+  border: solid rgba(255, 0, 0, 0.418) 1px;
+  box-sizing: border-box;
+
+  >.error-logs-header {
+    border-bottom: solid rgba(255, 0, 0, 1) 1px;
+    box-sizing: border-box;
+    padding-top: 5px;
+    padding-left: 5px;
+
+    >button {
+      float: right;
+      margin-top: -2px;
+    }
+
+    >h6 {
+      color: red;
+      line-height: 35px;
+      vertical-align: middle;
+    }
+  }
+
+  >.error-logs-body {
+    text-align: justify;
+    white-space: pre-line;
+    clear: both;
+    margin-left: 5px;
+    margin-right: 5px;
+    /* margin-bottom: 5px;
+       padding-top: 10px; */
+    padding-left: 10px;
+    padding-bottom: 10px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(180deg,
+        rgba(255, 0, 0, 0.1) 0%,
+        rgba(255, 255, 255, 0) 7px,
+        rgba(255, 255, 255, 0) 99%,
+        rgb(0, 0, 0, 0.1) 100%);
+    overflow-y: auto;
+    transition: all ease-out 200ms;
+  }
+}
+
+.mid-tab-card {
+  padding-left: 50px;
+  padding-right: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  min-width: 250px;
+  max-width: 80%;
+  max-height: 30%;
+  display: flex;
+  overflow: auto;
+
+  >.spinner {
+    >mat-icon {
+      font-size: 22px;
+      padding-top: 4px;
+      padding-left: 2px;
+    }
+  }
+
+  >.text {
+    width: 100%;
+    margin-left: 10px;
+    font-size: 13px;
+    text-align: justify;
+    text-align-last: center;
+  }
+}
+
+.bot-tab-card {
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  min-width: 100px;
+  max-width: 80%;
+  max-height: 30px;
+  display: flex;
+  overflow: hidden;
+  background: rgba(255, 255, 255);
+  opacity: 0.6;
+  transition: all linear 100ms;
+
+  >.text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    text-align: justify;
+    text-align-last: center;
+  }
+}
+
+.opaque-on-hover:hover {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 1366px) {
+  /* .status {
+     width: 80%;
+   } */
+}
+
+:host ::ng-deep .mat-tab-label.mat-tab-label-active {
+  opacity: 1;
+}
+
+:host ::ng-deep .mat-progress-bar-fill::after {
+  background-color: royalblue;
+}
+
+:host ::ng-deep .mat-progress-bar-buffer {
+  background: #e7e7e7;
+}
+
+:host ::ng-deep .mat-progress-bar {
+  border-radius: 0px;
+}
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+
+  width: calc(100% + 10%);
+  padding: 0;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

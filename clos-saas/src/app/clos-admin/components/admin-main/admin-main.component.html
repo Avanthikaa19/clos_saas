@@ -1,0 +1,31 @@
+<div class="main-container">
+    <div class="side-nav-container">
+        <div class="nav-container">
+            <ng-container *ngFor="let item of sideNavigationList">
+                <div class="nav-item" (click)="onNavClick(item);" routerLinkActive="active">
+                    <mat-icon class="icon">{{ item.iconName }}</mat-icon>
+                    <span class="name">{{ item.name }}</span>
+                </div>
+            </ng-container>
+        </div>
+        <div class="main-nav-container">
+            <mat-toolbar class="tool-bar">
+                <div class="tool-bar">
+                    <span *ngFor="let breadCrumb of breadCrumbList">
+                        <div style="cursor: pointer;margin-top:0.5rem;font-style: italic;"
+                            (click)="navToUrl(breadCrumb.url)">
+                            <div class="d-flex">{{breadCrumb.name}}
+                                <span class="separator-div">
+                                    <div class="separator"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </mat-toolbar>
+            <div class="content-container">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

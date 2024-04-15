@@ -1,0 +1,54 @@
+
+<div class="main-container">
+    <div class="header-conatiner">
+      <div class="header-content">
+        <span>
+          <b>
+            Application Entry
+          </b>
+        </span>
+      </div>
+    </div>
+    <div class="content-container">
+      <mat-tab-group [selectedIndex]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
+        <ng-container *ngFor="let matHead of matTabHeader">
+          <ng-container *ngIf="matHead.name !== 'Proxy Details' || isProxyDetailsTabVisible()">
+            <mat-tab label="{{matHead.name}}">
+              <ng-template mat-tab-label>
+                <span [class.tabColor]="activeTabName === matHead.name" style="font-weight: 600;text-shadow:2px 2px rgb(223, 223, 223)">
+                  {{matHead.name}}
+                </span>
+              </ng-template>
+              <div *ngIf="matHead.name === 'Corporate Details'">
+                <mat-tab-group [selectedIndex]="activeSubStepIndex" (selectedTabChange)="onSubStepSelectionChange($event)">
+                  <mat-tab label="{{matHeadSub.name}}" *ngFor="let matHeadSub of matSubTabHeaders">
+                    <ng-template mat-tab-label>
+                      <span [class.tabColor]="activeSubTabName === matHeadSub.name" style="font-weight: 600;text-shadow:2px 2px rgb(223, 223, 223)">
+                        {{matHeadSub.name}}
+                      </span>
+                    </ng-template>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+              <div *ngIf="matHead.name === 'Proxy Details' && isProxyDetailsTabVisible()">
+                <mat-tab-group [selectedIndex]="activeProxySubStepIndex" (selectedTabChange)="onProxySubStepSelectionChange($event)">
+                  <mat-tab label="{{matHeadSub.name}}" *ngFor="let matHeadSub of matProxySubTabHeader">
+                    <ng-template mat-tab-label>
+                      <span [class.tabColor]="activeProxySubTabName === matHeadSub.name" style="font-weight: 600;text-shadow:2px 2px rgb(223, 223, 223)">
+                        {{matHeadSub.name}}
+                      </span>
+                    </ng-template>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+            </mat-tab>
+          </ng-container>
+        </ng-container>
+      </mat-tab-group>
+    </div>
+    
+    <div class="main_nav-container">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+  </div>
+  

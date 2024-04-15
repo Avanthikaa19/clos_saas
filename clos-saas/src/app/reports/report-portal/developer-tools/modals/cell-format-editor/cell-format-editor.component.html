@@ -1,0 +1,181 @@
+<div class="cell-format-container">
+    <div class="cf-title noselect">
+        <span>Cell Format Editor</span>
+    </div>
+    <div class="cf-preview noselect">
+        <div class="cf-preview-title">
+            Preview:
+        </div>
+        <table class="cf-preview-table">
+            <tr>
+                <td class="cf-preview-topleft"></td>
+                <td class="cf-preview-topmiddle"></td>
+                <td class="cf-preview-topright"></td>
+            </tr>
+            <tr>
+                <td class="cf-preview-midleft"></td>
+                <td class="cf-preview-midmiddle"
+                [style.border-top-color]="cellFormat.borders.top.color"
+                [style.border-bottom-color]="cellFormat.borders.bottom.color"
+                [style.border-left-color]="cellFormat.borders.left.color"
+                [style.border-right-color]="cellFormat.borders.right.color"
+                [style.border-top-width.px]="cellFormat.borders.top.thickness"
+                [style.border-bottom-width.px]="cellFormat.borders.bottom.thickness"
+                [style.border-left-width.px]="cellFormat.borders.left.thickness"
+                [style.border-right-width.px]="cellFormat.borders.right.thickness"
+                [style.color]="cellFormat.fontColor"
+                [style.background-color]="cellFormat.backgroundColor"
+                [style.text-align]="cellFormat.textAlign"
+                [style.font-family]="cellFormat.font"
+                [style.font-size.px]="cellFormat.fontSize"
+                [style.font-weight]="cellFormat.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                [style.font-style]="cellFormat.fontStyle.includes('ITALIC')? 'italic' : 'normal'">
+                    {{cellData}}
+                </td>
+                <td class="cf-preview-midright"></td>
+            </tr>
+            <tr>
+                <td class="cf-preview-botleft"></td>
+                <td class="cf-preview-botmiddle"></td>
+                <td class="cf-preview-botright"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="cf-conf-title noselect">
+        <span>Configure:</span>
+    </div>
+    <div class="cf-conf-editor-container">
+        <table>
+            <tr>
+                <td></td>
+                <td>
+                    <div class="border-horizontal gap-10t">
+                        <label for="border-top-color" class="c-pointer noselect">Color:</label>
+                        <input id="border-top-color" class="min-input c-pointer" type="color" [(ngModel)]="cellFormat.borders.top.color">
+                        <label for="border-top-thickness" class="pad-10l noselect">Width:</label>
+                        <input id="border-top-thickness" class="min-input" type="number" min="0" max="3" [(ngModel)]="cellFormat.borders.top.thickness">
+                        <div class="border-preview-element preview-bottom"
+                        [style.border-bottom-color]="cellFormat.borders.top.color"
+                        [style.border-bottom-width.px]="cellFormat.borders.top.thickness"></div>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="border-vertical">
+                        <div>
+                            <label for="border-left-color" class="c-pointer noselect">Color:</label>
+                            <input id="border-left-color" class="min-input c-pointer" type="color" [(ngModel)]="cellFormat.borders.left.color">
+                        </div>
+                        <div class="gap-10t">
+                            <label for="border-left-thickness" class="noselect">Width:</label>
+                            <input id="border-left-thickness" class="min-input" type="number" min="0" max="3" [(ngModel)]="cellFormat.borders.left.thickness">
+                        </div>
+                        <div class="border-preview-element preview-right"
+                        [style.border-right-color]="cellFormat.borders.left.color"
+                        [style.border-right-width.px]="cellFormat.borders.left.thickness"></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-format-editor">
+                        <!-- <div class="text-preview"
+                        [style.color]="cellFormat.fontColor"
+                        [style.background-color]="cellFormat.backgroundColor"
+                        [style.text-align]="cellFormat.textAlign"
+                        [style.font-family]="cellFormat.font"
+                        [style.font-size.px]="cellFormat.fontSize"
+                        [style.font-weight]="cellFormat.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                        [style.font-style]="cellFormat.fontStyle.includes('ITALIC')? 'italic' : 'normal'">
+                            {{cellData}}
+                        </div> -->
+                        <div class="text-font">
+                            <label class="noselect">Font:</label>
+                            <mat-select [(ngModel)]="cellFormat.font" class="min-select"
+                            [style.font-family]="cellFormat.font">
+                                <mat-option [value]="cellFormat.font" [style.font-family]="cellFormat.font">{{cellFormat.font}}</mat-option>
+                                <mat-option *ngFor="let font of fontFamilyNames" [value]="font" [style.font-family]="font">{{font}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="text-font-style">
+                            <label class="noselect">Style:</label>
+                            <mat-select [(ngModel)]="cellFormat.fontStyle" class="min-select"
+                            [style.font-weight]="cellFormat.fontStyle.includes('BOLD')? 'bold' : 'normal'"
+                            [style.font-style]="cellFormat.fontStyle.includes('ITALIC')? 'italic' : 'normal'">
+                                <mat-option [value]="'NORMAL'" style="font-weight: normal; font-style: normal;">Normal</mat-option>
+                                <mat-option [value]="'BOLD'" style="font-weight: bold; font-style: normal;">Bold</mat-option>
+                                <mat-option [value]="'ITALIC'" style="font-weight: normal; font-style: italic;">Italic</mat-option>
+                                <mat-option [value]="'BOLD_ITALIC'" style="font-weight: bold; font-style: italic;">Bold & Italic</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="text-align">
+                            <label class="noselect">Align:</label>
+                            <mat-select [(ngModel)]="cellFormat.textAlign" class="min-select"
+                            [style.text-align]="cellFormat.textAlign === 'LEFT' ? 'left' : (cellFormat.textAlign === 'RIGHT' ? 'right' : 'center')">
+                                <mat-option [value]="'LEFT'" style="text-align: left;">Left</mat-option>
+                                <mat-option [value]="'CENTER'" style="text-align: center;">Center</mat-option>
+                                <mat-option [value]="'RIGHT'" style="text-align: right;">Right</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="text-font-size">
+                            <label for="font-size" class="noselect">Size:</label>
+                            <input id="font-size" class="min-input" type="number" [(ngModel)]="cellFormat.fontSize">
+                        </div>
+                        <div class="text-font-frontcolor">
+                            <label for="font-style" class="noselect">Foreground:</label>
+                            <input id="font-style" class="min-input" type="color" [(ngModel)]="cellFormat.fontColor">
+                        </div>
+                        <div class="text-font-backcolor">
+                            <label for="font-style" class="noselect">Background:</label>
+                            <input id="font-style" class="min-input" type="color" [(ngModel)]="cellFormat.backgroundColor">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="border-vertical">
+                        <div>
+                            <label for="border-right-color" class="c-pointer noselect">Color:</label>
+                            <input id="border-right-color" class="min-input c-pointer" type="color" [(ngModel)]="cellFormat.borders.right.color">
+                        </div>
+                        <div class="gap-10t">
+                            <label for="border-right-thickness" class="noselect">Width:</label>
+                            <input id="border-right-thickness" class="min-input" type="number" min="0" max="3" [(ngModel)]="cellFormat.borders.right.thickness">
+                        </div>
+                        <div class="border-preview-element preview-left"
+                        [style.border-left-color]="cellFormat.borders.right.color"
+                        [style.border-left-width.px]="cellFormat.borders.right.thickness"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div class="border-horizontal gap-10b">
+                        <label for="border-bottom-color" class="c-pointer noselect">Color:</label>
+                        <input id="border-bottom-color" class="min-input c-pointer" type="color" [(ngModel)]="cellFormat.borders.bottom.color">
+                        <label for="border-bottom-thickness" class="pad-10l noselect">Width:</label>
+                        <input id="border-bottom-thickness" class="min-input" type="number" min="0" max="3" [(ngModel)]="cellFormat.borders.bottom.thickness">
+                        <div class="border-preview-element preview-top"
+                        [style.border-top-color]="cellFormat.borders.bottom.color"
+                        [style.border-top-width.px]="cellFormat.borders.bottom.thickness"></div>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="font-notice noselect">
+        <span>Note:</span>
+        <p>Some font styles may not preview properly depending on your system's installed fonts. However, these fonts will still be applied to the report during generation.</p>
+    </div>
+    <div class="cf-action">
+        <button mat-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <button mat-raised-button color="primary" class="item-right" (click)="onApply()">
+            <mat-icon>save</mat-icon>
+            <span style="padding-left: 10px;">Apply Format</span>
+        </button>
+    </div>
+</div>

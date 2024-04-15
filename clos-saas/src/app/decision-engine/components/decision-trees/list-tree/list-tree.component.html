@@ -1,0 +1,88 @@
+<div class="main-container">
+    <div class="header-container flex-row-parent">
+        <div class="img-container flex-stetch">
+            <img style="opacity: 0.7;" src="assets/Icons/decision-tree.png">
+        </div>
+        <div class="describe-container flex-unstetch flex-column-parent">
+            <div class="title-container flex-stetch">
+                <span class="font-header">
+                    Decision Tree
+                </span>
+            </div>
+            <div class="sub-title-container flex-unstetch">
+                <span style="font-size: 1.4rem; color: gray;">
+                    You can create and edit Decision Tree here.
+                </span>
+            </div>
+        </div>
+        <div class="create-rule-container flex-stetch">
+            <span style="padding-right: 2rem;">
+                <button mat-stroked-button color="primary" (click)="createDecisionTree()" class="cls-button">
+                    <mat-icon>add</mat-icon>
+                    <span>
+                        Create Decision Tree
+                    </span>
+            </button>
+            </span>
+        </div>
+    </div>
+    <div class="filter-container flex-row-parent">
+        <div class="loading-container" [@fadeInOut] *ngIf="loading">
+            <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+            <span>Loading... Please wait...</span>
+        </div>
+        <div class="search-container flex-unstetch" style="position: relative;">
+            <mat-icon class="icon-search" style="left: 2rem;">search</mat-icon>
+            <input class="min-input" (input)="searchTree()" [(ngModel)]="inputText" style="margin-top: 0rem; margin-left: 1rem; height: 3rem; padding-left: 4rem;padding-right: 4rem; width: 98%;margin-right: 2rem;" placeholder="Search by   Decision Tree name">
+            <mat-icon class="icon-search" style="left: 78rem;cursor:pointer;" *ngIf="inputText" (click)="clearSearchField()">close</mat-icon>
+        </div>
+        <div class="sort-container flex-stetch" style="margin-left: 2rem;">
+            Sort by :
+        </div>
+        <div class="sort-container flex-unstetch">
+            <mat-select class="min-select" style="width: 20%;margin-left: 1rem;">
+                <mat-option value="asc" (click)="sortAsc()">Asc by name.</mat-option>
+                <mat-option value="desc" (click)="sortDesc()">Desc by name.</mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div class="content-container" *ngIf="treeList.length != 0 && !loading">
+        <div class="card-container" *ngFor="let tree of treeList">
+            <div class="inner-card-container" matRipple>
+                <div class="left-card-align ">
+                    <div style="margin-top: 1rem; margin-left: 2rem; ">
+                        <span class="inner-header">
+                            {{tree.name}}
+                        </span>
+                        <div style="height:1rem">
+
+                        </div>
+                        <!-- <span style="font-size: 1.3rem; color: gray;">
+                            {{tree.description}}
+                        </span> -->
+                    </div>
+                </div>
+                <div class="center-card-align">
+                    <!-- center -->
+                </div>
+                <div class="right-card-align ">
+                    <!-- right -->
+                    <button mat-stroked-button #tooltip="matTooltip" matTooltip="Click here to edit" class="class-btn" (click)="onClickCard(tree.id)">
+                        <mat-icon class="edit-button-icon">edit</mat-icon><span style="margin-left: 1rem;color: blue;">Edit </span>
+                    </button>
+
+                    <button mat-stroked-button #tooltip="matTooltip" matTooltip="Click here to Delete" class="class-btn" (click)="deleteDecisionTree(tree)">
+                        <mat-icon class="delete-button-icon">delete</mat-icon><span style="margin-left: 1rem;color: red;">Delete </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="no-records-found" *ngIf="treeList.length == 0 && !loading">
+            <div class="div-span">
+                No Decision Tree found
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

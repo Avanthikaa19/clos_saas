@@ -1,0 +1,168 @@
+.category-header {
+    background-color: whitesmoke;
+    color: silver;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: italic;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    position: sticky;
+    top: 0;
+}
+
+.category-sub-header {
+    color: silver;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: italic;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+table {
+    width: auto;
+    margin-left: 20px;
+}
+td {
+    white-space: nowrap;
+    margin-bottom: 1px;
+    line-height: 24px;
+}
+td:last-child {
+    width: 100%;
+}
+
+.min-label {
+    padding: 0 10px 0 10px;
+}
+
+.min-input {
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    border: solid transparent 1px;
+    border-radius: 3px;
+    transition: all linear 100ms;
+    width: 100%;
+}
+
+.min-input:hover {
+    border: solid rgb(218, 218, 218) 1px;
+}
+
+.min-input:focus {
+    border: solid silver 1px;
+}
+
+.min-input1 {
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    border: solid transparent 1px;
+    border-radius: 3px;
+    transition: all linear 100ms;
+    width: 93%;
+}
+
+.min-input1:hover {
+    border: solid rgb(218, 218, 218) 1px;
+}
+
+.min-input1:focus {
+    border: solid silver 1px;
+}
+.min-button1 {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    .mat-icon {
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+    }
+}
+
+.min-add-button1 {
+    position: absolute; 
+    right: 10%;
+}
+.min-button2 {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    .mat-icon {
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+    }
+}
+
+.min-add-button2 {
+    position: absolute; 
+    right: 5%;
+}
+.min-button3 {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    .mat-icon {
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+    }
+}
+
+.min-add-button3 {
+    position: absolute; 
+    right: 0;
+}
+
+.min-button {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    .mat-icon {
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+    }
+}
+
+.min-add-button {
+    position: absolute; 
+    right: 0; 
+    top: -2px; 
+    z-index:20;
+}
+
+.min-select {
+    background-color: whitesmoke;
+    padding-left: 2px;
+    min-height: 24px;
+    line-height: 24px;
+    border-radius: 3px;
+    border: solid transparent 1px;
+    transition: all linear 100ms;
+}
+
+.min-select:hover {
+    border: solid rgb(218, 218, 218) 1px;
+}
+
+.add-items-text {
+    color: silver; 
+    font-size: 12px; 
+    font-weight: 300; 
+    font-style: italic;
+}
+
+.left-pad-20 {
+    margin-left: 20px;
+    border-left: dotted 3px silver;
+}

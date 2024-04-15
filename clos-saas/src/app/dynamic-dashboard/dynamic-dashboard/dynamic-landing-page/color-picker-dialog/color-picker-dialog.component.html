@@ -1,0 +1,16 @@
+<h4 mat-dialog-title class="title">Choose Header Background Color
+  <mat-icon class="float-right box-icon-hov" matTooltip="Close" style="cursor: pointer;font-size: 18px; font-weight: bolder;" (click)="onCancelClick()">close</mat-icon></h4>
+<mat-dialog-content class="custom-dialog-content">
+  <mat-form-field class="color-input">
+    <input matInput [(ngModel)]="selectedColor" type="color">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <!-- <button mat-stroked-button (click)="onCancelClick()" style="margin-left:16px;font-weight:300;font-family: sans-serif;font-size: 14px;width:100px;margin-top: 15px;margin-right:5px">
+    <mat-icon style="color:red">close</mat-icon>
+    <span style="padding-left: 5px;color:red">Close</span>
+  </button> -->
+  <button mat-raised-button [mat-dialog-close]="selectedColor" style="background-color: black;color:white;float: right;margin-top: 15px;
+  height: 33px;
+  margin-left: 40%;"><span style="font-size: 12px;">APPLY</span></button>
+</mat-dialog-actions>

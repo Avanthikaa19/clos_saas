@@ -1,0 +1,498 @@
+<div class="seprate-columns" style="position: relative;">
+    <div class="choose-mode">
+        <span>Choose Mode:</span>
+        <mat-select class="min-select" [(ngModel)]="modelMode" (ngModelChange)="getDatabaseName()">
+            <mat-option value="Object Model">Object Model</mat-option>
+            <mat-option value="Database">Database</mat-option>
+        </mat-select>
+    </div>
+    <div class="database" *ngIf="modelMode == 'Database'">
+        <span>Chooose Database:</span>
+        <mat-select class="min-select" [(ngModel)]="DatabaseName" [disabled]="true">
+            <mat-option *ngFor="let dataBase of dataBaselist" [value]="dataBase">{{dataBase}}</mat-option>
+        </mat-select>
+    </div>
+    <div class="search-field" *ngIf="modelMode == 'Database'">
+        <span>Choose Table:</span>
+        <mat-select #selectAll class="min-select" [(ngModel)]="selectedTables" [multiple]="true" #multiSelect>
+            <mat-option>
+                <ngx-mat-select-search placeholderLabel="Search here.." [(ngModel)]="searchTableName"
+                    (ngModelChange)="onTableFilter()" noEntriesFoundLabel='No Items Found'>
+                </ngx-mat-select-search>
+            </mat-option>
+            <div class="select-all"  style="width: 100%; margin-top: -0.1rem; margin-left: -0.1rem;margin-bottom: -0.1rem;">
+                <mat-checkbox style="padding-left: 16px" [(ngModel)]="selectedAll"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="toggleAll()">Select All</mat-checkbox>
+            </div>
+            <span *ngFor="let tableName of filteredTablelist">
+                <mat-option [value]="tableName">{{ tableName }}</mat-option>
+            </span>
+        </mat-select>
+    </div>
+</div>
+<div style="margin-top: 15px;border: 2px solid gainsboro">
+    <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedIndex" (selectedTabChange)="tabChanged($event)">
+        <!-- <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon style="color: blue">track_changes</mat-icon>
+                <span style="color: blue;">
+                    ObjectModel
+                </span>
+            </ng-template>
+        <mat-progress-bar mode="indeterminate" *ngIf="params.length==0"></mat-progress-bar>
+           <div class="param-main-container">
+            <div class="category-header">
+                Select ObjectModel:
+            </div>
+               <div class="inner-container">
+                <div class="check-card-container" *ngIf="params.length!=0">
+                   <mat-checkbox  style="margin-top: 0.8rem; margin-left: 1rem;"  [(ngModel)]="master_checked" [(indeterminate)]="master_indeterminate"
+                   (change)="master_change()"> Select/Deselect All</mat-checkbox>
+                </div>
+                <div class="check-card-container" *ngFor="let param of params">
+                    <mat-checkbox style="margin-top: 0.8rem; margin-left: 1rem;" [(ngModel)]="param.checked" (change)="list_change()" >{{param.name}}</mat-checkbox>
+                </div>
+               </div>
+            </div>
+        </mat-tab> -->
+        <mat-tab>
+            <mat-progress-bar mode="indeterminate" *ngIf="params.length==0 && loading"></mat-progress-bar>
+            <ng-template mat-tab-label>
+                <mat-icon style="color: #0e2954">monetization_on</mat-icon>
+                <span style="color: #0e2954;">
+                    Conditional Variable
+                </span>
+            </ng-template>
+            <div class="main-container">
+                <div class="header-container" style="padding-top: 1.5rem; color: #343030;">
+                    <span style="margin-left: 1%;">
+                        Rule Builder :
+                    </span>
+                </div>
+                <div class="body-container" *ngIf="modelMode == 'Object Model'">
+                    <div class="side-nav-container">
+                        <div class="left-align ">
+                            <div style="margin-left: 2%;">
+                                <input type="text" name="search" [(ngModel)]="objModelKey" (keyup)="searchObjModel()"
+                                    autocomplete="off" placeholder="Search" />
+                            </div>
+                            <div style="height: 450px;margin-top: 20px">
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let item of objName" [expanded]="item.panelOpenState"
+                                        (opened)="item.panelOpenState = true" (closed)="item.panelOpenState = false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{item.name}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <p style="margin-left: 20px;cursor: pointer;"
+                                            *ngFor="let childObj of item.children">
+                                            <mat-checkbox
+                                                [hidden]="!childObj.name.toLowerCase().includes(objModelKey.toLowerCase())"
+                                                (change)="selectedInputNode(childObj.name,item.name,childObj.type,$event);detectChange();"
+                                                [disabled]="actionChecked.includes(childObj.name)"
+                                                [checked]="checkedItems.includes(childObj.name + ' - ' + childObj.type)"
+                                                class="example-margin">{{childObj.name}} -
+                                                <span>{{childObj.type}}</span></mat-checkbox>
+                                        </p>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <div style="margin-top:40%;margin-left:40%">
+                                    <div *ngIf="loading" class="loading-spinner">
+                                        <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"
+                                            style="left: 50px;bottom: 10px"></mat-progress-spinner>
+                                        <span>Loading.. Please wait..</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-nav-container">
+                        <div class="example-container">
+                            <div class="right-header">
+                                Conditions
+                            </div>
+
+                            <div class="list-checkeditems">
+                                <div class="list-containeritems" style="height:92%;overflow-y: auto;">
+                                    <mat-list role="list">
+                                        <div *ngFor="let input of inputData;let i = index">
+                                            <mat-list-item role="listitem"
+                                                style="font-size: 1.4rem;height:60px;background-color: white;border-radius: 5px;">
+                                                <div style="font-size: 1.6rem;padding-right: 10px;">
+                                                    {{input.name |titlecase}}
+                                                </div>
+                                                <div style="padding-right: 20px;">
+                                                    <mat-select class="min-select"
+                                                        style="min-width: 15rem; max-width: 30rem; text-transform: capitalize;background-color: whitesmoke;"
+                                                        [(ngModel)]="input.operator">
+                                                        <mat-option *ngFor="let symbol of symbols"
+                                                            [value]="symbol.value" (click)="detectChange()"
+                                                            [disabled]="input.type=='string'?symbol.disable:false">
+                                                            <span style="text-transform: capitalize;">
+                                                                {{symbol.name}}
+                                                            </span>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </div>
+                                                <div [hidden]="input.operator == '..'||input.operator == '....'">
+                                                    <input type="text" placeholder="Enter the value"
+                                                        (change)="detectChange()" (keypress)="onKeyPress($event)"
+                                                        *ngIf="input.type=='integer'" [(ngModel)]="input.operand"
+                                                        class="min-input">
+                                                    <input type="integer" placeholder="Enter the value"
+                                                        (change)="detectChange()" (keypress)="onKeyPress1($event)"
+                                                        *ngIf="input.type=='string'||input.type=='float'"
+                                                        [(ngModel)]="input.operand" class="min-input">
+                                                </div>
+                                                <div style="padding-right: 20px;" *ngIf="input.type=='dateTime'">
+                                                    <input type="datetime-local" placeholder="Enter the date"
+                                                        (change)="detectChange()" [(ngModel)]="input.operand"
+                                                        class="min-input">
+                                                </div>
+                                                <div style="padding-right: 20px;" *ngIf="input.operator == '..'">
+                                                    <input type="integer" placeholder="From" (change)="detectChange()"
+                                                        [(ngModel)]="input1" class="min-input">
+                                                </div>
+                                                <div style="padding-right: 20px;" *ngIf="input.type=='decimal'">
+                                                    <input type="string" placeholder="Enter the value"
+                                                        (keypress)="onKeyPress2($event)" (change)="detectChange()"
+                                                        [(ngModel)]="input.operand" class="min-input">
+                                                </div>
+                                                <div *ngIf="input.operator == '..'">
+                                                    <input type="integer" placeholder="To" (change)="detectChange()"
+                                                        [(ngModel)]="input2" class="min-input">
+                                                </div>
+                                                <div style="padding-right: 20px;" *ngIf="input.operator == '....'">
+                                                    <input type="integer" placeholder="From" (change)="detectChange2()"
+                                                        [(ngModel)]="from" class="min-input">
+                                                </div>
+                                                <div *ngIf="input.operator == '....'">
+                                                    <input type="integer" placeholder="To" (change)="detectChange2()"
+                                                        [(ngModel)]="to" class="min-input">
+                                                </div>
+                                                <div style="margin-left: 20px;" *ngIf="input.operator == '....'">
+                                                    <input type="integer" placeholder="Enter the value"
+                                                        (change)="detectChange2()" [(ngModel)]="index"
+                                                        class="min-input">
+                                                </div>
+
+                                            </mat-list-item>
+                                            <ng-container *ngIf="(i+1)!=inputData.length">
+                                                <div class="d-flex">
+                                                    <div class="togg-condition">
+                                                        <mat-slide-toggle style="margin: auto;padding: 10px;"
+                                                            (change)="detectChange()" color="primary"
+                                                            [(ngModel)]="inputData[i+1].logical_operator">
+                                                        </mat-slide-toggle>
+                                                        <span
+                                                            style="margin: auto;font-size: 1.2rem;font-weight: bolder;">
+                                                            {{inputData[i+1].logical_operator===true ?"AND":"OR"}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </mat-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body-container" *ngIf="modelMode == 'Database'">
+                    <div class="side-nav-container">
+                        <div class="left-align ">
+                            <!-- <div style="margin-left: 2%;">
+                                <input type="text" name="search" autocomplete="off" placeholder="Search" />
+                            </div> -->
+                            <div style="height: 450px;margin-top: 20px">
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let item of selectedTables; let i=index"
+                                        (opened)="getPanelvalue(item,i)">
+                                        <mat-expansion-panel-header *ngIf="item">
+                                            <mat-panel-title>
+                                                {{item}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="loading-container" *ngIf="loading">
+                                            <mat-progress-spinner color="primary" diameter="20" strokeWidth="2"
+                                                mode="indeterminate"></mat-progress-spinner>
+                                            <span>Loading... Please wait...</span>
+                                        </div>
+                                        <div #scrollContainer style="height: 145px;overflow-x:hidden;"
+                                            (scroll)="onScroll($event)">
+                                            <ng-container *ngFor="let fields of FieldsList[item]">
+                                                <mat-checkbox style="display: block;"
+                                                    (change)="databaseCondition(fields,$event)"
+                                                    [checked]="isFieldChecked(fields)">{{fields.join(' -')}}
+                                                </mat-checkbox>
+                                            </ng-container>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <div style="margin-top:40%;margin-left:40%">
+                                    <div *ngIf="loading" class="loading-spinner">
+                                        <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"
+                                            style="left: 50px;bottom: 10px"></mat-progress-spinner>
+                                        <span>Loading.. Please wait..</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-nav-container">
+                        <div class="example-container">
+                            <div class="right-header">
+                                Conditions
+                            </div>
+                            <div class="list-checkeditems">
+                                <div class="list-containeritems" style="height:92%;overflow-y: auto;">
+                                    <mat-list role="list">
+                                        <div *ngFor="let input of inputDbData;let i = index">
+                                            <mat-list-item role="listitem"
+                                                style="font-size: 1.4rem;height:60px;width:97.5%;background-color: white;margin: 10px;">
+                                                <div style="font-size: 1.6rem;padding-right: 10px;">
+                                                    {{input.name?input.name:input[0] |titlecase}}
+                                                </div>
+                                                <div style="padding-right: 20px;">
+                                                    <mat-select class="min-select"
+                                                        style="min-width: 15rem; max-width: 30rem; text-transform: capitalize;background-color: whitesmoke;"
+                                                        [(ngModel)]="input.operator">
+                                                        <mat-option *ngFor="let symbol of symbols"
+                                                            [value]="symbol.value" (click)="detectChange()"
+                                                            [disabled]="input.type=='string'?symbol.disable:false">
+                                                            <span style="text-transform: capitalize;">
+                                                                {{symbol.name}}
+                                                            </span>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </div>
+                                                <div>
+                                                    <input type="text" placeholder="Enter the value"
+                                                        (change)="detectChange()" [(ngModel)]="input.operand"
+                                                        class="min-input">
+                                                </div>
+                                            </mat-list-item>
+                                        </div>
+                                    </mat-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <mat-progress-bar mode="indeterminate" *ngIf="params.length==0 && loading"></mat-progress-bar>
+            <ng-template mat-tab-label>
+                <mat-icon style="color: #0e2954">monetization_on</mat-icon>
+                <span style="color: #0e2954;">
+                    Action Variable
+                </span>
+            </ng-template>
+            <div class="main-container">
+                <div class="header-container" style="padding-top: 1.5rem; color: #343030;">
+                    <span style="margin-left: 1%;">
+                        Rule Builder :
+                    </span>
+                </div>
+                <div class="body-container" *ngIf="modelMode == 'Object Model'">
+                    <div class="side-nav-container">
+                        <div class="left-align ">
+                            <div style="margin-left: 2%;">
+                                <input type="text" name="search" [(ngModel)]="actionSearchKey" (keyup)="actionSearch()"
+                                    autocomplete="off" placeholder="Search" />
+                            </div>
+                            <div style="height: 450px;margin-top: 20px">
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let item of actionobjModel"
+                                        [expanded]="item.panelOpenState" (opened)="item.panelOpenState = true"
+                                        (closed)="item.panelOpenState = false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{item.name}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <!-- <p style="margin-left: 20px;cursor: pointer;" *ngFor="let name of item.children">
+                                            <mat-checkbox (change)="selectedOutputNode(name,item.name,$event);detectChange();" [disabled]="actionChecked.includes(name)" [checked]="conditionChecked.includes(name)" class="example-margin">{{name}}</mat-checkbox>
+                                        </p> -->
+                                        <p style="margin-left: 20px;cursor: pointer;"
+                                            *ngFor="let childObj of item.children">
+                                            <mat-checkbox
+                                                [hidden]="!childObj.name.toLowerCase().includes(actionSearchKey.toLowerCase())"
+                                                (change)="selectedOutputNode(childObj.name,item.name,childObj.type,$event);detectChange();"
+                                                [disabled]="actionChecked.includes(childObj.name)"
+                                                [checked]="checkedItems2.includes(childObj.name + ' - ' + childObj.type)"
+                                                class="example-margin">{{childObj.name}} -
+                                                <span>{{childObj.type}}</span></mat-checkbox>
+                                        </p>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <div style="margin-top:40%;margin-left:40%">
+                                    <div *ngIf="loading" class="loading-spinner">
+                                        <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"
+                                            style="left: 50px;bottom: 10px"></mat-progress-spinner>
+                                        <span>Loading.. Please wait..</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-nav-container">
+                        <div class="example-container">
+                            <div class="right-header">
+                                Actions
+                            </div>
+                            <div class="list-checkeditems">
+                                <mat-list style="height:92%;overflow-y: auto;">
+                                    <mat-list-item *ngFor="let output of outputData;let i=index" role="listitem"
+                                        style="font-size: 1.4rem;height:60px;width:97.5%;background-color: white;margin: 10px;">
+                                        <div style="font-size: 1.6rem;">
+                                            {{output.name |titlecase}}
+                                        </div>
+                                        <div style="font-size: 1.6rem;">
+                                            <span style="padding:10px;">:</span>
+                                        </div>
+                                        <div *ngIf="output.choosen=='value'">
+                                            <input type="integer" placeholder="Enter the value"
+                                                *ngIf="output.type=='integer'" (keypress)="onKeyPress($event)"
+                                                [(ngModel)]="output.operand" (change)="detectChange()"
+                                                class="min-input">
+                                            <input type="text" placeholder="Enter the value"
+                                                *ngIf="output.type=='string'" (keypress)="onKeyPress1($event)"
+                                                (change)="detectChange()" [(ngModel)]="output.operand"
+                                                class="min-input">
+                                        </div>
+                                        <div style="padding-right: 20px;" *ngIf="output.type=='decimal'">
+                                            <input type="text" placeholder="Enter the value"
+                                                (keypress)="onKeyPress2($event)" (change)="detectChange()"
+                                                [(ngModel)]="output.operand" class="min-input">
+                                        </div>
+
+                                        <mat-select *ngIf="output.choosen=='function'" class="min-Select"
+                                            (change)="detectChange()"
+                                            style="min-width: 10rem; max-width: 15rem; background-color: whitesmoke;padding-right: 20px;"
+                                            [(ngModel)]="output.function">
+                                            <mat-option *ngFor="let function of functionsList" [value]="function.id">
+                                                {{function.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <div style="min-width: 20rem;">
+                                            <mat-select class="min-select"
+                                            style="min-width: 1.8rem; max-width: 1.8rem; background-color: whitesmoke;padding-right: 20px;"
+                                            [(ngModel)]="output.choosen">
+                                            <mat-option *ngFor="let option of options" [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-select>
+                                        </div> -->
+                                    </mat-list-item>
+                                </mat-list>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body-container" *ngIf="modelMode == 'Database'">
+                    <div class="side-nav-container">
+                        <div class="left-align ">
+                            <!-- <div style="margin-left: 2%;">
+                                <input type="text" name="search" autocomplete="off" placeholder="Search" />
+                            </div> -->
+                            <div style="height: 450px;margin-top: 20px">
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let item of selectedTables; let i=index"
+                                        (opened)="getPanelvalue(item,i)">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                {{item}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="loading-container" *ngIf="loading">
+                                            <mat-progress-spinner color="primary" diameter="20" strokeWidth="2"
+                                                mode="indeterminate"></mat-progress-spinner>
+                                            <span>Loading... Please wait...</span>
+                                        </div>
+                                        <div #scrollContainer style="height: 145px;overflow-x:hidden;"
+                                            (scroll)="onScroll($event)">
+                                            <ng-container *ngFor="let fields of FieldsList[item]">
+                                                <mat-checkbox style="display: block;"
+                                                    (change)="actionCondition(fields,$event)"
+                                                    [checked]="isFieldCheckedAction(fields)">{{fields.join(' -')}}</mat-checkbox>
+                                            </ng-container>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <div style="margin-top:40%;margin-left:40%">
+                                    <div *ngIf="loading" class="loading-spinner">
+                                        <mat-progress-spinner [diameter]="24" [strokeWidth]="2" mode="indeterminate"
+                                            style="left: 50px;bottom: 10px"></mat-progress-spinner>
+                                        <span>Loading.. Please wait..</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-nav-container">
+                        <div class="example-container">
+                            <div class="right-header">
+                                Actions
+                            </div>
+                            <div class="list-checkeditems">
+                                <div class="list-containeritems" style="height:92%;overflow-y: auto;">
+                                    <mat-list role="list">
+                                        <div *ngFor="let input of inputActionData;let i = index">
+                                            <mat-list-item role="listitem"
+                                                style="font-size: 1.4rem;height:60px;width:97.5%;background-color: white;margin: 10px;">
+                                                <div style="font-size: 1.6rem;padding-right: 10px;">
+                                                    {{input.name?input.name:input[0] |titlecase}}
+                                                </div>
+                                                <div style="font-size: 1.6rem;">
+                                                    <span style="padding:10px;">:</span>
+                                                </div>
+                                                <div>
+                                                    <input type="text" placeholder="Enter the value"
+                                                        (change)="detectChange()" [(ngModel)]="input.operand"
+                                                        class="min-input">
+                                                </div>
+                                            </mat-list-item>
+                                        </div>
+                                    </mat-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close style="color: red;"
+        style="float:right;margin-right: auto;background: rgb(43, 42, 42);color: white;">
+        <mat-icon>close</mat-icon>Close
+    </button>
+
+    <button (click)="nextStep()" mat-flat-button
+        style="color: white;background-color: rgb(43, 42, 42);float:right;margin-left: 5px;" cdkFocusInitial
+        *ngIf="tabChangeIndex==0">
+        <mat-icon>skip_next</mat-icon>Next
+    </button>
+    <button (click)="previousStep()" mat-flat-button
+        style="color: white;background-color: rgb(43, 42, 42);float:right;margin-left: 5px;" cdkFocusInitial
+        *ngIf="tabChangeIndex==1">
+        <mat-icon>skip_previous</mat-icon>Previous
+    </button>
+    <ng-container *ngIf="!saveUpdate">
+        <button (click)="saveParams()" mat-flat-button
+            style="color: white;background-color: #0e2954;float:right;margin-left: 5px;" cdkFocusInitial
+            *ngIf="tabChangeIndex==1">
+            <mat-icon style="position: relative;bottom: 2px;">save</mat-icon>Save</button>
+    </ng-container>
+    <ng-container *ngIf="saveUpdate">
+        <button (click)="saveParams()" mat-flat-button
+            style="color: white;background-color: rgb(43, 42, 42);float:right;margin-left: 5px;" cdkFocusInitial
+            *ngIf="tabChangeIndex==1">
+            <mat-icon style="position: relative;bottom: 2px;">update</mat-icon>Update</button>
+    </ng-container>
+</div>

@@ -1,0 +1,107 @@
+.selected-job-details{
+    padding: 0px;
+    .job-detail{
+        display: flex;
+        justify-content: space-between;
+        padding: 16px;
+        font-size: 1rem;
+        font-weight: bold;        
+        white-space: nowrap;
+        font-style: italic;
+        background-color: #fff;
+        > .job-status {
+            font-weight: 400;
+            margin-right:20px;
+            font-style:normal;
+            > span span {
+                font-weight: bold;
+                font-size: 18px;
+                text-transform: uppercase;
+                color: rgb(0, 129, 0);  
+                margin-right: 25px; 
+            }
+            > ::ng-deep .mat-flat-button.mat-warn, .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn{
+                background-color: #cf0c0c2e !important;
+                color: #cf0c0c !important;
+            }
+            > ::ng-deep .mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab{
+                background-color: #8987874d !important;
+            }
+        }
+    }
+    .report-details{
+        margin: 20px;
+        > .report-field{
+            display: flex;
+            flex-wrap: wrap;
+            > div{
+                margin-bottom: 5px;
+                font-weight: bold;
+                font-size: 1rem;
+            }
+            > span{
+                border-radius: 4px;
+                background-color: #fff;
+                margin-bottom: 10px;
+                padding-left: 10px;
+            }
+        }
+    }
+    .report-param{
+        display: flex;
+        flex-wrap: wrap;
+        > span{
+            border-radius: 4px;
+            background-color: #fff;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 0 4px;
+            border-radius: 4px;
+        }
+        > .report-param-value{
+            height: 135px;
+            overflow: auto;
+            width: 100%;
+            > div{
+                display: flex;
+                flex-wrap: wrap;
+                padding: 5px;
+                align-items: center;
+                justify-content: center;
+                > span{
+                    background-color: #fff;
+                    text-align: center;
+                    margin: 0 4px;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+    
+    .logs{
+        margin: 20px;
+        font-weight: bold;
+        font-size: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        > .logs-detail{
+            margin-top: 10px;
+            font-weight: normal;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+            height: 350px;
+            width: 100%;
+            padding: 0px 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            align-items: center;
+            justify-content: center;
+            flex-flow: wrap;
+        }
+    }
+}

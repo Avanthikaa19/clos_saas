@@ -1,0 +1,155 @@
+@import url(../../../common-css/common.scss);
+@import url(../../../common-css/commonstyles.scss);
+.main-container {
+    height: 70rem;
+    overflow: hidden;
+    cursor: initial;
+    >.tool-bar-container {
+        height: 6rem;
+        border-bottom: 1px solid lightgrey;
+    }
+    div {
+        width: 100%;
+    }
+    >.rule-definition-container {
+        flex: 0 0 auto;
+        min-height: 8rem;
+        // min-height: 25%;
+        .node-data {
+            width: 30%;
+            .node-detail {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                margin-left: 20px;
+                .label {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 130px;
+                    text-align: left;
+                }
+                .colen {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: 10px;
+                    text-align: center;
+                }
+                .value {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    margin:2rem;
+                    width: 20rem;
+                    input {
+                        width: 20rem;
+                    }
+                }
+            }
+        }
+    }
+    >.button-right .button {
+        float: right;
+        height: 10%;
+    }
+    mat-slide-toggle {
+        transform: scale(1);
+    }
+
+.table-container {
+    flex: 1 1 auto;
+    height: 44rem;
+    width: 100%;
+    overflow: auto;
+    // overflow-x:hidden;
+    margin: 1rem;
+    position: relative;
+        table-layout: fixed;
+
+    .main-table {
+        border-collapse: separate;
+        box-shadow: 0 1px 9px 1px rgb(0 0 0 / 14%);
+        -webkit-box-shadow: 0 1px 9px 1px rgb(0 0 0 / 14%);
+    }
+    .nested-table{
+        width: 100%;
+        max-height: 20rem;
+        overflow: auto;
+        border-collapse: collapse;
+    }
+    
+    td {
+        text-align: left;
+        padding: 2px 8px;
+    }
+    
+    th {
+       text-align: center;
+        padding: 0.5rem 7rem;
+        // overflow: hidden;
+        position:sticky;
+    }
+   .main-table thead {
+        position: sticky;
+        top: 0; /* Stick the header to the top */
+        background-color: #f7f7f7; /* Optional: Header background color */
+        z-index: 2; /* Ensure the header stays above the table content */
+      }
+      .nested-table{
+       margin-top: 20px;
+       margin:1rem;
+       border-collapse: separate;
+      }
+      .nested-table thead{
+        position: sticky;
+        top: 0;
+        z-index: 1;
+       }
+       .nested-table th{
+        width: 20%;
+       }
+    
+    tr:nth-child(1) {
+        background: #3445b4;
+        color: white;
+    }
+    
+    tr {
+        background-color: #f5f5f5;
+        overflow:scroll;
+    }
+  }
+}
+
+.save-disable {
+    color: blueviolet !important;
+    background-color: white !important;
+    cursor: not-allowed;
+}
+
+.disable-icon {
+    background-color: rgb(236, 229, 222);
+    cursor: not-allowed;
+}
+.button-container{
+    color: white;
+    background-color: #3445b4;
+}
+.name-container{
+   display: flex;
+   flex-direction: row;
+}
+.name-details-container{
+    font-weight: bolder;
+    text-transform: capitalize;
+    margin-left:1rem;
+}
+.main-bins-container{
+    display:grid;
+    grid-template-columns:0fr 3fr 0fr;
+    margin:1rem;
+}
+.input{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+

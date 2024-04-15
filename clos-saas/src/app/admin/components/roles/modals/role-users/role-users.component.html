@@ -1,0 +1,49 @@
+<div class="module-buttons-container">
+    <div class="aed__btn-container">
+        <button class="add__btn-container" mat-button (click)="getUsersDetail()">
+            <mat-icon>add</mat-icon>
+            Add /Remove User
+        </button>
+    </div>
+</div>
+<div class="content-container"> 
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr style="text-transform: capitalize;">
+                    <th *ngFor="let header of userHeaders">{{header}}</th>
+                </tr>
+            </thead>
+            <thead>
+                <tr style="top: 5.5%; text-transform: capitalize;">
+                    <th *ngFor="let header of userHeaders">
+                        <div class="parent__row-flex">
+                            <input class="min-input flex-grow" style="background-color: white;min-width: 15rem;" >
+                            <mat-icon class="flex-shrink" style="font-size: 1.4rem; margin-top: 1rem;">filter_list</mat-icon>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container>
+                    <tr *ngFor="let user of users">
+                        <td *ngFor="let header of userHeaders">{{user[header]}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="paginator-container">
+    <!-- <div class="fetch-container">
+        <span>
+            Fetched 469 datas in 0.05 seconds
+        </span>
+    </div>
+    <div class="pg-container">
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+        </mat-paginator>
+    </div> -->
+</div>
+<notifier-container></notifier-container>

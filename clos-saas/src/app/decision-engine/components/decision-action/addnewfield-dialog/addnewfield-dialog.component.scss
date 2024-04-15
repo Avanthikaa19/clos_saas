@@ -1,0 +1,98 @@
+@use "src/theme" as theme;
+.main-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    >.module-header-container {
+        height: 2.5rem;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    >.tab-container {
+        >.main-tabs-container {
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            .tab-icon {
+                margin-right: 8px;
+            }
+            .form-content-container {
+                margin: 1rem 1rem 1rem 2rem;
+                border: 0.1rem solid lightgray;
+                border-radius: 0.5rem;
+                overflow: auto;
+                max-height: 50rem;
+                .table-content-container {
+                    padding: 1rem 1rem 5rem 2rem;
+                    font-weight: 600;
+                    >.role-detail-container {
+                        .required::after {
+                            content: " *";
+                            color: red;
+                        }
+                        td {
+                            font-size: 1.5rem;
+                        }
+                    }
+                    .other {
+                        margin-top: 1rem;
+                        margin-left: 1rem;
+                        font-weight: 100;
+                    }
+                }
+            }
+            .cdu__btn__container {
+                height: 5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 3rem;
+                span {
+                    font-weight: 600;
+                }
+                >.delete__btn-container {
+                    flex: 1 1 auto;
+                    button {
+                        background-color: black;
+                        color: white;
+                        box-shadow: 3px 3px rgb(230, 230, 230);
+                        margin-left: 2rem;
+                    }
+                }
+                >.create__btn-container {
+                    flex: 0 0 auto;
+                    >.save_btn {
+                        background-color: #0e2954;
+                        color: white;
+                        box-shadow: 3px 3px rgb(230, 230, 230);
+                        margin-right: 1rem;
+                    }
+                    >.save_btn:disabled {
+                        background-color: lightgray;
+                    }
+                }
+            }
+        }
+    }
+}
+
+:host ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+:host ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    color: #0e2954;
+    opacity: 1;
+}
+
+td {
+    font-size: 1.2rem;
+    text-align: left;
+    padding: 8px;
+     :not(even) {
+        min-width: 35rem;
+    }
+}

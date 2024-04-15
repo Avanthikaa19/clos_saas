@@ -1,0 +1,163 @@
+<div class="main-container">
+  <div class="row mb-4 pt-4">
+    <div class="col-md-10">
+      <div class="application-list">
+        <ul>
+            <li>
+                <span style="font-weight: bold; margin-right: 10px;">APPLICATION ID:</span>
+                <span style="color: royalblue;">{{applicationDetails?.id}}</span>
+            </li>
+            <li>
+                <span style="font-weight: bold; margin-left: 20px; margin-right: 10px;">ENTITY NAME:</span>
+                <span style="color: royalblue;">{{applicationDetails?.legalNameOfTheCompany}}</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="top-container">
+    <mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChangeEvent($event)">
+      <mat-tab *ngFor="let mainTab of mainTabs; let i = index" label="{{mainTab.name}}">
+        <ng-template matTabContent>
+          <mat-tab-group #subTabGroup (selectedTabChange)="onsubTabChangeEvent($event, i)">
+            <mat-tab *ngFor="let subTab of subTabs[i]" label="{{subTab.name}}">
+            </mat-tab>
+          </mat-tab-group>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  
+  <div class="scroll-container">
+    <div class="cardmain-container" [ngClass]="{'box-with-shadow': !isLoading && !isEmpty}">
+      <div class="card-container" *ngIf="this.stage ==='initial'">
+        <div class="card-row-initial">
+          <div class="card-label">INITIAL STAGE :</div>
+          <div class="card-value">{{ initialStatus }}</div> <br>
+        </div>
+      </div>
+      <!-- NEW CODE FOR DUPLICATE MATCH CARDS -->
+      <ng-container *ngIf="stage === 'DUPLICATE CHECKING' && duplicatestatus && duplicatestatus['DATA']">
+        <ng-container *ngFor="let record of duplicatestatus['DATA']">
+          <div class="card-container" *ngFor="let data of matchedField">
+            <div class="card-row">
+              <table>
+                <!-- <tr>
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Duplicate Match</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{ duplicatestatus['TABLE_NAME'] }}</td>
+                </tr> -->
+                <tr *ngIf="record['MATCHED_TABLE_FIELDS'] !== null">
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Matched Fields</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{data}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight:bold;font-size: 12px" class="card-label">Status</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value" *ngIf="record['DUP_DECISION_A'] === 'NO_MATCH'" style="color: red;">
+                    {{ record['DUP_DECISION_A'] }}
+                  </td>
+                  <td class="details-value" *ngIf="record['DUP_DECISION_A'] === 'EXACT_MATCH'" style="color: green;">
+                    {{ record['DUP_DECISION_A'] }}
+                  </td>
+                </tr>
+                <tr *ngIf="record['MATCHED_RECORD_ID'] !== null">
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Record ID</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{ record['MATCHED_RECORD_ID']}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="stage === 'NEGATIVE CHECKING' && negativestatus && negativestatus['DATA']">
+        <ng-container *ngFor="let record of negativestatus['DATA']">
+          <div class="card-container" *ngFor="let data of matchedNegativeField">
+            <div class="card-row">
+              <table>
+                <!-- <tr>
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Duplicate Match</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{ duplicatestatus['TABLE_NAME'] }}</td>
+                </tr> -->
+                <tr *ngIf="record['MATCHED_TABLE_FIELDS'] !== null">
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Matched Fields</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{data}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight:bold;font-size: 12px" class="card-label">Status</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value" *ngIf="record['DUP_DECISION_A'] === 'NO_MATCH'" style="color: red;">
+                    {{ record['DUP_DECISION_A'] }}
+                  </td>
+                  <td class="details-value" *ngIf="record['DUP_DECISION_A'] === 'EXACT_MATCH'" style="color: green;">
+                    {{ record['DUP_DECISION_A'] }}
+                  </td>
+                </tr>
+                <tr *ngIf="record['MATCHED_RECORD_ID'] !== null">
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Record ID</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{ record['MATCHED_RECORD_ID']}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+        
+      </ng-container>
+      <ng-container *ngIf="stage === 'EXTERNAL KYC CHECKING' && externalKYCStatus && externalKYCStatus['DATA']">
+        <ng-container *ngFor="let record of externalKYCStatus['DATA']">
+          <div class="card-container" *ngFor="let data of matchedKYCField">
+            <div class="card-row">
+              <table>
+                <!-- <tr>
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Duplicate Match</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{ duplicatestatus['TABLE_NAME'] }}</td>
+                </tr> -->
+                <tr *ngIf="record['MATCHED_TABLE_FIELDS'] !== null">
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Matched Fields</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{data}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight:bold;font-size: 12px" class="card-label">Status</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value" *ngIf="record['DUP_DECISION_A'] === 'NO_MATCH'" style="color: red;">
+                    {{ record['DUP_DECISION_A'] }}
+                  </td>
+                  <td class="details-value" *ngIf="record['DUP_DECISION_A'] === 'EXACT_MATCH'" style="color: green;">
+                    {{ record['DUP_DECISION_A'] }}
+                  </td>
+                </tr>
+                <tr *ngIf="record['MATCHED_RECORD_ID'] !== null">
+                  <td style="font-weight:bold;font-size: 12px;" class="card-label">Record ID</td>
+                  <td class="details-value">:</td>
+                  <td class="details-value">{{ record['MATCHED_RECORD_ID']}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+        
+      </ng-container>
+    </div>
+  </div>
+  <div>
+  </div>
+  <div class="close-container">
+    <button style="float:right" mat-dialog-close mat-raised-button class="clos-btn" matTooltip="Close">
+      <mat-icon>close</mat-icon>Close
+    </button>
+  </div>
+</div>
+<div class="loading-container" *ngIf="isLoading">
+  <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+  <span>Loading... Please wait...</span>
+</div>
+<div class="placeholder-container" *ngIf="!isLoading && isEmpty">
+  <span>No items found!</span>
+</div>

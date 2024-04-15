@@ -1,0 +1,1786 @@
+<div class="content-container">
+    <div>
+        <form #supplementaryInfoForm="ngForm">
+            <div class="content-section">
+                <div class="grid-container">
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">No. of Supple</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSuprln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">Supple Business Code</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmSbuCde']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 1'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Cust Ind</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Cind']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1EMbl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Gender</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Local Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Lcnm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Bill Address 1</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Bad1']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Bill Address 2</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Bad2']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Bill Address 3</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Bad3']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Bill Address 4</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Bad4']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Bill City</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Bilc']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Perm Address 1</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Pad1']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Perm Address 2</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Pad2']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Perm Address 3</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Pad3']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Perm Address 4</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Pad4']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Perm City</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Prmc']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Place of Birth</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1POb']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Marital Status</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Mrst']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1MaritalList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Nationality</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Nat']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Source of Fund</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1SOf']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1SourceofFundList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Employment Type</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1ETyp']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1EmploymentTypelIst" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS1RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Tax Id Nbr</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Tin']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Social Sec Nbr</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Sss']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Employer Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Memp']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Province</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Prov']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Zip Code</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Zip']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Specimen Id</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Spec']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Phone Number</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Phn']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Phone Number 2</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Phn2']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Mobile Phone</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1MPhn']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Email Address</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input class="no-uppercase" type="email" #s1EmailAddress="ngModel" name="appmS1Eml" matInput [(ngModel)]="listFieldName['appMS1Eml']" (ngModelChange)="setInput()" [ngModelOptions]="{standalone: true}" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                                    <div *ngIf="s1EmailAddress.errors?.['pattern']" class="error-message">
+                                        Invalid email format
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Mother Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Mom']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S1 Beneficial</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS1Ben']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 2'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 First name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Middle name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Last name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2Embl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2DOb']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s2GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Local Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2Lcnm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Bill Address 1</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Bad1']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Bill Address 2</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Bad2']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Bill Address 3</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Bad3']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Bill Address 4</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Bad4']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Bill City</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Bilc']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Perm Address 1</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Pad1']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Perm Address 2</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Pad2']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Perm Address 3</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Pad3']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Perm Address 4</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Pad4']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Perm City</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Prmc']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Place of Birth</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2POb']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Marital Status</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Mrst']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s2MaritalList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Nationality</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2Nat']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Source of Fund</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2SOf']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1SourceofFundList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Employment Type</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS2ETyp']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1EmploymentTypelIst" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS2RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Tax ID Nbr</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appbS2Tin']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Social Sec Nbr</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Sss']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Employer Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Memp']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Province</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Prov']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Zip Code</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Zip']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Specimen Id</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Spec']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Phone Number</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Phn']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Phone Number 2</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Phn2']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Mobile Phone</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2MPhn']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Email Address</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="mail" class="no-uppercase" matInput #s2EmailAddress="ngModel" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Eml']" (ngModelChange)="setInput()" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                                    <div *ngIf="s2EmailAddress?.errors?.['pattern']" class="error-message">
+                                        Invalid email format.
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Mother Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Mom']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S2 Beneficial</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appBS2Ben']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 3'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3EmbL']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3DOb']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s3GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Local Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Lcnm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Bill Address 1</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Bad1']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Bill Address 2</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Bad2']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Bill Address 3</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Bad3']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Bill Address 4</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Bad4']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Bill City</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Bilc']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Perm Address 1</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Pad1']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Perm Address 2</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Pad2']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Perm Address 3</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Pad3']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="textarea_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Perm Address 4</span>
+                            </div>
+                            <div>
+                                <textarea matInput style="font-size:16px;width:78%; margin-top:1.5rem" [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Pad4']" (ngModelChange)="setInput()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Perm City</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Prmc']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Place of Birth</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3POb']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Marital Status</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Mrst']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s3MaritalList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Nationality</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Nat']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Source of Fund</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3SOf']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1SourceofFundList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Employment Type</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3ETyp']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s1EmploymentTypelIst" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS3Rtln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Tax Id Nbr</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Tin']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Social Sec Nbr</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Sss']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Employer Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Memp']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Province</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Prov']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Zip Code</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Zip']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Specimen Id</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Spec']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Phone Number</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Phn']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Phone Number 2</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Phn2']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Mobile Phone</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="tel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3MPhn']" (ngModelChange)="setInput()" appPhonenumberValidation>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Email Address</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="mail" class="no-uppercase" #s3EmailAddress="ngModel" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Eml']" (ngModelChange)="setInput()" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                                    <div *ngIf="s3EmailAddress?.errors?.['pattern']" class="error-message">
+                                        Invalid email format.
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Mother Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Mom']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S3 Beneficial</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appMS3Ben']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 4'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4Embl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s4GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Credit Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4Crlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S4 Cash Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS4CSlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 5'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS5FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS5MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS5LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appms5embl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS5Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS5Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s5GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S5 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS5RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 6'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Card Emboss Line Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6EMbl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s6GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Credit Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6CRlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S6 Cash Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS6CSlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 7'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7EMbl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s7GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Credit Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7CRlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S7 Cash Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS7CSlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 8'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 Card Emboss Lime</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8Embl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s8GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S8 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS8RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="subTabName === 'Supplementary Information 9'">
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 First Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9FNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Middle Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9MNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Last Name</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9LNam']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Card Emboss Line</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9Embl']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Birth Date</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="date" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9Dob']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Sex</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:78%">
+                                    <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9Sex']" (ngModelChange)="setInput()">
+                                        <mat-option *ngFor="let list of s9GenderList" [value]="list.value">{{list.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Relationship</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="text" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9RTln']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Credit Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9CRlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="input_Fields">
+                            <div style="margin-top: 2rem">
+                                <span class="field_name">S9 Cash Limit</span>
+                            </div>
+                            <div>
+                                <mat-form-field class="select-field" matInput style="font-size:16px;width:75%">
+                                    <input type="number" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="listFieldName['appmS9CSlm']" (ngModelChange)="setInput()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="button_container">
+        <div></div>
+        <div></div>
+        <div class="button-section">
+            <div>
+                <button *ngIf="entryOption === 'Create Entry'" (click)="onFormSubmit()" mat-raised-button style="margin-bottom:3rem; margin-right: 5rem;" class="next_button" [disabled]="formInvalid">
+                    <span style="margin-left: 1rem;">Save & Continue</span>
+                    <span class="material-symbols-outlined">keyboard_arrow_right</span>
+                </button>
+                <button *ngIf="entryOption === 'Edit Entry'" (click)="onFormUpdate()" mat-raised-button style="margin-bottom:3rem; margin-right: 5rem;" class="next_button" [disabled]="formInvalid">
+                    <span style="margin-left: 1rem;">Update & Continue</span>
+                    <span class="material-symbols-outlined">keyboard_arrow_right</span>
+                </button>
+            </div>
+            <div *ngIf="formInvalid"><span class="error-alert">Fill the required fields</span></div>
+        </div>
+    </div>
+</div>

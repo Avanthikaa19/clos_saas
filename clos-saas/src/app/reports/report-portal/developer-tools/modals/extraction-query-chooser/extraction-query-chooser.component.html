@@ -1,0 +1,86 @@
+<div class="extraction-chooser-container">
+    <div class="extraction-title noselect">
+        <span>{{title}}</span>
+    </div>
+    <div class="chooser-container">
+        <div style="height: 5px;">
+            <mat-progress-bar [@fadeInOut] *ngIf="loadingItems" mode="indeterminate" color="primary"></mat-progress-bar>
+        </div>
+        <div class="search-container noselect">
+            <label class="min-label">Filter:</label>
+            <input class="min-input" [(ngModel)]="nameSearch" placeholder="By Query Name" (keydown.enter)="onSearchClicked()">
+            <button mat-button (click)="onSearchClicked()">
+                <mat-icon>search</mat-icon>
+                <span style="padding-left: 10px;">Search</span>
+            </button>
+        </div>
+        <div class="cards-list-container">
+            <div class="cards-list noselect" (click)="clearSelection($event)">
+                <div class="extraction-card noselect" [@fadeInOut] *ngFor="let extraction of extractions" [class.selected-card]="extraction === selectedQuery" matRipple (click)="select(extraction, $event)" matRipple>
+                    <div class="extraction-details1">
+                        <div class="extraction-card-name">
+                            {{extraction.name}}
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-description">
+                            {{extraction.description}}
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-fields-count">
+                            {{extraction.fields.length}} Fields
+                        </div>
+                        <div class="extraction-card-separator">&bull;</div>
+                        <div class="extraction-card-fields-count">
+                            <!-- {{extraction.parameters.length}} Parameters -->
+                        </div>
+                    </div>
+                    <div class="extraction-details-separator"></div>
+                    <div class="extraction-details2">
+                        <div class="extraction-card-sql">
+                            {{extraction.sql}}
+                        </div>
+                    </div>
+                    <div class="extraction-details-separator"></div>
+                    <div class="extraction-details3">
+                        <ng-container *ngFor="let field of extraction.fields">
+                            <div class="extraction-field" *ngIf="field && field.name && field.type" [matTooltip]="'Field: ' + field.name + '\nType: ' + field.type">
+                                <div class="extraction-field-name">
+                                    {{field.name}}
+                                </div>
+                                <div class="extraction-field-type">
+                                    {{field.type.charAt(0)}}
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="page-nav-container noselect" [@fadeInOut] *ngIf="totalRecords">
+                <div>
+                    <button mat-icon-button [disabled]="currentPage <= 1" (click)="prevPage()">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <span>Page {{currentPage}} of {{totalPages}} </span>(<span>{{currentPageStart}}</span>-<span>{{currentPageEnd}}</span> of <span>{{totalRecords}}</span>)
+                </div>
+                <div>
+                    <button mat-icon-button [disabled]="currentPage >= totalPages" (click)="nextPage()">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="extraction-chooser-action">
+        <button mat-stroked-button color="warn" class="item-left" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            <span style="padding-left: 10px;">Close</span>
+        </button>
+        <div class="spacer"></div>
+        <button mat-raised-button color="primary" class="item-right" [disabled]="!selectedQuery" (click)="onSelect(selectedQuery)">
+            <mat-icon>check</mat-icon>
+            <span style="padding-left: 10px;">Select</span>
+        </button>
+    </div>
+</div>

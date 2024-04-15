@@ -1,0 +1,211 @@
+<div class="main-container">
+    <div class="module-header-container" *ngIf="false">
+        <span class="grp__dtl__txt-container">
+            <!-- <a style="color:black;"><u>Group list</u></a> >
+            <span class="grp__name__txt-container">
+                {{groupDetail.name ? groupDetail.name : 'New group'}}
+                New Group
+            </span> -->
+        </span>
+        <span class="go__back-container">
+            <button (click)="onGoBackClick()" mat-stroked-button
+                style="font-weight: 600;background-color: rgb(248, 248, 248);box-shadow: 3px 3px rgb(238, 236, 236);margin-right: 1rem;">
+                <mat-icon>arrow_circle_left</mat-icon>
+                Go back
+            </button>
+        </span>
+    </div>
+    <div class="tab-container">
+        <div class="main-tabs-container">
+            <mat-tab-group #allTabs>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="tab-icon">groups</mat-icon>
+                        <span style="font-weight: 600;">
+                            Group
+                        </span>
+                    </ng-template>
+                    <div class="name-container">
+                        <span>
+                            {{groupDetail.name ? groupDetail.name : 'New group'}}
+                        </span>
+                    </div>
+                    <!-- <div class="crtd-date-container">
+                        <span>
+                            Crtd date container
+                        </span>
+                    </div> -->
+                    <div class="form-content-container">
+                        <div class="table-content-container">
+                            <div class="group-detail-container">
+                                <table>
+                                    <tr>
+                                        <td class="required">Group Name</td>
+                                        <td>:</td>
+                                        <td><input type="text" class="min-input" [(ngModel)]="groupDetail.name" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255"></td>
+                                        <td>
+                                            <div *ngIf="!groupDetail.name">
+                                                <span style="color:red;">Group Name is required field.</span>
+                                            </div>
+                                            <div *ngIf="message">
+                                                <span style="color:red;">{{message}}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="required">Description</td>
+                                        <td>:</td>
+                                        <td><textarea class="min-input" rows="5" cols="50" style="background-color: F4F4F4 ;resize: none;" [(ngModel)]="groupDetail.description" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="500"></textarea>
+                                        </td>
+
+                                        <td>
+                                            <div *ngIf="groupDetail.name && !groupDetail.description">
+                                                <span style="color:red;">Description is required field.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td class="required">Country</td>
+                                        <td>:</td>
+                                        <td>
+                                            <mat-select [(ngModel)]="groupDetail.country" required class="min-input min-select detail-item-input">
+                                                <mat-option *ngFor="let country of countriesList" [value]="country">{{country}}
+                                                </mat-option>
+                                            </mat-select> -->
+                                            <!-- <input type="text" class="min-input" [(ngModel)]="groupDetail.country" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255" [readonly]="groupDetail.id"></td> -->
+                                            <!-- <td>
+                                                <div *ngIf="groupDetail.name && groupDetail.description && !groupDetail.country">
+                                                    <span style="color:red;">Group Country is required field.</span>
+                                                </div>
+                                                <div *ngIf="message">
+                                                    <span style="color:red;">{{message}}</span>
+                                                </div>
+                                            </td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td style="vertical-align: top; padding-top: 1rem;">Roles & Access Template</td>
+                                        <td style="vertical-align: top; padding-top: 1rem;">:</td>
+                                        <div class="rat_container" *ngFor="let role of groupRoles">
+                                            <div class="parent__row-flex" style="color: gray;">
+                                                <div class="flex-shrink">
+                                                    <mat-icon style="font-size: 1.8rem; margin-top: 0.5rem; text-align: center;">
+                                                        person</mat-icon>
+                                                </div>
+                                                <div class="flex-grow">
+                                                    {{role.name}}
+                                                </div>
+                                            </div>
+                                            <div class="parent__row-flex" style="max-width: fit-content; ">
+                                                <div style="line-height: 3rem;" class="access-container parent__row-flex flex-grow">
+                                                    <div class="flex-shrink">
+                                                        <mat-icon style="font-size: 1.8rem; margin-top: 1rem; text-align: center;">
+                                                            security</mat-icon>
+                                                    </div>
+                                                    <div class="flex-grow" style="margin-right: 0.5rem;">
+                                                        Alerts Management Template (+1 Other)
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow" style="font-weight: 100;margin-left: 1rem;cursor:pointer" (click)='moveToSelectedTab("how_to_regRoleTemplate")'>
+                                                    <u>Edit</u>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="other" *ngIf="this.groupDetail.roleTemplates.length > 2">
+                                            (+{{this.groupDetail.roleTemplates.length - 2}} Other)
+                                        </div>
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <div style="line-height: 2.5rem; text-align: left; margin-left: 0.5rem; font-weight: 100;cursor:pointer" class="flex-grow" (click)="getTemplatesDetail()">
+                                                <span>
+                                                <u>{{groupDetail.id ? 'Edit Roles Template' : 'Add Roles Template'}}</u>
+                                            </span>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                    <td>Roles</td>
+                                    <td>:</td>
+                                    <div class="parent__row-flex" style="padding-left: 1rem; padding-top: 0.6rem;">
+                                        <ng-container>
+                                            <div *ngIf="groupDetail.roleTemplates.length != 0">
+                                                <div class="flex-grow">
+                                                    <mat-icon>how_to_reg</mat-icon>
+                                                </div>
+                                                <div style="line-height: 2.5rem; text-align: left;text-transform: capitalize;" class="flex-grow">
+                                                    <span>{{changeRoleNamesText ? roleNamesFull :
+                                                        roleNamesShort}}</span>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <div *ngFor="let data of [0]"
+                                            class="flex-grow user__role-container parent__row-flex">
+                                            <div style="line-height: 2.5rem; text-align: left; margin-left: 0.5rem; font-weight: 100;cursor:pointer"
+                                                class="flex-grow" (click)='moveToSelectedTab("how_to_regRoles")'>
+                                                <u>Edit Roles</u>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr> -->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cdu__btn__container">
+                        <div class="delete__btn-container">
+                            <ng-container *ngIf="ac.items?.AD003C_GROUPS_REMOVE">
+                                <button class="tl-btn" *ngIf="groupDetail.id" (click)=" onDeleteBtnClick()">
+                                <mat-icon>delete</mat-icon>
+                                <span>
+                                    Delete Group
+                                </span>
+                            </button>
+                            </ng-container>
+                        </div>
+                        <div class="create__btn-container" style="margin-right:1rem">
+                            <button class="save_btn" mat-raised-button  (click)="saveGroup()" [disabled]="disable()">
+                                <mat-icon> {{groupDetail.id ? 'refresh' : 'save'}}
+                                </mat-icon>
+                                <span>
+                                    {{groupDetail.id ? 'Update Group' : 'Save Group'}}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <!-- <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon>groups</mat-icon>
+                        <span style="font-weight: 600;"> Members</span>
+                    </ng-template>
+                    <div>
+                        <app-group-members [user]="groupDetail.users" (userChange)="userChangeGroup($event)"></app-group-members>
+                    </div>
+                </mat-tab> -->
+                <!-- <mat-tab class="input">
+                    <ng-template mat-tab-label>
+                        <mat-icon>how_to_reg</mat-icon>
+                        <span style="font-weight: 600;"> Roles</span>
+                    </ng-template>
+                    <div>
+                        <app-group-roles [roles]="this.groupDetail.roleTemplates"
+                            (roleChange)="onGroupRoleChange($event)"></app-group-roles>
+                    </div>
+                </mat-tab> -->
+                <!-- <mat-tab class="input">
+                    <ng-template mat-tab-label>
+                        <mat-icon>how_to_reg</mat-icon>
+                        <span style="font-weight: 600;">RoleTemplate</span>
+                    </ng-template>
+                    <div>
+                        <app-group-role-template></app-group-role-template>
+                    </div>
+                </mat-tab> -->
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

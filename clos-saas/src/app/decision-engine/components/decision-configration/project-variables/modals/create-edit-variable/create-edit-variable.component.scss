@@ -1,0 +1,90 @@
+@import url(../../../../../common-css/common.scss);
+@import url(../../../../../common-css/commonstyles.scss);
+.main-container {
+    height: 90%;
+    width: 99%;
+    overflow: hidden;
+    >.header-container {
+        height: 3rem;
+    }
+    >.content-container {
+        height: calc(100% - 3rem);
+        div {
+            padding: 0.65rem;
+        }
+    }
+    >.param-content-container {
+        height: calc(100% - 1rem);
+        div {
+            width: 100%;
+        }
+    }
+}
+
+.flex-parent {
+    display: flex;
+    direction: column;
+    margin: 10px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.flex-stetch1 {
+    width: 400px;
+    height: 300px;
+}
+
+.flex-unstetch1 {
+    margin-left: 20px;
+    width: 400px;
+    height: 300px;
+}
+
+mat-card {
+    width: 500px;
+    height: 300px;
+    overflow: auto;
+    margin: 10px;
+}
+
+.lable {
+    width: 6rem;
+}
+
+.fixTableHead {
+    overflow: auto;
+    border-bottom: silver;
+}
+
+.fixTableHead thead th {
+    position: sticky;
+    top: 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    background-color: white;
+}
+
+th,
+td {
+    min-width: 14rem;
+    padding: 5px 15px;
+    border: 1px solid silver;
+}
+
+th {
+    background: rgb(167, 167, 167);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: whitesmoke;
+}
+
+.message-box {
+    margin-top: 3rem;
+    margin-left: 10rem;
+    text-align: center;
+}
