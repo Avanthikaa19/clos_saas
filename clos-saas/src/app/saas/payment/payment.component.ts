@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { SnackbarComponent } from 'src/app/dynamic-dashboard/snackbar';
 import { DataService } from 'src/app/saas/data-service';
 import { SaasService } from '../saas-service';
+import jsPDF from 'jspdf';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-payment',
@@ -43,6 +45,7 @@ export class PaymentComponent implements OnInit {
   subscribedDate=null;
   unsubscribedDate=null;
   postalCode:any='';
+  generateBill:boolean=false;
 
 
   ngOnInit() {
@@ -127,11 +130,68 @@ proceedPayment(){
      res=>{
        console.log(res);
        this.sendEmailToClients();
+       this.downloadAsPdf();
+       this.demovideo=true;
      },
      err=>{
        console.log(err)
      }
    )
 }
+//convert the mat-card bill into pdf
+downloadAsPdf() {
+  setTimeout(() => {
+    var pdfTable: any = document.getElementById('page');
+    const dashboardHeight = pdfTable.scrollHeight;
+    const dashboardWidth = pdfTable.clientWidth;
+    const options = { background: 'white', width: dashboardWidth, height: dashboardHeight };
+    const doc = new jsPDF(dashboardWidth > dashboardHeight ? 'l' : 'p', 'mm', [dashboardWidth, dashboardHeight]);
+    let totalPages = 1;
+    let currentPage = 1;
+    let contentY = 0;
+    //Conversion of dom into img
+    domtoimage.toPng(pdfTable, options).then((imgData) => {
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const pageHeight = doc.internal.pageSize.getHeight();
+      totalPages = Math.ceil(dashboardHeight / pageHeight);
 
+      doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      doc.setFont("arial", "italic","bold");
+      doc.setFontSize(20);
+      doc.setTextColor(0,0,0);
+      doc.text('Strictly Private & Confidential', 15, 15);
+
+      contentY += pageHeight;
+      currentPage++;
+
+      while (currentPage <= totalPages) {
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, -contentY, pdfWidth, pdfHeight);
+        doc.setFont("arial", "italic","bold");
+        doc.setFontSize(14);
+        contentY += pageHeight;
+        currentPage++;
+      }
+      const blob = doc.output('blob');
+      this.uploadPdfToAPI(blob);
+    })
+    .catch((error) => {
+      console.error('Error capturing content:', error);
+    });
+  }, 5000);
+}
+//Convert the file as pdf in API
+uploadPdfToAPI(blob) {
+  // Upload the blob to the API
+  this.saasService.uploadInvoiceOfPayment(this.paymentId, blob).subscribe(
+    res => {
+      console.log(res);
+    },
+    err => {
+      console.error('Error uploading PDF:', err);
+    }
+  );
+}
 }

@@ -53,7 +53,7 @@ export class AppComponent {
         // });
         console.log('session expired');
         this.dialog.closeAll();
-        this.router.navigateByUrl('logout');
+        this.router.navigate(['/signup/login'])
         alert("Session Expired!!!....")
       }
     });

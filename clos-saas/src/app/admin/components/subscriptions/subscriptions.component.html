@@ -7,31 +7,10 @@
            <mat-card-content>
                <!-------------LEFT SIDE HEADER-------------------->
                <span>
-               <span class="main-header" style="color: #0d203e;font-size: 20px;margin-left:5px">
-                SUBSCRIPTIONS AND BILLINGS (SUPERUSER)
-               </span>
-            </span>
-            <!-----------RIGHT SIDE HEADER------------------------>
-            <span style="position: absolute;right:5px">
-                <span style="margin-right:20px;font-size: 20px;color: #0d203e;margin-top:2px">
-                    <span>
-                        <i class="fa fa-phone">
-                        </i>
-                        <span> +654321890</span>
-                    </span>
-                </span>
-            <span style="margin-right: 8px;">
-                <button mat-flat-button style="background: #0d203e;color: white;">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> ADD INVOICE</span>
-                </button>
-            </span>
-            <span style="margin-right: 8px;">
-                <button mat-flat-button style="background: #0d203e;color: white;" routerLink="/main">
-                    <i class="fa fa-arrow-left"></i>
-                    <span> BACK</span>
-                </button>
-            </span>
+                <div class="column-container">
+                    <mat-icon class="mr-3 ml-4 m-3 circle_icon">money</mat-icon>
+                    <span class="ml-4 user-contain m-3">Subscriptions and Billings ({{getCurrentUser()}})</span>
+                </div>
             </span>
            </mat-card-content>
        </mat-card>
@@ -45,18 +24,18 @@
               <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white">{{list}}</th>
           </tr>
           </thead>
-          <tr>
-              <td>26 Jan 2024</td>
-              <td>#208901</td>
-              <td>26 Mar 2024</td>
-              <td>$300</td>
+          <tr *ngFor="let list of invoice;let i=index">
+              <td>{{list?.paid_date|date:'yyyy-MM-dd'}}</td>
+              <td>#{{list?.id}}</td>
+              <td>{{list?.due_date|date:'yyyy-MM-dd'}}</td>
+              <td>{{list?.amount_paid}}</td>
               <td>
                 <button class="btn">
                     <i class="fa fa-plus_square_o"></i>
                     <span> PAID</span>
                 </button>
               </td>              
-              <td>
+              <td (click)="downloadInvoice(list?.id)">
                 <button class="btn"
                 style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
                  >
@@ -65,198 +44,6 @@
                 </button>
               </td>
           </tr>
-          <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-                <button  class="btn" style="margin-left:10px">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAY NOW</span>
-                </button>
-            </td>              
-            <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-                <button  class="btn" style="margin-left:10px">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAY NOW</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-                <button  class="btn" style="margin-left:10px">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAY NOW</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
-        <tr>
-            <td>26 Jan 2024</td>
-            <td>#208901</td>
-            <td>26 Mar 2024</td>
-            <td>$300</td>
-            <td>
-                <button  class="btn">
-                    <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
-                </button>
-            </td>              
-             <td>
-                <button class="btn"
-                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
-                 >
-                <mat-icon>download</mat-icon>
-                <span>Download Invoice</span>
-                </button>
-              </td>
-        </tr>
       </table>
       </div>
       <div style="margin-top: 2%;">

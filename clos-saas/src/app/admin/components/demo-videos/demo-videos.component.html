@@ -28,7 +28,7 @@
       <!---Videos-->
       <div class="container" style="padding: 1%;overflow: auto;"  [style.height.px]="component_height - 60">
         <div class="row">
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12" (click)="getDemoName('BASICS OF CLOS')">
                 <span class="video-title">BASICS OF CLOS</span>
                 <p>
                 <video width="500" height="400" controls>
@@ -36,7 +36,7 @@
                 </video>
                 </p>
             </div>
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12" (click)="getDemoName('APPLICATION ENTRY')">
                 <span class="video-title">APPLICATION ENTRY</span>
                 <p>
                 <video width="500" height="400" controls>
@@ -44,7 +44,7 @@
                 </video>
                 </p>
             </div>
-            <!-- <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12" (click)="getDemoName('REPORTS')">
                 <span class="video-title">REPORTS</span>
                 <p>
                 <video width="500" height="400" controls>
@@ -52,14 +52,14 @@
                 </video>
                 </p>
             </div>
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12" (click)="getDemoName('BI TOOLS')">
                 <span class="video-title">BI TOOLS</span>
                 <p>
                 <video width="500" height="400" controls>
                     <source src="/assets/BITools.mp4" type="video/mp4">
                 </video>
                 </p>
-            </div> -->
+            </div>
 
         </div>
       </div>

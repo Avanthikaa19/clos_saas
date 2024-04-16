@@ -49,4 +49,25 @@ getUploadedDocuments(id: string, files: File[]) {
   sendEmailToClient(to,body){
     return this.http.post<any>(`${this.QUERY_BUILDER_API_URL}/welcome/mail`, {to,body});
   }
+  //GET-DEMO-VIDEO-NAMES
+  getWatchedDemoVideo(demo){
+    return this.http.post<any>(`${this.QUERY_BUILDER_API_URL}/save/demo/watchers`, demo);
+  }
+  //UPLOAD INVOICE
+  uploadInvoiceOfPayment(id: number, file: Blob) {
+    // Create a new FormData object
+    const formData = new FormData();
+    // Append the blob directly to the FormData object
+    formData.append('file', file, 'payment.pdf');
+    // Make the HTTP POST request
+    return this.http.post<any>(`${this.QUERY_BUILDER_API_URL}/save/invoice?id=${id}`, formData);
+  }
+  //DOWNLOAD INVOICE
+  downloadInvoice(id){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/download/pdf/${id}`,{responseType:'arraybuffer'});
+  }
+  //GET-ALL-SUBSCRIPTION-DETAILS
+  getAllSubscriptionDetails(page,pageSize){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/subscriptions/billings?page=${page}&pageSize=${pageSize}`);
+  }
 }
