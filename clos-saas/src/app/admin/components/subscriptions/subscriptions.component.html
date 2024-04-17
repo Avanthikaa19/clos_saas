@@ -2,26 +2,18 @@
 <div style="position: relative;">
 <div>
     <!-------------------INITIAL CARD------------------------------>
-   <div>
-       <mat-card>
-           <mat-card-content>
-               <!-------------LEFT SIDE HEADER-------------------->
-               <span>
+  
                 <div class="column-container">
                     <mat-icon class="mr-3 ml-4 m-3 circle_icon">money</mat-icon>
                     <span class="ml-4 user-contain m-3">Subscriptions and Billings ({{getCurrentUser()}})</span>
                 </div>
-            </span>
-           </mat-card-content>
-       </mat-card>
-   </div> 
-  </div>
+          
   <!---------------------------TABLE------------------------------------>
-  <div style="margin-left:1%;width:98%;margin-top:1%;overflow: auto;" [style.height.px]="component_height - 162">
+  <div style="padding: 5px;width:100%;margin-top:1%;overflow: auto;" [style.height.px]="component_height - 162">
     <table>
         <thead class="header">
           <tr>
-              <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white">{{list}}</th>
+              <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white;border:1px solid #ddd;position: relative;">{{list}}</th>
           </tr>
           </thead>
           <tr *ngFor="let list of invoice;let i=index">
