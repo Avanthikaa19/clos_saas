@@ -30,3 +30,15 @@
     outline: solid transparent 0.2rem;
     margin-top: 4%;
 }
+.mat-button-toggle-group-appearance-standard:not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+    border-radius: 41px;
+}
+.mat-button-toggle-checked{
+    background-color: #073174;
+    border-radius: 26px;
+    color: white;
+}
+.mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
+    border-left: solid 1px transparent;
+  }
