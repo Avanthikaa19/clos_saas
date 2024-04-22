@@ -47,6 +47,7 @@
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%;">
             <div class="card-box">
+                <mat-icon class="check-icon" *ngIf="selectedPayment == 'BASIC' ">check</mat-icon>
             <div style="text-align: center;margin-top: 5%;">
                 <span style="font-size: 20px;font-weight: bold;color: black;">BASIC</span>
             </div>
@@ -92,6 +93,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
             <div class="card-box">
+                <mat-icon class="check-icon" *ngIf="selectedPayment == 'STANDARD' ">check</mat-icon>
             <div style="text-align: center;margin-top: 5%;">
                 <span style="font-size: 20px;font-weight: bold;color: black;">STANDARD</span>
             </div>
@@ -137,6 +139,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
             <div class="card-box">
+                <mat-icon class="check-icon" *ngIf="selectedPayment == 'PREMIUM' ">check</mat-icon>
             <div style="text-align: center;margin-top: 5%;">
                 <span style="font-size: 20px;font-weight: bold;color: black;">PREMIUM</span>
             </div>

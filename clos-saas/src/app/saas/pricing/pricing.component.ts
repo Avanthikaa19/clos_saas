@@ -31,7 +31,7 @@ export class PricingComponent implements OnInit {
   paymentAmt:any='';
   currentDate=null;
   trialExpiryDate=null;
-
+  selectedPayment:string='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -73,6 +73,7 @@ username:any='';
     this.domainName=sessionStorage.getItem('domain');
     this.transferDataService.getData().subscribe(data => {
       this.id=data?.id;
+      this.selectedPayment =data.paymentOption;
       this.emailId=data?.email;
       this.username=data?.name;
     });
