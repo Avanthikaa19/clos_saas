@@ -2,6 +2,8 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { catchError, filter, of, Subscription, switchMap, timer } from 'rxjs';
 import { ColumnDefinition, PageData } from 'src/app/general/components/generic-data-table/generic-data-table.component';
+import { EncryptDecryptService } from 'src/app/services/encrypt-decrypt.service';
+import { AUTHENTICATED_USER } from 'src/app/services/jwt-authentication.service';
 import { AccessService } from '../../access-templates/services/access.service';
 import { AuditTrailDetail } from '../../audit-trail/models/AuditTrail';
 import { DownloadJob } from '../../users/services/download-data.service';
@@ -24,6 +26,7 @@ export class AuditTrailListingComponent implements OnInit {
   loadingItems: boolean = false;
   selectedTabName: string;
   selectedTabModule:string;
+  currentUser:any='';
   matTabHeader: MatTabHeaders[] = [
     { name: 'Application Data Entry', icon: 'assignment' },
     // { name: 'Decision Engine', icon: 'directions_alt' },
@@ -38,6 +41,7 @@ export class AuditTrailListingComponent implements OnInit {
 
   constructor(private accessDetailDataService: AccessService,
     public datepipe: DatePipe,private userDataService: UsersService,
+    public encryptDecryptService:EncryptDecryptService,
 
     ) { 
     this.auditcolumns = []
@@ -149,6 +153,13 @@ export class AuditTrailListingComponent implements OnInit {
         this.getAuditColumnsData(this.pageData);
        }
     }
+    getCurrentUser():string{
+      if(sessionStorage.getItem(AUTHENTICATED_USER)){
+      let user=sessionStorage.getItem(AUTHENTICATED_USER)
+      this.currentUser=this.encryptDecryptService.decryptData(user)}
+      return this.currentUser
+     }
+   
 
       //LISTING FUNCTION
       getAuditColumnsData(pageData: PageData) {

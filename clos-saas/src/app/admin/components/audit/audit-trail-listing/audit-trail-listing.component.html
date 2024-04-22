@@ -1,7 +1,7 @@
 
 <div class="column-container">
     <mat-icon class="mr-3 ml-4 m-3 circle_icon">assignment_ind</mat-icon>
-    <span class="ml-4 user-contain m-3">Audit Trial</span>
+    <span class="ml-4 user-contain m-3">Audit Trial <span>({{getCurrentUser()}})</span></span>
 </div>
 <mat-tab-group [(selectedIndex)]="activeStepIndex" (selectedTabChange)="onStepSelectionChange($event)">
   <ng-container *ngFor="let tab of matTabHeader">

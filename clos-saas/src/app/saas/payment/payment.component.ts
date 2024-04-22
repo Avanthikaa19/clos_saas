@@ -62,6 +62,7 @@ export class PaymentComponent implements OnInit {
       let amt=sessionStorage.getItem('paymentAmt');
       this.paymentAmt=parseFloat(amt);
       this.paymentOption=sessionStorage.getItem('paymentOption')
+      console.log(data)
     });
     this.calculateNextBillingDate(this.billingPeriod)
   this.lastpaymentDate=this.datepipe.transform(new Date(), 'yyyy-MM-ddT00:00:00')
@@ -161,7 +162,7 @@ downloadAsPdf() {
       doc.setFont("arial", "italic","bold");
       doc.setFontSize(20);
       doc.setTextColor(0,0,0);
-      doc.text('Strictly Private & Confidential', 15, 15);
+      // doc.text('Strictly Private & Confidential', 15, 15);
 
       contentY += pageHeight;
       currentPage++;

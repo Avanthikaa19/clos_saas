@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -28,6 +29,8 @@ export class PricingComponent implements OnInit {
   freeTrial:boolean=false;
   paymentOption:any='';
   paymentAmt:any='';
+  currentDate=null;
+  trialExpiryDate=null;
 
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
@@ -63,7 +66,7 @@ id:any='';
 emailId:any='';
 username:any='';
   constructor(public router:Router,public transferDataService:DataService,public snackBar:MatSnackBar,
-    public saasService:SaasService) { }
+    public saasService:SaasService,public datepipe:DatePipe,) { }
 
   ngOnInit() {
     this.responseUrl=sessionStorage.getItem('newurl');
@@ -74,6 +77,7 @@ username:any='';
       this.username=data?.name;
     });
     console.log(this.id)
+    this.getDetailsById();
   }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -81,14 +85,19 @@ username:any='';
     });
   }
   getFreetrial(id){
-     this.saasService.getFreeTrial(id,'FREE-TRIAL','PENDING').subscribe(
+    let currentDate = new Date();
+    let expiryDate = new Date(currentDate);
+    expiryDate.setDate(expiryDate.getDate() + 15);
+    let formattedExpiryDate = this.datepipe.transform(expiryDate, 'yyyy-MM-ddT00:00:00');
+    this.saasService.getFreeTrial(id,'FREE-TRIAL','PENDING',formattedExpiryDate).subscribe(
        res=>{
          console.log(res)
          this.demovideo=true;
          this.sendEmailToClients();
        },
        err=>{
-         this.demovideo=true;
+         this.demovideo=false;
+         console.log(err)
        }
      )
   }
@@ -106,6 +115,26 @@ username:any='';
     this.router.navigate([`${param}`])
     sessionStorage.setItem('paymentAmt',this.paymentAmt);
     sessionStorage.setItem('paymentOption',this.paymentOption);
+  }
+  getDetailsById(){
+     this.saasService.getDetailsById(this.id).subscribe(
+       (res:any)=>{
+         this.paymentOption=res['paymentStatus']
+         const data={
+           id:res?.id,
+           name:res?.userName,
+           email:res?.emailId,
+           phn:res?.phoneNo,
+           domain:res?.domain,
+           payemtAmt:res?.amountPaid,
+           paymentOption:res?.subscriptionPlan
+         }
+         this.transferDataService.setData(data)
+       },
+       err=>{
+         console.log(err)
+       }
+     )
   }
 
 }

@@ -102,7 +102,7 @@
         </div>
         <!--------------------PROCEED PAYMENT-------------------------->
         <div style="margin-top:1%;margin-left:1.5%">
-            <button (click)="generateBill=true" style="text-align: center;" mat-flat-button color="primary">
+            <button (click)="generateBill=true" style="text-align: center;" [disabled]="!currency||!address1||!address2||!city||!state||!postalCode" mat-flat-button color="primary">
                 <span> GENERATE BILL</span>
             </button>
           </div>
@@ -110,7 +110,7 @@
         <div class="container" style="position: absolute;top:26%;left:43%" *ngIf="generateBill">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <mat-card style="height:500px" id="page">
+                    <mat-card style="height:530px" id="page">
                    <div style="height:30px;background: lightblue;display: flex;
                     align-items: center;">
                        <span style="margin-left: 10px;">BILLING</span>
@@ -134,12 +134,12 @@
                         </div>
                         <div style="margin-top: 1%;">
                             <span>
-                                {{state}},
+                                {{city}},
                             </span>
                         </div>
                         <div style="margin-top: 1%;">
                             <span>
-                                {{countryName}},
+                                {{state}},
                             </span>
                         </div>
                         <div style="margin-top: 1%;">
@@ -183,8 +183,8 @@
                     </div>
                     </mat-card-content>
                     </mat-card>
-                    <div style="margin-top: 8%;">
-                        <button (click)="proceedPayment()" style="text-align: center;" mat-flat-button color="primary">
+                    <div style="margin-top: 6%;">
+                        <button [disabled]="!billingPeriod" (click)="proceedPayment()" style="text-align: center;" mat-flat-button color="primary">
                             <span> PROCEED PAYMENT</span>
                         </button>
                     </div>

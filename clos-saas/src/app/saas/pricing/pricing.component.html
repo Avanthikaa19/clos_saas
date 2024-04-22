@@ -29,7 +29,7 @@
              </button>
          </span>
          <span style="margin-right: 8px;">
-            <button mat-flat-button color="primary" (click)="getFreetrial(id)">
+            <button mat-flat-button color="primary" (click)="getFreetrial(id)" *ngIf="paymentOption==null">
                 <i class="fa fa-arrow-right"></i>
                 <span> GET FREE TRIAL</span>
             </button>
@@ -61,7 +61,7 @@
             </div>
             <div style="text-align: center;margin-top: 3%;" (click)="navigateToPage('payment');">
                 <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt='300.00';paymentOption='BASIC'">
-                    <span> SUBSCRIBE</span>
+                    <span> {{paymentOption=='BASIC'?'SUBSCRIBED':'SUBSCRIBE'}}</span>
                 </button>
             </div>
             <div style="margin-top: 4%;">
@@ -106,7 +106,7 @@
             </div>
             <div style="text-align: center;margin-top: 3%;" (click)="navigateToPage('payment');">
                 <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt='500.00';paymentOption='STANDARD'">
-                    <span> SUBSCRIBE</span>
+                    <span> {{paymentOption=='BASIC' && id!==null?'UPGRADE':'SUBSCRIBE'}}</span>
                 </button>
             </div>
             <div style="margin-top: 4%;">
@@ -151,7 +151,7 @@
             </div>
             <div style="text-align: center;margin-top: 3%;" (click)="navigateToPage('payment');">
                 <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt='800.00';paymentOption='PREMIUM'">
-                    <span> SUBSCRIBE</span>
+                    <span> {{paymentOption=='BASIC'||paymentOption=='STANDARD'?'UPGRADE':'SUBSCRIBE'}}</span>
                 </button>
             </div>
             <div style="margin-top: 4%;">

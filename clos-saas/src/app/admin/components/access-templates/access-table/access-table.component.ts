@@ -10,6 +10,7 @@ import { catchError, filter, of, Subscription, switchMap, timer } from 'rxjs';
 import { AccessControlData } from 'src/app/app.access';
 import { ClickEvent, ColumnDefinition, PageData } from 'src/app/general/components/generic-data-table/generic-data-table.component';
 import { EncryptDecryptService } from 'src/app/services/encrypt-decrypt.service';
+import { AUTHENTICATED_USER } from 'src/app/services/jwt-authentication.service';
 import { JwtAuthenticationService } from 'src/app/services/jwt-authentication.service';
 import { DownloadDataService, DownloadJob } from '../../users/services/download-data.service';
 import { UsersService } from '../../users/services/users.service';
@@ -30,6 +31,7 @@ export class AccessTableComponent implements OnInit {
    loadingItems: boolean=false;
    file: any;
    dataRequest: ExportFile = { filter: new accessTemplatesort()};
+   currentUser:any='';
 
     // EXPORT
 
@@ -142,6 +144,12 @@ export class AccessTableComponent implements OnInit {
       this.pageData.totalPages = res['count']
     })
   }
+  getCurrentUser():string{
+    if(sessionStorage.getItem(AUTHENTICATED_USER)){
+    let user=sessionStorage.getItem(AUTHENTICATED_USER)
+    this.currentUser=this.encryptDecryptService.decryptData(user)}
+    return this.currentUser
+   }
 
 //  FILTER DROP DOWN FUNCTION 
 

@@ -36,8 +36,8 @@ getUploadedDocuments(id: string, files: File[]) {
     return this.http.get(`${this.QUERY_BUILDER_API_URL}/check/is_valid?column=${column}&value=${value}`);
   }
   //GET-FREE-TRIAL
-  getFreeTrial(id,paymentStatus,approval){
-    return this.http.put(`${this.QUERY_BUILDER_API_URL}/add/subscription-details?id=${id}`, {paymentStatus,approval});
+  getFreeTrial(id,paymentStatus,approval,trialExpiryDate){
+    return this.http.put(`${this.QUERY_BUILDER_API_URL}/add/subscription-details?id=${id}`, {paymentStatus,approval,trialExpiryDate});
   }
   //PAYMENT-TRIAL
   getPaymentTrial(userId,id,orgName,domain,userName,password,emailId,phoneNo,paymentCycle,amountPaid,subscribed,lastPaymentDate,dueAmount,upcomingDueDate,subscriptionPlan,subscribedDate,unsubscribedDate,paymentStatus,approval,currency,country,addressLine1,addressLine2,postalCode,city,state){
@@ -69,5 +69,13 @@ getUploadedDocuments(id: string, files: File[]) {
   //GET-ALL-SUBSCRIPTION-DETAILS
   getAllSubscriptionDetails(page,pageSize){
     return this.http.get(`${this.QUERY_BUILDER_API_URL}/subscriptions/billings?page=${page}&pageSize=${pageSize}`);
+  }
+  //VALIDATE BY EMAIL
+  validateEmailOfUsers(email){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/check/email/is_valid?email=${email}`);
+  }
+  //GET-DETAILS-BY-ID
+  getDetailsById(id){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/organization_details/id?id=${id}`);
   }
 }

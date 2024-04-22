@@ -36,6 +36,8 @@ export class SignUpComponent implements OnInit {
   errMessageForNumbers:any='';
   orgValidation:any='';
   domainValidation:any='';
+  emailIdValidation:boolean=false;
+  existingEmail:any='';
   
  
  async ngOnInit() {
@@ -150,17 +152,6 @@ password:any='';
     const newUrl = `http://${this.domainName}.${window.location.host}/#/signup/login`;
     console.log(newUrl,'new url')
     this.responseUrl=newUrl;
-    const responseData = {
-      firstname: this.firstname,
-      lastname: this.lastname,
-      position: this.position,
-      role: this.role,
-      email: this.email,
-      phn: this.phn,
-      companyname: this.companyname,
-      domainName: this.domainName,
-      countryName: this.countryName,
-  };
     sessionStorage.setItem('newurl',newUrl)
     sessionStorage.setItem('domain',this.domainName)
 }
@@ -298,6 +289,36 @@ getMyDomainValidation(event,col,val){
     if (event.length > 0 || event.length == undefined) {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => { this.validateDomain(col,val) }, 1000)
+    }
+    }
+}
+//VALIDATE-EMAIL
+validateEmail(email){
+    this.saasService.validateEmailOfUsers(email).subscribe(
+      res=>{
+        console.log(res)
+        if(res['status']!=='Unavailable Email Id'){
+          this.emailIdValidation=true;
+          this.existingEmail=res['status']
+          let emailvalId=res['id'];
+          const data={
+            id:emailvalId
+          }
+          this.transferDataService.setData(data)
+        }
+      },
+      err=>{
+        console.log(err)
+        this.emailIdValidation=false;
+      }
+    )
+}
+//EMAIL VALIDATION
+getMyEmailValidation(event,col){
+  if (event != null) {
+    if (event.length > 0 || event.length == undefined) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => { this.validateEmail(col);}, 1000)
     }
     }
 }

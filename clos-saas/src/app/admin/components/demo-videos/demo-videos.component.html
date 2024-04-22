@@ -7,19 +7,10 @@
                <mat-card-content>
                    <!-------------LEFT SIDE HEADER-------------------->
                    <span>
-                   <span class="main-header" style="color: #0d203e;font-size: 20px;margin-left:5px">
-                    DEMO VIDEOS (SUPERUSER)
-                   </span>
-                </span>
-                <!-----------RIGHT SIDE HEADER------------------------>
-                <span style="position: absolute;right:5px">
-                    <span style="margin-right:20px;font-size: 20px;color: #0d203e;margin-top:2px">
-                        <span>
-                            <i class="fa fa-phone">
-                            </i>
-                            <span> +654321890</span>
-                        </span>
-                    </span>
+                    <div class="column-container">
+                        <mat-icon class="mr-3 ml-4 m-3 circle_icon">important_devices</mat-icon>
+                        <span class="ml-4 user-contain m-3">Demo Videos ({{getCurrentUser()}})</span>
+                    </div>
                 </span>
                </mat-card-content>
            </mat-card>
@@ -44,7 +35,7 @@
                 </video>
                 </p>
             </div>
-            <div class="col-lg-6 col-md-12" (click)="getDemoName('REPORTS')">
+            <!-- <div class="col-lg-6 col-md-12" (click)="getDemoName('REPORTS')">
                 <span class="video-title">REPORTS</span>
                 <p>
                 <video width="500" height="400" controls>
@@ -59,7 +50,7 @@
                     <source src="/assets/BITools.mp4" type="video/mp4">
                 </video>
                 </p>
-            </div>
+            </div> -->
 
         </div>
       </div>
