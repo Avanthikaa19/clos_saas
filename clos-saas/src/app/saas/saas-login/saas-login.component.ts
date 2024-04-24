@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SnackbarComponent } from 'src/app/dynamic-dashboard/snackbar';
+import { DataService } from '../data-service';
+import { SaasService } from '../saas-service';
 @Component({
   selector: 'app-saas-login',
   templateUrl: './saas-login.component.html',
@@ -11,16 +13,20 @@ export class SaasLoginComponent implements OnInit {
   email:any='';
   demovideo:boolean=false;
   loginapp:boolean=false;
-  domainName='user';
+  domainName:any='';
   responseUrl:any='';
   component_height:any;
   errMessage:any='';
+  emailIdValidation:boolean=false;
+  existingEmail:any='';
+  timer:any;
   @HostListener('window:resize', ['$event'])
   updateComponentSize() {
     this.component_height = window.innerHeight;
   }
   constructor(public snackBar:MatSnackBar,
-    public router:Router) {
+    public router:Router,public saasService:SaasService,
+    public transferDataService:DataService,) {
     this.updateComponentSize();
    }
 
@@ -43,6 +49,7 @@ export class SaasLoginComponent implements OnInit {
       console.log(newUrl,'new url')
       this.responseUrl=newUrl;
       // window.location.href = newUrl;
+      window.location.href=`http://${this.domainName}.${window.location.host}/#/signup/login`
       console.log(newUrl,window.location)
   }
   copyTokenToClipboard() {
@@ -72,5 +79,72 @@ export class SaasLoginComponent implements OnInit {
   navigateToPage(param){
     this.router.navigate([`${param}`])
   }
+  validateEmail(email){
+    this.saasService.validateEmailOfUsers(email).subscribe(
+      res=>{
+        console.log(res)      
+        if(res['status']==='Unavailable Email Id'){
+          this.loginapp=false;
+          this.existingEmail=res['status'];
+          this.emailIdValidation=false;
+          console.log('unavailable email id')
+        }
+        if(res['status']!=='Unavailable Email Id'){
+          this.emailIdValidation=true;
+          this.loginapp=true;
+          this.existingEmail=res['status']
+          let emailvalId=res['id'];
+          const data={
+            id:emailvalId
+          }
+          this.getDetailsById(emailvalId)
+          this.transferDataService.setData(data)
+        }
+      },
+      err=>{
+        console.log(err)
+        this.emailIdValidation=false;
+      }
+    )
+}
+//EMAIL VALIDATION
+getMyEmailValidation(event,col){
+  if (event != null) {
+    if (event.length > 0 || event.length == undefined) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => { this.validateEmail(col);}, 1000)
+    }
+    }
+}
+paymentOption:any='';
+userName:any='';
+expiryDate:any='';
+approvalStatus:any='';
+getDetailsById(id){
+  this.saasService.getDetailsById(id).subscribe(
+    (res:any)=>{
+      this.paymentOption=res['paymentStatus'];
+      this.userName=res['userName'];
+      this.expiryDate=res['trialExpiryDate'];
+      this.approvalStatus=res['approval'];
+      let domain=res['domain'];
+      this.domainName=domain?.split('.')[0]
+      const data={
+        id:res?.id,
+        name:res?.userName,
+        email:res?.emailId,
+        phn:res?.phoneNo,
+        domain:res?.domain,
+        payemtAmt:res?.amountPaid,
+        paymentOption:res?.subscriptionPlan
+      }
+      this.transferDataService.setData(data)
+    },
+    err=>{
+      console.log(err)
+    }
+  )
+}
+
 
 }

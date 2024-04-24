@@ -33,6 +33,13 @@ export class GroupsTableComponent implements OnInit {
   // DOWNLOADS - EXPORT
   downloadStatusSubscription: Subscription;
   currentDownloadJob: DownloadJob;
+  demovideo:boolean=false;
+  demotourstep1:boolean=false;
+  demotourstep2:boolean=false;
+  demotourstep3:boolean=false;
+  demotourstep4:boolean=false;
+  demotourstep5:boolean=false;
+  demotourstep6:boolean=false;
 
   constructor(
     private userDataService: UsersService,
@@ -153,6 +160,9 @@ export class GroupsTableComponent implements OnInit {
     this.groupDataService.GroupsListingDataList(this.groupscolumns, this.pageData.currentPage, this.pageData.pageSize).subscribe(res => {
       console.log("Data : ", res)
       this.groupscolumnsData = res['data'];
+      if(this.groupscolumnsData?.length==0){
+        this.demovideo=true;
+      }
       console.log(this.groupscolumnsData)
       this.pageData.count = res['count']
       this.pageData.totalPages = res['count']

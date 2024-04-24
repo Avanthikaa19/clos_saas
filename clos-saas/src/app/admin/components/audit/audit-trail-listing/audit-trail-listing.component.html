@@ -16,4 +16,24 @@
     <app-generic-data-table [columns]="auditcolumns" [filterButton]="true" [pageData]="pageData" [newTemplatebutton]="true"  [newTemplate]="true" [exportButton]="true" [clearButton]="true" [loading]="loadingItems"
     (onExportChange)="accessTemplateListExport($event)"  [tableData]="auditcolumnsData" (onPageChange)="getAuditColumnsData($event)"></app-generic-data-table>
  </div>
+ <div *ngIf="demovideo" style="position: absolute; top:42%; right: -5.5%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:250px;width:385px;border-radius: 10px;padding: 15px;">
+    <div style="width: 10px; height: 10px; margin-left: 200px; margin-top: -20px; transform: rotate(45deg);background: white;border-top: 1px solid lightgrey;border-left: 1px solid lightgrey"></div>
+    <div style="text-align: center;margin-top:5%">
+        <img src="assets/info.png" style="width:24%">
+    </div>
+    <div class="main-header" style="text-align: center;margin-top:4%;color:#0e2954">
+        <span style="font-size: 14px;font-weight: bold;margin-bottom: 10px;line-height: 23px;">
+        <br>
+        First Create your template for using CLOS
+       </span>
+       <br>
+    </div>
+    <div style="text-align: center;margin-top: 6%;">
+        <button mat-flat-button style="background-color:#0e2954" (click)="demovideo=false">
+            <span style="color: white;"> DONE</span>
+        </button> 
+    </div>
+ </div>
+ <div *ngIf="demovideo"
+ style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 

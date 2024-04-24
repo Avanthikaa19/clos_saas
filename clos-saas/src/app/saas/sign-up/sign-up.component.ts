@@ -304,6 +304,7 @@ validateEmail(email){
           const data={
             id:emailvalId
           }
+          this.getDetailsById(emailvalId)
           this.transferDataService.setData(data)
         }
       },
@@ -330,5 +331,33 @@ openErrSnackbar(message){
   }
    });
   }
-
+paymentOption:any='';
+userName:any='';
+expiryDate:any='';
+approvalStatus:any='';
+getDetailsById(id){
+  this.saasService.getDetailsById(id).subscribe(
+    (res:any)=>{
+      this.paymentOption=res['paymentStatus'];
+      this.userName=res['userName'];
+      this.expiryDate=res['trialExpiryDate'];
+      this.approvalStatus=res['approval'];
+      let domain=res['domain'];
+      this.domainName=domain?.split('.')[0]
+      const data={
+        id:res?.id,
+        name:res?.userName,
+        email:res?.emailId,
+        phn:res?.phoneNo,
+        domain:res?.domain,
+        payemtAmt:res?.amountPaid,
+        paymentOption:res?.subscriptionPlan
+      }
+      this.transferDataService.setData(data)
+    },
+    err=>{
+      console.log(err)
+    }
+  )
+}
 }

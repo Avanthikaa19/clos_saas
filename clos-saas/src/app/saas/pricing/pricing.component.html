@@ -43,6 +43,9 @@
 <div style="height:50px;width:100%;font-size: 20px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:2%;color:blue">
     <span style="margin-left: -3%;">PRICING</span>
 </div>
+<div *ngIf="paymentOption" style="height:50px;width:100%;font-size: 20px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:1%;color:blue">
+    <span style="margin-left: -3%;">CURRENT PLAN : {{paymentOption}}</span>
+</div>
 <div class="container" style="margin-top: 1%;">
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%;">

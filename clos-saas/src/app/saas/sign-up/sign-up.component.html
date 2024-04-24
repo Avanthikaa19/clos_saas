@@ -180,6 +180,7 @@
     <div class="main-header" style="text-align: center;margin-top:4%;color:blue">
        <span style="font-size: 14px;font-weight: lighter;margin-bottom: 10px;line-height: 23px;">
         Welcome aboard! Enjoy using CLOS!!
+        <br>
         Next you will be redirected to Payments/Get Free Trial
        </span>
        <br>
@@ -192,19 +193,77 @@
  </div>
  </div>
  <!---------------------------EMAIL VALIDATION POPUP----------------------------------------------------->
- <div *ngIf="emailIdValidation" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:270px;width:385px;border-radius: 10px;padding: 15px;">
+ <div *ngIf="emailIdValidation" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:450px;width:450px">
     <div style="text-align: center;margin-top:5%">
         <img src="assets/ok.png" style="width:24%">
     </div>
-    <div class="main-header" style="text-align: center;margin-top:4%;color:blue">
-       <span style="font-size: 14px;font-weight: lighter;margin-bottom: 10px;line-height: 23px;">
+    <div class="main-header" style="text-align: center;margin-top:4%;color: blue;" *ngIf="!existingEmail">
+        <span style="font-size: 14px;">
+            You have not signed up yet.
+        </span>
+    </div>
+    <div class="main-header" style="text-align: center;margin-top:4%;color: blue;" *ngIf="existingEmail">
+       <span style="font-size: 14px;">
         {{existingEmail}}
+        <br>
+        <span *ngIf="paymentOption==null">
+            You have just signed up. Go to Payments to enjoy using CLOS!
+        </span>
+        <span *ngIf="paymentOption=='FREE-TRIAL' && approvalStatus==='PENDING'">
+            Your request for Free-trial usage is pending. We will get back to you shortly
+        </span>
+        <span *ngIf="paymentOption=='FREE-TRIAL' && approvalStatus==='approved'">
+            Your Free-trial request will be expired on {{expiryDate|date:'dd-MM-yyyy'}}
+        </span>
+        <span *ngIf="(paymentOption=='BASIC' || paymentOption=='STANDARD') && approvalStatus==='PENDING'">
+            You have subscribed for {{paymentOption}} plan and your request is pending. we will get back to you shortly
+        </span>
+        <span *ngIf="(paymentOption=='BASIC' || paymentOption=='STANDARD') && approvalStatus==='approved'">
+            You have subscribed for {{paymentOption}} plan and your request is approved. You can also upgrade your plans .  Enjoy using CLOS!
+        </span>
+        <span *ngIf="(paymentOption=='PREMIUM') && approvalStatus==='PENDING'">
+            You have subscribed for {{paymentOption}} plan and your request is pending. we will get back to you shortly
+        </span>
+        <span *ngIf="(paymentOption=='PREMIUM') && approvalStatus==='approved'">
+            You have subscribed for {{paymentOption}} plan and your request is approved. Enjoy using CLOS!
+        </span>
+        <span *ngIf="approvalStatus=='rejected'">
+            Your request for {{paymentOption}} has been rejected due to invalid documents. Try using valid documents . If you have paid, your money will be refunded.
+        </span>
        </span>
        <br>
+       <span style="font-size: 14px;cursor: pointer;">
+         User Name : {{userName}}
+       </span>
+       <br>
+       <span style="font-size: 14px;cursor: pointer;" *ngIf="paymentOption!==null">
+         Current Plan : {{paymentOption}}
+       </span>
+       <span style="font-size: 14px;cursor: pointer;" *ngIf="paymentOption===null">
+        Current Plan : No Plans Purchased.
+      </span>
+       <br>
+       <span style="font-size: 14px;cursor: pointer;" *ngIf="paymentOption=='FREE-TRIAL' && expiryDate!==null && approvalStatus==='approved'">
+         Expiry Date : {{expiryDate|date:'dd-MM-yyyy'}}
+       </span>
     </div>
-    <div style="text-align: center;margin-top: 6%;">
-        <button mat-flat-button color="primary" (click)="demovideo=false;emailIdValidation=false;navigateToPage('pricing')">
-            <span> GO TO PAYMENTS</span>
+    <div style="text-align: center;margin-top: 6%;" *ngIf="existingEmail && (approvalStatus=='PENDING'||approvalStatus=='approved'||approvalStatus==null)">
+        <button mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
+            <span *ngIf="paymentOption===null||paymentOption==='FREE-TRIAL'"> GO TO PAYMENTS </span>
+        </button> 
+        <button style="margin-left: -50px;" *ngIf="paymentOption==='BASIC'||paymentOption==='STANDARD'" mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
+            <span> UPGRADE PLANS </span>
+        </button> 
+        <button style="margin-left: -50px;" *ngIf="paymentOption==='PREMIUM'" mat-flat-button color="primary" (click)="emailIdValidation=false;email='';domainName=''">
+            <span> DONE </span>
+        </button> 
+        <!-- <button *ngIf="paymentOption==='BASIC'||paymentOption==='STANDARD'||paymentOption==='PREMIUM'" mat-flat-button color="primary" (click)="demovideo=false;loginapp=false;login()">
+            <span> LOGIN TO CLOS </span>
+        </button>  -->
+    </div>
+    <div style="text-align: center;margin-top: 6%;" *ngIf="!existingEmail || approvalStatus=='rejected'">
+        <button mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('signup');email='';domainName=''">
+            <span> GO TO SIGN UP </span>
         </button> 
     </div>
  </div>

@@ -1,3 +1,4 @@
+import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { catchError, filter, of, Subscription, switchMap, timer } from 'rxjs';
@@ -38,6 +39,7 @@ export class AuditTrailListingComponent implements OnInit {
   ];
   downloadStatusSubscription: Subscription;
   currentDownloadJob: DownloadJob;
+  demovideo:boolean=false;
 
   constructor(private accessDetailDataService: AccessService,
     public datepipe: DatePipe,private userDataService: UsersService,
@@ -169,6 +171,9 @@ export class AuditTrailListingComponent implements OnInit {
           this.auditLogData = res['data'];
           this.auditLogData = this.formatActivityLogData()
           this.loadingItems=false;
+          if(this.auditcolumnsData?.length==0){
+            this.demovideo=true;
+          }
           this.pageData.count = res['count']
           this.pageData.totalPages = res['count']
         })

@@ -17,6 +17,7 @@ export class SubscriptionsComponent implements OnInit {
   page:number=1;
   pageSize:any=10;
   currentUser:any='';
+  loading:boolean=false;
   @HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -45,14 +46,18 @@ export class SubscriptionsComponent implements OnInit {
 
   //GET-ALL-SUBSCRIPTION-DETAILS
   getAllSubscriptionDetails(){
+    this.loading=true;
      this.saasService.getAllSubscriptionDetails(this.page,this.pageSize).subscribe(
        res=>{
+         this.loading=false;
          console.log(res)
          this.invoice=res['data']
          this.invoiceCount=res['count']
        },
        err=>{
          console.log(err)
+         this.loading=false;
+        this.invoice=[];
        }
      )
   }

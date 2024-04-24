@@ -10,6 +10,9 @@
           
   <!---------------------------TABLE------------------------------------>
   <div style="padding: 5px;width:100%;margin-top:1%;overflow: auto;" [style.height.px]="component_height - 162">
+    <div>
+      <span style="font-size: 14px;font-weight: bold;color:#0e2954;font-style: italic;float:right">Note : Free-trial plans cannot be viewed in subscriptions and billings.</span>
+    </div>
     <table>
         <thead class="header">
           <tr>
@@ -42,4 +45,11 @@
       <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" [showFirstLastButtons]="true" aria-label="Select page">
     </mat-paginator>
   </div>
+  <div class="loading-container" *ngIf="loading">
+    <mat-progress-spinner color="primary" diameter="20" strokeWidth="2" mode="indeterminate"></mat-progress-spinner>
+    <span>Loading... Please wait...</span>
+</div>
+<div class="placeholder-container" *ngIf="!loading && !invoice?.length">
+    <span>No items found!</span>
+</div>
   </div>

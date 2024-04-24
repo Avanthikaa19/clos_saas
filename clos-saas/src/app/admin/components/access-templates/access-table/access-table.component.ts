@@ -32,6 +32,7 @@ export class AccessTableComponent implements OnInit {
    file: any;
    dataRequest: ExportFile = { filter: new accessTemplatesort()};
    currentUser:any='';
+   demovideo:boolean=false;
 
     // EXPORT
 
@@ -139,6 +140,9 @@ export class AccessTableComponent implements OnInit {
     this.accessDetailDataService.accessTemplateList(this.accesstemplatecolums,this.pageData.currentPage, this.pageData.pageSize).subscribe(res => {
       this.accesstemplatedata = res['data'];
       this.loadingItems=false;
+      if(this.accesstemplatedata?.length===0){
+        this.demovideo=true;
+      }
       console.log(this.accesstemplatecolums)
       this.pageData.count = res['count']
       this.pageData.totalPages = res['count']

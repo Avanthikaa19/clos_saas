@@ -33,6 +33,7 @@ export class RolesTableComponent implements OnInit {
   // DOWNLOADS - EXPORT
   downloadStatusSubscription: Subscription;
   currentDownloadJob: DownloadJob;
+  demovideo:boolean=false;
 
 
   constructor(
@@ -161,6 +162,9 @@ export class RolesTableComponent implements OnInit {
     this.loadingItems = true;
     this.roleDataService.rolesListingDataList(this.rolescolumns, this.pageData.currentPage, this.pageData.pageSize).subscribe(res => {
       this.rolescolumnsData = res['data'];
+      if(this.rolescolumnsData?.length==0){
+        this.demovideo=true;
+      }
       this.loadingItems = false;
       this.pageData.count = res['count']
       this.pageData.totalPages = res['count']

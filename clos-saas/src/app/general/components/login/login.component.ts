@@ -85,11 +85,7 @@ export class LoginComponent implements OnInit {
           },
           (err) => {
             console.log(err);
-            if (err.status == 500) {
-              this.errorMsg = "Internal Server Error";
-            } else {
-              this.errorMsg = err.error;
-            }
+            this.errorMsg = err.error;
           }
         );
     }

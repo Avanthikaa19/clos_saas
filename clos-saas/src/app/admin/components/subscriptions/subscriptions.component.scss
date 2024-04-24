@@ -108,4 +108,40 @@
   td{
       padding: 5px;
   }
+  //LOADING
+  .loading-container {
+    position: absolute;
+    top: 47%;
+    left: 45%;
+    z-index: 15;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(0.5rem);
+    padding: 1rem 2rem;
+    -webkit-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    span {
+        margin-left: 1rem;
+    }
+}
+//NO-DATA-FOUND
+.placeholder-container {
+  position: absolute;
+  top: 47%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(0.5rem);
+  padding: 1rem 2rem;
+  -webkit-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+}
   
