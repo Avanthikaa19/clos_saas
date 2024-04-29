@@ -32,7 +32,9 @@ export class PaymentComponent implements OnInit {
   currencies:any=['INR','MYR','POUNDS','SGD','YEN']
   responseUrl:any='';
   constructor(public transferDataService:DataService,public snackBar:MatSnackBar,public router:Router,
-    public saasService:SaasService,public datepipe:DatePipe,) {}
+    public saasService:SaasService,public datepipe:DatePipe,) {
+      this.updateComponentSize()
+    }
   userName:any='';
   password:any='';
   domain:any='';
@@ -46,7 +48,11 @@ export class PaymentComponent implements OnInit {
   unsubscribedDate=null;
   postalCode:any='';
   generateBill:boolean=false;
-
+  component_height:any;
+	@HostListener('window:resize', ['$event'])
+	updateComponentSize() {
+		this.component_height = window.innerHeight;
+	}
 
   ngOnInit() {
     this.responseUrl=sessionStorage.getItem('newurl');
