@@ -38,6 +38,7 @@ export class SignUpComponent implements OnInit {
   domainValidation:any='';
   emailIdValidation:boolean=false;
   existingEmail:any='';
+  description:any=[];
   
  
  async ngOnInit() {
@@ -127,6 +128,7 @@ signup(){
 }
 addFileInput(): void {
   this.companies.push({});
+  this.description?.push('')
 }
 newId:any='';
 createDB(){
@@ -139,11 +141,27 @@ createDB(){
 files: File[] = [];
 
 uploadDocument(){
-  this.saasService.getUploadedDocuments(this.newId,this.files).subscribe(
-    res=>{
-      console.log(res);
+  for (let i = 0; i < this.description.length; i++) {
+    const description = this.description[i];
+    const files = this.files.filter((_, index) => this.description[index] === description);
+
+    // Create a new FormData object for this set of files and description
+    const formData = new FormData();
+    formData.append('description', description);
+    for (let j = 0; j < files.length; j++) {
+      formData.append('files', files[j], files[j].name);
     }
-  )
+
+    // Make the API call for this description and its files
+    this.saasService.getUploadedDocuments(this.newId, files, description).subscribe(
+      res => {
+        console.log(res);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
 }
 password:any='';
   done() {
@@ -248,28 +266,33 @@ checkFileExtension(fileName: string): boolean {
 }
 
 onFileSelected(event: any) {
-  const files:FileList = event.target.files;
+  const files: FileList = event.target.files;
   const invalidFiles: string[] = [];
 
   for (let i = 0; i < files.length; i++) {
     if (!this.checkFileExtension(files[i].name)) {
       invalidFiles.push(files[i].name);
+    } else {
+      // Push the valid file to the files array
+      this.files.push(files[i]);
+      
     }
-    this.files?.push(files[i])
   }
 
   if (invalidFiles.length > 0) {
     this.openErrSnackbar('Invalid file(s) selected. Only JPG, JPEG, and PDF files are allowed.');
     event.target.value = null;
   }
-  this.onefileuploaded=true;
+  this.onefileuploaded = true;
 }
+
 hide:boolean=true;
 myFunction() {
   this.hide = !this.hide;
 }
 removeDocument(index: number) {
   this.companies.splice(index, 1); // Remove the div at the specified index
+  this.description?.splice(index,1)
 }
 
 checkFileSize(event: any) {
@@ -359,5 +382,29 @@ getDetailsById(id){
       console.log(err)
     }
   )
+}
+mandatoryDocx:any=[];
+//GET-DOCUMENTS-BASED-ON-COUNTRY
+getMandatoryDocumentsBasedOnCountry() {
+  this.description = [];
+  this.companies=[];
+  this.saasService.getDocumentsBasedOnCountry(this.countryName).subscribe(
+    res => {
+      console.log(res);
+      this.mandatoryDocx=res['data']
+      res['data']?.forEach(document => {
+        console.log(document);
+        this.companies?.push({})
+        this.description?.push(document);
+      });
+    },
+    err => {
+      console.log(err);
+    }
+  );
+}
+isMandatory(index: number): boolean {
+  const mandatoryDescriptions = this.mandatoryDocx;
+  return mandatoryDescriptions.includes(this.description[index]);
 }
 }

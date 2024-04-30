@@ -63,7 +63,9 @@ export class LoginComponent implements OnInit {
       // 'Minisha','Fin_ldap#26'
       //encrypt password
       let encPassword: string = "";
-      const authority = window.location.host.replace('localhost:4200', 'finsurge.tech');
+      const subdomain = window.location.hostname.split('.')[0];
+      const newHostname = 'finsurge.tech'; 
+      const authority = subdomain + '.' + newHostname;
       try {
         encPassword = CryptoJS.AES.encrypt(
           this.password,

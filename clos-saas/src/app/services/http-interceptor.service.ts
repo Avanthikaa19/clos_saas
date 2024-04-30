@@ -21,7 +21,10 @@ export class HttpInterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let authHeaderString = this.authenticationService.getAuthenticatedToken();
     let username = this.authenticationService.getAuthenticatedUser();
-    let authorityString = window.location.host.replace('localhost:4200', 'finsurge.tech');
+    console.log(window.location)
+    const subdomain = window.location.hostname.split('.')[0];
+    const newHostname = 'finsurge.tech'; 
+    let authorityString = subdomain + '.' + newHostname;
     // console.log("authHeaderString",authHeaderString)
     // console.log("username",username)
     if(authHeaderString && username){

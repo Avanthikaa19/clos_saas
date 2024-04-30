@@ -96,6 +96,35 @@
     </div>
     </div>
  </div>
+ <!-----------------------------------VALIDATE OTP----------------------------------------------->
+ <div *ngIf="otpLogin" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:300px;width:450px">
+    <div style="text-align: center;margin-top:5%;font-weight: bold;color:blue">
+        <span> An OTP has been sent to your registered email</span>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div style="margin-top:24%;background-color: white;padding: 10px;margin-bottom: 10px;">
+          <div class="container" style="width:413px">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div style="margin-top: 1%;">
+                <div>Validate your OTP <span style="color:red">*</span>
+                </div>
+                <input #otp1Ref maxlength="1" (input)="otp2Ref.focus()" [(ngModel)]="otp1" style="margin-top: 4%;width: 20%;" matInput class="min-select" />
+                <input #otp2Ref maxlength="1" (input)="otp3Ref.focus()" [(ngModel)]="otp2" style="margin-top: 4%;width: 20%;margin-left: 3%;" matInput class="min-select" />
+                <input #otp3Ref maxlength="1" (input)="otp4Ref.focus()" [(ngModel)]="otp3" style="margin-top: 4%;width: 20%;margin-left: 3%;" matInput class="min-select" />
+                <input #otp4Ref maxlength="1" [(ngModel)]="otp4" style="margin-top: 4%;width: 20%;margin-left: 3%;" matInput class="min-select" />
+               </div>
+            </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div style="text-align: center;margin-top: 6%;">
+        <button mat-flat-button color="primary" [disabled]="!otp1||!otp2||!otp3||!otp4" (click)="loginapp=true;otpLogin=false;validateOTP()">
+            <span> VALIDATE</span>
+        </button> 
+    </div>
+ </div>
  <!-----------------------------------DEMO VIDEO CLICK-------------------------------------------->
  <div *ngIf="demovideo" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:300px;width:450px">
     <div style="text-align: center;margin-top:5%">
@@ -117,7 +146,7 @@
  </div>
  </div>
  <!---------------------------BLUR THE BG WHEN CLICK REQUEST FOR DEMO---------------------------------->
- <div *ngIf="demovideo"
+ <div *ngIf="demovideo||otpLogin"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 
  <div class="version-info">

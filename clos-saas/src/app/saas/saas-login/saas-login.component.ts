@@ -20,6 +20,7 @@ export class SaasLoginComponent implements OnInit {
   emailIdValidation:boolean=false;
   existingEmail:any='';
   timer:any;
+  otpLogin:boolean=false;
   @HostListener('window:resize', ['$event'])
   updateComponentSize() {
     this.component_height = window.innerHeight;
@@ -91,7 +92,7 @@ export class SaasLoginComponent implements OnInit {
         }
         if(res['status']!=='Unavailable Email Id'){
           this.emailIdValidation=true;
-          this.loginapp=true;
+          this.otpLogin=true;
           this.existingEmail=res['status']
           let emailvalId=res['id'];
           const data={
@@ -120,6 +121,10 @@ paymentOption:any='';
 userName:any='';
 expiryDate:any='';
 approvalStatus:any='';
+otp1:string='';
+otp2:string='';
+otp3:string='';
+otp4:string='';
 getDetailsById(id){
   this.saasService.getDetailsById(id).subscribe(
     (res:any)=>{
@@ -144,6 +149,10 @@ getDetailsById(id){
       console.log(err)
     }
   )
+}
+validateOTP(){
+  let otp = parseInt(this.otp1 + this.otp2 + this.otp3 + this.otp4, 10);
+  console.log(otp)  
 }
 
 
