@@ -85,4 +85,8 @@ getUploadedDocuments(id: string, files: File[], description: string) {
   getDocumentsBasedOnCountry(country){
     return this.http.get(`${this.QUERY_BUILDER_API_URL}/country/doc/names?country=${country}`);
   }
+  //GET-COUNTRIES-LIST
+  getListOfCountries(){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/country/dropdown`);
+  }
 }

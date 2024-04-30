@@ -39,7 +39,22 @@ export class SignUpComponent implements OnInit {
   emailIdValidation:boolean=false;
   existingEmail:any='';
   description:any=[];
+  countriesList:any=[];
   
+  component_height:any;
+@HostListener('window:resize', ['$event'])
+updateComponentSize() {
+  this.component_height = window.innerHeight;
+}
+  constructor(
+    public router:Router,
+    public url:UrlService,
+    public saasService:SaasService,
+    public transferDataService:DataService,
+    public snackbar:MatSnackBar,
+  ) {
+    this.updateComponentSize();
+   }
  
  async ngOnInit() {
     // this.dateFormat = await this.formatDate();
@@ -49,6 +64,7 @@ export class SignUpComponent implements OnInit {
     console.log(response)
     console.log(window.location)
     this.clearAll();
+    this.getAllCountries();
   }
 
 
@@ -225,21 +241,6 @@ getMyValidation(event,col,val){
     }
     }
 }
-
-component_height:any;
-@HostListener('window:resize', ['$event'])
-updateComponentSize() {
-  this.component_height = window.innerHeight;
-}
-  constructor(
-    public router:Router,
-    public url:UrlService,
-    public saasService:SaasService,
-    public transferDataService:DataService,
-    public snackbar:MatSnackBar,
-  ) {
-    this.updateComponentSize();
-   }
    navigateToPage(param){
     this.router.navigate([`${param}`])
   }
@@ -406,5 +407,16 @@ getMandatoryDocumentsBasedOnCountry() {
 isMandatory(index: number): boolean {
   const mandatoryDescriptions = this.mandatoryDocx;
   return mandatoryDescriptions.includes(this.description[index]);
+}
+//GET-COUNTRIES-LIST
+getAllCountries(){
+  this.saasService.getListOfCountries().subscribe(
+    res=>{
+      this.countriesList=res['data'];
+    },
+    err=>{
+      console.log(err)
+    }
+  )
 }
 }

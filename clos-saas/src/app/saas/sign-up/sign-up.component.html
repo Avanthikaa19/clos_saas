@@ -133,7 +133,7 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <mat-select class="min-select" [(ngModel)]="countryName" (ngModelChange)="getMandatoryDocumentsBasedOnCountry()" placeholder="INDIA" style="margin-top: 2%;">
-                              <mat-option *ngFor="let country of countries" [value]="country" style="background-color: white; color: black">{{ country }}</mat-option>
+                              <mat-option *ngFor="let country of countriesList" [value]="country" style="background-color: white; color: black">{{ country }}</mat-option>
                           </mat-select> 
                         </div>
                     </div>
