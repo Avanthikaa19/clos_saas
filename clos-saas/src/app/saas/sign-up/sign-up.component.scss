@@ -94,5 +94,29 @@
     top: 64%;
     transform: translateY(-50%);
 }
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width:40vw;
+    height:60vh;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index:9999;
+  }
+  .title-bar{
+    height:45px;
+    width: 100%;
+    background-color: #0d203e;
+    text-transform: uppercase;
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+    line-height: 28px;
+    display: flex;
+    justify-content: space-between;
+  }
 
   

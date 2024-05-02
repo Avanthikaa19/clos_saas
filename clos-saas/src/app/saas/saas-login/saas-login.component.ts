@@ -21,6 +21,8 @@ export class SaasLoginComponent implements OnInit {
   existingEmail:any='';
   timer:any;
   otpLogin:boolean=false;
+  errMessageForMail:any='';
+  combinedotp:any='';
   @HostListener('window:resize', ['$event'])
   updateComponentSize() {
     this.component_height = window.innerHeight;
@@ -125,6 +127,8 @@ otp1:string='';
 otp2:string='';
 otp3:string='';
 otp4:string='';
+otp5:string='';
+otp6:string='';
 getDetailsById(id){
   this.saasService.getDetailsById(id).subscribe(
     (res:any)=>{
@@ -151,9 +155,40 @@ getDetailsById(id){
   )
 }
 validateOTP(){
-  let otp = parseInt(this.otp1 + this.otp2 + this.otp3 + this.otp4, 10);
-  console.log(otp)  
+  let otp = parseInt(this.otp1 + this.otp2 + this.otp3 + this.otp4 + this.otp5 + this.otp6, 10);
+  console.log(otp)
+  this.combinedotp=otp;
+  return this.combinedotp;  
 }
+//GET-OTP-FOR-COUNTRY
+getOTPForEmail(email){
+  this.saasService.getOTPForEmail(email).subscribe(
+    res=>{
+      console.log(res)
+    },
+    err=>{
+      console.log(err)
+    }
+  )
+}
+//VALIDATE OTP
+ validateOTPForMail(email){
+   this.validateOTP();
+   console.log('hii')
+this.saasService.validateOTPForEmail(email,this.combinedotp).subscribe(
+res=>{
+      console.log(res)
+      this.otpLogin=false;
+      this.loginapp=true;
+      this.openSnackBar(res['status'],null)
+    },
+    err=>{
+      console.log(err)
+      this.loginapp=false;
+      this.otpLogin=true;
+    }
+  )
 
+}
 
 }

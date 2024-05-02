@@ -139,45 +139,11 @@
                     </div>
                   </div>
                 </div>
-            </div>
-            <!--------------UPLOAD DOCX---------------->
-            <div class="row" style="margin-top:2%">
-                <div>
-                    <span>
-                        <button mat-icon-button *ngIf="onefileuploaded" (click)="addFileInput()" [matTooltip]="'add more document'" style="color: blue;float:right">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                    </span>
-                </div>
-                <!-- <div class="col-lg-4" style="height:73px;overflow-y:auto;padding-right: 0px;">
-                    <div *ngFor="let company of companies; let i = index">
-                    <input class="min-select" placeholder="Description" style="height: 53px;">
-                    </div>
-                </div> -->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:73px;overflow-y:auto;margin-top:-6px">
-                    <div *ngFor="let company of companies; let i = index">
-                        <div (ngSubmit)="uploadDocument()">
-                            <div style="display: flex; align-items: center;">
-                                <div class="col-lg-4" style="padding-right: 0px;padding-left: 0px;">
-                                    <input class="min-select" placeholder="Description" [(ngModel)]="description[i]" style="height: 51px;margin-top: 12px;">   
-                                </div>
-                                <div class="col-lg-7">
-                                <input accept=".jpg,.jpeg,.pdf" type="file" class="min-select" multiple (change)="onFileSelected($event)" #fileInput (change)="checkFileSize($event)">
-                                </div>
-                                <div class="col-lg-1">
-                                <button mat-icon-button *ngIf="!isMandatory(i)" (click)="removeDocument(i)" style="color: red" [matTooltip]="'remove document'">
-                                    <mat-icon style="margin-top: 20px;" *ngIf="i!==0">remove_circle</mat-icon>
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
-            </div>                     
+            </div>                  
             <!--------------REQUEST FOR DEMO----------->
             <div style="margin-top:1%;text-align: center;">
-              <button [disabled]="firstname==''||email==''||phn==''||domainName==''||companyname==''||position==''||role==''||password==''||countryName==''" (click)="signup()" style="text-align: center;" mat-flat-button color="primary">
-                  <span> SIGN UP</span>
+              <button   (click)="addDocx=true;" style="text-align: center;" mat-flat-button color="primary">
+                  <span> ADD DOCUMENTS</span>
               </button>
             </div>
           </div>
@@ -204,6 +170,47 @@
     </div>
  </div>
  </div>
+ <!----------------------------UPLOAD DOCX -------------------------------------------------------->
+ <div class="popup" *ngIf="addDocx">
+    <div class="title-bar">
+        <span style="margin-right: auto;">Mandatory Documents</span>
+        <mat-icon (click)="addDocx = false;" style="cursor: pointer;">close</mat-icon>
+    </div>
+ <div style="margin-top:2%">
+    <div>
+        <span style="margin-right: 75px;float:right" *ngIf="allDocumentsUploaded() && !anyMandatoryDocumentNotUploaded()" (click)="addFileInput()">
+            <button mat-flat-button color="primary">
+                <i class="fa fa-add"></i>
+                <span> ADD MORE DOCUMENTS</span>
+            </button>
+        </span>      
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:335px;overflow-y:auto;margin-top:-6px">
+        <div *ngFor="let company of companies; let i = index">
+            <div (ngSubmit)="uploadDocument()">
+                <div style="display: flex; align-items: center;">
+                    <div class="col-lg-4" style="padding-right: 0px; padding-left: 0px;">
+                        <input class="min-select" placeholder="Description" [(ngModel)]="description[i]" [disabled]="description[i] !== '' && description[i] !== null" style="height: 51px; margin-top: 12px;">   
+                      </div>                      
+                    <div class="col-lg-7">
+                    <input accept=".jpg,.jpeg,.pdf" type="file" class="min-select" multiple (change)="onFileSelected($event,i)" #fileInput (change)="checkFileSize($event)">
+                    </div>
+                    <div class="col-lg-1">
+                    <button mat-icon-button *ngIf="!isMandatory(i)" (click)="removeDocument(i)" style="color: red" [matTooltip]="'remove document'">
+                        <mat-icon style="margin-top: 20px;" *ngIf="i!==0">remove_circle</mat-icon>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>   
+<div style="margin-top:5%;text-align: center;">
+    <button (click)="signup()" style="text-align: center;"  [disabled]="!allDocumentsUploaded() || anyMandatoryDocumentNotUploaded()" mat-flat-button color="primary">
+        <span> SIGN UP</span>
+    </button>
+  </div>    
+</div>
  <!---------------------------EMAIL VALIDATION POPUP----------------------------------------------------->
  <div *ngIf="emailIdValidation" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:450px;width:450px">
     <div style="text-align: center;margin-top:5%">
@@ -280,7 +287,7 @@
     </div>
  </div>
  <!---------------------------BLUR THE BG WHEN CLICK REQUEST FOR DEMO---------------------------------->
- <div *ngIf="demovideo||emailIdValidation"
+ <div *ngIf="demovideo||emailIdValidation||addDocx"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 
  <div class="version-info">

@@ -40,6 +40,9 @@ export class SignUpComponent implements OnInit {
   existingEmail:any='';
   description:any=[];
   countriesList:any=[];
+  addDocx:boolean=false;
+  fileUploaded: boolean[] = []; // Array to track whether each file is uploaded
+
   
   component_height:any;
 @HostListener('window:resize', ['$event'])
@@ -122,6 +125,7 @@ signup(){
   this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn).subscribe(
     (res:any)=>{
      console.log(res)
+     this.addDocx=false;
      this.newId=res['id'];
      this.uploadDocument();
      const data={
@@ -266,7 +270,7 @@ checkFileExtension(fileName: string): boolean {
   return allowedExtensions.includes(extension);
 }
 
-onFileSelected(event: any) {
+onFileSelected(event: any,index) {
   const files: FileList = event.target.files;
   const invalidFiles: string[] = [];
 
@@ -284,7 +288,7 @@ onFileSelected(event: any) {
     this.openErrSnackbar('Invalid file(s) selected. Only JPG, JPEG, and PDF files are allowed.');
     event.target.value = null;
   }
-  this.onefileuploaded = true;
+  this.fileUploaded[index]=true;
 }
 
 hide:boolean=true;
@@ -294,6 +298,7 @@ myFunction() {
 removeDocument(index: number) {
   this.companies.splice(index, 1); // Remove the div at the specified index
   this.description?.splice(index,1)
+  this.fileUploaded.splice(index, 1);
 }
 
 checkFileSize(event: any) {
@@ -407,6 +412,13 @@ getMandatoryDocumentsBasedOnCountry() {
 isMandatory(index: number): boolean {
   const mandatoryDescriptions = this.mandatoryDocx;
   return mandatoryDescriptions.includes(this.description[index]);
+}
+allDocumentsUploaded(): boolean {
+  return this.fileUploaded.every(upload => upload);
+}
+
+anyMandatoryDocumentNotUploaded(): boolean {
+  return this.description.some((_, index) => this.isMandatory(index) && !this.fileUploaded[index]);
 }
 //GET-COUNTRIES-LIST
 getAllCountries(){
