@@ -79,6 +79,14 @@ export class SaasLoginComponent implements OnInit {
       }
     });
   }
+  openErrSnackbar(message){
+    this.snackBar.openFromComponent(SnackbarComponent, {
+    panelClass: ['error-snackbar'],duration: 5000,
+    data: {
+     message: message, icon: 'error_outline',type:'error'
+    }
+     });
+    }
   navigateToPage(param){
     this.router.navigate([`${param}`])
   }
@@ -175,8 +183,8 @@ getOTPForEmail(email){
  validateOTPForMail(email){
    this.validateOTP();
    console.log('hii')
-this.saasService.validateOTPForEmail(email,this.combinedotp).subscribe(
-res=>{
+   this.saasService.validateOTPForEmail(email,this.combinedotp).subscribe(
+   res=>{
       console.log(res)
       this.otpLogin=false;
       this.loginapp=true;
@@ -186,6 +194,7 @@ res=>{
       console.log(err)
       this.loginapp=false;
       this.otpLogin=true;
+      this.openErrSnackbar(err.error)
     }
   )
 
