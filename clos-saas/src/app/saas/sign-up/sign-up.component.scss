@@ -118,6 +118,11 @@
     display: flex;
     justify-content: space-between;
   }
+  .custom-tooltip {
+    background-color: #fff;
+    color: #000; /* Set text color as per your design */
+    border: 1px solid #ccc; /* Optional: Add border for better visibility */
+}
 
   ::ng-deep .cdk-overlay-container{
     z-index: 9999 !important;

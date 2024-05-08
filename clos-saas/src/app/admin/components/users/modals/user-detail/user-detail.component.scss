@@ -174,11 +174,11 @@ th {
     width: 60px;
   }
 
-::ng-deep .input-field .mat-form-field-underline {
+:host ::ng-deep .input-field .mat-form-field-underline {
     display: none;
   }
 
-  ::ng-deep .input-field .mat-form-field-flex{
+:host  ::ng-deep .input-field .mat-form-field-flex{
     white-space: nowrap;
     background-color: rgb(245 245 245);
     color: #606266;

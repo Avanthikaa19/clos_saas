@@ -19,6 +19,7 @@ export class AccessDetailComponent implements OnInit {
   accessDetail: AccessTemplate;
   currentDate: string = '';
   currentUser: string = '';
+  showMoreInfo:boolean=false;
   constructor(
     private router: Router,
     public configurationService: ConfigurationService,

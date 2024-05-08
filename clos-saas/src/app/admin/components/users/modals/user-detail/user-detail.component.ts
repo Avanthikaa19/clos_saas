@@ -45,6 +45,7 @@ export class UserDetailComponent implements OnInit {
   currentUser:string = '';
   passwordMessage: string = '';
   passwordValid: boolean = false;
+  showMoreInfo:boolean=false;
 
   //role name vars
   changeRoleNamesText: boolean = false;

@@ -12,6 +12,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LogoutPopupComponent } from '../logout-popup/logout-popup.component';
 import { PageData } from '../generic-data-table/generic-data-table.component';
+import { ServiceService } from 'src/app/loan-origination/service.service';
+import { SaasService } from 'src/app/saas/saas-service';
 
 @Component({
   selector: 'app-header',
@@ -38,6 +40,8 @@ export class HeaderComponent implements OnInit {
   manage;
   admin;
   alert;
+  contactNo:any='';
+  contactMail:any='';
 
   constructor(    
     public dialog: MatDialog,
@@ -47,6 +51,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public encryptDecryptService:EncryptDecryptService,
     private notificationService: NotificationService,
+    public saasService:SaasService,
   ) {
     this.ac.items=this.encryptDecryptService.getACItemsFromSession()
     this.ac.super=this.encryptDecryptService.getACSuperFromSession()
@@ -67,6 +72,7 @@ export class HeaderComponent implements OnInit {
  
   ngOnInit(): void {
     this.getAutoSubscription();
+    this.getContactInfo();
   }
 
   ngOnDestroy() {
@@ -319,5 +325,14 @@ export class HeaderComponent implements OnInit {
   onHomeBtnClick(){
     this.router.navigate(['/general/home']);
     sessionStorage.removeItem('appId')
+  }
+  getContactInfo(){
+    this.saasService.getContactInfo().subscribe(
+      res=>{
+        console.log(res)
+        this.contactNo = res['data'].supportMobile;
+        this.contactMail = res['data'].supportMail;
+      }
+    )
   }
 }

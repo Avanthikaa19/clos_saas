@@ -16,18 +16,6 @@
             </span>
             <!-----------RIGHT SIDE HEADER------------------------>
             <span style="position: absolute;right:5px">
-                <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
-                    <span style="margin-right: 20px;">
-                        <i class="fa fa-envelope">
-                        </i>
-                        <span> {{contactMail}}</span>
-                    </span>
-                    <span>
-                        <i class="fa fa-phone">
-                        </i>
-                        <span> {{contactNo}}</span>
-                    </span>
-                </span>
             <span style="margin-right: 8px;" (click)="navigateToPage('home')">
                 <button mat-flat-button color="primary">
                     <i class="fa fa-arrow-left"></i>
@@ -61,10 +49,13 @@
           <div class="container">
             <div class="row" style="margin-top:2%">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div>
-                      <div style="margin-left:-16px">User Name <span style="color:red">*</span></div>
-                      <input style="margin-left:-16px;width:52rem" [(ngModel)]="firstname" matInput class="min-select" placeholder="USER NAME">
-                  </div>
+                    <div style="position:relative;">
+                        <div style="margin-left:-16px">User Name <span style="color:red">*</span></div>
+                        <input style="margin-left:-16px;width:52rem;padding-right: 2.5rem" [(ngModel)]="firstname" matInput class="min-select" placeholder="USER NAME">
+                        <span style="position:absolute;top:5.5rem;right:0rem;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
+                            <i class="fa fa-info-circle"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
             </div>
@@ -121,12 +112,18 @@
                   <div style="margin-top: 1%;">
                       <div>Position <span style="color:red">*</span></div>
                       <input [(ngModel)]="position" type="text" matInput class="min-select" placeholder="Dev">
+                      <span style="position:absolute;top:4.5rem;right:2.75rem;cursor:pointer" matTooltip="click to view" (click)="showmoreposition=true">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
                   </div>
               </div>  
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div style="margin-top: 1%;">
                     <div>Role <span style="color:red">*</span></div>
                     <input [(ngModel)]="role" type="text" matInput class="min-select" placeholder="Junior Dev">
+                    <span style="position:absolute;top:4.5rem;right:2.75rem;cursor:pointer" matTooltip="click to view" (click)="showmorerole=true">
+                        <i class="fa fa-info-circle"></i>
+                    </span>
                 </div>
             </div>                
             </div> 
@@ -289,9 +286,66 @@
     </div>
  </div>
  <!---------------------------BLUR THE BG WHEN CLICK REQUEST FOR DEMO---------------------------------->
- <div *ngIf="demovideo||emailIdValidation||addDocx"
+ <div *ngIf="demovideo||emailIdValidation||addDocx||showMoreInfo||showmoreposition||showmorerole"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 
  <div class="version-info">
     <span class="version-name float-left">Copyright © 2024 FinSurge. All Rights Reserved.</span>
 </div>
+<!--------------------------USER INPUT POPUP----------------------------------------------->
+<div *ngIf="showMoreInfo" style="position: absolute; top:42%; right: 5.4%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:270px;width:385px;border-radius: 10px;padding: 15px;">
+    <div style="width: 10px; height: 10px; margin-left: 200px; margin-top: -20px; transform: rotate(45deg);background: white;border-top: 1px solid lightgrey;border-left: 1px solid lightgrey"></div>
+    <div style="text-align: center;margin-top:5%">
+        <img src="assets/info.png" style="width:24%">
+    </div>
+    <div class="main-header" style="text-align: center;margin-top:4%;color:#0e2954">
+       <span style="font-size: 14px;font-weight: bold;margin-bottom: 10px;line-height: 23px;">
+        <br>
+        <span *ngIf="showMoreInfo">Enter your uername in small letters. Ussername should be a minimum of 3 letters.</span>
+       </span>
+       <br>
+    </div>
+    <div style="text-align: center;margin-top: 6%;">
+        <button mat-flat-button style="background-color:#0e2954" (click)="showMoreInfo=false">
+            <span style="color: white;" *ngIf="showMoreInfo"> DONE</span>
+        </button> 
+    </div>
+ </div>
+
+ <div *ngIf="showmoreposition" style="position: absolute; bottom:9%; right: 20%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:252px;width:385px;border-radius: 10px;padding: 15px;">
+    <div style="text-align: center;margin-top:5%">
+        <img src="assets/info.png" style="width:24%">
+    </div>
+    <div class="main-header" style="text-align: center;margin-top:4%;color:#0e2954">
+       <span style="font-size: 14px;font-weight: bold;margin-bottom: 10px;line-height: 23px;">
+        <br>
+        <span *ngIf="showmoreposition">Enter the position in your organization . Ex:Manager</span>
+       </span>
+       <br>
+    </div>
+    <div style="text-align: center;margin-top: 6%;">
+        <button mat-flat-button style="background-color:#0e2954" (click)="showmoreposition=false">
+            <span style="color: white;" *ngIf="showmoreposition"> DONE</span>
+        </button> 
+    </div>
+    <div style="width: 10px; height: 10px; margin-left: 200px; margin-top: 2px; transform: rotate(223deg);background: white;border-top: 1px solid lightgrey;border-left: 1px solid lightgrey"></div>
+ </div>
+
+ <div *ngIf="showmorerole" style="position: absolute; bottom:11%; right: 5.4%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:282px;width:385px;border-radius: 10px;padding: 15px;">
+    <div style="text-align: center;margin-top:5%">
+        <img src="assets/info.png" style="width:24%">
+    </div>
+    <div class="main-header" style="text-align: center;margin-top:4%;color:#0e2954">
+       <span style="font-size: 14px;font-weight: bold;margin-bottom: 10px;line-height: 23px;">
+        <br>
+        <span *ngIf="showmorerole">Enter the role in your company . Ex:Junior/Senior Manager</span>
+       </span>
+       <br>
+    </div>
+    <div style="text-align: center;margin-top: 6%;">
+        <button mat-flat-button style="background-color:#0e2954" (click)="showmorerole=false">
+            <span style="color: white;" *ngIf="showmorerole"> DONE</span>
+        </button> 
+    </div>
+    <div style="width: 10px; height: 10px; margin-left: 200px; margin-top: 2px; transform: rotate(223deg);background: white;border-top: 1px solid lightgrey;border-left: 1px solid lightgrey"></div>
+ </div>

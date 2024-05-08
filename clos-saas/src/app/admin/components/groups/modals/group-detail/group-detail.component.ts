@@ -30,6 +30,7 @@ export class GroupDetailComponent implements OnInit {
   changeRoleNamesText: boolean = false;
   roleNamesShort: string = '';
   roleNamesFull: string = '';
+  showMoreInfo:boolean=false;
 
   constructor(
     private router: Router,

@@ -25,6 +25,7 @@ export class SaasLoginComponent implements OnInit {
   combinedotp:any='';
   contactNo:any;
   contactMail:any;
+  showMoreInfo:boolean=false;
   @HostListener('window:resize', ['$event'])
   updateComponentSize() {
     this.component_height = window.innerHeight;

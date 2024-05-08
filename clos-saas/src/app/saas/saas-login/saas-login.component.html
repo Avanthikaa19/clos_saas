@@ -16,18 +16,6 @@
             </span>
             <!-----------RIGHT SIDE HEADER------------------------>
             <span style="position: absolute;right:5px">
-                <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
-                  <span style="margin-right: 20px;">
-                    <i class="fa fa-envelope">
-                    </i>
-                    <span> {{contactMail}}</span>
-                </span>
-                <span>
-                    <i class="fa fa-phone">
-                    </i>
-                    <span> {{contactNo}}</span>
-                </span>
-                </span>
             <span style="margin-right: 8px;" (click)="navigateToPage('home')">
                 <button mat-flat-button color="primary">
                     <i class="fa fa-arrow-left"></i>
@@ -64,6 +52,9 @@
               <div style="margin-top: 7%;">
                   <div>Enter your Email Id <span style="color:red">*</span></div>
                   <input [(ngModel)]="email" (ngModelChange)="mailValidation(email);" (keyup.backspace)="existingEmail=''" style="margin-top: 4%;"  matInput class="min-select" placeholder="abc@gmail.com" />
+                  <span style="position:absolute;top:8.5rem;right:2rem;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
+                    <i class="fa fa-info-circle"></i>
+                  </span>
               </div>
               <span *ngIf="errMessage" style="font-size: 12px;color: crimson;">{{errMessage}}</span>
               <span *ngIf="existingEmail" style="font-size: 12px;color: crimson;">{{existingEmail}}</span>
@@ -154,9 +145,28 @@
  </div>
  </div>
  <!---------------------------BLUR THE BG WHEN CLICK REQUEST FOR DEMO---------------------------------->
- <div *ngIf="demovideo||otpLogin"
+ <div *ngIf="demovideo||otpLogin||showMoreInfo"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
 
  <div class="version-info">
     <span class="version-name float-left">Copyright © 2024 FinSurge. All Rights Reserved.</span>
+</div>
+
+<div *ngIf="showMoreInfo" style="position: absolute; top:59%; right: 5.4%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:270px;width:385px;border-radius: 10px;padding: 15px;">
+  <div style="width: 10px; height: 10px; margin-left: 200px; margin-top: -20px; transform: rotate(45deg);background: white;border-top: 1px solid lightgrey;border-left: 1px solid lightgrey"></div>
+  <div style="text-align: center;margin-top:5%">
+      <img src="assets/info.png" style="width:24%">
+  </div>
+  <div class="main-header" style="text-align: center;margin-top:4%;color:#0e2954">
+     <span style="font-size: 14px;font-weight: bold;margin-bottom: 10px;line-height: 23px;">
+      <br>
+      <span *ngIf="showMoreInfo">Enter the email ID that you have given on sign-up.</span>
+     </span>
+     <br>
+  </div>
+  <div style="text-align: center;margin-top: 6%;">
+      <button mat-flat-button style="background-color:#0e2954" (click)="showMoreInfo=false">
+          <span style="color: white;" *ngIf="showMoreInfo"> DONE</span>
+      </button> 
+  </div>
 </div>

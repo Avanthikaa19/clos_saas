@@ -44,6 +44,14 @@ export class SignUpComponent implements OnInit {
   fileUploaded: boolean[] = []; // Array to track whether each file is uploaded
   contactNo:any;
   contactMail:any;
+  showMoreInfo:boolean=false;
+  showMoreemail:boolean=false;
+  showmorephn:boolean=false;
+  showmorecompany:boolean=false;
+  showmoredomain:boolean=false;
+  showmoreposition:boolean=false;
+  showmorerole:boolean=false;
+
   
   component_height:any;
 @HostListener('window:resize', ['$event'])
