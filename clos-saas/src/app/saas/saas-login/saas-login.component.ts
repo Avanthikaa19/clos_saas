@@ -23,6 +23,8 @@ export class SaasLoginComponent implements OnInit {
   otpLogin:boolean=false;
   errMessageForMail:any='';
   combinedotp:any='';
+  contactNo:any;
+  contactMail:any;
   @HostListener('window:resize', ['$event'])
   updateComponentSize() {
     this.component_height = window.innerHeight;
@@ -31,6 +33,7 @@ export class SaasLoginComponent implements OnInit {
     public router:Router,public saasService:SaasService,
     public transferDataService:DataService,) {
     this.updateComponentSize();
+    this.getContactInfo();
    }
 
   ngOnInit(): void {
@@ -199,5 +202,13 @@ getOTPForEmail(email){
   )
 
 }
-
+getContactInfo(){
+  this.saasService.getContactInfo().subscribe(
+    res=>{
+      console.log(res)
+      this.contactNo = res['data'].supportMobile;
+      this.contactMail = res['data'].supportMail;
+    }
+  )
+}
 }

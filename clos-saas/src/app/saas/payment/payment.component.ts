@@ -48,6 +48,8 @@ export class PaymentComponent implements OnInit {
   unsubscribedDate=null;
   postalCode:any='';
   generateBill:boolean=false;
+  contactNo:any;
+  contactMail:any;
   component_height:any;
 	@HostListener('window:resize', ['$event'])
 	updateComponentSize() {
@@ -73,6 +75,7 @@ export class PaymentComponent implements OnInit {
     this.calculateNextBillingDate(this.billingPeriod)
   this.lastpaymentDate=this.datepipe.transform(new Date(), 'yyyy-MM-ddT00:00:00')
   this.subscribedDate=this.datepipe.transform(new Date(), 'yyyy-MM-ddT00:00:00')
+  this.getContactInfo();
   }
 clearAll(){
   this.companyname='';
@@ -200,5 +203,14 @@ uploadPdfToAPI(blob) {
       console.error('Error uploading PDF:', err);
     }
   );
+}
+getContactInfo(){
+  this.saasService.getContactInfo().subscribe(
+    res=>{
+      console.log(res)
+      this.contactNo = res['data'].supportMobile;
+      this.contactMail = res['data'].supportMail;
+    }
+  )
 }
 }

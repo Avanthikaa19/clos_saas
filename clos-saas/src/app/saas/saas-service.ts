@@ -97,4 +97,8 @@ getUploadedDocuments(id: string, files: File[], description: string) {
   validateOTPForEmail(email,otp){
     return this.http.post<any>(`${this.QUERY_BUILDER_API_URL}/validate/otp`, {email,otp});
   }
+  //GET CONTACT INFO
+  getContactInfo(){
+    return this.http.get(`${this.QUERY_BUILDER_API_URL}/get/support/data`);
+  }
 }

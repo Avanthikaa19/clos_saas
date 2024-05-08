@@ -42,7 +42,8 @@ export class SignUpComponent implements OnInit {
   countriesList:any=[];
   addDocx:boolean=false;
   fileUploaded: boolean[] = []; // Array to track whether each file is uploaded
-
+  contactNo:any;
+  contactMail:any;
   
   component_height:any;
 @HostListener('window:resize', ['$event'])
@@ -68,6 +69,7 @@ updateComponentSize() {
     console.log(window.location)
     this.clearAll();
     this.getAllCountries();
+    this.getContactInfo();
   }
 
 
@@ -428,6 +430,15 @@ getAllCountries(){
     },
     err=>{
       console.log(err)
+    }
+  )
+}
+getContactInfo(){
+  this.saasService.getContactInfo().subscribe(
+    res=>{
+      console.log(res)
+      this.contactNo = res['data'].supportMobile;
+      this.contactMail = res['data'].supportMail;
     }
   )
 }

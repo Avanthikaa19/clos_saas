@@ -32,6 +32,8 @@ export class PricingComponent implements OnInit {
   currentDate=null;
   trialExpiryDate=null;
   selectedPayment:string='';
+  contactNo:any;
+  contactMail:any;
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -79,6 +81,7 @@ username:any='';
     });
     console.log(this.id)
     this.getDetailsById();
+    this.getContactInfo();
   }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -137,5 +140,13 @@ username:any='';
        }
      )
   }
-
+  getContactInfo(){
+    this.saasService.getContactInfo().subscribe(
+      res=>{
+        console.log(res)
+        this.contactNo = res['data'].supportMobile;
+        this.contactMail = res['data'].supportMail;
+      }
+    )
+  }
 }

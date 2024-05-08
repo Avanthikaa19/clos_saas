@@ -17,10 +17,15 @@
             <!-----------RIGHT SIDE HEADER------------------------>
             <span style="position: absolute;right:5px">
                 <span style="margin-right:20px;font-size: 20px;color: blue;margin-top:2px">
+                    <span style="margin-right: 20px;">
+                        <i class="fa fa-envelope">
+                        </i>
+                        <span> {{contactMail}}</span>
+                    </span>
                     <span>
                         <i class="fa fa-phone">
                         </i>
-                        <span> +654321890</span>
+                        <span> {{contactNo}}</span>
                     </span>
                 </span>
             <span style="margin-right: 8px;" (click)="navigateToPage('home')">
@@ -177,14 +182,6 @@
         <mat-icon (click)="addDocx = false;" style="cursor: pointer;">close</mat-icon>
     </div>
  <div style="margin-top:2%">
-    <div>
-        <span style="margin-right: 75px;float:right" *ngIf="allDocumentsUploaded() && !anyMandatoryDocumentNotUploaded()" (click)="addFileInput()">
-            <button mat-flat-button color="primary">
-                <i class="fa fa-add"></i>
-                <span> ADD MORE DOCUMENTS</span>
-            </button>
-        </span>      
-    </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:335px;overflow-y:auto;margin-top:-6px">
         <div *ngFor="let company of companies; let i = index">
             <div (ngSubmit)="uploadDocument()">
@@ -192,12 +189,17 @@
                     <div class="col-lg-4" style="padding-right: 0px; padding-left: 0px;">
                         <input class="min-select" placeholder="Description" [(ngModel)]="description[i]" [disabled]="description[i] !== '' && description[i] !== null" style="height: 51px; margin-top: 12px;">   
                       </div>                      
-                    <div class="col-lg-7">
+                    <div class="col-lg-6">
                     <input accept=".jpg,.jpeg,.pdf" type="file" class="min-select" multiple (change)="onFileSelected($event,i)" #fileInput (change)="checkFileSize($event)">
                     </div>
                     <div class="col-lg-1">
+                        <button mat-icon-button *ngIf="allDocumentsUploaded() && !anyMandatoryDocumentNotUploaded()" (click)="addFileInput()" matTooltip="Add Document">
+                               <mat-icon>add</mat-icon>
+                        </button>      
+                    </div>
+                    <div class="col-lg-1">
                     <button mat-icon-button *ngIf="!isMandatory(i)" (click)="removeDocument(i)" style="color: red" [matTooltip]="'remove document'">
-                        <mat-icon style="margin-top: 20px;" *ngIf="i!==0">remove_circle</mat-icon>
+                        <mat-icon *ngIf="i!==0">remove_circle</mat-icon>
                     </button>
                     </div>
                 </div>
