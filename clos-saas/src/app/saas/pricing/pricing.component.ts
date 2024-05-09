@@ -149,4 +149,20 @@ username:any='';
       }
     )
   }
+  //Number of Users
+  totalAmount: number = 0;
+  popupVisible: boolean = false;
+  numberOfUsers: number = 1;
+  openPopup() {
+    this.popupVisible = true;
+    this.calculateTotal();
+  }
+
+  closePopup() {
+    this.popupVisible = false;
+  }
+
+  calculateTotal() {
+    this.totalAmount = parseFloat(this.paymentAmt) * this.numberOfUsers;
+  }
 }
