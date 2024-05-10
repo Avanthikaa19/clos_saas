@@ -169,6 +169,10 @@ createDB(){
   )
 }
 files: File[] = [];
+onInputChange() {
+  this.firstname = this.firstname.toLowerCase();
+}
+
 
 uploadDocument(){
   for (let i = 0; i < this.description.length; i++) {

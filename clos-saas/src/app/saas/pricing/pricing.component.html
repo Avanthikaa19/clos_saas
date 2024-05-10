@@ -33,154 +33,62 @@
 </div> 
 <!----------------PRICING----------------------------------------------->
 <div style="height: 89.6%;overflow-y: auto;">
-<div style="height:50px;width:100%;font-size: 20px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:2%;color:blue">
+<!-- <div style="height:50px;width:100%;font-size: 20px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:2%;color:blue">
     <span style="margin-left: -3%;">PRICING</span>
-</div>
+</div> -->
 <div *ngIf="paymentOption" style="height:50px;width:100%;font-size: 20px;font-family: sans-serif;font-weight: bold;display: flex; align-items: center; justify-content: center;margin-top:1%;color:blue">
     <span style="margin-left: -3%;">CURRENT PLAN : {{paymentOption}}</span>
 </div>
 <div class="container" style="margin-top: 1%;">
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%;">
+        <div *ngFor="let list of pricingList; let i=index" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%; margin-bottom: 20px;">
             <div class="card-box">
-                <mat-icon class="check-icon" *ngIf="selectedPayment == 'BASIC' ">check</mat-icon>
-            <div style="text-align: center;margin-top: 5%;">
-                <span style="font-size: 20px;font-weight: bold;color: black;">BASIC</span>
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-size: 15px;;color: black;">For business wanting to stramline their online application with minimal control and flexibilty</span>
-            </div>
-            <div style="margin-top: 3%;">
-                Starts at
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-weight: bold;font-size: 20px;">$300/month</span>
-            </div>
-            <div style="text-align: center;margin-top: 3%;">
-                <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt='300.00';paymentOption='BASIC';openPopup();">
-                    <span> {{paymentOption=='BASIC'?'SUBSCRIBED':'SUBSCRIBE'}}</span>
-                </button>
-            </div>
-            <div style="margin-top: 4%;">
-                Includes everything inStandard Plan +
-                <div>
- * Stay tax compliant with e-invoicing
- </div>
- <div>
-* Manage subscription billing
-</div>
-<div>
-* Use hosted payment pages
-</div>
-<div>
-* Provide multi-currency options
-</div>
-<div>
-* Set transaction approval processes
-</div>
-<div>
-* Allow customers to review timesheets
-</div>
-<div>
-* Receive scheduled reports
-</div>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
-            <div class="card-box">
-                <mat-icon class="check-icon" *ngIf="selectedPayment == 'STANDARD' ">check</mat-icon>
-            <div style="text-align: center;margin-top: 5%;">
-                <span style="font-size: 20px;font-weight: bold;color: black;">STANDARD</span>
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-size: 15px;;color: black;">For business wanting to stramline their online application with minimal control and flexibility</span>
-            </div>
-            <div style="margin-top: 3%;">
-                Starts at
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-weight: bold;font-size: 20px;">$500/month</span>
-            </div>
-            <div style="text-align: center;margin-top: 3%;">
-                <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt='500.00';paymentOption='STANDARD';openPopup();">
-                    <span> {{paymentOption=='BASIC' && id!==null?'UPGRADE':'SUBSCRIBE'}}</span>
-                </button>
-            </div>
-            <div style="margin-top: 4%;">
-                Includes everything inStandard Plan +
-                <div>
- * Stay tax compliant with e-invoicing
- </div>
- <div>
-* Manage subscription billing
-</div>
-<div>
-* Use hosted payment pages
-</div>
-<div>
-* Provide multi-currency options
-</div>
-<div>
-* Set transaction approval processes
-</div>
-<div>
-* Allow customers to review timesheets
-</div>
-<div>
-* Receive scheduled reports
-</div>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
-            <div class="card-box">
-                <mat-icon class="check-icon" *ngIf="selectedPayment == 'PREMIUM' ">check</mat-icon>
-            <div style="text-align: center;margin-top: 5%;">
-                <span style="font-size: 20px;font-weight: bold;color: black;">PREMIUM</span>
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-size: 15px;;color: black;">Our most powerful marketing software for advanced control and advanced flexibility.</span>
-            </div>
-            <div style="margin-top: 3%;">
-                Starts at
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-weight: bold;font-size: 20px;">$800/month</span>
-            </div>
-            <div style="text-align: center;margin-top: 3%;">
-                <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt='800.00';paymentOption='PREMIUM';openPopup();">
-                    <span> {{paymentOption=='BASIC'||paymentOption=='STANDARD'?'UPGRADE':'SUBSCRIBE'}}</span>
-                </button>
-            </div>
-            <div style="margin-top: 4%;">
-                Includes everything inStandard Plan +
-                <div>
- * Stay tax compliant with e-invoicing
- </div>
- <div>
-* Manage subscription billing
-</div>
-<div>
-* Use hosted payment pages
-</div>
-<div>
-* Provide multi-currency options
-</div>
-<div>
-* Set transaction approval processes
-</div>
-<div>
-* Allow customers to review timesheets
-</div>
-<div>
-* Receive scheduled reports
-</div>
-            </div>
+                <!-- <mat-icon class="check-icon" *ngIf="selectedPayment == 'BASIC' ">check</mat-icon> -->
+                <div style="text-align: center;margin-top: 5%;">
+                    <span style="font-size: 20px;font-weight: bold;color: black;">{{list?.subscriptionName}}</span>
+                </div>
+                <div style="margin-top: 3%;">
+                    <span style="font-size: 15px;;color: black;">{{list?.subscriptionDescription}}</span>
+                </div>
+                <div style="margin-top: 3%;">
+                    Starts at
+                </div>
+                <div style="margin-top: 3%;">
+                    <span style="font-weight: bold;font-size: 20px;">{{list?.subscriptionPrice}} / user</span>
+                </div>
+                <div style="text-align: center;margin-top: 3%;" (click)="openPopup()">
+                    <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt=list?.subscriptionPrice;paymentOption=list?.subscriptionName;numberOfUsers=list?.defaultUserCount;minNumberOfUsers=list?.minUsers;maxNumberOfUsers=list?.maxUsers">
+                        <span>SUBSCRIBE</span>
+                    </button>
+                </div>
+                <div style="margin-top: 4%; border: 1px solid #e0e0e0; border-radius: 5px; padding: 15px;">
+                    <div style="font-weight: bold; color: #333;">Includes everything in Standard Plan +</div>
+                    <div style="margin-top: 10px;">
+                        <div style="margin-bottom: 5px;">ACCESSIBLE MODULES WITH THIS PLAN</div>
+                        <ng-container *ngFor="let item of list?.accessModules; let j=index">
+                            <div style="color: #007bff; margin-bottom: 5px;">
+                                <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">check_circle</span>
+                                {{item}}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div>
+                            <span style="font-weight: bold;"><span class="material-icons" style="vertical-align: middle; margin-right: 5px;">group</span> MIN USERS:</span>
+                            <span style="font-weight: bold;">  {{list?.minUsers}}</span>
+                        </div>
+                        <div>
+                            <span style="font-weight: bold;"><span class="material-icons" style="vertical-align: middle; margin-right: 5px;">groups</span> MAX USERS:</span>
+                            <span style="font-weight: bold;">  {{list?.maxUsers}}</span>
+                        </div>
+                    </div>
+                </div>                                          
             </div>
         </div>
     </div>
+    <br>
 </div>
+
 <!----------------------SUCCESS POPUP------------------------------->
 <div *ngIf="demovideo" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:280px;width:385px;border-radius: 10px;padding: 15px;">
     <div style="text-align: center;margin-top:5%">
@@ -200,12 +108,15 @@
  <div class="custom-popup" [ngStyle]="{ 'display': popupVisible ? 'flex' : 'none' }">
     <div class="popup-content">
         <div class="users-header">
-        <h2 style="margin-right: auto;color: #3f51b5;">Subscription Details</h2>
+        <h2 style="margin-right: auto;color: #3f51b5;">No of users to be created</h2>
         <mat-icon style="float: right;margin-top: -14px;cursor: pointer;" (click)="closePopup()">close</mat-icon>
         </div>
         <div class="input-group">
-            <label for="numberOfUsers">Number of Users:</label>
-            <input type="number" id="numberOfUsers" [(ngModel)]="numberOfUsers" (input)="calculateTotal()">
+            <label for="numberOfUsers">Number of Users: (min users : {{minNumberOfUsers}}) (max users : {{maxNumberOfUsers}})</label>
+            <input type="number" id="numberOfUsers" [(ngModel)]="numberOfUsers" [min]="minNumberOfUsers" [max]="maxNumberOfUsers" (input)="calculateTotal();validateInput()">
+        </div>
+        <div>
+            <span *ngIf="inputError" style="color:crimson;font-size:12px">Please Enter users ranging between {{minNumberOfUsers}} and {{maxNumberOfUsers}}</span>
         </div>
         <div class="input-group">
             <label for="paymentAmt">Payment Amount:</label>
@@ -215,7 +126,7 @@
             <label for="totalAmount">Total Amount:</label>
             <input type="text" id="totalAmount" [(ngModel)]="totalAmount" disabled>
         </div>
-        <button class="proceed" (click)="navigateToPage('payment')">Proceed Payment</button>
+        <button mat-flat-button [disabled]="inputError==true" class="proceed" (click)="navigateToPage('payment')">Proceed Payment</button>
     </div>
 </div>
 <!----------------------FOOTER-------------------------------------->

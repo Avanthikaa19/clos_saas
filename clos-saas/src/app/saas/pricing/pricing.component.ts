@@ -34,6 +34,11 @@ export class PricingComponent implements OnInit {
   selectedPayment:string='';
   contactNo:any;
   contactMail:any;
+  page:number=1;
+  pageSize:number=20;
+  pricingList:any=[];
+  minNumberOfUsers:any;
+  maxNumberOfUsers:any;
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -82,6 +87,7 @@ username:any='';
     console.log(this.id)
     this.getDetailsById();
     this.getContactInfo();
+    this.getPricingList();
   }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -115,9 +121,17 @@ username:any='';
       }
     )
   }
+  validateInput() {
+    if (this.numberOfUsers < this.minNumberOfUsers || this.numberOfUsers > this.maxNumberOfUsers) {
+        this.inputError = true;
+    } else {
+        this.inputError = false;
+    }
+}
+inputError:boolean=false;
   navigateToPage(param){
     this.router.navigate([`${param}`])
-    sessionStorage.setItem('paymentAmt',this.paymentAmt);
+    sessionStorage.setItem('paymentAmt',this.totalAmount?.toString());
     sessionStorage.setItem('paymentOption',this.paymentOption);
   }
   getDetailsById(){
@@ -130,7 +144,7 @@ username:any='';
            email:res?.emailId,
            phn:res?.phoneNo,
            domain:res?.domain,
-           payemtAmt:res?.amountPaid,
+           payemtAmt:this.totalAmount,
            paymentOption:res?.subscriptionPlan
          }
          this.transferDataService.setData(data)
@@ -154,7 +168,7 @@ username:any='';
   popupVisible: boolean = false;
   numberOfUsers: number = 1;
   openPopup() {
-    this.popupVisible = true;
+    this.popupVisible =true;
     this.calculateTotal();
   }
 
@@ -165,4 +179,17 @@ username:any='';
   calculateTotal() {
     this.totalAmount = parseFloat(this.paymentAmt) * this.numberOfUsers;
   }
+ //GET-PRICING-LIST
+ getPricingList(){
+    this.saasService.getPricingList(this.page,this.pageSize,'desc','subscriptionName').subscribe(
+      res=>{
+        console.log(res)
+        this.pricingList=res['data']
+      },
+      err=>{
+        console.log(err)
+      }
+    )
+ }
+
 }

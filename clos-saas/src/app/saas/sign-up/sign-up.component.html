@@ -51,7 +51,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div style="position:relative;">
                         <div style="margin-left:-16px">User Name <span style="color:red">*</span></div>
-                        <input style="margin-left:-16px;width:52rem;padding-right: 2.5rem" [(ngModel)]="firstname" matInput class="min-select" placeholder="USER NAME">
+                        <input style="margin-left:-16px;width:52rem;padding-right: 2.5rem" [(ngModel)]="firstname" (input)="onInputChange()" matInput class="min-select" placeholder="USER NAME">
                         <span style="position:absolute;top:5.5rem;right:0rem;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
                             <i class="fa fa-info-circle"></i>
                         </span>
