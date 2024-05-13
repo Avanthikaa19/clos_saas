@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/saas/data-service';
 import { SaasService } from '../saas-service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pricing',
@@ -72,7 +73,7 @@ copyTokenToClipboard() {
 id:any='';
 emailId:any='';
 username:any='';
-  constructor(public router:Router,public transferDataService:DataService,public snackBar:MatSnackBar,
+  constructor(public router:Router,public transferDataService:DataService,public snackBar:MatSnackBar,private sanitizer: DomSanitizer,
     public saasService:SaasService,public datepipe:DatePipe,) { }
 
   ngOnInit() {
@@ -166,6 +167,7 @@ inputError:boolean=false;
   //Number of Users
   totalAmount: number = 0;
   popupVisible: boolean = false;
+  popupVisible1: boolean = false;
   numberOfUsers: number = 1;
   openPopup() {
     this.popupVisible =true;
@@ -174,6 +176,9 @@ inputError:boolean=false;
 
   closePopup() {
     this.popupVisible = false;
+  }
+  closePopup1() {
+    this.popupVisible1 = false;
   }
 
   calculateTotal() {
@@ -192,4 +197,30 @@ inputError:boolean=false;
     )
  }
 
+ decodedPdf: SafeResourceUrl | null = null;
+ checked = false;
+ encodedPdf2:any;
+
+decodePdf(res) {
+ this.encodedPdf2=res['agreement'];
+ if (this.encodedPdf2) {
+   const byteCharacters = atob(this.encodedPdf2);
+   const byteNumbers = new Array(byteCharacters.length);
+   for (let i = 0; i < byteCharacters.length; i++) {
+     byteNumbers[i] = byteCharacters.charCodeAt(i);
+   }
+   const byteArray = new Uint8Array(byteNumbers);
+   const BLOB = new Blob([byteArray], { type: 'application/pdf' });
+   console.log(this.decodedPdf)
+   const pdfUrl = URL.createObjectURL(BLOB);
+   this.decodedPdf = this.sanitizer.bypassSecurityTrustResourceUrl(pdfUrl);
+
+  }
+}
+createObjectURL(blob: Blob): string {
+ return (window.URL || window.webkitURL).createObjectURL(blob);
+}
+public sanitizeUrl(url: string): SafeResourceUrl {
+ return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+}
 }

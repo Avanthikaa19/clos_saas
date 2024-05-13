@@ -56,7 +56,7 @@
                 <div style="margin-top: 3%;">
                     <span style="font-weight: bold;font-size: 20px;">{{list?.subscriptionPrice}} / user</span>
                 </div>
-                <div style="text-align: center;margin-top: 3%;" (click)="openPopup()">
+                <div style="text-align: center;margin-top: 3%;" (click)="decodePdf(list);popupVisible1=true;">
                     <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt=list?.subscriptionPrice;paymentOption=list?.subscriptionName;numberOfUsers=list?.defaultUserCount;minNumberOfUsers=list?.minUsers;maxNumberOfUsers=list?.maxUsers">
                         <span>SUBSCRIBE</span>
                     </button>
@@ -129,6 +129,19 @@
         <button mat-flat-button [disabled]="inputError==true" class="proceed" (click)="navigateToPage('payment')">Proceed Payment</button>
     </div>
 </div>
+<!-- <button mat-stroked-button (click)="decodePdf();popupVisible1=true">Open Document</button> -->
+<div class="custom-popup" [ngStyle]="{ 'display': popupVisible1 ? 'flex' : 'none' }">
+    <div class="popup-content">
+        <iframe *ngIf="decodedPdf" [src]="decodedPdf" width="1000px" height="600px" frameborder="0"></iframe>
+        <div>
+            <mat-checkbox class="example-margin" [(ngModel)]="checked"><span style="color: grey;">By ticking, you have confirmed that you have read,understood and agree to the above <u style="color: black;">terms and conditions</u>.</span></mat-checkbox>
+</div>
+<div style="display: flex;justify-content:space-between;width: 100%;">
+    <button mat-flat-button color="primary" style="margin-right: auto;" (click)="closePopup1()">Disagree</button>
+    <button mat-flat-button color="primary" [disabled]="checked==false" (click)="navigateToPage('payment')">Agree</button>
+</div>
+        </div>
+        </div>
 <!----------------------FOOTER-------------------------------------->
 <div *ngIf="demovideo"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
