@@ -51,6 +51,8 @@ export class PaymentComponent implements OnInit {
   contactNo:any;
   contactMail:any;
   component_height:any;
+  minNumberOfUsers:any;
+  maxNumberOfUsers:any;
 	@HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -69,6 +71,11 @@ export class PaymentComponent implements OnInit {
       this.password=data?.password;
       let amt=sessionStorage.getItem('paymentAmt');
       this.paymentAmt=parseFloat(amt);
+      this.totalAmount = this.paymentAmt;
+      let min=sessionStorage.getItem('minUsers')
+      this.minNumberOfUsers=parseFloat(min);
+      let max=sessionStorage.getItem('maxUsers')
+      this.maxNumberOfUsers=parseFloat(max)
       this.paymentOption=sessionStorage.getItem('paymentOption')
       console.log(data)
     });
@@ -212,5 +219,25 @@ getContactInfo(){
       this.contactMail = res['data'].supportMail;
     }
   )
+}
+numberValue: number = 1;
+totalAmount:number;
+
+increaseNumber() {
+  console.log(this.maxNumberOfUsers)
+  if(this.numberValue<this.maxNumberOfUsers)
+  this.numberValue++;
+  this.calculateTotal();
+}
+
+decreaseNumber() {
+  if (this.numberValue > this.minNumberOfUsers) {
+    this.numberValue--;
+    this.calculateTotal();
+  }
+}
+calculateTotal() {
+  this.totalAmount = parseFloat(this.paymentAmt) * this.numberValue;
+  console.log(this.totalAmount)
 }
 }

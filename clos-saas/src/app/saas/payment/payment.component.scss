@@ -42,3 +42,33 @@
 .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
     border-left: solid 1px transparent;
   }
+  .number-input {
+    display: flex;
+    align-items: center;
+    height: 50px;
+  }
+  
+  .number-input button {
+    background-color: lightblue ;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #e6e6e6;
+  }
+  .addbutton{
+    border-top-right-radius: 5px;
+    border: 1px solid #e6e6e6;
+    border-bottom-right-radius: 5px;
+  }
+  .subbutton{
+    border-top-left-radius: 5px;
+    border: 1px solid #e6e6e6;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .number-input input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+  }

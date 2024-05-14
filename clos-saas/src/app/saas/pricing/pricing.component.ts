@@ -132,7 +132,9 @@ username:any='';
 inputError:boolean=false;
   navigateToPage(param){
     this.router.navigate([`${param}`])
-    sessionStorage.setItem('paymentAmt',this.totalAmount?.toString());
+    sessionStorage.setItem('paymentAmt',this.paymentAmt?.toString());
+    sessionStorage.setItem('minUsers',this.minNumberOfUsers?.toString());
+    sessionStorage.setItem('maxUsers',this.maxNumberOfUsers?.toString())
     sessionStorage.setItem('paymentOption',this.paymentOption);
   }
   getDetailsById(){

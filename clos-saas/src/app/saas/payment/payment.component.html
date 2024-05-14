@@ -109,7 +109,7 @@
         <div class="container" *ngIf="generateBill">
             <div class="row">
                 <div style="width: 85%;">
-                    <mat-card style="height:500px" id="page">
+                    <mat-card  id="page">
                    <div style="height:30px;background: lightblue;display: flex;
                     align-items: center;">
                        <span style="margin-left: 10px;">BILLING</span>
@@ -160,7 +160,18 @@
                           <mat-button-toggle [value]="'MONTHLY'">Billed Monthly</mat-button-toggle>
                           <mat-button-toggle [value]="'ANNUALLY'">Billed Annually</mat-button-toggle>
                         </mat-button-toggle-group>
-                      </div>                      
+                      </div>   
+                      <div style="font-weight: bold;margin-top:2%">
+                        <span>Select number of users</span>
+                    </div>    
+                    <div style="margin-top:1%;color: gray;">
+                        <span>The maximum amount is {{maxNumberOfUsers}} users and minimum amount is {{minNumberOfUsers}} users.</span>
+                    </div>          
+                    <div class="number-input">
+                        <button class="subbutton" (click)="decreaseNumber()">-</button>
+                        <input [(ngModel)]="numberValue" [min]="minNumberOfUsers" [max]="maxNumberOfUsers" readonly>
+                        <button class="addbutton" (click)="increaseNumber()">+</button>
+                      </div>         
                       <div style="font-weight: bold;margin-top: 2%;">
                           <span>Billing Term</span>
                       </div>
@@ -176,12 +187,12 @@
                       </div>
                       <div style="margin-top: 1%;">
                           <span>Amount :</span>
-                          <span style="float: right;">{{paymentAmt}}</span>
+                          <span style="float: right;">{{totalAmount}}</span>
                       </div>
                     <hr>
                     <div style="margin-top: 1%;">
                         <span style="font-weight: bold;">Total</span>
-                        <span style="float: right;">{{paymentAmt}}</span>
+                        <span style="float: right;">{{totalAmount}}</span>
                     </div>
                     </mat-card-content>
                     </mat-card>
