@@ -269,7 +269,7 @@
         <button mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
             <span *ngIf="paymentOption===null||paymentOption==='FREE-TRIAL'"> GO TO PAYMENTS </span>
         </button> 
-        <button style="margin-left: -50px;" *ngIf="paymentOption==='BASIC'||paymentOption==='STANDARD'" mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
+        <button style="margin-left: -50px;" mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
             <span> UPGRADE PLANS </span>
         </button> 
         <button style="margin-left: -50px;" *ngIf="paymentOption==='PREMIUM'" mat-flat-button color="primary" (click)="emailIdValidation=false;email='';domainName=''">
