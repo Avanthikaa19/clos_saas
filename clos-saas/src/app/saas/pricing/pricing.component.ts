@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/saas/data-service';
 import { SaasService } from '../saas-service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { C } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-pricing',
@@ -40,6 +41,9 @@ export class PricingComponent implements OnInit {
   pricingList:any=[];
   minNumberOfUsers:any;
   maxNumberOfUsers:any;
+  freeTrialUsers:any='';
+  freeTrialDate:number;
+  freeTrialId:any='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -95,15 +99,23 @@ username:any='';
       duration: 2000,
     });
   }
+  agreeterms(){
+    this.closePopup1();
+    this.popupVisible=true;
+    this.calculateTotal();
+  }
   getFreetrial(id){
     let currentDate = new Date();
     let expiryDate = new Date(currentDate);
-    expiryDate.setDate(expiryDate.getDate() + 15);
+    if(this.freeTrialUsers=='FREE-TRIAL'){
+      expiryDate.setDate(expiryDate.getDate() + this.freeTrialDate);
+    }
     let formattedExpiryDate = this.datepipe.transform(expiryDate, 'yyyy-MM-ddT00:00:00');
     this.saasService.getFreeTrial(id,'FREE-TRIAL','PENDING',formattedExpiryDate).subscribe(
        res=>{
          console.log(res)
          this.demovideo=true;
+         this.closePopup1();
          this.sendEmailToClients();
        },
        err=>{
@@ -148,7 +160,8 @@ inputError:boolean=false;
            phn:res?.phoneNo,
            domain:res?.domain,
            payemtAmt:this.totalAmount,
-           paymentOption:res?.subscriptionPlan
+           paymentOption:res?.subscriptionPlan,
+           approval:res?.approval,
          }
          this.transferDataService.setData(data)
        },

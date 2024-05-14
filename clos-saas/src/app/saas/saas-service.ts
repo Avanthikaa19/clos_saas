@@ -57,13 +57,13 @@ getUploadedDocuments(id: string, files: File[], description: string) {
     return this.http.post<any>(`${this.SAAS_API_URL}/save/demo/watchers`, demo);
   }
   //UPLOAD INVOICE
-  uploadInvoiceOfPayment(id: number, file: Blob) {
+  uploadInvoiceOfPayment(id: number, file: Blob,subscriptionPlan) {
     // Create a new FormData object
     const formData = new FormData();
     // Append the blob directly to the FormData object
     formData.append('file', file, 'payment.pdf');
     // Make the HTTP POST request
-    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice?id=${id}`, formData);
+    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice?id=${id}&subscriptionPlan=${subscriptionPlan}`, formData);
   }
   //DOWNLOAD INVOICE
   downloadInvoice(id){
@@ -104,5 +104,9 @@ getUploadedDocuments(id: string, files: File[], description: string) {
   //GET-ALL-THE-MAPPED-PRICING-LISTS
   getPricingList(page,pageSize,order,orderBy){
     return this.http.get(`${this.SAAS_API_URL}/get/subscriptions?page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}`);
+  }
+  //SUBSCRIPTION-DETAILS-API
+  getSubscription(amountPaid,totalUsers,subscriptionPlan,subscriptionId){
+    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice/details?id=${subscriptionId}`, {amountPaid,totalUsers,subscriptionPlan});
   }
 }

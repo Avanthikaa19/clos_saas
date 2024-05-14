@@ -249,139 +249,48 @@ Ease customer onboarding processes.
 </div>
 <div class="container" style="margin-top: 1%;">
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%;">
+        <div *ngFor="let list of pricingList; let i=index" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%; margin-bottom: 20px;">
             <div class="card-box">
-            <div style="text-align: center;margin-top: 5%;">
-                <span style="font-size: 20px;font-weight: bold;color: black;">BASIC</span>
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-size: 15px;;color: black;">For business wanting to stramline their online application with minimal control and flexibilty</span>
-            </div>
-            <div style="margin-top: 3%;">
-                Starts at
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-weight: bold;font-size: 20px;">$300/month</span>
-            </div>
-            <div style="text-align: center;margin-top: 3%;">
-                <button mat-flat-button color="primary" style="width:100%">
-                    <span> SUBSCRIBE</span>
-                </button>
-            </div>
-            <div style="margin-top: 4%;">
-                Includes everything inStandard Plan +
-                <div>
- * Stay tax compliant with e-invoicing
- </div>
- <div>
-* Manage subscription billing
-</div>
-<div>
-* Use hosted payment pages
-</div>
-<div>
-* Provide multi-currency options
-</div>
-<div>
-* Set transaction approval processes
-</div>
-<div>
-* Allow customers to review timesheets
-</div>
-<div>
-* Receive scheduled reports
-</div>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
-            <div class="card-box">
-            <div style="text-align: center;margin-top: 5%;">
-                <span style="font-size: 20px;font-weight: bold;color: black;">STANDARD</span>
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-size: 15px;;color: black;">For business wanting to stramline their online application with minimal control and flexibility</span>
-            </div>
-            <div style="margin-top: 3%;">
-                Starts at
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-weight: bold;font-size: 20px;">$500/month</span>
-            </div>
-            <div style="text-align: center;margin-top: 3%;">
-                <button mat-flat-button color="primary" style="width:100%">
-                    <span> SUBSCRIBE</span>
-                </button>
-            </div>
-            <div style="margin-top: 4%;">
-                Includes everything inStandard Plan +
-                <div>
- * Stay tax compliant with e-invoicing
- </div>
- <div>
-* Manage subscription billing
-</div>
-<div>
-* Use hosted payment pages
-</div>
-<div>
-* Provide multi-currency options
-</div>
-<div>
-* Set transaction approval processes
-</div>
-<div>
-* Allow customers to review timesheets
-</div>
-<div>
-* Receive scheduled reports
-</div>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: 2%;">
-            <div class="card-box">
-            <div style="text-align: center;margin-top: 5%;">
-                <span style="font-size: 20px;font-weight: bold;color: black;">PREMIUM</span>
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-size: 15px;;color: black;">Our most powerful marketing software for advanced control and advanced flexibility.</span>
-            </div>
-            <div style="margin-top: 3%;">
-                Starts at
-            </div>
-            <div style="margin-top: 3%;">
-                <span style="font-weight: bold;font-size: 20px;">$800/month</span>
-            </div>
-            <div style="text-align: center;margin-top: 3%;">
-                <button mat-flat-button color="primary" style="width:100%">
-                    <span> SUBSCRIBE</span>
-                </button>
-            </div>
-            <div style="margin-top: 4%;">
-                Includes everything inStandard Plan +
-                <div>
- * Stay tax compliant with e-invoicing
- </div>
- <div>
-* Manage subscription billing
-</div>
-<div>
-* Use hosted payment pages
-</div>
-<div>
-* Provide multi-currency options
-</div>
-<div>
-* Set transaction approval processes
-</div>
-<div>
-* Allow customers to review timesheets
-</div>
-<div>
-* Receive scheduled reports
-</div>
-            </div>
+                <!-- <mat-icon class="check-icon" *ngIf="selectedPayment == 'BASIC' ">check</mat-icon> -->
+                <div style="text-align: center;margin-top: 5%;">
+                    <span style="font-size: 20px;font-weight: bold;color: black;">{{list?.subscriptionName}}</span>
+                </div>
+                <div style="margin-top: 3%;">
+                    <span style="font-size: 15px;;color: black;">{{list?.subscriptionDescription}}</span>
+                </div>
+                <div style="margin-top: 3%;">
+                    Starts at
+                </div>
+                <div style="margin-top: 3%;">
+                    <span style="font-weight: bold;font-size: 20px;"> INR {{list?.subscriptionPrice}} / user</span>
+                </div>
+                <div style="text-align: center;margin-top: 3%;" (click)="navigateToPage('signup')">
+                    <button mat-flat-button color="primary" style="width:100%">
+                        <span>SUBSCRIBE</span>
+                    </button>
+                </div>
+                <div style="margin-top: 4%; border: 1px solid #e0e0e0; border-radius: 5px; padding: 15px;">
+                    <div style="font-weight: bold; color: #333;">Includes everything in Standard Plan +</div>
+                    <div style="margin-top: 10px;">
+                        <div style="margin-bottom: 5px;">ACCESSIBLE MODULES WITH THIS PLAN</div>
+                        <ng-container *ngFor="let item of list?.accessModules; let j=index">
+                            <div style="color: #007bff; margin-bottom: 5px;">
+                                <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">check_circle</span>
+                                {{item}}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div>
+                            <span style="font-weight: bold;"><span class="material-icons" style="vertical-align: middle; margin-right: 5px;">group</span> MIN USERS:</span>
+                            <span style="font-weight: bold;">  {{list?.minUsers}}</span>
+                        </div>
+                        <div>
+                            <span style="font-weight: bold;"><span class="material-icons" style="vertical-align: middle; margin-right: 5px;">groups</span> MAX USERS:</span>
+                            <span style="font-weight: bold;">  {{list?.maxUsers}}</span>
+                        </div>
+                    </div>
+                </div>                                          
             </div>
         </div>
     </div>

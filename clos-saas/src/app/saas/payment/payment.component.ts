@@ -53,6 +53,7 @@ export class PaymentComponent implements OnInit {
   component_height:any;
   minNumberOfUsers:any;
   maxNumberOfUsers:any;
+  approval:any='';
 	@HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -77,6 +78,8 @@ export class PaymentComponent implements OnInit {
       let max=sessionStorage.getItem('maxUsers')
       this.maxNumberOfUsers=parseFloat(max)
       this.paymentOption=sessionStorage.getItem('paymentOption')
+      this.paymentOption=sessionStorage.getItem('paymentOption');
+      this.approval=data?.approval;
       console.log(data)
     });
     this.calculateNextBillingDate(this.billingPeriod)
@@ -143,7 +146,14 @@ proceedPayment(){
   this.calculateNextBillingDate(this.billingPeriod)
   this.lastpaymentDate=this.datepipe.transform(new Date(), 'yyyy-MM-ddT00:00:00')
   this.subscribedDate=this.datepipe.transform(new Date(), 'yyyy-MM-ddT00:00:00')
-   this.saasService.getPaymentTrial(this.paymentId,null,this.companyname,this.domain,this.userName,this.password,this.email,this.phn,this.billingPeriod,this.paymentAmt,true,this.lastpaymentDate,this.paymentAmt,this.upcomingDueDate,this.paymentOption,this.subscribedDate,this.unsubscribedDate,this.paymentOption,'PENDING',this.currency,this.countryName,this.address1,this.address2,this.postalCode,this.city,this.state).subscribe(
+  let approvalStatus:any='';
+  if(this.approval==null||this.approval==undefined||this.approval==''){
+    approvalStatus='PENDING'
+  }
+  else{
+    approvalStatus=this.approval;
+  }
+   this.saasService.getPaymentTrial(this.paymentId,null,this.companyname,this.domain,this.userName,this.password,this.email,this.phn,this.billingPeriod,this.paymentAmt,true,this.lastpaymentDate,this.paymentAmt,this.upcomingDueDate,this.paymentOption,this.subscribedDate,this.unsubscribedDate,this.paymentOption,approvalStatus,this.currency,this.countryName,this.address1,this.address2,this.postalCode,this.city,this.state).subscribe(
      res=>{
        console.log(res);
        this.sendEmailToClients();
@@ -202,7 +212,7 @@ downloadAsPdf() {
 //Convert the file as pdf in API
 uploadPdfToAPI(blob) {
   // Upload the blob to the API
-  this.saasService.uploadInvoiceOfPayment(this.paymentId, blob).subscribe(
+  this.saasService.uploadInvoiceOfPayment(this.paymentId, blob,this.paymentOption).subscribe(
     res => {
       console.log(res);
     },
