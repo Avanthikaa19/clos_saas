@@ -106,7 +106,19 @@ getUploadedDocuments(id: string, files: File[], description: string) {
     return this.http.get(`${this.SAAS_API_URL}/get/subscriptions?page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}`);
   }
   //SUBSCRIPTION-DETAILS-API
-  getSubscription(amountPaid,totalUsers,subscriptionPlan,subscriptionId){
-    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice/details?id=${subscriptionId}`, {amountPaid,totalUsers,subscriptionPlan});
+  getSubscription(amountPaid,totalUsers,subscriptionPlan,subscriptionId,paymentCycle){
+    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice/details?id=${subscriptionId}`, {amountPaid,totalUsers,subscriptionPlan,paymentCycle});
+  }
+  //GET-ACCESS-BASED-ON-DOMAINNAME
+  getAccessBasedOnDomainName(domain){
+    return this.http.post<any>(`${this.SAAS_API_URL}/get/access`, domain);
+  }
+  //GET-SUBSCRIPTIONS-BY-ID
+  getSubscriptionsById(id){
+    return this.http.get(`${this.SAAS_API_URL}/get/invoice?id=${id}`);
+  }
+  //GET-PAYMENT-DETAILS
+  getPaymentDetails(){
+    return this.http.get(`${this.SAAS_API_URL}/get/organization/details`);
   }
 }

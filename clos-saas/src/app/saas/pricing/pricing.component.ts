@@ -91,6 +91,7 @@ username:any='';
     });
     console.log(this.id)
     this.getDetailsById();
+    this.getOrganizationDetails();
     this.getContactInfo();
     this.getPricingList();
   }
@@ -169,6 +170,29 @@ inputError:boolean=false;
          console.log(err)
        }
      )
+  }
+  //GET-ORG-DETAILS
+  getOrganizationDetails(){
+    this.saasService.getPaymentDetails().subscribe(
+      (res:any)=>{
+        this.paymentOption=res['paymentStatus']
+         const data={
+           id:res?.id,
+           name:res?.userName,
+           email:res?.emailId,
+           phn:res?.phoneNo,
+           domain:res?.domain,
+           payemtAmt:this.totalAmount,
+           paymentOption:res?.subscriptionPlan,
+           approval:res?.approval,
+           users:res?.totalUsers,
+         }
+         this.transferDataService.setData(data)
+      },
+      err=>{
+        console.log(err)
+      }
+    )
   }
   getContactInfo(){
     this.saasService.getContactInfo().subscribe(

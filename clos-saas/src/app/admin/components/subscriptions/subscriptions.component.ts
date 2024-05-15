@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UrlService } from 'src/app/decision-engine/services/http/url.service';
 import { SaasService } from 'src/app/saas/saas-service';
 import { EncryptDecryptService } from 'src/app/services/encrypt-decrypt.service';
@@ -10,7 +12,7 @@ import { AUTHENTICATED_USER } from 'src/app/services/jwt-authentication.service'
   styleUrls: ['./subscriptions.component.scss']
 })
 export class SubscriptionsComponent implements OnInit {
-  userHeaders:any=['ISSUED DATE','INVOICE ID','DUE DATE','AMOUNT','STATUS','DOWNLOAD']
+  userHeaders:any=['ISSUED DATE','INVOICE ID','DUE DATE','AMOUNT','STATUS','VIEW','DOWNLOAD']
   component_height:any;
   invoice:any=[];
   invoiceCount:any;
@@ -18,6 +20,19 @@ export class SubscriptionsComponent implements OnInit {
   pageSize:any=10;
   currentUser:any='';
   loading:boolean=false;
+  viewSubscription:boolean=false;
+  username:any='';
+  orgName:any='';
+  subscriptionPlan:any='';
+  totalUsers:any='';
+  amountPaid:any='';
+  invoiceCreatedDate:any='';
+  paidBy:any='';
+  paymentCycle:any='';
+  paymentDate:any='';
+  createdDate:any='';
+  dueDate:any='';
+  invoiceId:any;
   @HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -25,7 +40,9 @@ export class SubscriptionsComponent implements OnInit {
   constructor(
     public saasService:SaasService,
     public url:UrlService,
-    public encryptDecryptService:EncryptDecryptService
+    public encryptDecryptService:EncryptDecryptService,
+    public router:Router,
+    public datepipe:DatePipe,
   ) { this.updateComponentSize() }
   public updateUrl() {
     console.log('hiiii')
@@ -77,6 +94,35 @@ export class SubscriptionsComponent implements OnInit {
       res=>{
         console.log(res)
         this.saveFile(res,id)
+      },
+      err=>{
+        console.log(err)
+      }
+    )
+  }
+  //NAVIGATE
+  navigateToPage(param){
+    this.router.navigate([`${param}`])
+  }
+  //GET-SUBSCRIPTIONS-BY-ID
+  getSubscriptionById(id){
+    this.saasService.getSubscriptionsById(id).subscribe(
+      res=>{
+        console.log(res)
+        this.viewSubscription=true;
+        this.username=res['username'];
+        this.orgName=res['orgName'];
+        this.subscriptionPlan=res['subscriptionPlan'];
+        this.totalUsers=res['totalUsers'];
+        this.amountPaid=res['amount'];
+        this.paidBy=res['paidBy'];
+        this.paymentCycle=res['paymentCycle'];
+        let invoiceCreatedDate=res['invoiceCreatedDate'];
+        this.invoiceCreatedDate=this.datepipe.transform(invoiceCreatedDate,'yyyy-MM-dd')
+        let paymentDate = res['paymentDate']
+        this.paymentDate=this.datepipe.transform(paymentDate,'yyyy-MM-dd')
+        let dueDate=res['dueDate'];
+        this.dueDate=this.datepipe.transform(dueDate,'yyyy-MM-dd')
       },
       err=>{
         console.log(err)

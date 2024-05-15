@@ -144,4 +144,41 @@
   -moz-box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
 }
+
+//SUBSCRIPTION-POPUP
+.title {
+  font-weight: bold;
+}
+
+.popup {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 40vw;
+  height: 60vh;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.title-bar {
+  height: 45px;
+  width: 100%;
+  background-color: #0d203e;
+  text-transform: uppercase;
+  padding: 10px;
+  color: white;
+  font-weight: bolder;
+  line-height: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.document-portion {
+  height: 85%;
+  padding: 20px;
+  overflow: auto;
+}
   

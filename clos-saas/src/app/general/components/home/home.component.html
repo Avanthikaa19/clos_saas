@@ -211,7 +211,7 @@
     </div>
     <div class="card-container pt-5" >
         <div class="row-container">
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('APPLICATION_DATA_ENTRY')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/application-entry/application-details']">
                     <div class="card-content">
                         <div class="card-body">
@@ -232,7 +232,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('DATA_FLOW_MANAGER')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/flows']">
                     <div class="card-content">
                         <div class="card-body">
@@ -255,7 +255,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('DECISION_MANAGER')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/desicion-engine']">
                     <div class="card-content">
                         <div class="card-body">
@@ -278,7 +278,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('CASE_MANAGER')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/loan-case-manager']">
                     <div class="card-content">
                         <div class="card-body">
@@ -303,7 +303,7 @@
             </div>
         </div>
         <div class="row-container">
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('CONFIGURATION_MANAGER')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/loan-application-matching']">
                     <div class="card-content">
                         <div class="card-body">
@@ -326,7 +326,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('REPORTS')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/reports']">
                     <div class="card-content">
                         <div class="card-body">
@@ -349,7 +349,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('BI_TOOLS')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/dynamic/dynamic/landingPage']">
                     <div class="card-content">
                         <div class="card-body">
@@ -372,7 +372,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div [class]="access?.length>4?'col-3':'col-6'" *ngIf="access && access?.includes('ADMIN')">
                 <div style="background-color:#0d203e" class="card-grid" [routerLink]="['/admin/admin/users']">
                     <div class="card-content">
                         <div class="card-body">

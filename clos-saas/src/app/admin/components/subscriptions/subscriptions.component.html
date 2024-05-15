@@ -19,19 +19,27 @@
               <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white;border:1px solid #ddd;position: relative;">{{list}}</th>
           </tr>
           </thead>
-          <tr *ngFor="let list of invoice;let i=index">
+          <tr *ngFor="let list of invoice;let i=index" (click)="invoiceId=list?.id">
               <td>{{list?.paid_date|date:'yyyy-MM-dd'}}</td>
               <td>#{{list?.id}}</td>
               <td>{{list?.due_date|date:'yyyy-MM-dd'}}</td>
               <td>{{list?.amount_paid}}</td>
               <td>
-                <button class="btn">
+                <button class="btn" (click)="list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?navigateToPage('pricing'):''">
                     <i class="fa fa-plus_square_o"></i>
-                    <span> PAID</span>
+                    <span> {{list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?'PAY NOW':list?.paymentStatus}}</span>
                 </button>
-              </td>              
-              <td (click)="downloadInvoice(list?.id)">
-                <button class="btn"
+              </td>  
+              <td>
+                <button class="btn" (click)="getSubscriptionById(list?.id)"
+                style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
+                 >
+                <mat-icon>remove_red_eye</mat-icon>
+                <span>View Invoice</span>
+                </button>
+              </td>            
+              <td>
+                <button class="btn" (click)="downloadInvoice(list?.id)"
                 style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
                  >
                 <mat-icon>download</mat-icon>
@@ -52,4 +60,71 @@
 <div class="placeholder-container" *ngIf="!loading && !invoice?.length">
     <span>No items found!</span>
 </div>
+
+<!--------------------GET SUBSCRIPTIONS BY ID-------------------------------->
+<div class="popup" *ngIf="viewSubscription">
+  <div class="title-bar">
+      <span style="margin-right: auto;">INVOICE INFORMATION (INVOICE ID : {{invoiceId}})</span>
+      <mat-icon (click)="viewSubscription = false;" style="cursor: pointer;">close</mat-icon>
+  </div>
+  <div class="document-portion">
+      <div class="input-container">
+          <table class="no-table">
+              <tr>
+                  <td class="title">USERNAME</td>
+                  <td><input disabled class="min-select" [(ngModel)]="username"></td>
+                  <br>
+              </tr>
+              <tr>
+                  <td class="title">ORGANIZATION NAME</td>
+                  <td><input disabled class="min-select" [(ngModel)]="orgName"></td>
+                  <br>
+              </tr>
+              <tr>
+                <td class="title">SUBACRIPTION PLAN</td>
+                <td><input disabled class="min-select" [(ngModel)]="subscriptionPlan"></td>
+                <br>
+              </tr>
+              <tr>
+                <td class="title">TOTAL USERS</td>
+                <td><input disabled class="min-select" [(ngModel)]="totalUsers"></td>
+                <br>
+            </tr>
+             <tr>
+              <td class="title">AMOUNT PAID</td>
+              <td><input disabled class="min-select" [(ngModel)]="amountPaid"></td>
+              <br>
+            </tr>
+           <tr>
+            <td class="title">INVOICE CREATED DATE</td>
+            <td><input disabled class="min-select" [(ngModel)]="invoiceCreatedDate"></td>
+            <br>
+           </tr>
+           <tr>
+            <td class="title">PAID BY</td>
+            <td><input disabled class="min-select" [(ngModel)]="paidBy"></td>
+            <br>
+            </tr>
+           <tr>
+           <td class="title">PAYMENT CYCLE</td>
+           <td><input disabled class="min-select" [(ngModel)]="paymentCycle"></td>
+           <br>
+           </tr>
+           <tr>
+            <td class="title">PAYMENT DATE</td>
+            <td><input disabled class="min-select" [(ngModel)]="paymentDate"></td>
+            <br>
+           </tr>
+           <tr>
+            <td class="title">DUE DATE</td>
+            <td><input disabled class="min-select" [(ngModel)]="dueDate"></td>
+            <br>
+          </tr>
+          </table>
+      </div>
+  </div>
+</div>
+<!------------------BLUR THE WINDOW------------------------------>
+<div *ngIf="viewSubscription"
+ style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
   </div>
