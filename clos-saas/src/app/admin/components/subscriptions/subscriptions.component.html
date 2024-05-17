@@ -39,7 +39,7 @@
                 </button>
               </td>            
               <td>
-                <button class="btn" (click)="downloadInvoice(list?.id)"
+                <button class="btn" [disabled]="list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'" (click)="downloadInvoice(list?.id)"
                 style="margin-top:0.4rem; margin-bottom: 0.4rem; margin-right: auto;display: flex;justify-content: center;"
                  >
                 <mat-icon>download</mat-icon>

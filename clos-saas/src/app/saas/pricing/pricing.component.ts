@@ -44,6 +44,7 @@ export class PricingComponent implements OnInit {
   freeTrialUsers:any='';
   freeTrialDate:number;
   freeTrialId:any='';
+  subscriptionPeriod:any='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -111,8 +112,9 @@ username:any='';
     if(this.freeTrialUsers=='FREE-TRIAL'){
       expiryDate.setDate(expiryDate.getDate() + this.freeTrialDate);
     }
+    let maxfreeTrailUsers=1;
     let formattedExpiryDate = this.datepipe.transform(expiryDate, 'yyyy-MM-ddT00:00:00');
-    this.saasService.getFreeTrial(id,'FREE-TRIAL','PENDING',formattedExpiryDate).subscribe(
+    this.saasService.getFreeTrial(id,'FREE-TRIAL','PENDING',formattedExpiryDate,maxfreeTrailUsers).subscribe(
        res=>{
          console.log(res)
          this.demovideo=true;
@@ -149,6 +151,7 @@ inputError:boolean=false;
     sessionStorage.setItem('minUsers',this.minNumberOfUsers?.toString());
     sessionStorage.setItem('maxUsers',this.maxNumberOfUsers?.toString())
     sessionStorage.setItem('paymentOption',this.paymentOption);
+    sessionStorage.setItem('billingPeriod',this.subscriptionPeriod);
   }
   getDetailsById(){
      this.saasService.getDetailsById(this.id).subscribe(

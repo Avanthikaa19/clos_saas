@@ -31,6 +31,7 @@ export class PaymentComponent implements OnInit {
   countries:any=['INDIA','MALAYSIA','ENGLAND','SINGAPORE','HONG-KONG'];
   currencies:any=['INR','MYR','POUNDS','SGD','YEN']
   responseUrl:any='';
+  paymentMethod:any='';
   constructor(public transferDataService:DataService,public snackBar:MatSnackBar,public router:Router,
     public saasService:SaasService,public datepipe:DatePipe,) {
       this.updateComponentSize()
@@ -55,6 +56,9 @@ export class PaymentComponent implements OnInit {
   maxNumberOfUsers:any;
   approval:any='';
   totalUsers:number;
+  accountNo:any='';
+  bankerName:any='';
+  ifscCode:any='';
 	@HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -82,6 +86,8 @@ export class PaymentComponent implements OnInit {
       this.paymentOption=sessionStorage.getItem('paymentOption');
       this.approval=data?.approval;
       this.totalUsers=data?.users;
+      this.billingPeriod=sessionStorage.getItem('billingPeriod')
+      console.log(this.billingPeriod)
       console.log(data)
     });
     this.calculateNextBillingDate(this.billingPeriod)
@@ -126,9 +132,9 @@ navigateToPage(param){
 calculateNextBillingDate(billingPeriod: string) {
   const currentDate = new Date();
   console.log(billingPeriod,'billing-period')
-  if (billingPeriod === 'MONTHLY') {
+  if (billingPeriod === 'monthly') {
     currentDate.setMonth(currentDate.getMonth() + 1);
-  } else if (billingPeriod === 'ANNUALLY') {
+  } else if (billingPeriod === 'annually') {
     currentDate.setFullYear(currentDate.getFullYear() + 1);
   }
   this.unsubscribedDate = this.datepipe.transform(currentDate, 'yyyy-MM-ddT00:00:00');
@@ -155,7 +161,7 @@ proceedPayment(){
   else{
     approvalStatus=this.approval;
   }
-   this.saasService.getPaymentTrial(this.paymentId,null,this.companyname,this.domain,this.userName,this.password,this.email,this.phn,this.billingPeriod,this.totalAmount,true,this.lastpaymentDate,this.paymentAmt,this.upcomingDueDate,this.paymentOption,this.subscribedDate,this.unsubscribedDate,this.paymentOption,approvalStatus,this.currency,this.countryName,this.address1,this.address2,this.postalCode,this.city,this.state).subscribe(
+   this.saasService.getPaymentTrial(this.paymentId,null,this.companyname,this.domain,this.userName,this.password,this.email,this.phn,this.billingPeriod,this.totalAmount,true,this.lastpaymentDate,this.paymentAmt,this.upcomingDueDate,this.paymentOption,this.subscribedDate,this.unsubscribedDate,this.paymentOption,approvalStatus,this.currency,this.countryName,this.address1,this.address2,this.postalCode,this.city,this.state,this.numberValue).subscribe(
      res=>{
        console.log(res);
        this.sendEmailToClients();
@@ -164,8 +170,45 @@ proceedPayment(){
      },
      err=>{
        console.log(err)
+       this.getBankDetails();
+       this.demovideo=true;
      }
    )
+}
+existingInvoice:any=[];
+invoiceId:any;
+//UPDATE-INVOICE
+getExistingInvoiceDetailsById(){
+    this.saasService.getInvoiceDetailsById(this.paymentId).subscribe(
+      (res:any)=>{
+        console.log(res)
+        this.existingInvoice=res;
+        this.invoiceId=res?.id
+      }
+    )
+}
+//GET-INVOICE-DETAILS-BY-DOMAIN
+getExistingInvoiceDetailsByDomain(){
+   this.saasService.getInvoiceDetailsByDomain().subscribe(
+     (res:any)=>{
+       console.log(res)
+       this.existingInvoice=res;
+       this.invoiceId=res?.id
+     }
+   )
+}
+//UPDATE-INVOICE-BASED-ON-INFO
+updateInvoice(blob) {
+  // Upload the blob to the API
+  this.saasService.updateInvoiceOfPayment(this.paymentId, blob).subscribe(
+    res => {
+      console.log(res);
+      this.saveInvoiceDetails(this.invoiceId);
+    },
+    err => {
+      console.error('Error uploading PDF:', err);
+    }
+  );
 }
 //convert the mat-card bill into pdf
 downloadAsPdf() {
@@ -204,7 +247,12 @@ downloadAsPdf() {
         currentPage++;
       }
       const blob = doc.output('blob');
-      this.uploadPdfToAPI(blob);
+      if(this.existingInvoice?.length > 0){
+      this.updateInvoice(blob);
+      }
+      else{
+        this.uploadPdfToAPI(blob)
+      }
     })
     .catch((error) => {
       console.error('Error capturing content:', error);
@@ -217,7 +265,9 @@ uploadPdfToAPI(blob) {
   this.saasService.uploadInvoiceOfPayment(this.paymentId, blob,this.paymentOption).subscribe(
     res => {
       console.log(res);
-      this.saveInvoiceDetails();
+      let newId=res['id'];
+      console.log(newId,'hii')
+      this.saveInvoiceDetails(newId);
     },
     err => {
       console.error('Error uploading PDF:', err);
@@ -225,8 +275,8 @@ uploadPdfToAPI(blob) {
   );
 }
 //SAVE-INVOICE
-saveInvoiceDetails(){
-   this.saasService.getSubscription(this.totalAmount,this.totalUsers,this.paymentOption,this.paymentId,this.billingPeriod).subscribe(
+saveInvoiceDetails(id){
+   this.saasService.getSubscription(this.totalAmount,this.numberValue,this.paymentOption,id,this.billingPeriod,this.userName).subscribe(
      res=>{
        console.log(res)
      },
@@ -263,5 +313,18 @@ decreaseNumber() {
 calculateTotal() {
   this.totalAmount = parseFloat(this.paymentAmt) * this.numberValue;
   console.log(this.totalAmount)
+}
+getBankDetails(){
+   this.saasService.getBankDetails().subscribe(
+     res=>{
+       let response=res['data'][0]
+       this.accountNo=response['accountNumber'];
+       this.ifscCode=response['ifscCode'];
+       this.bankerName=response['accountHolderName'];
+     },
+     err=>{
+       console.log(err)
+     }
+   )
 }
 }

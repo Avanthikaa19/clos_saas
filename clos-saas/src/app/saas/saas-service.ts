@@ -39,13 +39,13 @@ getUploadedDocuments(id: string, files: File[], description: string) {
     return this.http.get(`${this.SAAS_API_URL}/check/is_valid?column=${column}&value=${value}`);
   }
   //GET-FREE-TRIAL
-  getFreeTrial(id,paymentStatus,approval,trialExpiryDate){
-    return this.http.put(`${this.SAAS_API_URL}/add/subscription-details?id=${id}`, {paymentStatus,approval,trialExpiryDate});
+  getFreeTrial(id,paymentStatus,approval,trialExpiryDate,maxUsers){
+    return this.http.put(`${this.SAAS_API_URL}/add/subscription-details?id=${id}`, {paymentStatus,approval,trialExpiryDate,maxUsers});
   }
   //PAYMENT-TRIAL
-  getPaymentTrial(userId,id,orgName,domain,userName,password,emailId,phoneNo,paymentCycle,amountPaid,subscribed,lastPaymentDate,dueAmount,upcomingDueDate,subscriptionPlan,subscribedDate,unsubscribedDate,paymentStatus,approval,currency,country,addressLine1,addressLine2,postalCode,city,state){
+  getPaymentTrial(userId,id,orgName,domain,userName,password,emailId,phoneNo,paymentCycle,amountPaid,subscribed,lastPaymentDate,dueAmount,upcomingDueDate,subscriptionPlan,subscribedDate,unsubscribedDate,paymentStatus,approval,currency,country,addressLine1,addressLine2,postalCode,city,state,maxUsers){
     return this.http.put(`${this.SAAS_API_URL}/add/subscription-details?id=${userId}`, {
-    id,orgName,domain,userName,password,emailId,phoneNo,paymentCycle,amountPaid,subscribed,lastPaymentDate,dueAmount,upcomingDueDate,subscriptionPlan,subscribedDate,unsubscribedDate,paymentStatus,approval,currency,country,addressLine1,addressLine2,postalCode,city,state}
+    id,orgName,domain,userName,password,emailId,phoneNo,paymentCycle,amountPaid,subscribed,lastPaymentDate,dueAmount,upcomingDueDate,subscriptionPlan,subscribedDate,unsubscribedDate,paymentStatus,approval,currency,country,addressLine1,addressLine2,postalCode,city,state,maxUsers}
     );
   }
   //EMAIL-API-INTEGRATION
@@ -106,8 +106,8 @@ getUploadedDocuments(id: string, files: File[], description: string) {
     return this.http.get(`${this.SAAS_API_URL}/get/subscriptions?page=${page}&pageSize=${pageSize}&order=${order}&orderBy=${orderBy}`);
   }
   //SUBSCRIPTION-DETAILS-API
-  getSubscription(amountPaid,totalUsers,subscriptionPlan,subscriptionId,paymentCycle){
-    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice/details?id=${subscriptionId}`, {amountPaid,totalUsers,subscriptionPlan,paymentCycle});
+  getSubscription(amountPaid,totalUsers,subscriptionPlan,subscriptionId,paymentCycle,paidBy){
+    return this.http.post<any>(`${this.SAAS_API_URL}/save/invoice/details?id=${subscriptionId}`, {amountPaid,totalUsers,subscriptionPlan,paymentCycle,paidBy});
   }
   //GET-ACCESS-BASED-ON-DOMAINNAME
   getAccessBasedOnDomainName(domain){
@@ -120,5 +120,26 @@ getUploadedDocuments(id: string, files: File[], description: string) {
   //GET-PAYMENT-DETAILS
   getPaymentDetails(){
     return this.http.get(`${this.SAAS_API_URL}/get/organization/details`);
+  }
+  //GET-EXISTING-INVOICE-DETAILS-BY-ID
+  getInvoiceDetailsById(id){
+    return this.http.get(`${this.SAAS_API_URL}/get/unpaid/invoice?id=${id}`);
+  }
+  //GET-EXISTING-INVOICE-BY-DOMAIN-NAME
+  getInvoiceDetailsByDomain(){
+    return this.http.get(`${this.SAAS_API_URL}/get/user/unpaid/invoice`);
+  }
+  //UPDATE-INVOICE
+  updateInvoiceOfPayment(id: number, file: Blob) {
+    // Create a new FormData object
+    const formData = new FormData();
+    // Append the blob directly to the FormData object
+    formData.append('file', file, 'payment.pdf');
+    // Make the HTTP POST request
+    return this.http.put<any>(`${this.SAAS_API_URL}/update/invoice?id=${id}`, formData);
+  }
+  //GET-BANK-DETAILS
+  getBankDetails(){
+    return this.http.get(`${this.SAAS_API_URL}/get/bank/details`);
   }
 }

@@ -184,7 +184,7 @@ export class UserDetailComponent implements OnInit {
             this.emailerrormessage=err.error['EmailId'];
           
           }
-          this.showNotification('error', 'Whoops! Something went wrong.')
+          this.showNotification('error', err.error['error'])
         }
       )
     } else {

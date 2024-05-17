@@ -72,3 +72,15 @@
     border-radius: 0px !important;
     box-shadow: none !important;
   }
+  .payment-method {
+    margin-top: 2%;
+    margin-left: 8px;
+}
+.payment-method mat-radio-button {
+    display: block;
+    margin: 5px 0;
+}
+.payment-button {
+    text-align: center;
+    margin-top: 6%;
+}

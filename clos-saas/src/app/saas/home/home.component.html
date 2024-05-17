@@ -249,14 +249,14 @@ Ease customer onboarding processes.
 </div>
 <div class="container" style="margin-top: 1%;">
     <div class="row">
-        <div *ngFor="let list of pricingList; let i=index" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%; margin-bottom: 20px;">
+        <div *ngFor="let list of pricingList; let i=index" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%; margin-right: 2%; margin-bottom: 20px;">
             <div class="card-box">
                 <!-- <mat-icon class="check-icon" *ngIf="selectedPayment == 'BASIC' ">check</mat-icon> -->
                 <div style="text-align: center;margin-top: 5%;">
                     <span style="font-size: 20px;font-weight: bold;color: black;">{{list?.subscriptionName}}</span>
                 </div>
                 <div style="margin-top: 3%;">
-                    <span style="font-size: 15px;;color: black;">{{list?.subscriptionDescription}}</span>
+                    <span style="font-size: 15px;color: black;">{{list?.subscriptionDescription}}</span>
                 </div>
                 <div style="margin-top: 3%;">
                     Starts at

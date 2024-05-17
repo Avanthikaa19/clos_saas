@@ -35,7 +35,7 @@
 </div> -->
 <div class="container" style="margin-top: 1%;">
     <div class="row">
-        <div *ngFor="let list of pricingList; let i=index" (click)="freeTrialUsers=list?.subscriptionName;freeTrialDate=list?.trialPeriodDays;freeTrialId=list?.id" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%; margin-bottom: 20px;">
+        <div *ngFor="let list of pricingList; let i=index" (click)="freeTrialUsers=list?.subscriptionName;freeTrialDate=list?.trialPeriodDays;freeTrialId=list?.id;subscriptionPeriod=list?.subscriptionPeriod" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-left: -4%; margin-bottom: 20px;">
             <div class="card-box">
                 <mat-icon class="check-icon" *ngIf="paymentOption===list?.subscriptionName">check</mat-icon>
                 <div style="text-align: center;margin-top: 5%;">
