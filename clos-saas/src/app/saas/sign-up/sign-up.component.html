@@ -266,9 +266,9 @@
        </span>
     </div>
     <div style="text-align: center;margin-top: 6%;" *ngIf="existingEmail && (approvalStatus=='PENDING'||approvalStatus=='approved'||approvalStatus==null)">
-        <button mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
+        <!-- <button mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
             <span *ngIf="paymentOption===null||paymentOption==='FREE-TRIAL'"> GO TO PAYMENTS </span>
-        </button> 
+        </button>  -->
         <button style="margin-left: -50px;" mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
             <span> UPGRADE PLANS </span>
         </button> 

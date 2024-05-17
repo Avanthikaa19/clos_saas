@@ -167,12 +167,11 @@ proceedPayment(){
        this.sendEmailToClients();
        this.downloadAsPdf();
        this.demovideo=true;
+       this.getBankDetails();
      },
      err=>{
        console.log(err)
-       this.getBankDetails();
-       this.demovideo=true;
-     }
+       }
    )
 }
 existingInvoice:any=[];
