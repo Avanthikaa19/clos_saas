@@ -33,6 +33,17 @@ export class SubscriptionsComponent implements OnInit {
   createdDate:any='';
   dueDate:any='';
   invoiceId:any;
+  //Payment
+  payNow:any='';
+  selectedPaymentMethod:any=''
+  accountNo:any='';
+  ifscCode:any='';
+  errMessageForAccountNumber:any='';
+  errMessageForIfscCode:any='';
+  errMessageForBankerName:any='';
+  bankerName:any='';
+  bankingInfo:any=[];
+  selectedBankInfo:any='';
   @HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;

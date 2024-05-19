@@ -181,4 +181,56 @@
   padding: 20px;
   overflow: auto;
 }
-  
+.document-card{
+  width:100%;
+  border: 1px solid #B8A7A7;
+  border-radius: 10px;
+  height:55px;
+  display: flex;
+  justify-content: initial;
+  padding: 15px;
+}
+.bank-transfer{
+  margin-top: 10px;
+}
+.title {
+  font-weight: bold;
+}
+.min-select1 {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #B8A7A7;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  bottom: 78%;
+  left: 4%;
+}
+
+.no-table tr:hover {
+  box-shadow: none;
+  background-color: white !important;
+  cursor: default;
+}
+
+.no-table tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.no-table tr:nth-child(even) {
+  background-color: #fff
+}
+.no-table tr{
+  border: none !important;
+}
+.no-table td{
+  border: none !important;
+}
+.approve-btn {
+  position: absolute;
+  bottom: 3%;
+  height: 45px;
+  width: 92.5%;
+  right: 3.5%;
+}
