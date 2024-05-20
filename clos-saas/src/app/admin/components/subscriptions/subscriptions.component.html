@@ -62,7 +62,8 @@
 </div>
 
 <!--------------------GET SUBSCRIPTIONS BY ID-------------------------------->
-<div class="popup" *ngIf="viewSubscription">
+<div class="overlay1">
+<div class="popup" style="height:450px;overflow:auto" *ngIf="viewSubscription">
   <div class="title-bar">
       <span style="margin-right: auto;">INVOICE INFORMATION (INVOICE ID : {{invoiceId}})</span>
       <mat-icon (click)="viewSubscription = false;" style="cursor: pointer;">close</mat-icon>
@@ -124,53 +125,59 @@
       </div>
   </div>
 </div>
+</div>
 <!------------------BLUR THE WINDOW------------------------------>
-<div *ngIf="viewSubscription"
+<div *ngIf="viewSubscription||payNow"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
   </div>
       <!----------------------PAYMENT INFO----------------------------------------------------->
-      <div class="popup" *ngIf="payNow">
-        <div class="title-bar">
-          <span style="margin-right: auto;">PAYMENT</span>
-          <mat-icon (click)="payNow = false" style="cursor: pointer;">close</mat-icon>
-        </div>
-        <div class="document-portion">
-          <div class="input-container">
-            <mat-radio-group [(ngModel)]="selectedPaymentMethod">
-              <div class="document-card">
-                <mat-radio-button value="paypal">PayPal</mat-radio-button>
+      <div class="overlay1" *ngIf="payNow">
+        <div class="popup" style="height:350px;overflow:auto">
+          <div class="title-bar">
+            <span class="title-text">PAYMENT DETAILS</span>
+            <mat-icon (click)="payNow = false" class="close-icon">close</mat-icon>
+          </div>
+          <div class="document-portion">
+            <div class="instruction-text">
+              <span>You can pay the amount by bank transfer with the following details</span>
+            </div>
+            <div class="input-container">
+              <mat-radio-group [(ngModel)]="selectedPaymentMethod">
+                <div class="document-card">
+                  <mat-radio-button value="paypal">PayPal</mat-radio-button>
+                </div>
+                <div class="document-card">
+                  <mat-radio-button value="bankTransfer">Bank Transfer</mat-radio-button>
+                </div>
+              </mat-radio-group>
+              <div class="bank-transfer" *ngIf="selectedPaymentMethod==='bankTransfer'">
+                <table class="no-table">
+                  <tr>
+                    <td class="title">Payment Mode</td>
+                    <td><input class="min-select1" [(ngModel)]="paymentMode"></td>
+                  </tr>
+                  <tr>
+                    <td class="title">Payment Description</td>
+                    <td><input class="min-select1" [(ngModel)]="description"></td>
+                  </tr>
+                  <tr>
+                    <td class="title">Bank Account Number</td>
+                    <td><input class="min-select1" [(ngModel)]="accountNo"></td>
+                  </tr>
+                  <tr>
+                    <td class="title">IFSC Code</td>
+                    <td><input class="min-select1" [(ngModel)]="ifscCode"></td>
+                  </tr>
+                  <tr>
+                    <td class="title">Bank Holder Name</td>
+                    <td><input class="min-select1" [(ngModel)]="bankerName"></td>
+                  </tr>
+                </table>
               </div>
-              <div class="document-card" style="margin-top: 10px;">
-                <mat-radio-button value="bankTransfer">Bank Transfer</mat-radio-button>
-              </div>
-            </mat-radio-group>
-            <div class="bank-transfer" *ngIf="selectedPaymentMethod === 'bankTransfer'">
-              <table class="no-table">
-                <tr>
-                  <td class="title">Bank Account Number</td>
-                  <td><input class="min-select1" [(ngModel)]="accountNo"></td>
-                  <br>
-                </tr>
-                <tr>
-                  <td class="title">IFSC Code</td>
-                  <td><input class="min-select1" [(ngModel)]="ifscCode"></td>
-                  <br>
-                  <span *ngIf="errMessageForIfscCode" style="font-size: 14px;color:crimson;">{{errMessageForIfscCode}}</span>
-                </tr>
-                <tr>
-                  <td class="title">Bank Holder Name</td>
-                  <td><input class="min-select1" [(ngModel)]="bankerName"></td>
-                  <br>
-                  <span *ngIf="errMessageForBankerName"
-                    style="font-size: 14px;color:crimson;">{{errMessageForBankerName}}</span>
-                </tr>
-      
-              </table>
+            </div>
+            <div class="approve-btn">
+              <button class="btn" (click)="payNow = false">DONE</button>
             </div>
           </div>
-          <div class="approve-btn">
-            <button class="btn" style="float: right;font-size: 14px;width: 100px;" (click)="payNow = false">OK</button>
-          </div>
-      
         </div>
       </div>

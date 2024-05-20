@@ -204,7 +204,7 @@
         </div>
     </div>            
 </div>   
-<div style="margin-top:5%;text-align: center;">
+<div style="text-align: center;">
     <button (click)="signup()" style="text-align: center;"  [disabled]="!allDocumentsUploaded() || anyMandatoryDocumentNotUploaded()" mat-flat-button color="primary">
         <span> SIGN UP</span>
     </button>
@@ -269,7 +269,7 @@
         <!-- <button mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
             <span *ngIf="paymentOption===null||paymentOption==='FREE-TRIAL'"> GO TO PAYMENTS </span>
         </button>  -->
-        <button style="margin-left: -50px;" mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
+        <button style="margin-left: 8px;" mat-flat-button color="primary" (click)="emailIdValidation=false;navigateToPage('pricing')">
             <span> UPGRADE PLANS </span>
         </button> 
         <!-- <button *ngIf="paymentOption==='BASIC'||paymentOption==='STANDARD'||paymentOption==='PREMIUM'" mat-flat-button color="primary" (click)="demovideo=false;loginapp=false;login()">

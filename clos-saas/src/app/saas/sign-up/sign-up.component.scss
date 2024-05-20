@@ -95,29 +95,99 @@
     transform: translateY(-50%);
 }
 .popup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width:40vw;
-    height:60vh;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index:9999;
+  padding: 20px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  max-height: 80vh; /* Adjust the max height for the popup */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds max-height */
+  margin: auto;
+  position: absolute;
+  z-index: 22222222;
+  top:50%;
+  left:50%;
+}
+
+.title-bar {
+  height: 45px;
+  width: 100%;
+  background-color: #0d203e;
+  text-transform: uppercase;
+  padding: 10px;
+  color: white;
+  font-weight: bolder;
+  line-height: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+.content {
+  max-height: calc(80vh - 80px); /* Adjust based on the total max height and other content */
+  overflow-y: auto;
+}
+
+.document-container {
+  margin-top: 20px;
+}
+
+.document-row {
+  margin-bottom: 15px;
+}
+
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.description-input {
+  flex: 1 1 calc(50% - 20px);
+  padding: 10px;
+  height: 40px;
+}
+
+.file-input {
+  flex: 1 1 calc(50% - 20px);
+  padding: 10px;
+}
+
+button {
+  flex: 0 1 auto;
+}
+
+.remove-icon {
+  color: red;
+}
+
+.signup-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 10px;
+}
+
+@media (max-width: 767px) {
+  .description-input,
+  .file-input {
+      flex: 1 1 100%;
   }
-  .title-bar{
-    height:45px;
-    width: 100%;
-    background-color: #0d203e;
-    text-transform: uppercase;
-    padding: 10px;
-    color: white;
-    font-weight: bolder;
-    line-height: 28px;
-    display: flex;
-    justify-content: space-between;
-  }
+}
+
   .custom-tooltip {
     background-color: #fff;
     color: #000; /* Set text color as per your design */

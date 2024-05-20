@@ -44,6 +44,8 @@ export class SubscriptionsComponent implements OnInit {
   bankerName:any='';
   bankingInfo:any=[];
   selectedBankInfo:any='';
+  paymentMode:any='Direct Bank Transfer';
+  description:any='Please transfer amount directly into our bank account . Keep the invoice id as your payment reference .Your service would not be enabled till we receive our payment '
   @HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -64,6 +66,7 @@ export class SubscriptionsComponent implements OnInit {
     let response = await this.updateUrl();
     UrlService.API_URL = response.toString();
     this.getAllSubscriptionDetails();
+    this.getBankDetails();
   }
   getCurrentUser():string{
     if(sessionStorage.getItem(AUTHENTICATED_USER)){
@@ -140,4 +143,17 @@ export class SubscriptionsComponent implements OnInit {
       }
     )
   }
+  getBankDetails(){
+    this.saasService.getBankDetails().subscribe(
+      res=>{
+        let response=res['data'][0]
+        this.accountNo=response['accountNumber'];
+        this.ifscCode=response['ifscCode'];
+        this.bankerName=response['accountHolderName'];
+      },
+      err=>{
+        console.log(err)
+      }
+    )
+ }
 }

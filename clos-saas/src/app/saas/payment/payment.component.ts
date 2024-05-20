@@ -59,6 +59,8 @@ export class PaymentComponent implements OnInit {
   accountNo:any='';
   bankerName:any='';
   ifscCode:any='';
+  paymentMode:any='Direct Bank Transfer';
+  description:any='Your service would not be enabled till we receive our payment '
 	@HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;

@@ -97,16 +97,11 @@
         </div>
         </div>
         <!--------------------PROCEED PAYMENT-------------------------->
-        <div style="margin-top:4.7%;margin-left:3%;margin-bottom: 25px;">
-            <button (click)="generateBill=true;getExistingInvoiceDetailsByDomain();getExistingInvoiceDetailsById()" style="text-align: center;" mat-flat-button color="primary">
-                <span> GENERATE BILL</span>
-            </button>
-          </div>
           </div>
           </div>
         <!--------------------BILLINGS------------------------------------->
         <div class="col-lg-6">
-        <div class="container" *ngIf="generateBill">
+        <div class="container">
             <div class="row">
                 <div style="width: 85%;">
                     <mat-card  id="page">
@@ -124,24 +119,6 @@
                         <div style="margin-top: 1%;">
                             <span>{{userName}}</span>
                         </div>
-                        <!-- <div style="margin-top: 1%;">
-                            <span>
-                                {{address1}},
-                            </span>
-                        </div>
-                        <div style="margin-top: 1%;">
-                            <span>
-                                {{state}},
-                            </span>
-                        </div>
-                        <div style="margin-top: 1%;">
-                            <span>
-                                {{postalCode}}
-                            </span>
-                        </div> -->
-                        <!-- <div>
-                            <img src="assets/FSLOGO.png" style="width:25px;height:25px">
-                        </div> -->
                         <div style="font-weight: bold;margin-top:2%">
                             <span>Product Details</span>
                         </div>
@@ -152,7 +129,7 @@
                           <span>Billing Cycle</span>
                       </div>
                       <div style="margin-top: 1%;">
-                        <mat-button-toggle-group disabled [(ngModel)]="billingPeriod" (ngModelChange)="calculateNextBillingDate(billingPeriod)" name="billingPeriod">
+                        <mat-button-toggle-group [(ngModel)]="billingPeriod" (ngModelChange)="calculateNextBillingDate(billingPeriod)" name="billingPeriod">
                           <mat-button-toggle [value]="'monthly'">Billed Monthly</mat-button-toggle>
                           <mat-button-toggle [value]="'annually'">Billed Annually</mat-button-toggle>
                         </mat-button-toggle-group>
@@ -200,7 +177,7 @@
                         </mat-radio-group>
                     </div>
                     <div style="margin-top: 6%;">
-                        <button (click)="proceedPayment()" style="text-align: center;" mat-flat-button color="primary">
+                        <button (click)="demovideo=true" style="text-align: center;" mat-flat-button color="primary">
                             <span> PAY NOW</span>
                         </button>
                     </div>
@@ -215,34 +192,49 @@
     <div *ngIf="demovideo"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>
  <!----------------------------------SUCCESS POPUP------------------------------------------->
-    <div *ngIf="demovideo" style="position: absolute; top:45%; left: 51%;transform: translate(-50%, -50%); z-index: 222222222;background-color: #fff;height:370px;width:385px;border-radius: 10px;padding: 15px;">
-        <div style="text-align: center;margin-top:5%">
-            <img src="assets/ok.png" style="width:24%">
+ <div class="overlay" *ngIf="demovideo">
+    <div class="popup">
+      <div class="title-bar">
+        <span class="title-text">PAYMENT DETAILS</span>
+        <mat-icon (click)="demovideo = false" class="close-icon">close</mat-icon>
+      </div>
+      <div class="document-portion">
+        <div class="instruction-text">
+          <span>You can pay the amount by bank transfer with the following details</span>
         </div>
-        <div class="main-header" style="text-align: center;margin-top:4%;color:blue">
-           <span style="font-size: 14px;font-weight: lighter;margin-bottom: 10px;line-height: 23px;" *ngIf="paymentMethod==='bankTransfer'">
-                You can pay with the following bank details.
-                <br>
-                <span>
-                Bank A/C No: {{accountNo}}
-                </span>
-                <br>
-                <span>
-                IFSC       : {{ifscCode}}
-                </span>
-                <br>
-                <span>
-                Account Holder : {{bankerName}}
-                </span>
-           </span>
-           <br>
+        <div class="input-container">
+          <div class="bank-transfer" *ngIf="paymentMethod === 'bankTransfer'">
+            <table class="no-table">
+              <tr>
+                <td class="title">Payment Mode</td>
+                <td><input class="min-select1" [(ngModel)]="paymentMode"></td>
+              </tr>
+              <tr>
+                <td class="title">Payment Description</td>
+                <td><input class="min-select1" [(ngModel)]="description"></td>
+              </tr>
+              <tr>
+                <td class="title">Bank Account Number</td>
+                <td><input class="min-select1" [(ngModel)]="accountNo"></td>
+              </tr>
+              <tr>
+                <td class="title">IFSC Code</td>
+                <td><input class="min-select1" [(ngModel)]="ifscCode"></td>
+              </tr>
+              <tr>
+                <td class="title">Bank Holder Name</td>
+                <td><input class="min-select1" [(ngModel)]="bankerName"></td>
+              </tr>
+            </table>
+          </div>
         </div>
-        <div style="text-align: center;margin-top: 6%;">
-            <button mat-flat-button color="primary" (click)="demovideo=false;copyTokenToClipboard()">
-                <span> DONE</span>
-            </button> 
+        <div class="approve-btn">
+          <button class="btn" (click)="demovideo = false">DONE</button>
         </div>
-     </div>
+      </div>
+    </div>
+  </div>
+   
 </div>
 </div>
 </div>
