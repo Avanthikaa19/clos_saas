@@ -122,9 +122,9 @@
                             <img src="assets/FSLOGO.png" style="width:40px;height:40px">
                         </div>
                         <div style="margin-top: 1%;">
-                            <span>{{userName}},</span>
+                            <span>{{userName}}</span>
                         </div>
-                        <div style="margin-top: 1%;">
+                        <!-- <div style="margin-top: 1%;">
                             <span>
                                 {{address1}},
                             </span>
@@ -138,10 +138,16 @@
                             <span>
                                 {{postalCode}}
                             </span>
-                        </div>
+                        </div> -->
                         <!-- <div>
                             <img src="assets/FSLOGO.png" style="width:25px;height:25px">
                         </div> -->
+                        <div style="font-weight: bold;margin-top:2%">
+                            <span>Product Details</span>
+                        </div>
+                        <div style="margin-top: 1%;">
+                            {{paymentOption}}
+                        </div>
                       <div style="font-weight: bold;margin-top:2%">
                           <span>Billing Cycle</span>
                       </div>
@@ -193,13 +199,13 @@
                             </span>
                         </mat-radio-group>
                     </div>
-                    </mat-card-content>
-                    </mat-card>
                     <div style="margin-top: 6%;">
                         <button (click)="proceedPayment()" style="text-align: center;" mat-flat-button color="primary">
-                            <span> PROCEED PAYMENT</span>
+                            <span> PAY NOW</span>
                         </button>
                     </div>
+                    </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>
