@@ -127,6 +127,8 @@
 
 .popup-content {
     background-color: #fff;
+    height: 600px;
+    width: 1000px;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -160,4 +162,44 @@
 .users-header{
     display: flex;
     align-items: center;
+}
+@media (-moz-min-device-pixel-ratio: 1.5),
+(-o-min-device-pixel-ratio: 3/2),
+(-webkit-min-device-pixel-ratio: 1.5),
+(min--moz-device-pixel-ratio: 1.5),
+(min-resolution: 1.5dppx) {
+.popup-content {
+    height: 500px;
+    width: 800px;
+}
+.iframe{
+    height: 85%;
+  }
+}
+@media (-moz-min-device-pixel-ratio: 1.7),
+       (-o-min-device-pixel-ratio: 17/10),
+       (-webkit-min-device-pixel-ratio: 1.7),
+       (min--moz-device-pixel-ratio: 1.7),
+       (min-resolution: 1.7dppx) {
+  .popup-content {
+    height: 457px;
+    width: 750px;
+    margin-top: 30px;
+  }
+       }
+       @media (-moz-min-device-pixel-ratio: 2),
+       (-o-min-device-pixel-ratio: 2/1),
+       (-webkit-min-device-pixel-ratio: 2),
+       (min--moz-device-pixel-ratio: 2),
+       (min-resolution: 2dppx) {
+  .popup-content {
+    height: 389px;
+    width: 667px;
+  }
+  .iframe{
+    height: 76%;
+  }
+  .terms{
+    text-wrap:wrap;
+  }
 }
