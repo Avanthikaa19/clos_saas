@@ -136,6 +136,17 @@
 </div>
         </div>
         </div>
+        <div class="placeholder-container" *ngIf="!loadingPlans && pricingList?.length===0">
+            <span>No items found!</span>
+        </div>
+        <div *ngIf="loadingPlans" style="font-size: 15px;font-weight:bold;font-style: italic; box-shadow: 0 1px 4px rgb(0 0 0 / 10%) inset;width: 10%;
+        justify-content: center;
+        display: flex;
+        left: 40%;
+        position: absolute;
+        top: 40%;">
+          <span>Loading...Please Wait</span>
+        </div>
 <!----------------------FOOTER-------------------------------------->
 <div *ngIf="demovideo"
  style="position: fixed; top: -5px; left: 0; height: 100%; width: 100%;background-color: rgba(0,0,0,.47843137254901963);opacity: 0.7;z-index:22"></div>

@@ -60,7 +60,6 @@
 <div class="placeholder-container" *ngIf="!loading && !invoice?.length">
     <span>No items found!</span>
 </div>
-
 <!--------------------GET SUBSCRIPTIONS BY ID-------------------------------->
 <div class="overlay1">
 <div class="popup" style="height:450px;overflow:auto" *ngIf="viewSubscription">
@@ -71,11 +70,6 @@
   <div class="document-portion">
       <div class="input-container">
           <table class="no-table">
-              <tr>
-                  <td class="title">USERNAME</td>
-                  <td><input disabled class="min-select" [(ngModel)]="username"></td>
-                  <br>
-              </tr>
               <tr>
                   <td class="title">ORGANIZATION NAME</td>
                   <td><input disabled class="min-select" [(ngModel)]="orgName"></td>

@@ -45,6 +45,7 @@ export class PricingComponent implements OnInit {
   freeTrialDate:number;
   freeTrialId:any='';
   subscriptionPeriod:any='';
+  loadingPlans:boolean=false;
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -228,8 +229,11 @@ inputError:boolean=false;
   }
  //GET-PRICING-LIST
  getPricingList(){
+   this.loadingPlans=true;
+   this.pricingList=[];
     this.saasService.getPricingList(this.page,this.pageSize,'desc','subscriptionName').subscribe(
       res=>{
+        this.loadingPlans=false;
         console.log(res)
         this.pricingList=res['data']
       },
