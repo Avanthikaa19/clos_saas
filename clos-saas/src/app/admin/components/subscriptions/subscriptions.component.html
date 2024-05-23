@@ -25,7 +25,7 @@
               <td>{{list?.due_date|date:'yyyy-MM-dd'}}</td>
               <td>{{list?.amount_paid}}</td>
               <td>
-                <button class="btn" (click)="list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?payNow = true:''">
+                <button class="btn" (click)="list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?payNow = true:'';invoiceId=list?.id">
                     <i class="fa fa-plus_square_o"></i>
                     <span> {{list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?'PAY NOW':list?.paymentStatus}}</span>
                 </button>

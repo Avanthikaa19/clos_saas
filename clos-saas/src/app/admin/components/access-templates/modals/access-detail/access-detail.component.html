@@ -39,13 +39,14 @@
                             <div class="access-detail-container">
                             <table>
                                 <tr>
-                                    <td class="required">Template Name</td>
+                                    <td>Template Name
+                                        <span style="margin-left: 10px;cursor: pointer;">
+                                            <i class="fa fa-question-circle" [matTooltip]="'Access Template defines the usage of modules assigned to the user.You can create each template for each user or assign the same template to all.'"></i>
+                                        </span>
+                                    </td>
                                     <td>:</td>
                                     <td><input type="text" class="min-input" [(ngModel)]="accessDetail.name"
                                             oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
-                                            <span style="position:absolute;top:10.5rem;left:55%;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
-                                                <i class="fa fa-info-circle"></i>
-                                            </span>
                                     </td>
                                     <td>
                                         <div *ngIf="!accessDetail.name">

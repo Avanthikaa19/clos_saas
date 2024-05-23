@@ -40,12 +40,13 @@
                             <div class="group-detail-container">
                                 <table>
                                     <tr>
-                                        <td class="required">Group Name</td>
+                                        <td>Group Name
+                                            <span style="margin-left: 10px;cursor: pointer;">
+                                                <i class="fa fa-question-circle" [matTooltip]="'You can create each group for each user. Group names should be different'"></i>
+                                            </span>
+                                        </td>
                                         <td>:</td>
                                         <td><input type="text" class="min-input" [(ngModel)]="groupDetail.name" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255"></td>
-                                        <span style="position:absolute;top:8.5rem;left:55%;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
-                                            <i class="fa fa-info-circle"></i>
-                                        </span>
                                         <td>
                                             <div *ngIf="!groupDetail.name">
                                                 <span style="color:red;">Group Name is required field.</span>

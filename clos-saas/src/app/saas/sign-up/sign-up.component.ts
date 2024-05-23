@@ -132,7 +132,7 @@ signup(){
   const newHost = `${this.domainName}.${window.location.host}`;
   const newUrl = `http://${this.domainName}.${window.location.host}/signup/login`;
   this.responseUrl=newUrl;
-  this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn).subscribe(
+  this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn,this.email).subscribe(
     (res:any)=>{
      console.log(res)
      this.addDocx=false;

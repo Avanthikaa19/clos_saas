@@ -156,4 +156,30 @@ export class SubscriptionsComponent implements OnInit {
       }
     )
  }
+//  getPaypalintegration(id){
+//   console.log(id)
+//     this.saasService.getPayPalLink(this.paymentAmt,this.currency,id).subscribe(
+//       res=>{
+//         console.log(res)
+//       },
+//       err=>{
+//         console.log(err)
+//         if (err.status === 200 && err.error && err.error['text']) {
+//           const match = err.error['text'].match(/redirect:(.*)/);
+//           if (match && match[1]) {
+//             const redirectUrl = match[1].trim();
+//             if (redirectUrl) {
+//               window.open(redirectUrl, '_blank');
+//             } else {
+//               console.log('Redirect URL not found in the error text');
+//             }
+//           } else {
+//             console.log('Redirect URL not found in the error text');
+//           }
+//         } else {
+//           console.log('Unexpected error format or status code');
+//         }
+//       }
+//     )
+// }
 }

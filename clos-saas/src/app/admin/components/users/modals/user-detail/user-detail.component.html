@@ -44,13 +44,14 @@
                             <div class="user-detail-table">
                                 <table>
                                     <tr>
-                                        <td class="required">User Name</td>
+                                        <td>User Name
+                                            <span style="margin-left: 10px;cursor: pointer;">
+                                                <i class="fa fa-question-circle" [matTooltip]="'Username only accepts small letters . Username should be a minimum of 3 letters.'"></i>
+                                            </span>
+                                        </td>
                                         <td>:</td>
                                         <td>
                                             <input class="min-input" #usernameInput (input)="onInputChange()" [(ngModel)]="userDetail.username" type="text" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
-                                            <span style="position:absolute;top:10.5rem;right:28rem;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
-                                                <i class="fa fa-info-circle"></i>
-                                            </span>
                                         </td>
                                         <td>
                                             <div>
@@ -89,7 +90,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="required">Initial</td>
+                                        <td>Initial
+                                            <span style="margin-left: 10px;cursor: pointer;">
+                                                <i class="fa fa-question-circle" [matTooltip]="'Initial like Mr/Ms/Mrs.'"></i>
+                                            </span>
+                                        </td>
                                         <td>:</td>
                                         <td><input type="text" class="min-input" placeholder="Provide intials" [(ngModel)]="userDetail.initial" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
                                         </td>
@@ -150,7 +155,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="required">Designation</td>
+                                        <td>Designation
+                                            <span style="margin-left: 10px;cursor: pointer;">
+                                                <i class="fa fa-question-circle" [matTooltip]="'Designation like Manager/Developer'"></i>
+                                            </span>
+                                        </td>
                                         <td>:</td>
                                         <td><input type="text" class="min-input" [(ngModel)]="userDetail.designation" oninput="this.value = this.value.replace(/^\s+/g, '');"></td>
                                         <td>
@@ -160,7 +169,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Supervising User</td>
+                                        <td>Supervising User
+                                            <span style="margin-left: 10px;cursor: pointer;">
+                                                <i class="fa fa-question-circle" [matTooltip]="'Supervising User is the guide for your project'"></i>
+                                            </span>
+                                        </td>
                                         <td>:</td>
                                         <td><input type="text" class="min-input" [(ngModel)]="userDetail.supervisingUser"></td>
                                     </tr>

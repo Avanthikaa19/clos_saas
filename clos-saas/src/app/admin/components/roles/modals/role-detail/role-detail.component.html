@@ -39,7 +39,11 @@
                             <div class="role-detail-container">
                             <table>
                                 <tr>
-                                    <td class="required">Role Name</td>
+                                    <td>Role Name
+                                        <span style="margin-left: 10px;cursor: pointer;">
+                                            <i class="fa fa-question-circle" [matTooltip]="'You can create each role for each user. Role names should be different'"></i>
+                                        </span>
+                                    </td>
                                     <td>:</td>
                                     <td>
                                         <mat-select [(ngModel)]="roleDetail.name" required class="min-input min-select detail-item-input">

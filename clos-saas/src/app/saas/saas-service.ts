@@ -12,8 +12,8 @@ export class SaasService{
     }
 
 //SIGN-UP
-getUserSignUp(id,orgName,domain,userName,password,emailId,phoneNo){
-    return this.http.post(`${this.SAAS_API_URL}/create_organization`,{id,orgName,domain,userName,password,emailId,phoneNo});
+getUserSignUp(id,orgName,domain,userName,password,emailId,phoneNo,invoiceMail){
+    return this.http.post(`${this.SAAS_API_URL}/create_organization`,{id,orgName,domain,userName,password,emailId,phoneNo,invoiceMail});
 }
 //CREATE-SEPERATE-DB
 getDataBaseForOrg(id){
@@ -141,5 +141,9 @@ getUploadedDocuments(id: string, files: File[], description: string) {
   //GET-BANK-DETAILS
   getBankDetails(){
     return this.http.get(`${this.SAAS_API_URL}/get/bank/details`);
+  }
+  //PAYPAL-LINK
+  getPayPalLink(amount,currency,invoiceId){
+    return this.http.post<any>(`${this.SAAS_API_URL}/pay`, {amount,currency,invoiceId});
   }
 }

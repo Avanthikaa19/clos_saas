@@ -29,7 +29,7 @@ export class PaymentComponent implements OnInit {
   demovideo:boolean=false;
   countryName:any='';
   countries:any=['INDIA','MALAYSIA','ENGLAND','SINGAPORE','HONG-KONG'];
-  currencies:any=['INR','MYR','POUNDS','SGD','YEN']
+  currencies:any=['USD','MYR','POUNDS','SGD','YEN']
   responseUrl:any='';
   paymentMethod:any='';
   constructor(public transferDataService:DataService,public snackBar:MatSnackBar,public router:Router,
@@ -66,7 +66,7 @@ export class PaymentComponent implements OnInit {
 		this.component_height = window.innerHeight;
 	}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.responseUrl=sessionStorage.getItem('newurl');
     this.transferDataService.getData().subscribe(data => {
       this.companyname=data?.company;
@@ -168,13 +168,45 @@ proceedPayment(){
        console.log(res);
        this.sendEmailToClients();
        this.downloadAsPdf();
+       if(this.paymentMethod=='bankTransfer'){
        this.demovideo=true;
        this.getBankDetails();
+       }
+       else{
+         this.getExistingInvoiceDetailsById();
+         this.getExistingInvoiceDetailsByDomain();
+       }
      },
      err=>{
        console.log(err)
        }
    )
+}
+getPaypalintegration(id){
+  console.log(id)
+    this.saasService.getPayPalLink(this.paymentAmt,this.currency,id).subscribe(
+      res=>{
+        console.log(res)
+      },
+      err=>{
+        console.log(err)
+        if (err.status === 200 && err.error && err.error['text']) {
+          const match = err.error['text'].match(/redirect:(.*)/);
+          if (match && match[1]) {
+            const redirectUrl = match[1].trim();
+            if (redirectUrl) {
+              window.open(redirectUrl, '_blank');
+            } else {
+              console.log('Redirect URL not found in the error text');
+            }
+          } else {
+            console.log('Redirect URL not found in the error text');
+          }
+        } else {
+          console.log('Unexpected error format or status code');
+        }
+      }
+    )
 }
 existingInvoice:any=[];
 invoiceId:any;
@@ -184,7 +216,7 @@ getExistingInvoiceDetailsById(){
       (res:any)=>{
         console.log(res)
         this.existingInvoice=res;
-        this.invoiceId=res?.id
+        this.getPaypalintegration(res[0]?.id)
       }
     )
 }
@@ -194,8 +226,8 @@ getExistingInvoiceDetailsByDomain(){
      (res:any)=>{
        console.log(res)
        this.existingInvoice=res;
-       this.invoiceId=res?.id
-     }
+       this.getPaypalintegration(res[0]?.id)
+      }
    )
 }
 //UPDATE-INVOICE-BASED-ON-INFO

@@ -50,11 +50,12 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div style="margin-top: 7%;">
-                  <div>Enter your Email Id <span style="color:red">*</span></div>
+                  <div>Enter your Email Id <span style="color:red">*</span>
+                    <span style="margin-left: 10px;cursor: pointer;">
+                      <i class="fa fa-question-circle" [matTooltip]="'Enter your registered emailId with the CLOS'"></i>
+                    </span>
+                  </div>
                   <input [(ngModel)]="email" (ngModelChange)="mailValidation(email);" (keyup.backspace)="existingEmail=''" style="margin-top: 4%;"  matInput class="min-select" placeholder="abc@gmail.com" />
-                  <span style="position:absolute;top:8.5rem;right:2rem;cursor:pointer" matTooltip="click to view" (click)="showMoreInfo=true">
-                    <i class="fa fa-info-circle"></i>
-                  </span>
               </div>
               <span *ngIf="errMessage" style="font-size: 12px;color: crimson;">{{errMessage}}</span>
               <span *ngIf="existingEmail" style="font-size: 12px;color: crimson;">{{existingEmail}}</span>
