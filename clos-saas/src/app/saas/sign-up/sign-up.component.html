@@ -181,32 +181,55 @@
         <span style="margin-right: auto;">Mandatory Documents</span>
         <mat-icon (click)="addDocx = false;" style="cursor: pointer;">close</mat-icon>
     </div>
- <div style="margin-top:2%">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:335px;overflow-y:auto;margin-top:-6px">
-        <div *ngFor="let company of companies; let i = index">
-            <div (ngSubmit)="uploadDocument()">
-                <div style="display: flex; align-items: center;">
-                    <div class="col-lg-4" style="padding-right: 0px; padding-left: 0px;">
-                        <input class="min-select" placeholder="Description" [(ngModel)]="description[i]" [disabled]="description[i] !== '' && description[i] !== null" style="height: 51px; margin-top: 12px;">   
-                      </div>                      
-                    <div class="col-lg-6">
-                    <input accept=".jpg,.jpeg,.pdf" type="file" class="min-select" multiple (change)="onFileSelected($event,i)" #fileInput (change)="checkFileSize($event)">
-                    </div>
-                    <div class="col-lg-1">
-                        <button mat-icon-button *ngIf="allDocumentsUploaded() && !anyMandatoryDocumentNotUploaded()" (click)="addFileInput()" matTooltip="Add Document">
-                               <mat-icon>add</mat-icon>
-                        </button>      
-                    </div>
-                    <div class="col-lg-1">
-                    <button mat-icon-button *ngIf="!isMandatory(i)" (click)="removeDocument(i)" style="color: red" [matTooltip]="'remove document'">
-                        <mat-icon *ngIf="i!==0">remove_circle</mat-icon>
-                    </button>
-                    </div>
+    <div style="margin-top: 2%">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 335px; overflow-y: auto; margin-top: -6px">
+          <div *ngFor="let company of companies; let i = index">
+            <form (ngSubmit)="uploadDocument()">
+              <div style="display: flex; align-items: center;">
+                <div class="col-lg-4" style="padding-right: 0px; padding-left: 0px;">
+                  <input
+                    class="min-select"
+                    placeholder="Description"
+                    [(ngModel)]="description[i]"
+                    [disabled]="isMandatory(i)"
+                    style="height: 51px; margin-top: 12px;"
+                    name="description{{i}}">
                 </div>
-            </div>
+                <div class="col-lg-6">
+                  <input
+                    accept=".jpg,.jpeg,.pdf"
+                    type="file"
+                    class="min-select"
+                    multiple
+                    (change)="onFileSelected($event, i)"
+                    #fileInput
+                    (change)="checkFileSize($event)">
+                </div>
+                <div class="col-lg-1">
+                  <button
+                    mat-icon-button
+                    *ngIf="allDocumentsUploaded() && !anyMandatoryDocumentNotUploaded()"
+                    (click)="addFileInput()"
+                    matTooltip="Add Document">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+                <div class="col-lg-1">
+                  <button
+                    mat-icon-button
+                    *ngIf="!isMandatory(i)"
+                    (click)="removeDocument(i)"
+                    style="color: red"
+                    matTooltip="Remove document">
+                    <mat-icon *ngIf="i !== 0">remove_circle</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-    </div>            
-</div>   
+      </div>
+        
 <div style="text-align: center;">
     <button (click)="signup()" style="text-align: center;"  [disabled]="!allDocumentsUploaded() || anyMandatoryDocumentNotUploaded()" mat-flat-button color="primary">
         <span> SIGN UP</span>

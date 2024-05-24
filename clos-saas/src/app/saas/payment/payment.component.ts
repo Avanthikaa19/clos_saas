@@ -210,6 +210,7 @@ getPaypalintegration(id){
 }
 existingInvoice:any=[];
 invoiceId:any;
+swiftcode:any='';
 //UPDATE-INVOICE
 getExistingInvoiceDetailsById(){
     this.saasService.getInvoiceDetailsById(this.paymentId).subscribe(
@@ -354,6 +355,7 @@ getBankDetails(){
        this.accountNo=response['accountNumber'];
        this.ifscCode=response['ifscCode'];
        this.bankerName=response['accountHolderName'];
+       this.swiftcode=response['swiftCode']
      },
      err=>{
        console.log(err)

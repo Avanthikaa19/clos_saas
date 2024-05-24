@@ -45,7 +45,9 @@ export class SubscriptionsComponent implements OnInit {
   bankingInfo:any=[];
   selectedBankInfo:any='';
   paymentMode:any='Direct Bank Transfer';
-  description:any='Please transfer amount directly into our bank account . Keep the invoice id as your payment reference .Your service would not be enabled till we receive our payment '
+  description:any='Please transfer amount directly into our bank account . Keep the invoice id as your payment reference .Your service would not be enabled till we receive our payment ';
+  swiftcode:any='';
+  currency:any='';
   @HostListener('window:resize', ['$event'])
 	updateComponentSize() {
 		this.component_height = window.innerHeight;
@@ -150,6 +152,8 @@ export class SubscriptionsComponent implements OnInit {
         this.accountNo=response['accountNumber'];
         this.ifscCode=response['ifscCode'];
         this.bankerName=response['accountHolderName'];
+        this.swiftcode=response['swiftCode'];
+        this.currency=response['currency'];
       },
       err=>{
         console.log(err)
