@@ -144,7 +144,6 @@ sideNavigationList: Navigation[] = [
   { name: "Manage Access Template", iconName:"security", routerLink: "access-template", activeOnPanels: ["Application Details"], disabled: false, access: '' },
   { name: "Audit Trail", iconName:"art_track", routerLink: "auditTrailListing", activeOnPanels: ["Application Details"], disabled: false, access: '' },
   { name: "Demo Videos", iconName:"important_devices", routerLink: "demo", activeOnPanels: ["Application Details"], disabled: false, access: '' },
-  { name: "Subscriptions and Billings", iconName:"money", routerLink: "subscribe", activeOnPanels: ["Application Entry"], disabled: false, access: '' },
 ]
 navigationElements: SideNav[] = [
   {

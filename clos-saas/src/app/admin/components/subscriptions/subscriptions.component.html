@@ -1,4 +1,4 @@
-<app-side-nav></app-side-nav>
+<!-- <app-side-nav></app-side-nav> -->
 <div style="position: relative;">
 <div>
     <!-------------------INITIAL CARD------------------------------>
@@ -9,7 +9,7 @@
                 </div>
           
   <!---------------------------TABLE------------------------------------>
-  <div style="padding: 5px;width:100%;margin-top:1%;overflow: auto;" [style.height.px]="component_height - 162">
+  <div style="padding: 5px;width:100%;margin-top:1%;overflow: auto;" [style.height.px]="component_height - 270">
     <div>
       <span style="font-size: 14px;font-weight: bold;color:#0e2954;font-style: italic;float:right">Note : Free-trial plans cannot be viewed in subscriptions and billings.</span>
     </div>
@@ -19,13 +19,13 @@
               <th *ngFor="let list of userHeaders;let i=index" style="background-color: #0d203e;color:white;border:1px solid #ddd;position: relative;">{{list}}</th>
           </tr>
           </thead>
-          <tr *ngFor="let list of invoice;let i=index" (click)="invoiceId=list?.id">
+          <tr *ngFor="let list of invoice;let i=index" (click)="invoiceId=list?.id;">
               <td>{{list?.paid_date|date:'yyyy-MM-dd'}}</td>
               <td>#{{list?.id}}</td>
               <td>{{list?.due_date|date:'yyyy-MM-dd'}}</td>
               <td>{{list?.amount_paid}}</td>
               <td>
-                <button class="btn" (click)="list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?payNow = true:'';invoiceId=list?.id">
+                <button class="btn" (click)="list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?payNow = true:'';invoiceId=list?.id;paymentAmt=list?.amount_paid">
                     <i class="fa fa-plus_square_o"></i>
                     <span> {{list?.paymentStatus===null||list?.paymentStatus==='NOT PAID'?'PAY NOW':list?.paymentStatus}}</span>
                 </button>
@@ -50,7 +50,7 @@
       </table>
       </div>
       <div style="margin-top: 2%;">
-      <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" [showFirstLastButtons]="true" aria-label="Select page">
+      <mat-paginator [length]="invoiceCount" [pageSize]="pageSize" [pageSizeOptions]="[1,5,10, 50, 100]" [showFirstLastButtons]="true" (page)="onPageChangeOfSubscriptions($event)" aria-label="Select page">
     </mat-paginator>
   </div>
   <div class="loading-container" *ngIf="loading">
@@ -178,7 +178,7 @@
               </div>
             </div>
             <div class="approve-btn">
-              <button class="btn" (click)="payNow = false">DONE</button>
+              <button class="btn" (click)="selectedPaymentMethod==='paypal'?getPaypalintegration(invoiceId):payNow=false">DONE</button>
             </div>
           </div>
         </div>

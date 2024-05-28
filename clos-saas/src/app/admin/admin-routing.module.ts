@@ -39,7 +39,6 @@ const routes: Routes = [
     path: 'admin', component: AdministratorHomeComponent, children: [
       { path: 'dashboard', component: AdministratorDashboardComponent },
       { path: 'password-encoder', component: PasswordEncoderComponent },
-      {path:'subscribe',component:SubscriptionsComponent},
       {path:'demo',component:DemoVideosComponent},
 
 

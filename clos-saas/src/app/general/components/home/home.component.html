@@ -396,5 +396,30 @@
                 </div>
             </div>
         </div>
+        <div class="row-container">
+            <div [class]="access?.length>4?'col-6':'col-12'" *ngIf="access?.includes('SUBSCRIPTIONS_AND_BILLINGS')">
+                <div style="background-color:hsl(217, 65%, 15%)" class="card-grid" [routerLink]="['/subscribe']">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 style="font-variant:all-small-caps;letter-spacing: 4px;font-size: 32px;color: #fff ;">
+                                        Subscriptions and Billings
+                                    </h3>
+                                    <span style="font-variant:petite-caps;font-size: large;letter-spacing: 1px;color: #fff">
+                                        Subscriptions and Billings of users
+                                    </span>
+                                </div>
+                                <div class="align-self-center">
+                                    <span class="material-symbols-outlined" style="color: #2196f3; font-size:5rem">
+                                        join_inner
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
     </div>
 </section>

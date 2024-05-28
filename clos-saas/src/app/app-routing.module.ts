@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import {ErrorComponent} from "./error/error.component";
 import { UserDetailComponent } from './admin/components/users/modals/user-detail/user-detail.component';
 import { LoginComponent } from './general/components/login/login.component';
+import { SubscriptionsComponent } from './admin/components/subscriptions/subscriptions.component';
 
 const routes: Routes = [
+  {path:'subscribe',component:SubscriptionsComponent},
   { path: '', loadChildren: () => import('./saas/saas-routing-module').then(m => m.SaasRoutingModule), data: {animationState: 'Saas'} },
   { path: `http://:subdomain.${window.location.host}/signup/login`,loadChildren: () => import('./general/general-routing.module').then(m => m.GeneralRoutingModule), data: {animationState: 'General'}  },
   { path: `general`,loadChildren: () => import('./general/general-routing.module').then(m => m.GeneralRoutingModule), data: {animationState: 'General'}  },

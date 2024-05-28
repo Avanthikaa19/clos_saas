@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
       res=>{
         let accessData = res['data'];
        // Splitting the response string and removing the last element
-       this.access = accessData?.split(',').slice(0, -1);
+       this.access = accessData?.split(',');
        console.log(this.access)
        console.log(res,'response-data')
       }

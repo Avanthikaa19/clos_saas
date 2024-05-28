@@ -17,7 +17,7 @@ export class SubscriptionsComponent implements OnInit {
   invoice:any=[];
   invoiceCount:any;
   page:number=1;
-  pageSize:any=10;
+  pageSize:any=5;
   currentUser:any='';
   loading:boolean=false;
   viewSubscription:boolean=false;
@@ -94,6 +94,12 @@ export class SubscriptionsComponent implements OnInit {
        }
      )
   }
+  //PAGE-CHANGE
+  onPageChangeOfSubscriptions(event){
+    this.page=event?.pageIndex+1;
+    this.pageSize=event?.pageSize;
+    this.getAllSubscriptionDetails();
+  }
   //BLOB TO DOWNLOAD THE FILE
   saveFile(atchmt,id) {
     var blob = new Blob([atchmt], {
@@ -160,30 +166,33 @@ export class SubscriptionsComponent implements OnInit {
       }
     )
  }
-//  getPaypalintegration(id){
-//   console.log(id)
-//     this.saasService.getPayPalLink(this.paymentAmt,this.currency,id).subscribe(
-//       res=>{
-//         console.log(res)
-//       },
-//       err=>{
-//         console.log(err)
-//         if (err.status === 200 && err.error && err.error['text']) {
-//           const match = err.error['text'].match(/redirect:(.*)/);
-//           if (match && match[1]) {
-//             const redirectUrl = match[1].trim();
-//             if (redirectUrl) {
-//               window.open(redirectUrl, '_blank');
-//             } else {
-//               console.log('Redirect URL not found in the error text');
-//             }
-//           } else {
-//             console.log('Redirect URL not found in the error text');
-//           }
-//         } else {
-//           console.log('Unexpected error format or status code');
-//         }
-//       }
-//     )
-// }
+ paymentAmt:any;
+ getPaypalintegration(id){
+  console.log(id)
+    this.saasService.getPayPalLink(this.paymentAmt,'USD',id).subscribe(
+      res=>{
+        console.log(res)
+        this.payNow=false;
+      },
+      err=>{
+        console.log(err)
+        if (err.status === 200 && err.error && err.error['text']) {
+          const match = err.error['text'].match(/redirect:(.*)/);
+          if (match && match[1]) {
+            const redirectUrl = match[1].trim();
+            if (redirectUrl) {
+              window.open(redirectUrl, '_blank');
+            } else {
+              console.log('Redirect URL not found in the error text');
+            }
+          } else {
+            console.log('Redirect URL not found in the error text');
+          }
+        } else {
+          console.log('Unexpected error format or status code');
+        }
+        this.payNow=false;
+      }
+    )
+}
 }
