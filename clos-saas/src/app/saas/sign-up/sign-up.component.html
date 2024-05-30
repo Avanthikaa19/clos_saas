@@ -147,7 +147,7 @@
             </div>                  
             <!--------------REQUEST FOR DEMO----------->
             <div style="margin-top:1%;text-align: center;">
-              <button   (click)="addDocx=true;" style="text-align: center;" mat-flat-button color="primary">
+              <button [disabled]="firstname==''||email==''||phn==''||companyname==''||domainName==''||position==''||role==''||password==''||countryName==''"   (click)="addDocx=true;" style="text-align: center;" mat-flat-button color="primary">
                   <span> ADD DOCUMENTS</span>
               </button>
             </div>

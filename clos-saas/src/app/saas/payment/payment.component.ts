@@ -310,7 +310,7 @@ uploadPdfToAPI(blob) {
 }
 //SAVE-INVOICE
 saveInvoiceDetails(id){
-   this.saasService.getSubscription(this.totalAmount,this.numberValue,this.paymentOption,id,this.billingPeriod,this.userName).subscribe(
+   this.saasService.getSubscription(this.totalAmount,this.numberValue,this.paymentOption,id,this.billingPeriod,this.userName,this.currency).subscribe(
      res=>{
        console.log(res)
      },
