@@ -51,7 +51,16 @@
                                         </td>
                                         <td>:</td>
                                         <td>
-                                            <input class="min-input" #usernameInput (input)="onInputChange()" [(ngModel)]="userDetail.username" type="text" oninput="this.value = this.value.replace(/^\s+/g, '');" maxlength="255">
+                                            <input
+                                            class="min-input"
+                                            [disabled]="userDetail.username !== '' && !hasStartedTyping"
+                                            #usernameInput
+                                            (input)="onInputChange()"
+                                            [(ngModel)]="userDetail.username"
+                                            type="text"
+                                            oninput="this.value = this.value.replace(/^\s+/g, '');"
+                                            maxlength="255"
+                                          />
                                         </td>
                                         <td>
                                             <div>

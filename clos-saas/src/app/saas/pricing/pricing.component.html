@@ -50,7 +50,7 @@
                 <div style="margin-top: 3%;">
                     <span style="font-weight: bold;font-size: 20px;"> $ {{list?.subscriptionPrice}} / user</span>
                 </div>
-                <div style="text-align: center;margin-top: 3%;" (click)="decodePdf(list);popupVisible1=true;">
+                <div style="text-align: center;margin-top: 3%;" (click)="getMyCountryTC(country,list?.id);popupVisible1=true;">
                     <button mat-flat-button color="primary" style="width:100%" (click)="paymentAmt=list?.subscriptionPrice;paymentOption=list?.subscriptionName;numberOfUsers=list?.defaultUserCount;minNumberOfUsers=list?.minUsers;maxNumberOfUsers=list?.maxUsers">
                         <span>SUBSCRIBE</span>
                     </button>

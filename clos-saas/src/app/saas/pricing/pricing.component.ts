@@ -46,6 +46,7 @@ export class PricingComponent implements OnInit {
   freeTrialId:any='';
   subscriptionPeriod:any='';
   loadingPlans:boolean=false;
+  country:any='';
   done() {
     const newHost = `${this.domainName}.${window.location.host}`;
     console.log(window.location)
@@ -86,6 +87,7 @@ username:any='';
     this.responseUrl=sessionStorage.getItem('newurl');
     this.domainName=sessionStorage.getItem('domain');
     this.transferDataService.getData().subscribe(data => {
+      console.log(data)
       this.id=data?.id;
       this.selectedPayment =data.paymentOption;
       this.emailId=data?.email;
@@ -158,6 +160,8 @@ inputError:boolean=false;
      this.saasService.getDetailsById(this.id).subscribe(
        (res:any)=>{
          this.paymentOption=res['paymentStatus']
+         this.country=res['country'];
+         console.log(this.country)
          const data={
            id:res?.id,
            name:res?.userName,
@@ -180,6 +184,7 @@ inputError:boolean=false;
     this.saasService.getPaymentDetails().subscribe(
       (res:any)=>{
         this.paymentOption=res['paymentStatus']
+        this.country=res['country']
          const data={
            id:res?.id,
            name:res?.userName,
@@ -246,9 +251,22 @@ inputError:boolean=false;
  decodedPdf: SafeResourceUrl | null = null;
  checked = false;
  encodedPdf2:any;
+ decodedPdfData:any=[];
+ getMyCountryTC(country,id){
+   this.decodedPdfData=[];
+   this.saasService.getTCDocument(country,id).subscribe(
+     res=>{
+       this.decodedPdfData=res;
+       this.decodePdf(this.decodedPdfData)
+     },
+     err=>{
+       console.log(err)
+     }
+   )
+ }
 
 decodePdf(res) {
- this.encodedPdf2=res['agreement'];
+ this.encodedPdf2=res['doc'];
  if (this.encodedPdf2) {
    const byteCharacters = atob(this.encodedPdf2);
    const byteNumbers = new Array(byteCharacters.length);

@@ -132,7 +132,7 @@ signup(){
   const newHost = `${this.domainName}.${window.location.host}`;
   const newUrl = `http://${this.domainName}.${window.location.host}/signup/login`;
   this.responseUrl=newUrl;
-  this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn,this.email).subscribe(
+  this.saasService.getUserSignUp(null,this.companyname,`${this.domainName}.finsurge.tech`,this.firstname,this.password,this.email,this.phn,this.email,this.countryName).subscribe(
     (res:any)=>{
      console.log(res)
      this.addDocx=false;
@@ -387,6 +387,7 @@ getDetailsById(id){
       this.approvalStatus=res['approval'];
       let domain=res['domain'];
       this.domainName=domain?.split('.')[0]
+      let country=res['country'];
       const data={
         id:res?.id,
         name:res?.userName,
@@ -394,7 +395,8 @@ getDetailsById(id){
         phn:res?.phoneNo,
         domain:res?.domain,
         payemtAmt:res?.amountPaid,
-        paymentOption:res?.subscriptionPlan
+        paymentOption:res?.subscriptionPlan,
+        country:res?.country
       }
       this.transferDataService.setData(data)
     },

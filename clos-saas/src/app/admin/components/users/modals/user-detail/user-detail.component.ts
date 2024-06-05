@@ -58,6 +58,10 @@ export class UserDetailComponent implements OnInit {
   roleName: Role[]=[];
   groupName: Group[]=[];
 
+  //DISBALE USERNAME CHANGING FOR EDIT
+  hasStartedTyping:boolean=false;
+
+
 
   constructor(
     private router: Router,
@@ -184,7 +188,7 @@ export class UserDetailComponent implements OnInit {
             this.emailerrormessage=err.error['EmailId'];
           
           }
-          this.showNotification('error', err.error['error'])
+          this.showNotification('error', err.error)
         }
       )
     } else {
@@ -351,10 +355,12 @@ export class UserDetailComponent implements OnInit {
       }
     )
   }
-
   // convert into smallcase
   onInputChange() {
     this.userDetail.username = this.userDetail.username.toLowerCase();
+    if (!this.hasStartedTyping) {
+      this.hasStartedTyping = true;
+    }
   }
 
   @Output() roleChange = new EventEmitter<any>();

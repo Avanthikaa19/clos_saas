@@ -87,8 +87,15 @@ export class LoginComponent implements OnInit {
           },
           (err) => {
             console.log(err);
+            if(err.error['text']){
             this.errorMsg = err.error['text'];
-            console.log(err.error['error'])
+            }
+            else if(err['error']!==undefined && err['error']!==null){
+              this.errorMsg=err['error'];
+            }
+            else{
+              this.errorMsg='Please Refer the console'
+            }
           }
         );
     }
