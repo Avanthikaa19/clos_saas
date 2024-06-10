@@ -33,7 +33,8 @@ jobs:
         with:
           name: build-artifacts
           path: build/ # or your actual build output directory
-deploy_job:
+          
+  name: deploy_job
     needs: build_job
     runs-on: ubuntu-latest
 
