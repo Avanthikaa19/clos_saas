@@ -27,7 +27,7 @@ jobs:
         run: npm install --save-dev @angular/cli
 
       - name: Build Application
-        run: ng run build 
+        run: npx ng run build
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
