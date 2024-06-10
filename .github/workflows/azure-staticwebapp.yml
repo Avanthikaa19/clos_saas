@@ -24,7 +24,8 @@ jobs:
         with:
           node-version: '14' # Specify the Node.js version
       - name: Install Dependencies
-        run: npm install --force
+        run: npm install --save-dev @angular/cli
+
       - name: Build Application
         run: ng run build 
       - name: Upload build artifacts
