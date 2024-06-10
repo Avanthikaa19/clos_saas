@@ -27,7 +27,7 @@ jobs:
         run: npm install --force
 
       - name: Build Application
-        run: npx ng run build
+        run: ng run build
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
