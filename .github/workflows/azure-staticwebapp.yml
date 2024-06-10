@@ -24,7 +24,8 @@ jobs:
         with:
           node-version: '20' # Specify the Node.js version
       - name: Install Dependencies
-        run: npm install --force
+        run: npm install @angular/cli --save-dev
+
 
       - name: Build Application
         run: ng run build
